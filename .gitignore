@@ -1,6 +1,6 @@
 
-# Created by https://www.gitignore.io/api/rider,macos,csharp,visualstudio
-# Edit at https://www.gitignore.io/?templates=rider,macos,csharp,visualstudio
+# Created by https://www.gitignore.io/api/osx,rider,csharp,windows,visualstudio
+# Edit at https://www.gitignore.io/?templates=osx,rider,csharp,windows,visualstudio
 
 ### Csharp ###
 ## Ignore Visual Studio temporary files, build results, and
@@ -345,7 +345,7 @@ ASALocalRun/
 # BeatPulse healthcheck temp database
 healthchecksdb
 
-### macOS ###
+### OSX ###
 # General
 .DS_Store
 .AppleDouble
@@ -440,6 +440,31 @@ fabric.properties
 
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
+
+### Windows ###
+# Windows thumbnail cache files
+Thumbs.db
+ehthumbs.db
+ehthumbs_vista.db
+
+# Dump file
+*.stackdump
+
+# Folder config file
+[Dd]esktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
 
 ### VisualStudio ###
 ## Ignore Visual Studio temporary files, build results, and
@@ -603,4 +628,4 @@ fabric.properties
 
 # BeatPulse healthcheck temp database
 
-# End of https://www.gitignore.io/api/rider,macos,csharp,visualstudio
+# End of https://www.gitignore.io/api/osx,rider,csharp,windows,visualstudio
