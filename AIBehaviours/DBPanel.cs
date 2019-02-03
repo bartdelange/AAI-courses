@@ -1,19 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace AIBehaviours
 {
-    class DBPanel : Panel
+    internal class DBPanel : Panel
     {
-        public DBPanel() 
+        public DBPanel()
         {
-           this.DoubleBuffered = true;
+            DoubleBuffered = true;
         }
-        
     }
 }
-

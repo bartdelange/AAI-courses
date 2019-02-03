@@ -1,6 +1,6 @@
-﻿using AIBehaviours.entity;
+﻿using System;
+using AIBehaviours.entity;
 using AIBehaviours.util;
-using System;
 
 namespace AIBehaviours.behaviour
 {
@@ -14,19 +14,16 @@ namespace AIBehaviours.behaviour
 
         public override Vector2D Calculate()
         {
-            Vector2D ToTarget = Target
+            var ToTarget = Target
                 .Pos
                 .Clone()
                 .Subtract(MovingEntity.Pos);
 
-            double distance = ToTarget.Length();
+            var distance = ToTarget.Length();
 
-            if (distance <= 0)
-            {
-                return new Vector2D(0, 0);
-            }
+            if (distance <= 0) return new Vector2D(0, 0);
 
-            double speed = Math.Min(distance / DecelerationSpeed, MovingEntity.MaxSpeed);
+            var speed = Math.Min(distance / DecelerationSpeed, MovingEntity.MaxSpeed);
 
             return ToTarget
                 .Multiply(speed)

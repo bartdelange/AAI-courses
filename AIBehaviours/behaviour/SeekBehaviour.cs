@@ -10,7 +10,7 @@ namespace AIBehaviours.behaviour
         }
 
         /// <summary>
-        /// Set a velocity that will make the agent move the world target
+        ///     Set a velocity that will make the agent move the world target
         /// </summary>
         public override Vector2D Calculate()
         {

@@ -14,12 +14,9 @@ namespace AIBehaviours.behaviour
         public override Vector2D Calculate()
         {
             // Don't flee when target is far away
-            double distance = MovingEntity.Pos.Clone().Subtract(Target.Pos).LengthSquared();
+            var distance = MovingEntity.Pos.Clone().Subtract(Target.Pos).LengthSquared();
 
-            if (distance > Boundary)
-            {
-                return new Vector2D();
-            }
+            if (distance > Boundary) return new Vector2D();
 
             return MovingEntity
                 .Pos

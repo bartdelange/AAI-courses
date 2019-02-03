@@ -1,13 +1,17 @@
-﻿using AIBehaviours.behaviour;
+﻿using System.Collections.Generic;
+using System.Linq;
+using AIBehaviours.behaviour;
 using AIBehaviours.util;
 using AIBehaviours.world;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace AIBehaviours.entity
 {
     internal abstract class MovingEntity : BaseGameEntity
     {
+        public MovingEntity(Vector2D pos, World w) : base(pos, w)
+        {
+        }
+
         public float Mass { get; set; } = 15;
 
         public float MaxSpeed { get; set; } = 50;
@@ -18,16 +22,12 @@ namespace AIBehaviours.entity
 
         public List<SteeringBehaviour> SteeringBehaviours { get; set; } = new List<SteeringBehaviour>();
 
-        public MovingEntity(Vector2D pos, World w) : base(pos, w)
-        {
-        }
-
         public override void Update(float delta)
         {
-            Vector2D steeringForce = SteeringBehaviours.Aggregate(
-                new Vector2D(),
-                (force, behaviour) => force.Add(behaviour.Calculate())
-            )
+            var steeringForce = SteeringBehaviours.Aggregate(
+                    new Vector2D(),
+                    (force, behaviour) => force.Add(behaviour.Calculate())
+                )
                 .Divide(SteeringBehaviours.Count)
                 .Divide(Mass)
                 .Multiply(delta);
@@ -38,50 +38,41 @@ namespace AIBehaviours.entity
 
             Pos.Add(Velocity.Multiply(delta));
 
-            if (Velocity.LengthSquared() > 0.00000001)
-            {
-                Heading = Velocity.Clone().Normalize();
-            }
+            if (Velocity.LengthSquared() > 0.00000001) Heading = Velocity.Clone().Normalize();
 
-            WrapAround(Pos, MyWorld.Width, MyWorld.Height);
+            Pos = WrapToBounds(Pos, MyWorld.Width, MyWorld.Height);
         }
 
-        private void WrapAround(Vector2D pos, int width, int height)
+        private Vector2D WrapToBounds(Vector2D inPos, int width, int height)
         {
-            double ratio = width / (double)height;
+            var pos = inPos.Clone();
 
             if (pos.X > width)
             {
-                pos.X = width - Pos.Y;
-                pos.Y = 0;
-                return;
+                pos.X = 0;
             }
 
             if (pos.Y > height)
             {
-                pos.Y = height - Pos.X;
-                pos.X = 0;
-                return;
+                pos.Y = 0;
             }
 
             if (pos.X < 0)
             {
-                pos.Y = width - Pos.Y;
                 pos.X = width;
-                return;
             }
 
             if (pos.Y < 0)
             {
-                pos.X = height - Pos.X;
                 pos.Y = height;
-                return;
             }
+
+            return pos;
         }
 
         public override string ToString()
         {
-            return string.Format("{0}", Velocity);
+            return $"{Velocity}";
         }
     }
 }

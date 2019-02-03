@@ -4,10 +4,6 @@ namespace AIBehaviours.util
 {
     public class Vector2D
     {
-        public double X { get; set; }
-
-        public double Y { get; set; }
-
         public Vector2D() : this(0, 0)
         {
         }
@@ -17,6 +13,10 @@ namespace AIBehaviours.util
             X = x;
             Y = y;
         }
+
+        public double X { get; set; }
+
+        public double Y { get; set; }
 
         public double Length()
         {
@@ -30,7 +30,7 @@ namespace AIBehaviours.util
 
         public double Dot(Vector2D target)
         {
-            return (X * target.X) + (Y * target.Y);
+            return X * target.X + Y * target.Y;
         }
 
         public Vector2D Add(Vector2D v)
@@ -60,10 +60,7 @@ namespace AIBehaviours.util
         public Vector2D Divide(double value)
         {
             // Can't divide by zero
-            if (value == 0)
-            {
-                return this;
-            }
+            if (value == 0) return this;
 
             X /= value;
             Y /= value;
@@ -73,7 +70,7 @@ namespace AIBehaviours.util
 
         public Vector2D Normalize()
         {
-            double length = Length();
+            var length = Length();
             Divide(length);
 
             return this;
@@ -97,7 +94,7 @@ namespace AIBehaviours.util
 
         public override string ToString()
         {
-            return string.Format("({0},{1})", X, Y);
+            return $"({X},{Y})";
         }
     }
 }

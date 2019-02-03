@@ -1,4 +1,5 @@
-﻿using AIBehaviours.entity;
+﻿using System;
+using AIBehaviours.entity;
 using AIBehaviours.util;
 
 namespace AIBehaviours.behaviour
@@ -11,31 +12,31 @@ namespace AIBehaviours.behaviour
 
         public override Vector2D Calculate()
         {
-            Vector2D toEvader = Target
+            var toEvader = Target
                 .Pos
                 .Clone()
                 .Subtract(MovingEntity.Pos);
 
-            double relativeHeading = MovingEntity.Heading.Dot(Target.Heading);
+            var relativeHeading = MovingEntity.Heading.Dot(Target.Heading);
 
             if (
                 toEvader.Dot(MovingEntity.Heading) > 0
                 && relativeHeading < -0.95) // acot(0.95) = 18 deg;
             {
-                System.Console.WriteLine("Ahead");
+                Console.WriteLine("Ahead");
 
                 // Seek
                 return Seek(Target.Pos);
             }
 
-            double lookAheadTime = toEvader.Length() / (MovingEntity.MaxSpeed + Target.Velocity.Length());
+            var lookAheadTime = toEvader.Length() / (MovingEntity.MaxSpeed + Target.Velocity.Length());
 
-            Vector2D newPos = Target
-                    .Pos
-                    .Clone()
-                    .Add(
-                        MovingEntity.Velocity.Multiply(lookAheadTime)
-                    );
+            var newPos = Target
+                .Pos
+                .Clone()
+                .Add(
+                    MovingEntity.Velocity.Multiply(lookAheadTime)
+                );
 
             // Seek to predicted position
             return Seek(newPos);
