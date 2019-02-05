@@ -25,7 +25,7 @@ namespace AIBehaviours.util
 
         public double LengthSquared()
         {
-            return Math.Pow(X, 2) + Math.Pow(Y, 2);
+            return (X * X) + (Y * Y);
         }
 
         public double Dot(Vector2D target)
@@ -73,20 +73,20 @@ namespace AIBehaviours.util
 
         public Vector2D Normalize()
         {
-            var length = Length();
-            Divide(length);
+            double length = Length();
+
+            if (length > double.Epsilon)
+            {
+                X /= length;
+                Y /= length;
+            }
 
             return this;
         }
 
         public Vector2D Perpendicular()
         {
-            var tempX = X;
-
-            X = -Y;
-            Y = -tempX;
-
-            return this;
+            return new Vector2D(-Y, X);
         }
 
         public Vector2D Truncate(double max)
