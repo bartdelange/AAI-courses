@@ -53,7 +53,7 @@ namespace AIBehaviours
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(55, 13);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Behaviour";
+            this.label1.Text = "Blue Behaviour";
             // 
             // dbPanel1
             // 
@@ -72,7 +72,7 @@ namespace AIBehaviours
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(88, 13);
             this.label2.TabIndex = 4;
-            this.label2.Text = "Target behaviour";
+            this.label2.Text = "Red behaviour";
             // 
             // comboBox2
             // 

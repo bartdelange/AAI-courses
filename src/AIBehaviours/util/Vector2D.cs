@@ -60,10 +60,7 @@ namespace AIBehaviours.util
         public Vector2D Divide(double value)
         {
             // Can't divide by zero
-            if (value == 0)
-            {
-                return this;
-            }
+            if (value == 0) return this;
 
             X /= value;
             Y /= value;
@@ -73,13 +70,12 @@ namespace AIBehaviours.util
 
         public Vector2D Normalize()
         {
-            double length = Length();
+            var length = Length();
 
-            if (length > double.Epsilon)
-            {
-                X /= length;
-                Y /= length;
-            }
+            if (!(length > double.Epsilon)) return this;
+            
+            X /= length;
+            Y /= length;
 
             return this;
         }
@@ -91,11 +87,10 @@ namespace AIBehaviours.util
 
         public Vector2D Truncate(double max)
         {
-            if (Length() > max)
-            {
-                Normalize();
-                Multiply(max);
-            }
+            if (!(Length() > max)) return this;
+            
+            Normalize();
+            Multiply(max);
 
             return this;
         }

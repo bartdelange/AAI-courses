@@ -7,6 +7,7 @@ namespace AIBehaviours.behaviour
     internal class ArriveBehaviour : SteeringBehaviour
     {
         private const double DecelerationSpeed = 1;
+        private const double DecelerationTweaker = 0.3;
 
         public ArriveBehaviour(MovingEntity self, MovingEntity target) : base(self, target)
         {
@@ -14,24 +15,29 @@ namespace AIBehaviours.behaviour
 
         public override Vector2D Calculate(float deltaTime)
         {
-            var toTarget = Target
-                .Pos
-                .Clone()
-                .Subtract(MovingEntity.Pos);
+            var toTarget = Target.Pos.Clone().Subtract(MovingEntity.Pos);
 
-            var distance = toTarget.Length();
+            //calculate the distance to the target
+            var dist = toTarget.Length();
 
-            if (distance <= 0)
-            {
-                return new Vector2D(0, 0);
-            }
+            if (!(dist > 0)) return new Vector2D();
+            
+            //because Deceleration is enumerated as an int, this value is required
+            //to provide fine tweaking of the deceleration..
 
-            var speed = Math.Min(distance / DecelerationSpeed, MovingEntity.MaxSpeed);
+            //calculate the speed required to reach the target given the desired
+            //deceleration
+            var speed =  dist / (DecelerationSpeed * DecelerationTweaker);     
 
-            return toTarget
-                .Multiply(speed)
-                .Divide(distance)
-                .Subtract(MovingEntity.Velocity);
+            //make sure the velocity does not exceed the max
+            speed = Math.Min(speed, MovingEntity.MaxSpeed);
+
+            //from here proceed just like Seek except we don't need to normalize 
+            //the ToTarget vector because we have already gone to the trouble
+            //of calculating its length: dist. 
+            var desiredVelocity =  toTarget.Multiply(speed).Divide(dist);
+
+            return desiredVelocity.Subtract(MovingEntity.Velocity);
         }
     }
 }

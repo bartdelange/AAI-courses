@@ -12,9 +12,9 @@ namespace AIBehaviours.entity
         {
         }
 
-        public float Mass { get; set; } = 15;
+        public float Mass { get; set; } = 1;
 
-        public float MaxSpeed { get; set; } = 50;
+        public float MaxSpeed { get; set; } = 10;
 
         public Vector2D Velocity { get; set; } = new Vector2D(0, 0);
 

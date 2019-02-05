@@ -5,7 +5,7 @@ namespace AIBehaviours.behaviour
 {
     internal class EvadeBehaviour : SteeringBehaviour
     {
-        private const int Boundary = 100 * 100;
+        private const double ThreatRange = 300.0;
 
         public EvadeBehaviour(MovingEntity movingEntity, MovingEntity target) : base(movingEntity, target)
         {
@@ -13,23 +13,22 @@ namespace AIBehaviours.behaviour
 
         public override Vector2D Calculate(float deltaTime)
         {
-            // Don't flee when target is far away
-            var distance = MovingEntity.Pos.Clone().Subtract(Target.Pos).LengthSquared();
+            var toPersuer = Target.Pos.Clone().Subtract(MovingEntity.Pos);
 
-            if (distance > Boundary)
-            {
-                return new Vector2D();
-            }
+            // Only flee if the target is within 'panic distance'. Work in distance squared space.
+//            if (toPersuer.LengthSquared() > ThreatRange * ThreatRange) return new Vector2D(0, 0);
 
-            var toPersuer = Target
-                .Pos
-                .Clone()
-                .Subtract(MovingEntity.Pos);
-
+            // The lookahead time is proportional to the distance between the pursuer
+            // and the pursuer; and is inversely proportional to the sum of the
+            // agents' velocities
             var lookAheadTime = toPersuer.Length() / (MovingEntity.MaxSpeed + Target.Velocity.Length());
 
-            var predictedPosition = Target.Pos.Clone().Add(Target.Velocity.Clone().Multiply(lookAheadTime));
+            var predictedPosition = Target
+                .Pos
+                .Clone()
+                .Add(Target.Velocity.Clone().Multiply(lookAheadTime));
 
+            //now flee away from predicted future position of the pursuer
             return MovingEntity
                 .Pos
                 .Clone()

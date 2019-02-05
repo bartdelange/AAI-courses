@@ -49,7 +49,7 @@
     <Compile Include="behaviour\ArriveBehaviour.cs" />
     <Compile Include="behaviour\EvadeBehaviour.cs" />
     <Compile Include="behaviour\FleeBehaviour.cs" />
-    <Compile Include="behaviour\PersuitBehavior.cs" />
+    <Compile Include="behaviour\PursuitBehavior.cs" />
     <Compile Include="behaviour\WanderBehaviour.cs" />
     <Compile Include="entity\BaseGameEntity.cs" />
     <Compile Include="behaviour\SeekBehaviour.cs" />

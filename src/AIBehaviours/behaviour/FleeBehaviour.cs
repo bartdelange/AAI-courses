@@ -13,9 +13,13 @@ namespace AIBehaviours.behaviour
 
         public override Vector2D Calculate(float deltaTime)
         {
-            // Don't flee when target is far away
-            var distance = MovingEntity.Pos.Clone().Subtract(Target.Pos).LengthSquared();
+            var distance = MovingEntity
+                .Pos
+                .Clone()
+                .Subtract(Target.Pos)
+                .LengthSquared();
 
+            // Only flee if the target is within 'panic distance'. Work in distance squared space.
             if (distance > Boundary)
             {
                 return new Vector2D();

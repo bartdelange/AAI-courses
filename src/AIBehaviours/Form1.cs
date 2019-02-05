@@ -25,7 +25,7 @@ namespace AIBehaviours
                 typeof(ArriveBehaviour),
                 typeof(FleeBehaviour),
                 typeof(SeekBehaviour),
-                typeof(PersuitBehavior),
+                typeof(PursuitBehavior),
                 typeof(EvadeBehaviour),
                 typeof(WanderBehaviour)
             };

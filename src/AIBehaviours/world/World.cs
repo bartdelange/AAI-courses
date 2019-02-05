@@ -9,9 +9,9 @@ namespace AIBehaviours.world
 {
     internal class World
     {
-        private readonly Type _steeringBehaviour;
+        private readonly Type _blueSteeringBehaviour;
 
-        private readonly Type _targetSteeringBehaviour;
+        private readonly Type _redSteeringBehaviour;
 
         public readonly List<MovingEntity> Entities = new List<MovingEntity>();
 
@@ -24,10 +24,10 @@ namespace AIBehaviours.world
         {
         }
 
-        public World(int w, int h, Type steeringBehaviour, Type targetSteeringBehaviour)
+        public World(int w, int h, Type blueSteeringBehaviour, Type targetSteeringBehaviour)
         {
-            _steeringBehaviour = steeringBehaviour ?? typeof(ArriveBehaviour);
-            _targetSteeringBehaviour = targetSteeringBehaviour ?? typeof(WanderBehaviour);
+            _blueSteeringBehaviour = blueSteeringBehaviour ?? typeof(WanderBehaviour);
+            _redSteeringBehaviour = targetSteeringBehaviour ?? typeof(WanderBehaviour);
 
             Width = w;
             Height = h;
@@ -40,21 +40,20 @@ namespace AIBehaviours.world
             var target = new Vehicle(new Vector2D(100, 60), this)
             {
                 VColor = Color.DarkRed,
-                MaxSpeed = 5
             };
 
             var agent = new Vehicle(new Vector2D(250, 250), this)
             {
-                VColor = Color.Blue
+                VColor = Color.Blue,
             };
 
             // Add behaviours
             target.SteeringBehaviours.AddRange(new []{
-                (SteeringBehaviour) Activator.CreateInstance(_targetSteeringBehaviour, target, agent)
+                (SteeringBehaviour) Activator.CreateInstance(_redSteeringBehaviour, target, agent)
             });
 
             agent.SteeringBehaviours.Add(
-                (SteeringBehaviour) Activator.CreateInstance(_steeringBehaviour, agent, target)
+                (SteeringBehaviour) Activator.CreateInstance(_blueSteeringBehaviour, agent, target)
             );
 
             Entities.Add(agent);

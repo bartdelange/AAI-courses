@@ -4,9 +4,9 @@ using System;
 
 namespace AIBehaviours.behaviour
 {
-    internal class PersuitBehavior : SteeringBehaviour
+    internal class PursuitBehavior : SteeringBehaviour
     {
-        public PersuitBehavior(MovingEntity self, MovingEntity target) : base(self, target)
+        public PursuitBehavior(MovingEntity self, MovingEntity target) : base(self, target)
         {
         }
 
@@ -21,12 +21,13 @@ namespace AIBehaviours.behaviour
 
             if (
                 toEvader.Dot(MovingEntity.Heading) > 0
-                && relativeHeading < -0.95) // acot(0.95) = 18 deg;
+                && relativeHeading < -0.95 // acot(0.95) = 18 deg;
+            )
             {
                 Console.WriteLine("Ahead");
 
                 // Seek
-                return Seek(Target.Pos);
+                return Seek(Target.Pos.Clone());
             }
 
             var lookAheadTime = toEvader.Length() / (MovingEntity.MaxSpeed + Target.Velocity.Length());
@@ -44,12 +45,11 @@ namespace AIBehaviours.behaviour
 
         private Vector2D Seek(Vector2D targetPosition)
         {
-            return MovingEntity
-                .Pos
-                .Clone()
-                .Add(targetPosition)
+            return targetPosition
+                .Subtract(MovingEntity.Pos)
                 .Normalize()
-                .Multiply(MovingEntity.MaxSpeed);
+                .Multiply(MovingEntity.MaxSpeed)
+                .Subtract(MovingEntity.Velocity);
         }
     }
 }
