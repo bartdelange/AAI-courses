@@ -5,7 +5,7 @@ namespace AIBehaviours.behaviour
 {
     internal class EvadeBehaviour : SteeringBehaviour
     {
-        private const double ThreatRange = 300.0;
+        private const double ThreatRange = 100.0;
 
         public EvadeBehaviour(MovingEntity movingEntity, MovingEntity target) : base(movingEntity, target)
         {
@@ -16,7 +16,7 @@ namespace AIBehaviours.behaviour
             var toPursuer = Target.Pos.Clone().Subtract(MovingEntity.Pos);
 
             // Only flee if the target is within 'panic distance'. Work in distance squared space.
-//            if (toPursuer.LengthSquared() > ThreatRange * ThreatRange) return new Vector2D(0, 0);
+            if (toPursuer.LengthSquared() > ThreatRange * ThreatRange) return new Vector2D(0, 0);
 
             // The lookahead time is proportional to the distance between the pursuer
             // and the pursuer; and is inversely proportional to the sum of the
