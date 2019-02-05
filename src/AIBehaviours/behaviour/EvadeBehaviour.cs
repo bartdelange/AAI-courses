@@ -13,15 +13,15 @@ namespace AIBehaviours.behaviour
 
         public override Vector2D Calculate(float deltaTime)
         {
-            var toPersuer = Target.Pos.Clone().Subtract(MovingEntity.Pos);
+            var toPursuer = Target.Pos.Clone().Subtract(MovingEntity.Pos);
 
             // Only flee if the target is within 'panic distance'. Work in distance squared space.
-//            if (toPersuer.LengthSquared() > ThreatRange * ThreatRange) return new Vector2D(0, 0);
+//            if (toPursuer.LengthSquared() > ThreatRange * ThreatRange) return new Vector2D(0, 0);
 
             // The lookahead time is proportional to the distance between the pursuer
             // and the pursuer; and is inversely proportional to the sum of the
             // agents' velocities
-            var lookAheadTime = toPersuer.Length() / (MovingEntity.MaxSpeed + Target.Velocity.Length());
+            var lookAheadTime = toPursuer.Length() / (MovingEntity.MaxSpeed + Target.Velocity.Length());
 
             var predictedPosition = Target
                 .Pos
