@@ -43,7 +43,7 @@ namespace AIBehaviours.entity
             if (Velocity.LengthSquared() > 0.00000001)
             {
                 Heading = Velocity.Clone().Normalize();
-                Side = Heading.Clone().Perpendicular();
+                Side = Heading.Perpendicular();
             }
 
             Pos = WrapToBounds(Pos, MyWorld.Width, MyWorld.Height);
