@@ -1,31 +1,56 @@
 ﻿using System.Drawing;
-using AIBehaviours.util;
-using AIBehaviours.world;
+using AIBehaviours.Util;
 
-namespace AIBehaviours.entity
+namespace AIBehaviours.Entity
 {
     internal class Vehicle : MovingEntity
     {
+        private readonly Pen _objectPen = new Pen(Color.Black, 2);
+        private readonly Pen _velocityPen = new Pen(Color.Red, 2);
+
         public Vehicle(Vector2D pos, World w) : base(pos, w)
         {
             Velocity = new Vector2D(0, 0);
-            Scale = 5;
-
-            VColor = Color.Black;
+            Scale = 1;
+        }
+        
+        public Vehicle(Vector2D pos, Color color, World w) : this(pos, w)
+        {
+            _objectPen = new Pen(color, 2);
         }
 
-        public Color VColor { get; set; }
 
         public override void Render(Graphics g)
         {
-            var leftCorner = Pos.X - Scale;
-            var rightCorner = Pos.Y - Scale;
-            double size = Scale * 2;
+            // Draw velocity
+            g.DrawLine(_velocityPen, 
+                (PointF) Pos, 
+                (PointF) (Pos + Velocity)
+            );
+            
+            var p1 = new Vector2D(-8, 5);
+            var p3 = new Vector2D(5, 0);
+            var p2 = new Vector2D(-8, -5);
 
-            var p = new Pen(VColor, 2);
-            g.DrawEllipse(p, new Rectangle((int) leftCorner, (int) rightCorner, (int) size, (int) size));
-            g.DrawLine(p, (int) Pos.X, (int) Pos.Y, (int) Pos.X + (int) (Velocity.X * 2),
-                (int) Pos.Y + (int) (Velocity.Y * 2));
+            var matrix = new Matrix();
+
+            matrix.Rotate(Heading, Side);
+            matrix.Translate(Pos.X, Pos.Y);
+
+            // Transform the vector to world space
+            p1 = matrix.TransformVector2Ds(p1);
+            p2 = matrix.TransformVector2Ds(p2);
+            p3 = matrix.TransformVector2Ds(p3);
+
+            // Create points that define polygon.
+            PointF[] curvePoints =
+            {
+                (PointF) p1, 
+                (PointF) p2,
+                (PointF) p3,
+            };
+            
+            g.DrawPolygon(_objectPen, curvePoints);
         }
     }
 }

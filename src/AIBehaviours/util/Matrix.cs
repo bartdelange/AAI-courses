@@ -1,47 +1,47 @@
-﻿using System;
+﻿ using System;
 
-namespace AIBehaviours.util
+namespace AIBehaviours.Util
 {
-    public class MatrixTransformations
+    public class Matrix
     {
-        private class Matrix
+        private class MatrixStructure
         {
-            public double _11 = 1;
-            public double _12;
-            public double _13;
-            public double _21;
-            public double _22 = 1;
-            public double _23;
-            public double _31;
-            public double _32;
-            public double _33 = 1;
+            public double P11 = 1;
+            public double P12;
+            public double P13;
+            public double P21;
+            public double P22 = 1;
+            public double P23;
+            public double P31;
+            public double P32;
+            public double P33 = 1;
 
             public override string ToString()
             {
-                return $"[{_11},{_12},{_13}]\n[{_21},{_22},{_23}]\n[{_31},{_32},{_33}]";
+                return $"[{P11},{P12},{P13}]\n[{P21},{P22},{P23}]\n[{P31},{P32},{P33}]";
             }
         }
 
-        private Matrix _matrix = new Matrix();
+        private MatrixStructure _matrix = new MatrixStructure();
 
-        private void MatrixMultiply(Matrix matrix)
+        private void MatrixMultiply(MatrixStructure matrix)
         {
-            var tempMatrix = new Matrix
+            var tempMatrix = new MatrixStructure
             {
                 // First row
-                _11 = (_matrix._11 * matrix._11) + (_matrix._12 * matrix._21) + (_matrix._13 * matrix._31),
-                _12 = (_matrix._11 * matrix._12) + (_matrix._12 * matrix._22) + (_matrix._13 * matrix._32),
-                _13 = (_matrix._11 * matrix._13) + (_matrix._12 * matrix._23) + (_matrix._13 * matrix._33),
+                P11 = (_matrix.P11 * matrix.P11) + (_matrix.P12 * matrix.P21) + (_matrix.P13 * matrix.P31),
+                P12 = (_matrix.P11 * matrix.P12) + (_matrix.P12 * matrix.P22) + (_matrix.P13 * matrix.P32),
+                P13 = (_matrix.P11 * matrix.P13) + (_matrix.P12 * matrix.P23) + (_matrix.P13 * matrix.P33),
 
                 // Second row
-                _21 = (_matrix._21 * matrix._11) + (_matrix._22 * matrix._21) + (_matrix._23 * matrix._31),
-                _22 = (_matrix._21 * matrix._12) + (_matrix._22 * matrix._22) + (_matrix._23 * matrix._32),
-                _23 = (_matrix._21 * matrix._13) + (_matrix._22 * matrix._23) + (_matrix._23 * matrix._33),
+                P21 = (_matrix.P21 * matrix.P11) + (_matrix.P22 * matrix.P21) + (_matrix.P23 * matrix.P31),
+                P22 = (_matrix.P21 * matrix.P12) + (_matrix.P22 * matrix.P22) + (_matrix.P23 * matrix.P32),
+                P23 = (_matrix.P21 * matrix.P13) + (_matrix.P22 * matrix.P23) + (_matrix.P23 * matrix.P33),
 
                 // Third row
-                _31 = (_matrix._31 * matrix._11) + (_matrix._32 * matrix._21) + (_matrix._33 * matrix._31),
-                _32 = (_matrix._31 * matrix._12) + (_matrix._32 * matrix._22) + (_matrix._33 * matrix._32),
-                _33 = (_matrix._31 * matrix._13) + (_matrix._32 * matrix._23) + (_matrix._33 * matrix._33),
+                P31 = (_matrix.P31 * matrix.P11) + (_matrix.P32 * matrix.P21) + (_matrix.P33 * matrix.P31),
+                P32 = (_matrix.P31 * matrix.P12) + (_matrix.P32 * matrix.P22) + (_matrix.P33 * matrix.P32),
+                P33 = (_matrix.P31 * matrix.P13) + (_matrix.P32 * matrix.P23) + (_matrix.P33 * matrix.P33),
             };
 
             _matrix = tempMatrix;
@@ -52,17 +52,17 @@ namespace AIBehaviours.util
         /// </summary>
         public void Rotate(Vector2D heading, Vector2D side)
         {
-            var matrix = new Matrix
+            var matrix = new MatrixStructure
             {
-                _11 = heading.X,
-                _12 = heading.Y,
-                _13 = 0,
-                _21 = side.X,
-                _22 = side.Y,
-                _23 = 0,
-                _31 = 0,
-                _32 = 0,
-                _33 = 1,
+                P11 = heading.X,
+                P12 = heading.Y,
+                P13 = 0,
+                P21 = side.X,
+                P22 = side.Y,
+                P23 = 0,
+                P31 = 0,
+                P32 = 0,
+                P33 = 1,
             };
 
             // Console.WriteLine("Rotate\n" + matrix);
@@ -80,17 +80,17 @@ namespace AIBehaviours.util
             var sin = Math.Sin(angle);
             var cos = Math.Cos(angle);
 
-            var matrix = new Matrix
+            var matrix = new MatrixStructure
             {
-                _11 = cos,
-                _12 = sin,
-                _13 = 0,
-                _21 = -sin,
-                _22 = cos,
-                _23 = 0,
-                _31 = 0,
-                _32 = 0,
-                _33 = 1,
+                P11 = cos,
+                P12 = sin,
+                P13 = 0,
+                P21 = -sin,
+                P22 = cos,
+                P23 = 0,
+                P31 = 0,
+                P32 = 0,
+                P33 = 1,
             };
 
             MatrixMultiply(matrix);
@@ -105,17 +105,17 @@ namespace AIBehaviours.util
         /// </param>
         public void Translate(double x, double y)
         {
-            var matrix = new Matrix
+            var matrix = new MatrixStructure
             {
-                _11 = 1,
-                _12 = 0,
-                _13 = 0,
-                _21 = 0,
-                _22 = 1,
-                _23 = 0,
-                _31 = x,
-                _32 = y,
-                _33 = 1,
+                P11 = 1,
+                P12 = 0,
+                P13 = 0,
+                P21 = 0,
+                P22 = 1,
+                P23 = 0,
+                P31 = x,
+                P32 = y,
+                P33 = 1,
             };
 
             // Console.WriteLine("Translate\n" + matrix);
@@ -125,8 +125,8 @@ namespace AIBehaviours.util
 
         public Vector2D TransformVector2Ds(Vector2D localVector)
         {
-            var x = (_matrix._11 * localVector.X) + (_matrix._21 * localVector.Y) + (_matrix._31);
-            var y = (_matrix._12 * localVector.X) + (_matrix._22 * localVector.Y) + (_matrix._32);
+            var x = (_matrix.P11 * localVector.X) + (_matrix.P21 * localVector.Y) + (_matrix.P31);
+            var y = (_matrix.P12 * localVector.X) + (_matrix.P22 * localVector.Y) + (_matrix.P32);
 
             return new Vector2D(x, y);
         }

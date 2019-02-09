@@ -1,12 +1,16 @@
-﻿using System.Drawing;
-using AIBehaviours.util;
-using AIBehaviours.world;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using AIBehaviours.Util;
 
-namespace AIBehaviours.entity
+namespace AIBehaviours.Entity
 {
-    internal abstract class BaseGameEntity
+    public abstract class BaseGameEntity
     {
-        public BaseGameEntity(Vector2D pos, World w)
+        public List<MovingEntity> Neighbors;
+
+        protected BaseGameEntity(Vector2D pos, World w)
         {
             Pos = pos;
             MyWorld = w;
@@ -14,15 +18,26 @@ namespace AIBehaviours.entity
 
         public Vector2D Pos { get; set; }
 
-        public float Scale { get; set; }
+        protected float Scale { get; set; }
 
-        public World MyWorld { get; set; }
+        protected World MyWorld { get; }
 
         public abstract void Update(float delta);
 
         public virtual void Render(Graphics g)
         {
             g.FillEllipse(Brushes.Blue, new Rectangle((int) Pos.X, (int) Pos.Y, 10, 10));
+        }
+
+        protected void FindNeighbours(double radius)
+        {
+            Neighbors = MyWorld.Entities.Where(entity =>
+            {
+                var targetDistance = entity.Pos - Pos;
+                var rangeSquared = Math.Pow(radius, 2);
+
+                return entity != this && targetDistance.LengthSquared() < rangeSquared;
+            }).ToList();
         }
     }
 }
