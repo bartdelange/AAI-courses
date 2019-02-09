@@ -148,6 +148,14 @@ namespace AIBehaviours.Util
         /// <returns></returns>
         public static explicit operator PointF(Vector2D vector) =>
             new PointF((float) vector.X, (float) vector.Y);
+        
+        /// <summary>
+        /// Cast to Point
+        /// </summary>
+        /// <param name="vector"></param>
+        /// <returns></returns>
+        public static explicit operator Point(Vector2D vector) =>
+            new Point((int) vector.X, (int) vector.Y);
 
         #endregion
 

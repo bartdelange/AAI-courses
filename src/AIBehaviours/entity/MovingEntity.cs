@@ -10,7 +10,7 @@ namespace AIBehaviours.Entity
         //
         public float Mass { get; set; } = 15;
         public float MaxSpeed { get; set; } = 100;
-        public float Radius { get; set; } = 50;
+        public int Radius { get; set; } = 50;
 
         //
         public Vector2D Velocity { get; set; } = new Vector2D(1, 1);

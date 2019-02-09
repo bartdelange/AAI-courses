@@ -64,8 +64,8 @@ namespace AIBehaviours
         {
             Entities.ForEach(e =>
             {
-                e.Render(g);
                 e.SteeringBehaviours.ForEach(sb => sb.Render(g));
+                e.Render(g);
             });
         }
     }
