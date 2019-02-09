@@ -5,28 +5,28 @@ using AIBehaviours.Util;
 
 namespace AIBehaviours.Behaviour.Group
 {
-    public class SeparationBehaviour : SteeringBehaviour
+    public class CohesionBehaviour : SteeringBehaviour
     {
-        private readonly Brush _brush = new SolidBrush(Color.FromArgb(25, 255, 0, 0));
+        private readonly Brush _brush = new SolidBrush(Color.FromArgb(25, 255, 255, 0));
 
-        public SeparationBehaviour(MovingEntity movingEntity, MovingEntity target) : base(movingEntity, target)
+        public CohesionBehaviour(MovingEntity movingEntity, MovingEntity target) : base(movingEntity, target)
         {
         }
 
         public override Vector2D Calculate(float deltaTime)
         {
             if (MovingEntity.Neighbors.Count < 1) return new Vector2D();
-
-            return MovingEntity.Neighbors.Aggregate(
+            
+            var centerOfMass = MovingEntity.Neighbors.Aggregate(
                 new Vector2D(),
-                (steeringForce, neighbor) =>
-                {
-                    var targetDistance = MovingEntity.Pos - neighbor.Pos;
-                    return steeringForce + targetDistance.Normalize() / targetDistance.Length();
-                }
+                (position, neighbor) => position + neighbor.Pos
             );
-        }
+            
+            var targetPosition = centerOfMass / MovingEntity.Neighbors.Count;
 
+            return (targetPosition - MovingEntity.Pos).Normalize() * MovingEntity.MaxSpeed;
+        }
+        
         public override void Render(Graphics g)
         {
             var size = MovingEntity.Radius * 2;
