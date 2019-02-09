@@ -1,5 +1,4 @@
-﻿using System;
-using AIBehaviours.Entity;
+﻿using AIBehaviours.Entity;
 using AIBehaviours.Util;
 
 namespace AIBehaviours.Behaviour.Individual
