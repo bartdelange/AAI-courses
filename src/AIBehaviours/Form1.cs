@@ -27,7 +27,8 @@ namespace AIBehaviours
                 typeof(PursuitBehavior),
                 typeof(EvadeBehaviour),
                 typeof(WanderBehaviour),
-                typeof(SeparationBehaviour)
+                typeof(SeparationBehaviour),
+                typeof(AlignmentBehaviour)
             };
 
             comboBox1.Items.AddRange(steeringBehaviours);

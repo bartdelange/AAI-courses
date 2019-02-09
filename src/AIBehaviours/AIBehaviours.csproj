@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Behaviour\Group\AlignmentBehaviour.cs" />
     <Compile Include="Behaviour\Group\SeparationBehaviour.cs" />
     <Compile Include="Behaviour\Individual\ArriveBehaviour.cs" />
     <Compile Include="Behaviour\Individual\EvadeBehaviour.cs" />

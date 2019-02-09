@@ -6,7 +6,7 @@ namespace AIBehaviours.Behaviour.Group
 {
     public class SeparationBehaviour : SteeringBehaviour
     {
-        private Brush _brush = new SolidBrush(Color.FromArgb(25, 255, 0, 0));
+        private readonly Brush _brush = new SolidBrush(Color.FromArgb(25, 255, 0, 0));
         
         public SeparationBehaviour(MovingEntity movingEntity, MovingEntity target) : base(movingEntity, target)
         {
