@@ -1,4 +1,4 @@
-﻿ using System;
+﻿using System;
 
 namespace AIBehaviours.Util
 {
@@ -28,17 +28,17 @@ namespace AIBehaviours.Util
         {
             var tempMatrix = new MatrixStructure
             {
-                // First row
+                // First row	
                 P11 = (_matrix.P11 * matrix.P11) + (_matrix.P12 * matrix.P21) + (_matrix.P13 * matrix.P31),
                 P12 = (_matrix.P11 * matrix.P12) + (_matrix.P12 * matrix.P22) + (_matrix.P13 * matrix.P32),
                 P13 = (_matrix.P11 * matrix.P13) + (_matrix.P12 * matrix.P23) + (_matrix.P13 * matrix.P33),
 
-                // Second row
+                // Second row	
                 P21 = (_matrix.P21 * matrix.P11) + (_matrix.P22 * matrix.P21) + (_matrix.P23 * matrix.P31),
                 P22 = (_matrix.P21 * matrix.P12) + (_matrix.P22 * matrix.P22) + (_matrix.P23 * matrix.P32),
                 P23 = (_matrix.P21 * matrix.P13) + (_matrix.P22 * matrix.P23) + (_matrix.P23 * matrix.P33),
 
-                // Third row
+                // Third row	
                 P31 = (_matrix.P31 * matrix.P11) + (_matrix.P32 * matrix.P21) + (_matrix.P33 * matrix.P31),
                 P32 = (_matrix.P31 * matrix.P12) + (_matrix.P32 * matrix.P22) + (_matrix.P33 * matrix.P32),
                 P33 = (_matrix.P31 * matrix.P13) + (_matrix.P32 * matrix.P23) + (_matrix.P33 * matrix.P33),
@@ -47,9 +47,9 @@ namespace AIBehaviours.Util
             _matrix = tempMatrix;
         }
 
-        /// <summary>
-        /// Rotates matrix by using the given vectors
-        /// </summary>
+        /// <summary>	
+        /// Rotates matrix by using the given vectors	
+        /// </summary>	
         public void Rotate(Vector2D heading, Vector2D side)
         {
             var matrix = new MatrixStructure
@@ -65,16 +65,16 @@ namespace AIBehaviours.Util
                 P33 = 1,
             };
 
-            // Console.WriteLine("Rotate\n" + matrix);
+            // Console.WriteLine("Rotate\n" + matrix);	
 
             MatrixMultiply(matrix);
         }
 
-        /// <summary>
-        /// Rotates matrix by given angle
-        /// </summary>
-        /// <param name="angle">
-        /// </param>
+        /// <summary>	
+        /// Rotates matrix by given angle	
+        /// </summary>	
+        /// <param name="angle">	
+        /// </param>	
         public void Rotate(double angle)
         {
             var sin = Math.Sin(angle);
@@ -96,13 +96,13 @@ namespace AIBehaviours.Util
             MatrixMultiply(matrix);
         }
 
-        /// <summary>
-        /// Translate the matrix origin
-        /// </summary>
-        /// <param name="x">
-        /// </param>
-        /// <param name="y">
-        /// </param>
+        /// <summary>	
+        /// Translate the matrix origin	
+        /// </summary>	
+        /// <param name="x">	
+        /// </param>	
+        /// <param name="y">	
+        /// </param>	
         public void Translate(double x, double y)
         {
             var matrix = new MatrixStructure
@@ -118,7 +118,7 @@ namespace AIBehaviours.Util
                 P33 = 1,
             };
 
-            // Console.WriteLine("Translate\n" + matrix);
+            // Console.WriteLine("Translate\n" + matrix);	
 
             MatrixMultiply(matrix);
         }
