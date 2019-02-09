@@ -1,12 +1,12 @@
-﻿using AIBehaviours.entity;
-using AIBehaviours.util;
-using System.Drawing;
+﻿using System.Drawing;
+using AIBehaviours.Entity;
+using AIBehaviours.Util;
 
-namespace AIBehaviours.behaviour
+namespace AIBehaviours.Behaviour
 {
-    internal abstract class SteeringBehaviour
+    public abstract class SteeringBehaviour
     {
-        public SteeringBehaviour(MovingEntity movingEntity, MovingEntity target)
+        protected SteeringBehaviour(MovingEntity movingEntity, MovingEntity target)
         {
             MovingEntity = movingEntity;
             Target = target;

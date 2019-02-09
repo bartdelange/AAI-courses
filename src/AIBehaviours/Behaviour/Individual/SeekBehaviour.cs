@@ -1,7 +1,7 @@
-﻿using AIBehaviours.entity;
-using AIBehaviours.util;
+﻿using AIBehaviours.Entity;
+using AIBehaviours.Util;
 
-namespace AIBehaviours.behaviour
+namespace AIBehaviours.Behaviour.Individual
 {
     internal class SeekBehaviour : SteeringBehaviour
     {
@@ -14,12 +14,7 @@ namespace AIBehaviours.behaviour
         /// </summary>
         public override Vector2D Calculate(float deltaTime)
         {
-            return Target
-                .Pos
-                .Clone()
-                .Subtract(MovingEntity.Pos)
-                .Normalize()
-                .Multiply(MovingEntity.MaxSpeed);
+            return (Target.Pos - MovingEntity.Pos).Normalize()  * MovingEntity.MaxSpeed;
         }
     }
 }

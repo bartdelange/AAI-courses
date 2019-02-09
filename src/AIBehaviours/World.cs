@@ -1,13 +1,14 @@
-﻿using AIBehaviours.behaviour;
-using AIBehaviours.entity;
-using AIBehaviours.util;
+﻿using AIBehaviours.Behaviour;
+using AIBehaviours.Entity;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using AIBehaviours.Behaviour.Individual;
+using AIBehaviours.Util;
 
-namespace AIBehaviours.world
+namespace AIBehaviours
 {
-    internal class World
+    public class World
     {
         private readonly Type _blueSteeringBehaviour;
 
@@ -37,16 +38,9 @@ namespace AIBehaviours.world
 
         private void Populate()
         {
-            var target = new Vehicle(new Vector2D(100, 60), this)
-            {
-                VColor = Color.DarkRed,
-            };
-
-            var agent = new Vehicle(new Vector2D(250, 250), this)
-            {
-                VColor = Color.Blue,
-            };
-
+            var target = new Vehicle(new Vector2D(100, 60), Color.DarkRed, this);
+            var agent = new Vehicle(new Vector2D(250, 250), Color.Blue, this);
+                
             // Add behaviours
             target.SteeringBehaviours.AddRange(new []{
                 (SteeringBehaviour) Activator.CreateInstance(_redSteeringBehaviour, target, agent)

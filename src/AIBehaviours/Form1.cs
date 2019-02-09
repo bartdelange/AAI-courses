@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Timers;
 using System.Windows.Forms;
-using AIBehaviours.behaviour;
-using AIBehaviours.util;
-using AIBehaviours.world;
+using AIBehaviours.Behaviour.Group;
+using AIBehaviours.Behaviour.Individual;
+using AIBehaviours.Util;
 using Timer = System.Timers.Timer;
 
 namespace AIBehaviours
@@ -12,7 +12,6 @@ namespace AIBehaviours
     {
         private const float TimeDelta = 0.8f;
 
-        private readonly Timer _timer;
         private World _world;
 
         public Form1()
@@ -27,16 +26,18 @@ namespace AIBehaviours
                 typeof(SeekBehaviour),
                 typeof(PursuitBehavior),
                 typeof(EvadeBehaviour),
-                typeof(WanderBehaviour)
+                typeof(WanderBehaviour),
+                typeof(SeparationBehaviour)
             };
 
             comboBox1.Items.AddRange(steeringBehaviours);
             comboBox2.Items.AddRange(steeringBehaviours);
 
-            _timer = new Timer();
-            _timer.Elapsed += Timer_Elapsed;
-            _timer.Interval = 20;
-            _timer.Enabled = true;
+            var timer = new Timer();
+            
+            timer.Elapsed += Timer_Elapsed;
+            timer.Interval = 20;
+            timer.Enabled = true;
         }
 
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)

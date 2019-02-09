@@ -1,17 +1,17 @@
-﻿using AIBehaviours.entity;
-using AIBehaviours.util;
-using System;
+﻿using System;
 using System.Drawing;
+using AIBehaviours.Entity;
+using AIBehaviours.Util;
 
-namespace AIBehaviours.behaviour
+namespace AIBehaviours.Behaviour.Individual
 {
     internal class WanderBehaviour : SteeringBehaviour
     {
         private const double WanderRadius = 50;
 
-        private const double WanderDistance = WanderRadius + 25;
+        private const double WanderDistance = 25;
 
-        private const double WanderJitter = 100;
+        private const double WanderJitter = 25;
 
         private Vector2D _wanderTarget = new Vector2D(0, 0);
 
@@ -23,19 +23,15 @@ namespace AIBehaviours.behaviour
 
         public override Vector2D Calculate(float deltaTime)
         {
-            _wanderTarget.Add(new Vector2D(RandomClamped() * WanderJitter, RandomClamped() * WanderJitter))
-                .Normalize()
-                .Multiply(WanderRadius)
-                .Add(new Vector2D(WanderDistance, 0));
+            var addToPerimeter = new Vector2D(RandomClamped() * WanderJitter, RandomClamped() * WanderJitter);
+            _wanderTarget = ((_wanderTarget + addToPerimeter).Normalize() * WanderRadius) + new Vector2D(WanderDistance, 0);
 
-            return PointToWorldSpace(_wanderTarget)
-                .Clone()
-                .Subtract(MovingEntity.Pos);
+            return PointToWorldSpace(_wanderTarget) - MovingEntity.Pos;
         }
 
         private Vector2D PointToWorldSpace(Vector2D localTarget)
         {
-            MatrixTransformations matrix = new MatrixTransformations();
+            var matrix = new Matrix();
 
             matrix.Rotate(MovingEntity.Heading, MovingEntity.Side);
             matrix.Translate(MovingEntity.Pos.X, MovingEntity.Pos.Y);
@@ -51,13 +47,13 @@ namespace AIBehaviours.behaviour
 
         public override void Render(Graphics g)
         {
-            Vector2D guide = PointToWorldSpace(_wanderTarget.Clone());
+            var guide = PointToWorldSpace(_wanderTarget);
 
             g.DrawEllipse(
                 new Pen(Color.Red),
                 new Rectangle(
-                    (int)(guide.X),
-                    (int)(guide.Y),
+                    (int) (guide.X),
+                    (int) (guide.Y),
                     4,
                     4
                 )

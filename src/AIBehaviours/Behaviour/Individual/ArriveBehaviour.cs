@@ -1,8 +1,8 @@
-﻿using AIBehaviours.entity;
-using AIBehaviours.util;
-using System;
+﻿using System;
+using AIBehaviours.Entity;
+using AIBehaviours.Util;
 
-namespace AIBehaviours.behaviour
+namespace AIBehaviours.Behaviour.Individual
 {
     internal class ArriveBehaviour : SteeringBehaviour
     {
@@ -15,19 +15,19 @@ namespace AIBehaviours.behaviour
 
         public override Vector2D Calculate(float deltaTime)
         {
-            var toTarget = Target.Pos.Clone().Subtract(MovingEntity.Pos);
+            var toTarget = Target.Pos - MovingEntity.Pos;
 
             //calculate the distance to the target
             var dist = toTarget.Length();
 
             if (!(dist > 0)) return new Vector2D();
-            
+
             //because Deceleration is enumerated as an int, this value is required
             //to provide fine tweaking of the deceleration..
 
             //calculate the speed required to reach the target given the desired
             //deceleration
-            var speed =  dist / (DecelerationSpeed * DecelerationTweaker);     
+            var speed = dist / (DecelerationSpeed * DecelerationTweaker);
 
             //make sure the velocity does not exceed the max
             speed = Math.Min(speed, MovingEntity.MaxSpeed);
@@ -35,9 +35,9 @@ namespace AIBehaviours.behaviour
             //from here proceed just like Seek except we don't need to normalize 
             //the ToTarget vector because we have already gone to the trouble
             //of calculating its length: dist. 
-            var desiredVelocity =  toTarget.Multiply(speed).Divide(dist);
+            var desiredVelocity = toTarget * speed / dist;
 
-            return desiredVelocity.Subtract(MovingEntity.Velocity);
+            return desiredVelocity - MovingEntity.Velocity;
         }
     }
 }

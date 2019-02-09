@@ -1,7 +1,7 @@
-﻿using AIBehaviours.entity;
-using AIBehaviours.util;
+﻿using AIBehaviours.Entity;
+using AIBehaviours.Util;
 
-namespace AIBehaviours.behaviour
+namespace AIBehaviours.Behaviour.Individual
 {
     internal class FleeBehaviour : SteeringBehaviour
     {
@@ -13,11 +13,7 @@ namespace AIBehaviours.behaviour
 
         public override Vector2D Calculate(float deltaTime)
         {
-            var distance = MovingEntity
-                .Pos
-                .Clone()
-                .Subtract(Target.Pos)
-                .LengthSquared();
+            var distance = (MovingEntity.Pos - Target.Pos).LengthSquared();
 
             // Only flee if the target is within 'panic distance'. Work in distance squared space.
             if (distance > Boundary)
@@ -25,13 +21,7 @@ namespace AIBehaviours.behaviour
                 return new Vector2D();
             }
 
-            return MovingEntity
-                .Pos
-                .Clone()
-                .Subtract(Target.Pos)
-                .Normalize()
-                .Multiply(MovingEntity.MaxSpeed)
-                .Subtract(MovingEntity.Velocity);
+            return (((MovingEntity.Pos - Target.Pos).Normalize() * MovingEntity.MaxSpeed) - MovingEntity.Velocity);
         }
     }
 }
