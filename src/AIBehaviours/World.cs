@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using AIBehaviours.Behaviour.Individual;
 using AIBehaviours.Util;
+using AIBehaviours.Map;
 
 namespace AIBehaviours
 {
@@ -13,6 +14,8 @@ namespace AIBehaviours
         private readonly Type _blueSteeringBehaviour;
 
         private readonly Type _redSteeringBehaviour;
+
+        private readonly BaseMap _map = new CoarseMap();
 
         public readonly List<MovingEntity> Entities = new List<MovingEntity>();
 
@@ -67,6 +70,8 @@ namespace AIBehaviours
                 e.SteeringBehaviours.ForEach(sb => sb.Render(g));
                 e.Render(g);
             });
+
+            _map.Render(g);
         }
     }
 }
