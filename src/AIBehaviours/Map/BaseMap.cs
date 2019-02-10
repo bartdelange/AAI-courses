@@ -6,8 +6,9 @@ namespace AIBehaviours.Map
 {
     public abstract class BaseMap : Graph<Vector2D>
     {
-        private Brush _brush = new SolidBrush(Color.LightSeaGreen);
-        private Pen _pen = new Pen(Color.DarkSeaGreen);
+        private readonly Brush _brush = new SolidBrush(Color.LightSeaGreen);
+        private readonly Pen _pen = new Pen(Color.DarkSeaGreen);
+        private readonly Font _font = new Font("Arial", 10);
 
         public void Render(Graphics g)
         {
@@ -18,6 +19,7 @@ namespace AIBehaviours.Map
                 );
 
                 g.FillEllipse(_brush, new Rectangle((Point)(edge.Value.Data - 2), new Size(5, 5)));
+                g.DrawString($"{edge.Value.Data}: {edge.Value.Distance}", _font, _brush, (Point)(edge.Value.Data + 5));
             }
         }
     }
