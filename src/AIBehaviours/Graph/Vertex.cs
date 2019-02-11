@@ -4,25 +4,24 @@ namespace AIBehaviours.Graph
 {
     public class Vertex<T> : IVertex
     {
-        public T Data;
-        public double Distance;
-
-        public List<Edge<T>> AdjacentVertices = new List<Edge<T>>();
-        public Vertex<T> PreviousVertex; // Previous vertex on *shortest* path
+        public List<Edge<T>> _AdjacentVertices = new List<Edge<T>>();
+        public T _Data;
+        public double _Distance;
+        public Vertex<T> _PreviousVertex; // Previous vertex on *shortest* path
 
         // Variable used in path finding algorithms
-        public bool Visited;
+        public bool _Visited;
 
         public Vertex(T data)
         {
-            Data = data;
+            _Data = data;
         }
 
         public void Reset()
         {
-            Distance = double.MaxValue;
-            PreviousVertex = default(Vertex<T>);
-            Visited = false;
+            _Distance = double.MaxValue;
+            _PreviousVertex = default;
+            _Visited = false;
         }
     }
 }

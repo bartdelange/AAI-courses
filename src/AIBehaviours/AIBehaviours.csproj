@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BehaviourItem.cs" />
     <Compile Include="Behaviour\Group\AlignmentBehaviour.cs" />
     <Compile Include="Behaviour\Group\CohesionBehaviour.cs" />
     <Compile Include="Behaviour\Group\SeparationBehaviour.cs" />
@@ -79,6 +80,9 @@
     <Compile Include="Map\CoarseMap.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RadioListBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Util\Matrix.cs" />
     <Compile Include="Util\PriorityQueue.cs" />
     <Compile Include="Util\Vector2D.cs" />

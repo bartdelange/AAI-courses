@@ -4,17 +4,17 @@ namespace AIBehaviours.Graph
 {
     public class Path<T> : IComparable
     {
-        public Vertex<T> Destination;
-        public double Cost;
+        public double _Cost;
+        public Vertex<T> _Destination;
 
         public Path(Vertex<T> destination, double cost)
         {
-            Destination = destination;
-            Cost = cost;
+            _Destination = destination;
+            _Cost = cost;
         }
 
         /// <summary>
-        /// Implementation of Comparable interface 
+        ///     Implementation of Comparable interface
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
@@ -22,9 +22,9 @@ namespace AIBehaviours.Graph
         {
             var path = (Path<T>) obj;
 
-            return Cost < path.Cost
+            return _Cost < path._Cost
                 ? -1
-                : Cost > path.Cost
+                : _Cost > path._Cost
                     ? 1
                     : 0;
         }

@@ -30,83 +30,133 @@ namespace AIBehaviours
         /// </summary>
         private void InitializeComponent()
         {
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.dbPanel1 = new AIBehaviours.DbPanel();
-            this.label2 = new System.Windows.Forms.Label();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.splitBehaviourPanel = new System.Windows.Forms.SplitContainer();
+            this.redBehaviourLabel = new System.Windows.Forms.Label();
+            this.blueBehaviourLabel = new System.Windows.Forms.Label();
+            this.worldPanel = new AIBehaviours.DbPanel();
+            this.redBehaviourSelect = new AIBehaviours.BehaviourListBox();
+            this.blueBehaviourSelect = new AIBehaviours.BehaviourListBox();
+            ((System.ComponentModel.ISupportInitialize)(this.splitBehaviourPanel)).BeginInit();
+            this.splitBehaviourPanel.Panel1.SuspendLayout();
+            this.splitBehaviourPanel.Panel2.SuspendLayout();
+            this.splitBehaviourPanel.SuspendLayout();
             this.SuspendLayout();
             // 
-            // comboBox1
+            // splitBehaviourPanel
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(620, 25);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(162, 21);
-            this.comboBox1.TabIndex = 1;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            this.splitBehaviourPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.splitBehaviourPanel.Location = new System.Drawing.Point(1109, 0);
+            this.splitBehaviourPanel.Name = "splitBehaviourPanel";
             // 
-            // label1
+            // splitBehaviourPanel.Panel1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(617, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(55, 13);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Blue Behaviour";
+            this.splitBehaviourPanel.Panel1.Controls.Add(this.redBehaviourSelect);
+            this.splitBehaviourPanel.Panel1.Controls.Add(this.redBehaviourLabel);
             // 
-            // dbPanel1
+            // splitBehaviourPanel.Panel2
             // 
-            this.dbPanel1.BackColor = System.Drawing.Color.White;
-            this.dbPanel1.Location = new System.Drawing.Point(0, 0);
-            this.dbPanel1.Name = "dbPanel1";
-            this.dbPanel1.Size = new System.Drawing.Size(600, 600);
-            this.dbPanel1.TabIndex = 0;
-            this.dbPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.dbPanel1_Paint);
-            this.dbPanel1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.dbPanel1_MouseClick);
+            this.splitBehaviourPanel.Panel2.Controls.Add(this.blueBehaviourSelect);
+            this.splitBehaviourPanel.Panel2.Controls.Add(this.blueBehaviourLabel);
+            this.splitBehaviourPanel.Size = new System.Drawing.Size(691, 1110);
+            this.splitBehaviourPanel.SplitterDistance = 342;
+            this.splitBehaviourPanel.TabIndex = 5;
             // 
-            // label2
+            // redBehaviourLabel
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(617, 55);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(88, 13);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "Red behaviour";
+            this.redBehaviourLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.redBehaviourLabel.Location = new System.Drawing.Point(0, 0);
+            this.redBehaviourLabel.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.redBehaviourLabel.Name = "redBehaviourLabel";
+            this.redBehaviourLabel.Size = new System.Drawing.Size(342, 69);
+            this.redBehaviourLabel.TabIndex = 2;
+            this.redBehaviourLabel.Text = "Red Behaviour";
+            this.redBehaviourLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // comboBox2
+            // blueBehaviourLabel
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(620, 71);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(162, 21);
-            this.comboBox2.TabIndex = 3;
-            this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            this.blueBehaviourLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.blueBehaviourLabel.Location = new System.Drawing.Point(0, 0);
+            this.blueBehaviourLabel.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.blueBehaviourLabel.Name = "blueBehaviourLabel";
+            this.blueBehaviourLabel.Size = new System.Drawing.Size(345, 69);
+            this.blueBehaviourLabel.TabIndex = 4;
+            this.blueBehaviourLabel.Text = "Blue behaviour";
+            this.blueBehaviourLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // worldPanel
+            // 
+            this.worldPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.worldPanel.BackColor = System.Drawing.Color.White;
+            this.worldPanel.Location = new System.Drawing.Point(0, 0);
+            this.worldPanel.Margin = new System.Windows.Forms.Padding(6);
+            this.worldPanel.Name = "worldPanel";
+            this.worldPanel.Size = new System.Drawing.Size(1100, 1110);
+            this.worldPanel.TabIndex = 0;
+            this.worldPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.dbPanel1_Paint);
+            this.worldPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.dbPanel1_MouseClick);
+            // 
+            // redBehaviourSelect
+            // 
+            this.redBehaviourSelect.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.redBehaviourSelect.BackColor = System.Drawing.SystemColors.Window;
+            this.redBehaviourSelect.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.redBehaviourSelect.FormattingEnabled = true;
+            this.redBehaviourSelect.ItemHeight = 22;
+            this.redBehaviourSelect.Location = new System.Drawing.Point(0, 72);
+            this.redBehaviourSelect.Name = "redBehaviourSelect";
+            this.redBehaviourSelect.Size = new System.Drawing.Size(342, 1038);
+            this.redBehaviourSelect.TabIndex = 3;
+            this.redBehaviourSelect.SelectedIndexChanged += new System.EventHandler(this.ChangeBehaviour);
+            // 
+            // blueBehaviourSelect
+            // 
+            this.blueBehaviourSelect.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.blueBehaviourSelect.BackColor = System.Drawing.SystemColors.Window;
+            this.blueBehaviourSelect.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.blueBehaviourSelect.FormattingEnabled = true;
+            this.blueBehaviourSelect.ItemHeight = 22;
+            this.blueBehaviourSelect.Location = new System.Drawing.Point(0, 72);
+            this.blueBehaviourSelect.Name = "blueBehaviourSelect";
+            this.blueBehaviourSelect.Size = new System.Drawing.Size(345, 1038);
+            this.blueBehaviourSelect.TabIndex = 5;
+            this.blueBehaviourSelect.SelectedIndexChanged += new System.EventHandler(this.ChangeBehaviour);
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(803, 603);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.comboBox2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.dbPanel1);
+            this.ClientSize = new System.Drawing.Size(1801, 1116);
+            this.Controls.Add(this.worldPanel);
+            this.Controls.Add(this.splitBehaviourPanel);
+            this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "Form1";
             this.Text = "Steering";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.splitBehaviourPanel.Panel1.ResumeLayout(false);
+            this.splitBehaviourPanel.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitBehaviourPanel)).EndInit();
+            this.splitBehaviourPanel.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private DbPanel dbPanel1;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private DbPanel worldPanel;
+        private System.Windows.Forms.SplitContainer splitBehaviourPanel;
+        private System.Windows.Forms.Label redBehaviourLabel;
+        private System.Windows.Forms.Label blueBehaviourLabel;
+        private BehaviourListBox redBehaviourSelect;
+        private BehaviourListBox blueBehaviourSelect;
     }
 }
 

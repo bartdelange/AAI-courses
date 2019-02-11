@@ -6,14 +6,14 @@ namespace AIBehaviours.Util
     public class Vector2D
     {
         /// <summary>
-        /// Position on x (horizontal) axis
+        ///     Position on x (horizontal) axis
         /// </summary>
-        public readonly double X;
+        public readonly double _X;
 
         /// <summary>
-        /// Position on y (vertical) axis
+        ///     Position on y (vertical) axis
         /// </summary>
-        public readonly double Y;
+        public readonly double _Y;
 
         public Vector2D()
         {
@@ -21,8 +21,8 @@ namespace AIBehaviours.Util
 
         public Vector2D(double x, double y)
         {
-            X = x;
-            Y = y;
+            _X = x;
+            _Y = y;
         }
 
         public double Length()
@@ -32,12 +32,12 @@ namespace AIBehaviours.Util
 
         public double LengthSquared()
         {
-            return (X * X) + (Y * Y);
+            return _X * _X + _Y * _Y;
         }
 
         public double Dot(Vector2D target)
         {
-            return (X * target.X) + (Y * target.Y);
+            return _X * target._X + _Y * target._Y;
         }
 
         public Vector2D Normalize()
@@ -47,12 +47,12 @@ namespace AIBehaviours.Util
             if (!(length > double.Epsilon))
                 return this;
 
-            return new Vector2D(X / length, Y / length);
+            return new Vector2D(_X / length, _Y / length);
         }
 
         public Vector2D Perpendicular()
         {
-            return new Vector2D(-Y, X);
+            return new Vector2D(-_Y, _X);
         }
 
         public Vector2D Truncate(double max)
@@ -62,62 +62,94 @@ namespace AIBehaviours.Util
             return Normalize() * max;
         }
 
+        /// <summary>
+        ///     Convert vector to readable string
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return $"({_X},{_Y})";
+        }
+
         #region operator overrides
 
         /// <summary>
-        /// Subtract vector values
+        ///     Subtract vector values
         /// </summary>
         /// <param name="vector"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static Vector2D operator -(Vector2D vector, double value) =>
-            new Vector2D(vector.X - value, vector.Y - value);
+        public static Vector2D operator -(Vector2D vector, double value)
+        {
+            return new Vector2D(vector._X - value, vector._Y - value);
+        }
 
-        public static Vector2D operator -(Vector2D vector, float value) =>
-            vector - (double) value;
+        public static Vector2D operator -(Vector2D vector, float value)
+        {
+            return vector - (double) value;
+        }
 
-        public static Vector2D operator -(Vector2D vector, int value) =>
-            vector - (double) value;
+        public static Vector2D operator -(Vector2D vector, int value)
+        {
+            return vector - (double) value;
+        }
 
         //
-        public static Vector2D operator -(Vector2D v1, Vector2D v2) =>
-            new Vector2D(v1.X - v2.X, v1.Y - v2.Y);
+        public static Vector2D operator -(Vector2D v1, Vector2D v2)
+        {
+            return new Vector2D(v1._X - v2._X, v1._Y - v2._Y);
+        }
 
         /// <summary>
-        /// Add vector values
+        ///     Add vector values
         /// </summary>
         /// <param name="vector"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static Vector2D operator +(Vector2D vector, double value) =>
-            new Vector2D(vector.X + value, vector.Y + value);
+        public static Vector2D operator +(Vector2D vector, double value)
+        {
+            return new Vector2D(vector._X + value, vector._Y + value);
+        }
 
-        public static Vector2D operator +(Vector2D vector, float value) =>
-            vector + (double) value;
+        public static Vector2D operator +(Vector2D vector, float value)
+        {
+            return vector + (double) value;
+        }
 
-        public static Vector2D operator +(Vector2D vector, int value) =>
-            vector + (double) value;
+        public static Vector2D operator +(Vector2D vector, int value)
+        {
+            return vector + (double) value;
+        }
 
         //
-        public static Vector2D operator +(Vector2D v1, Vector2D v2) => new Vector2D(v1.X + v2.X, v1.Y + v2.Y);
+        public static Vector2D operator +(Vector2D v1, Vector2D v2)
+        {
+            return new Vector2D(v1._X + v2._X, v1._Y + v2._Y);
+        }
 
         /// <summary>
-        /// Multiply vector values
+        ///     Multiply vector values
         /// </summary>
         /// <param name="vector"></param>
         /// <param name="scalar"></param>
         /// <returns></returns>
-        public static Vector2D operator *(Vector2D vector, double scalar) =>
-            new Vector2D(vector.X * scalar, vector.Y * scalar);
+        public static Vector2D operator *(Vector2D vector, double scalar)
+        {
+            return new Vector2D(vector._X * scalar, vector._Y * scalar);
+        }
 
-        public static Vector2D operator *(Vector2D vector, float scalar) =>
-            vector * (double) scalar;
+        public static Vector2D operator *(Vector2D vector, float scalar)
+        {
+            return vector * (double) scalar;
+        }
 
-        public static Vector2D operator *(Vector2D vector, int scalar) =>
-            vector * (double) scalar;
+        public static Vector2D operator *(Vector2D vector, int scalar)
+        {
+            return vector * (double) scalar;
+        }
 
         /// <summary>
-        /// Divide vector values
+        ///     Divide vector values
         /// </summary>
         /// <param name="vector"></param>
         /// <param name="scalar"></param>
@@ -126,46 +158,45 @@ namespace AIBehaviours.Util
         {
             // Can't divide by zero
             if (scalar.Equals(0))
-                return new Vector2D(vector.X, vector.Y);
+                return new Vector2D(vector._X, vector._Y);
 
-            return new Vector2D(vector.X / scalar, vector.Y / scalar);
+            return new Vector2D(vector._X / scalar, vector._Y / scalar);
         }
 
-        public static Vector2D operator /(Vector2D vector, float scalar) =>
-            vector / (double) scalar;
+        public static Vector2D operator /(Vector2D vector, float scalar)
+        {
+            return vector / (double) scalar;
+        }
 
-        public static Vector2D operator /(Vector2D vector, int scalar) =>
-            vector / (double) scalar;
+        public static Vector2D operator /(Vector2D vector, int scalar)
+        {
+            return vector / (double) scalar;
+        }
 
         #endregion
 
         #region explicit operator cast
 
         /// <summary>
-        /// Cast to PointF 
+        ///     Cast to PointF
         /// </summary>
         /// <param name="vector"></param>
         /// <returns></returns>
-        public static explicit operator PointF(Vector2D vector) =>
-            new PointF((float) vector.X, (float) vector.Y);
-        
+        public static explicit operator PointF(Vector2D vector)
+        {
+            return new PointF((float) vector._X, (float) vector._Y);
+        }
+
         /// <summary>
-        /// Cast to Point
+        ///     Cast to Point
         /// </summary>
         /// <param name="vector"></param>
         /// <returns></returns>
-        public static explicit operator Point(Vector2D vector) =>
-            new Point((int) vector.X, (int) vector.Y);
+        public static explicit operator Point(Vector2D vector)
+        {
+            return new Point((int) vector._X, (int) vector._Y);
+        }
 
         #endregion
-
-        /// <summary>
-        /// Convert vector to readable string
-        /// </summary>
-        /// <returns></returns>
-        public override string ToString()
-        {
-            return $"({X},{Y})";
-        }
     }
 }

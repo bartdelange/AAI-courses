@@ -8,7 +8,7 @@ namespace AIBehaviours.Entity
 {
     public abstract class BaseGameEntity
     {
-        public List<MovingEntity> Neighbors;
+        public List<MovingEntity> _Neighbors;
 
         protected BaseGameEntity(Vector2D pos, World w)
         {
@@ -26,12 +26,12 @@ namespace AIBehaviours.Entity
 
         public virtual void Render(Graphics g)
         {
-            g.FillEllipse(Brushes.Blue, new Rectangle((int) Pos.X, (int) Pos.Y, 10, 10));
+            g.FillEllipse(Brushes.Blue, new Rectangle((int) Pos._X, (int) Pos._Y, 10, 10));
         }
 
         protected void FindNeighbours(double radius)
         {
-            Neighbors = MyWorld.Entities.Where(entity =>
+            _Neighbors = MyWorld._Entities.Where(entity =>
             {
                 var targetDistance = entity.Pos - Pos;
                 var rangeSquared = Math.Pow(radius, 2);

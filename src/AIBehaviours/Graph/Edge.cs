@@ -2,13 +2,13 @@ namespace AIBehaviours.Graph
 {
     public class Edge<T>
     {
-        public Vertex<T> Destination;
-        public double Cost;
+        public double _Cost;
+        public Vertex<T> _Destination;
 
         public Edge(Vertex<T> destination, double cost)
         {
-            Destination = destination;
-            Cost = cost;
+            _Destination = destination;
+            _Cost = cost;
         }
     }
 }

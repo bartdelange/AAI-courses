@@ -35,7 +35,7 @@ namespace AIBehaviours.Entity
             var matrix = new Matrix();
 
             matrix.Rotate(Heading, Side);
-            matrix.Translate(Pos.X, Pos.Y);
+            matrix.Translate(Pos._X, Pos._Y);
 
             // Transform the vector to world space	
             p1 = matrix.TransformVector2Ds(p1);
@@ -47,7 +47,7 @@ namespace AIBehaviours.Entity
             {
                 (PointF) p1,
                 (PointF) p2,
-                (PointF) p3,
+                (PointF) p3
             };
 
             g.DrawPolygon(_objectPen, curvePoints);

@@ -55,7 +55,7 @@ namespace GraphTests
 
             var myVertex = myGraph.GetVertex("V0");
 
-            Assert.Equal("V0", myVertex.Data);
+            Assert.Equal("V0", myVertex._Data);
         }
 
         [Fact]
@@ -66,7 +66,7 @@ namespace GraphTests
 
             var myVertex = myGraph.GetVertex("V0");
 
-            Assert.Equal(5, myVertex.AdjacentVertices[0].Cost);
+            Assert.Equal(5, myVertex._AdjacentVertices[0]._Cost);
         }
 
         [Fact]
@@ -87,13 +87,13 @@ namespace GraphTests
 
             myGraph.Unweighted("V0");
 
-            Assert.Equal(0, (myGraph.GetVertex("V0")).Distance);
-            Assert.Equal(1, (myGraph.GetVertex("V1")).Distance);
-            Assert.Equal(2, (myGraph.GetVertex("V2")).Distance);
-            Assert.Equal(1, (myGraph.GetVertex("V3")).Distance);
-            Assert.Equal(2, (myGraph.GetVertex("V4")).Distance);
-            Assert.Equal(2, (myGraph.GetVertex("V5")).Distance);
-            Assert.Equal(2, (myGraph.GetVertex("V6")).Distance);
+            Assert.Equal(0, (myGraph.GetVertex("V0"))._Distance);
+            Assert.Equal(1, (myGraph.GetVertex("V1"))._Distance);
+            Assert.Equal(2, (myGraph.GetVertex("V2"))._Distance);
+            Assert.Equal(1, (myGraph.GetVertex("V3"))._Distance);
+            Assert.Equal(2, (myGraph.GetVertex("V4"))._Distance);
+            Assert.Equal(2, (myGraph.GetVertex("V5"))._Distance);
+            Assert.Equal(2, (myGraph.GetVertex("V6"))._Distance);
         }
 
         [Fact]
@@ -103,13 +103,13 @@ namespace GraphTests
 
             myGraph.Dijkstra("V0");
 
-            Assert.Equal(0, (myGraph.GetVertex("V0")).Distance);
-            Assert.Equal(2, (myGraph.GetVertex("V1")).Distance);
-            Assert.Equal(3, (myGraph.GetVertex("V2")).Distance);
-            Assert.Equal(1, (myGraph.GetVertex("V3")).Distance);
-            Assert.Equal(3, (myGraph.GetVertex("V4")).Distance);
-            Assert.Equal(6, (myGraph.GetVertex("V5")).Distance);
-            Assert.Equal(5, (myGraph.GetVertex("V6")).Distance);
+            Assert.Equal(0, (myGraph.GetVertex("V0"))._Distance);
+            Assert.Equal(2, (myGraph.GetVertex("V1"))._Distance);
+            Assert.Equal(3, (myGraph.GetVertex("V2"))._Distance);
+            Assert.Equal(1, (myGraph.GetVertex("V3"))._Distance);
+            Assert.Equal(3, (myGraph.GetVertex("V4"))._Distance);
+            Assert.Equal(6, (myGraph.GetVertex("V5"))._Distance);
+            Assert.Equal(5, (myGraph.GetVertex("V6"))._Distance);
         }
 
         [Fact]
@@ -119,13 +119,13 @@ namespace GraphTests
 
             myGraph.AStar("V0");
 
-            Assert.Equal(0, (myGraph.GetVertex("V0")).Distance);
-            Assert.Equal(2, (myGraph.GetVertex("V1")).Distance);
-            Assert.Equal(3, (myGraph.GetVertex("V2")).Distance);
-            Assert.Equal(1, (myGraph.GetVertex("V3")).Distance);
-            Assert.Equal(3, (myGraph.GetVertex("V4")).Distance);
-            Assert.Equal(6, (myGraph.GetVertex("V5")).Distance);
-            Assert.Equal(5, (myGraph.GetVertex("V6")).Distance);
+            Assert.Equal(0, (myGraph.GetVertex("V0"))._Distance);
+            Assert.Equal(2, (myGraph.GetVertex("V1"))._Distance);
+            Assert.Equal(3, (myGraph.GetVertex("V2"))._Distance);
+            Assert.Equal(1, (myGraph.GetVertex("V3"))._Distance);
+            Assert.Equal(3, (myGraph.GetVertex("V4"))._Distance);
+            Assert.Equal(6, (myGraph.GetVertex("V5"))._Distance);
+            Assert.Equal(5, (myGraph.GetVertex("V6"))._Distance);
         }
 
         [Fact]

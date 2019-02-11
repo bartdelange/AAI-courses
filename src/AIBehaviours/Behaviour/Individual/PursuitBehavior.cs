@@ -20,16 +20,14 @@ namespace AIBehaviours.Behaviour.Individual
             lookAheadTime += (MovingEntity.Heading.Dot(toEvader.Normalize()) - 1) * -coefficient;
 
             // Seek to predicted position
-            return Seek(Target.Pos + (MovingEntity.Velocity * lookAheadTime));
+            return Seek(Target.Pos + MovingEntity.Velocity * lookAheadTime);
         }
 
         private Vector2D Seek(Vector2D targetPosition)
         {
-            return (
-                (targetPosition - MovingEntity.Pos).Normalize() *
-                MovingEntity.MaxSpeed -
-                MovingEntity.Velocity
-            );
+            return (targetPosition - MovingEntity.Pos).Normalize() *
+                   MovingEntity.MaxSpeed -
+                   MovingEntity.Velocity;
         }
     }
 }

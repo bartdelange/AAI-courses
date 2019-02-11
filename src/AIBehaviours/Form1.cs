@@ -18,25 +18,32 @@ namespace AIBehaviours
         {
             InitializeComponent();
 
-            _world = new World(dbPanel1.Width, dbPanel1.Height);
+            _world = new World(worldPanel.Width, worldPanel.Height);
 
-            object[] steeringBehaviours = {
-                typeof(ArriveBehaviour),
-                typeof(FleeBehaviour),
-                typeof(SeekBehaviour),
-                typeof(PursuitBehavior),
-                typeof(EvadeBehaviour),
-                typeof(WanderBehaviour),
-                typeof(SeparationBehaviour),
-                typeof(AlignmentBehaviour),
-                typeof(CohesionBehaviour)
+            BehaviourItem[] steeringBehaviors =
+            {
+                new BehaviourItem {Type = typeof(ArriveBehaviour), Name = "Individual - Arrive"},
+                new BehaviourItem {Type = typeof(FleeBehaviour), Name = "Individual - Flee"},
+                new BehaviourItem {Type = typeof(SeekBehaviour), Name = "Individual - Seek"},
+                new BehaviourItem {Type = typeof(PursuitBehavior), Name = "Individual - Pursuit"},
+                new BehaviourItem {Type = typeof(EvadeBehaviour), Name = "Individual - Evade"},
+                new BehaviourItem {Type = typeof(WanderBehaviour), Name = "Individual - Wander"},
+                new BehaviourItem {Type = typeof(SeparationBehaviour), Name = "Group - Separation"},
+                new BehaviourItem {Type = typeof(AlignmentBehaviour), Name = "Group - Alignment"},
+                new BehaviourItem {Type = typeof(CohesionBehaviour), Name = "Group - Cohesion"}
             };
 
-            comboBox1.Items.AddRange(steeringBehaviours);
-            comboBox2.Items.AddRange(steeringBehaviours);
+
+            blueBehaviourSelect.DisplayMember = "Name";
+            blueBehaviourSelect.ValueMember = "Type";
+            blueBehaviourSelect.DataSource = steeringBehaviors.Clone();
+
+            redBehaviourSelect.DisplayMember = "Name";
+            redBehaviourSelect.ValueMember = "Type";
+            redBehaviourSelect.DataSource = steeringBehaviors.Clone();
 
             var timer = new Timer();
-            
+
             timer.Elapsed += Timer_Elapsed;
             timer.Interval = 20;
             timer.Enabled = true;
@@ -45,7 +52,7 @@ namespace AIBehaviours
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
             _world.Update(TimeDelta);
-            dbPanel1.Invalidate();
+            worldPanel.Invalidate();
         }
 
         private void dbPanel1_Paint(object sender, PaintEventArgs e)
@@ -56,18 +63,21 @@ namespace AIBehaviours
         private void dbPanel1_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
-                _world.Entities[0].Pos = new Vector2D(e.X, e.Y);
+                _world._Entities[0].Pos = new Vector2D(e.X, e.Y);
             else
-                _world.Entities[1].Pos = new Vector2D(e.X, e.Y);
+                _world._Entities[1].Pos = new Vector2D(e.X, e.Y);
         }
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void ChangeBehaviour(object sender, EventArgs e)
         {
+            var blueBehaviour = ((BehaviourItem) blueBehaviourSelect.SelectedItem)?.Type ?? typeof(WanderBehaviour);
+            var redBehaviour = ((BehaviourItem) redBehaviourSelect.SelectedItem)?.Type ?? typeof(WanderBehaviour);
+
             _world = new World(
-                dbPanel1.Width,
-                dbPanel1.Height,
-                (Type) comboBox1.SelectedItem,
-                (Type) comboBox2.SelectedItem
+                worldPanel.Width,
+                worldPanel.Height,
+                blueBehaviour,
+                redBehaviour
             );
         }
     }

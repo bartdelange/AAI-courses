@@ -27,11 +27,9 @@ namespace AIBehaviours.Behaviour.Individual
             var predictedPosition = (Target.Pos + Target.Velocity) * lookAheadTime;
 
             //now flee away from predicted future position of the pursuer
-            return (
-                (MovingEntity.Pos - predictedPosition).Normalize() *
-                MovingEntity.MaxSpeed -
-                MovingEntity.Velocity
-            );
+            return (MovingEntity.Pos - predictedPosition).Normalize() *
+                   MovingEntity.MaxSpeed -
+                   MovingEntity.Velocity;
         }
     }
 }

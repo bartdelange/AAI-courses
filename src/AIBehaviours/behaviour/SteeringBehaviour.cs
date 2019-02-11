@@ -19,6 +19,7 @@ namespace AIBehaviours.Behaviour
         public abstract Vector2D Calculate(float deltaTime);
 
         public virtual void Render(Graphics g)
-        { }
+        {
+        }
     }
 }

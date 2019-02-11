@@ -1,11 +1,11 @@
-﻿using AIBehaviours.Behaviour;
-using AIBehaviours.Entity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using AIBehaviours.Behaviour;
 using AIBehaviours.Behaviour.Individual;
-using AIBehaviours.Util;
+using AIBehaviours.Entity;
 using AIBehaviours.Map;
+using AIBehaviours.Util;
 
 namespace AIBehaviours
 {
@@ -13,25 +13,21 @@ namespace AIBehaviours
     {
         private readonly Type _blueSteeringBehaviour;
 
-        private readonly Type _redSteeringBehaviour;
-
         private readonly BaseMap _map = new CoarseMap();
 
-        public readonly List<MovingEntity> Entities = new List<MovingEntity>();
+        private readonly Type _redSteeringBehaviour;
 
-        public int Width { get; }
-
-        public int Height { get; }
+        public readonly List<MovingEntity> _Entities = new List<MovingEntity>();
 
         public World(int w, int h, Type steeringBehaviour = null)
             : this(w, h, steeringBehaviour, null)
         {
         }
 
-        public World(int w, int h, Type blueSteeringBehaviour, Type targetSteeringBehaviour)
+        public World(int w, int h, Type blueSteeringBehaviour, Type redSteeringBehaviour)
         {
             _blueSteeringBehaviour = blueSteeringBehaviour ?? typeof(WanderBehaviour);
-            _redSteeringBehaviour = targetSteeringBehaviour ?? typeof(WanderBehaviour);
+            _redSteeringBehaviour = redSteeringBehaviour ?? typeof(WanderBehaviour);
 
             Width = w;
             Height = h;
@@ -39,13 +35,18 @@ namespace AIBehaviours
             Populate();
         }
 
+        public int Width { get; }
+
+        public int Height { get; }
+
         private void Populate()
         {
             var target = new Vehicle(new Vector2D(100, 60), Color.DarkRed, this);
             var agent = new Vehicle(new Vector2D(250, 250), Color.Blue, this);
-                
+
             // Add behaviours
-            target.SteeringBehaviours.AddRange(new []{
+            target.SteeringBehaviours.AddRange(new[]
+            {
                 (SteeringBehaviour) Activator.CreateInstance(_redSteeringBehaviour, target, agent)
             });
 
@@ -53,19 +54,19 @@ namespace AIBehaviours
                 (SteeringBehaviour) Activator.CreateInstance(_blueSteeringBehaviour, agent, target)
             );
 
-            Entities.Add(agent);
-            Entities.Add(target);
+            _Entities.Add(agent);
+            _Entities.Add(target);
         }
 
         public void Update(float timeElapsed)
         {
-            foreach (var entity in Entities)
+            foreach (var entity in _Entities)
                 entity.Update(timeElapsed);
         }
 
         public void Render(Graphics g)
         {
-            Entities.ForEach(e =>
+            _Entities.ForEach(e =>
             {
                 e.SteeringBehaviours.ForEach(sb => sb.Render(g));
                 e.Render(g);

@@ -1,12 +1,16 @@
-using AIBehaviours.Behaviour;
 using System.Collections.Generic;
 using System.Linq;
+using AIBehaviours.Behaviour;
 using AIBehaviours.Util;
 
 namespace AIBehaviours.Entity
 {
     public abstract class MovingEntity : BaseGameEntity
     {
+        protected MovingEntity(Vector2D pos, World w) : base(pos, w)
+        {
+        }
+
         //	
         public float Mass { get; set; } = 15;
         public float MaxSpeed { get; set; } = 100;
@@ -19,10 +23,6 @@ namespace AIBehaviours.Entity
 
         //	
         public List<SteeringBehaviour> SteeringBehaviours { get; set; } = new List<SteeringBehaviour>();
-
-        protected MovingEntity(Vector2D pos, World w) : base(pos, w)
-        {
-        }
 
         public override void Update(float delta)
         {
@@ -49,17 +49,17 @@ namespace AIBehaviours.Entity
 
         private static Vector2D WrapToBounds(Vector2D pos, int width, int height)
         {
-            if (pos.X > width)
-                return new Vector2D(0, pos.Y);
+            if (pos._X > width)
+                return new Vector2D(0, pos._Y);
 
-            if (pos.Y > height)
-                return new Vector2D(pos.X, 0);
+            if (pos._Y > height)
+                return new Vector2D(pos._X, 0);
 
-            if (pos.X < 0)
-                return new Vector2D(width, pos.Y);
+            if (pos._X < 0)
+                return new Vector2D(width, pos._Y);
 
-            if (pos.Y < 0)
-                return new Vector2D(pos.X, height);
+            if (pos._Y < 0)
+                return new Vector2D(pos._X, height);
 
             return pos;
         }

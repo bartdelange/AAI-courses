@@ -15,18 +15,18 @@ namespace AIBehaviours.Behaviour.Group
 
         public override Vector2D Calculate(float deltaTime)
         {
-            if (MovingEntity.Neighbors.Count < 1) return new Vector2D();
-            
-            var centerOfMass = MovingEntity.Neighbors.Aggregate(
+            if (MovingEntity._Neighbors.Count < 1) return new Vector2D();
+
+            var centerOfMass = MovingEntity._Neighbors.Aggregate(
                 new Vector2D(),
                 (position, neighbor) => position + neighbor.Pos
             );
-            
-            var targetPosition = centerOfMass / MovingEntity.Neighbors.Count;
+
+            var targetPosition = centerOfMass / MovingEntity._Neighbors.Count;
 
             return (targetPosition - MovingEntity.Pos).Normalize() * MovingEntity.MaxSpeed;
         }
-        
+
         public override void Render(Graphics g)
         {
             var size = MovingEntity.Radius * 2;

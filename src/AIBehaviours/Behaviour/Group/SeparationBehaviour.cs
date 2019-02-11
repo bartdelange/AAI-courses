@@ -15,9 +15,9 @@ namespace AIBehaviours.Behaviour.Group
 
         public override Vector2D Calculate(float deltaTime)
         {
-            if (MovingEntity.Neighbors.Count < 1) return new Vector2D();
+            if (MovingEntity._Neighbors.Count < 1) return new Vector2D();
 
-            return MovingEntity.Neighbors.Aggregate(
+            return MovingEntity._Neighbors.Aggregate(
                 new Vector2D(),
                 (steeringForce, neighbor) =>
                 {

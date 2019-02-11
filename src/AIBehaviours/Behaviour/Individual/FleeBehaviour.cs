@@ -16,12 +16,9 @@ namespace AIBehaviours.Behaviour.Individual
             var distance = (MovingEntity.Pos - Target.Pos).LengthSquared();
 
             // Only flee if the target is within 'panic distance'. Work in distance squared space.
-            if (distance > Boundary)
-            {
-                return new Vector2D();
-            }
+            if (distance > Boundary) return new Vector2D();
 
-            return (((MovingEntity.Pos - Target.Pos).Normalize() * MovingEntity.MaxSpeed) - MovingEntity.Velocity);
+            return (MovingEntity.Pos - Target.Pos).Normalize() * MovingEntity.MaxSpeed - MovingEntity.Velocity;
         }
     }
 }

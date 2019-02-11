@@ -15,27 +15,27 @@ namespace AIBehaviours.Behaviour.Group
 
         public override Vector2D Calculate(float deltaTime)
         {
-            if (MovingEntity.Neighbors.Count < 1) return new Vector2D();
+            if (MovingEntity._Neighbors.Count < 1) return new Vector2D();
 
-            var averageHeading = MovingEntity.Neighbors.Aggregate(
+            var averageHeading = MovingEntity._Neighbors.Aggregate(
                 new Vector2D(),
                 (accumulator, neighbor) => accumulator + neighbor.Heading,
-                
+
                 // Get average of sum of headings
-                headingSum => headingSum / MovingEntity.Neighbors.Count
+                headingSum => headingSum / MovingEntity._Neighbors.Count
             );
 
             return averageHeading;
         }
-        
+
         public override void Render(Graphics g)
         {
             var size = MovingEntity.Radius * 2;
-            
+
             g.FillEllipse(
-                _brush, 
+                _brush,
                 new Rectangle(
-                    (Point)(MovingEntity.Pos - MovingEntity.Radius), 
+                    (Point) (MovingEntity.Pos - MovingEntity.Radius),
                     new Size(size, size)
                 )
             );
