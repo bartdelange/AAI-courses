@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.Remoting.Messaging;
+using System.Security.Policy;
 using AIBehaviors.Entity;
 using AIBehaviors.Util;
 
@@ -8,20 +10,31 @@ namespace AIBehaviors.Map
     {
         public int Width { get; }
         public int Height { get; }
-        private const int Density = 25;
-        private Dictionary<Vector2D, bool> vectorList = new Dictionary<Vector2D, bool>();
+        private const int Density = 20;
+        private readonly Dictionary<Vector2D, bool> _vectors = new Dictionary<Vector2D, bool>();
+        private readonly List<Obstacle> _obstacles;
 
 
         public CoarseMap(int w, int h, List<Obstacle> obstacles)
         {
             Width = w;
             Height = h;
+            _obstacles = obstacles;
 
-            var v1 = new Vector2D(Density, Density);
-            GenerateEdges(v1); // Flood fill
+            var x0y0 = new Vector2D(Density, Density);
+            GenerateEdges(x0y0);
+
+            var xWy0 = new Vector2D((Width / Density) * Density, Density);
+            GenerateEdges(xWy0);
+
+            var xWyH = new Vector2D((Width / Density) * Density, (Height / Density) * Density);
+            GenerateEdges(xWyH);
+
+            var x0yH = new Vector2D(Density, (Height / Density) * Density);
+            GenerateEdges(xWyH);
 
             // Run dijkstra
-            Dijkstra(v1);
+            //Dijkstra(v1);
 
             // TODO create A* algorithm
             // AStar(start, target)
@@ -29,46 +42,118 @@ namespace AIBehaviors.Map
 
         public void GenerateEdges(Vector2D start)
         {
-            if (vectorList.TryGetValue(start, out var processed))
+            if (_vectors.TryGetValue(start, out var processed))
                 return;
 
-            vectorList.Add(start, true);
+            _vectors.Add(start, true);
 
-            // Next horizontal edge
+            // Horizontal edges
             if (!(start._X + Density >= Width))
             {
-                var hV = new Vector2D(start._X + Density, start._Y);
-                AddEdge(start, hV, 1);
-                AddEdge(hV, start, 1);
-                GenerateEdges(hV);
+                var next = new Vector2D(start._X + Density, start._Y);
+
+                if (!HasCollision(next))
+                {
+                    CreateTwoWayEdges(start, next);
+                    GenerateEdges(next);
+                }
+            }
+            if (!(start._X - Density <= 0))
+            {
+                var next = new Vector2D(start._X - Density, start._Y);
+
+                if (!HasCollision(next))
+                {
+                    CreateTwoWayEdges(start, next);
+                    GenerateEdges(next);
+                }
             }
 
-            // Next vertical edge
+            // Vertical edges
             if (!(start._Y + Density >= Height))
             {
-                var vV = new Vector2D(start._X, start._Y + Density);
-                AddEdge(start, vV, 1);
-                AddEdge(vV, start, 1);
-                GenerateEdges(vV);
+                var next = new Vector2D(start._X, start._Y + Density);
+
+                if (!HasCollision(next))
+                {
+                    CreateTwoWayEdges(start, next);
+                    GenerateEdges(next);
+                }
+            }
+            if (!(start._Y - Density <= 0))
+            {
+                var next = new Vector2D(start._X, start._Y - Density);
+
+                if (!HasCollision(next))
+                {
+                    CreateTwoWayEdges(start, next);
+                    GenerateEdges(next);
+                }
             }
 
-            // Next forward diagonal edge
+            // Diagonal edges
             if (!(start._X + Density >= Width) && !(start._Y + Density >= Height))
             {
-                var vV = new Vector2D(start._X + Density, start._Y + Density);
-                AddEdge(start, vV, 1);
-                AddEdge(vV, start, 1);
-                GenerateEdges(vV);
-            }
+                var next = new Vector2D(start._X + Density, start._Y + Density);
 
-            // Next backward diagonal edge
+                if (!HasCollision(next))
+                {
+                    CreateTwoWayEdges(start, next);
+                    GenerateEdges(next);
+                }
+            }
             if (!(start._X - Density <= 0) && !(start._Y + Density >= Height))
             {
-                var vV = new Vector2D(start._X - Density, start._Y + Density);
-                AddEdge(start, vV, 1);
-                AddEdge(vV, start, 1);
-                GenerateEdges(vV);
+                var next = new Vector2D(start._X - Density, start._Y + Density);
+
+                if (!HasCollision(next))
+                {
+                    CreateTwoWayEdges(start, next);
+                    GenerateEdges(next);
+                }
             }
+            if (!(start._X - Density <= 0) && !(start._Y - Density <= 0))
+            {
+                var next = new Vector2D(start._X - Density, start._Y - Density);
+
+                if (!HasCollision(next))
+                {
+                    CreateTwoWayEdges(start, next);
+                    GenerateEdges(next);
+                }
+            }
+            if (!(start._X + Density >= Width) && !(start._Y - Density <= 0))
+            {
+                var next = new Vector2D(start._X + Density, start._Y - Density);
+
+                if (!HasCollision(next))
+                {
+                    CreateTwoWayEdges(start, next);
+                    GenerateEdges(next);
+                }
+            }
+        }
+
+        public void CreateTwoWayEdges(Vector2D start, Vector2D end)
+        {
+            AddEdge(start, end, 1);
+            AddEdge(end, start, 1);
+        }
+
+        public bool HasCollision(Vector2D end)
+        {
+            foreach (var obstacle in _obstacles)
+            {
+                var deltaX = obstacle.Pos._X - end._X;
+                var deltaY = obstacle.Pos._Y - end._Y;
+                var extraRadius = Density / 2;
+                var collisionZoneThreshold = (obstacle.Radius + extraRadius) * (obstacle.Radius + extraRadius);
+
+                if (deltaX * deltaX + deltaY * deltaY <= collisionZoneThreshold)
+                    return true;
+            }
+
+            return false;
         }
     }
 }
