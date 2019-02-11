@@ -1,4 +1,4 @@
-using AIBehaviours.Graph;
+using AIBehaviors.Graph;
 using Xunit;
 using Xunit.Abstractions;
 
