@@ -1,0 +1,30 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using AIBehaviours.Util;
+
+namespace AIBehaviours.Entity
+{
+    public abstract class BaseGameEntity : GameObject
+    {
+        public List<MovingEntity> Neighbors;
+
+        protected BaseGameEntity(Vector2D pos, World w) : base(pos, w)
+        {
+        }
+
+        public abstract void Update(float delta);
+
+        protected void FindNeighbors(double radius)
+        {
+            Neighbors = MyWorld.Entities.Where(entity =>
+            {
+                var targetDistance = entity.Pos - Pos;
+                var rangeSquared = Math.Pow(radius, 2);
+
+                return entity != this && targetDistance.LengthSquared() < rangeSquared;
+            }).ToList();
+        }
+    }
+}
