@@ -3,22 +3,23 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Timers;
 using System.Windows.Forms;
-using AIBehaviours.Behaviour.Group;
-using AIBehaviours.Behaviour.Individual;
-using AIBehaviours.Entity;
-using AIBehaviours.Util;
+using AIBehaviours.Controls;
+using AICore;
+using AICore.Behaviour.Group;
+using AICore.Behaviour.Individual;
+using AICore.Entity;
+using AICore.Model;
+using AICore.Util;
 using Timer = System.Timers.Timer;
 
 namespace AIBehaviours
 {
     public partial class Form1 : Form
     {
-        private readonly World _world;
+        private const float TimeDelta = 0.8f;
         private readonly Random _random = new Random();
 
-        private const float TimeDelta = 0.8f;
-
-        private readonly List<BehaviourItem> _steeringBehaviors = new List<BehaviourItem>()
+        private readonly List<BehaviourItem> _steeringBehaviors = new List<BehaviourItem>
         {
             new BehaviourItem {Type = typeof(ArriveBehaviour), Name = "Individual - Arrive"},
             new BehaviourItem {Type = typeof(FleeBehaviour), Name = "Individual - Flee"},
@@ -30,6 +31,8 @@ namespace AIBehaviours
             new BehaviourItem {Type = typeof(AlignmentBehaviour), Name = "Group - Alignment"},
             new BehaviourItem {Type = typeof(CohesionBehaviour), Name = "Group - Cohesion"}
         };
+
+        private readonly World _world;
 
         public Form1()
         {
@@ -58,7 +61,7 @@ namespace AIBehaviours
             {
                 var control = new BehaviourControl(behaviour, entityList, _world)
                 {
-                    Width = controlWidth,
+                    Width = controlWidth
                 };
 
                 entityOverviewPanel.Controls.Add(control);
@@ -76,7 +79,7 @@ namespace AIBehaviours
             {
                 if (!(control is BehaviourControl)) continue;
 
-                ((BehaviourControl)control).UpdateEntities();
+                ((BehaviourControl) control).UpdateEntities();
             }
         }
 
@@ -95,10 +98,7 @@ namespace AIBehaviours
 
         private void WorldPanel_MouseClick(object sender, MouseEventArgs e)
         {
-            foreach (MovingEntity entity in entityList.SelectedItems)
-            {
-                entity.Pos = new Vector2D(e.X, e.Y);
-            }
+            foreach (MovingEntity entity in entityList.SelectedItems) entity.Pos = new Vector2D(e.X, e.Y);
         }
 
         private void AddVehicleButton_Click(object sender, EventArgs e)
@@ -120,7 +120,7 @@ namespace AIBehaviours
         {
             if (entityList.SelectedItem == null) return;
 
-            MovingEntity entity = (MovingEntity)entityList.SelectedItem;
+            var entity = (MovingEntity) entityList.SelectedItem;
             _world.Entities.Remove(entity);
 
             UpdateForm();

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace AIBehaviours.Graph
+namespace AICore.Graph
 {
     public class Vertex<T> : IVertex
     {

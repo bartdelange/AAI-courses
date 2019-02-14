@@ -1,7 +1,7 @@
 using System;
 using System.Drawing;
 
-namespace AIBehaviours.Util
+namespace AICore.Util
 {
     public class Vector2D
     {
@@ -70,7 +70,6 @@ namespace AIBehaviours.Util
         {
             return $"({_X},{_Y})";
         }
-
 
 
         public override bool Equals(object obj)

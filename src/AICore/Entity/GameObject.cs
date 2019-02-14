@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AIBehaviours.Util;
+﻿using System.Drawing;
+using AICore.Util;
 
-namespace AIBehaviours.Entity
+namespace AICore.Entity
 {
     public class GameObject
     {
@@ -24,7 +19,7 @@ namespace AIBehaviours.Entity
 
         public virtual void Render(Graphics g)
         {
-            g.FillEllipse(Brushes.Black, new Rectangle((int)Pos._X, (int)Pos._Y, 10, 10));
+            g.FillEllipse(Brushes.Black, new Rectangle((int) Pos._X, (int) Pos._Y, 10, 10));
         }
     }
 }

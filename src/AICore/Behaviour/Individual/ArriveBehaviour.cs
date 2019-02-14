@@ -1,8 +1,8 @@
 ﻿using System;
-using AIBehaviours.Entity;
-using AIBehaviours.Util;
+using AICore.Entity;
+using AICore.Util;
 
-namespace AIBehaviours.Behaviour.Individual
+namespace AICore.Behaviour.Individual
 {
     public class ArriveBehaviour : SteeringBehaviour
     {

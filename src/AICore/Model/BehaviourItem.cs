@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AIBehaviours
+namespace AICore.Model
 {
     public class BehaviourItem
     {

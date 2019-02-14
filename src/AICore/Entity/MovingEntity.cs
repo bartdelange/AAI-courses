@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
-using AIBehaviours.Behaviour;
-using AIBehaviours.Util;
+using AICore.Behaviour;
+using AICore.Util;
 
-namespace AIBehaviours.Entity
+namespace AICore.Entity
 {
     public abstract class MovingEntity : BaseGameEntity
     {
@@ -31,7 +31,8 @@ namespace AIBehaviours.Entity
             var steeringForce =
                 SteeringBehaviours.Aggregate(
                     new Vector2D(),
-                    (accumulator, behaviour) => {
+                    (accumulator, behaviour) =>
+                    {
                         // Stop when steeringforce exceeds max speed
                         if (accumulator.Length() >= MaxSpeed)
                             return accumulator;

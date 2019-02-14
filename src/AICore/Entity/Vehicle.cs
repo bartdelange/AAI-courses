@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
-using AIBehaviours.Util;
+using AICore.Util;
 
-namespace AIBehaviours.Entity
+namespace AICore.Entity
 {
     public class Vehicle : MovingEntity
     {

@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
-using AIBehaviours.Util;
+using AICore.Util;
 
-namespace AIBehaviours.Entity
+namespace AICore.Entity
 {
     public abstract class BaseGameEntity : GameObject
     {

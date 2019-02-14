@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AIBehaviours.Util
+namespace AICore.Util
 {
     public class Matrix
     {

@@ -1,9 +1,9 @@
-﻿using AILib.Entity;
-using System;
+﻿using System;
+using AICore.Entity;
 
-namespace AILib.States
+namespace AICore.States
 {
-    class Hide : IState<Coward>
+    internal class Hide : IState<Coward>
     {
         public void Enter(EntityState<Coward> state)
         {
@@ -20,10 +20,7 @@ namespace AILib.States
             Console.WriteLine("Hiding...");
             state.Entity.Strength += 1;
 
-            if (true)
-            {// !(Enemy close)
-                state.SetState(new Patrol());
-            }
+            if (true) state.SetState(new Patrol());
         }
     }
 }

@@ -1,9 +1,9 @@
 using System.Drawing;
 using System.Linq;
-using AIBehaviours.Entity;
-using AIBehaviours.Util;
+using AICore.Entity;
+using AICore.Util;
 
-namespace AIBehaviours.Behaviour.Group
+namespace AICore.Behaviour.Group
 {
     public class AlignmentBehaviour : SteeringBehaviour
     {

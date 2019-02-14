@@ -1,9 +1,9 @@
-﻿using AILib.Entity;
-using System;
+﻿using System;
+using AICore.Entity;
 
-namespace AILib.States
+namespace AICore.States
 {
-    class Patrol : IState<Coward>
+    internal class Patrol : IState<Coward>
     {
         public void Enter(EntityState<Coward> state)
         {
@@ -20,10 +20,8 @@ namespace AILib.States
             Console.WriteLine("Patrolling...");
             state.Entity.Strength += 1;
 
-            if(state.Entity.Strength > 10) // && enemyClose
-            {
+            if (state.Entity.Strength > 10) // && enemyClose
                 state.SetState(new Attack());
-            }
         }
     }
 }

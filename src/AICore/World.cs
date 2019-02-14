@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Threading.Tasks;
-using AIBehaviours.Entity;
-using AIBehaviours.Map;
-using AIBehaviours.Util;
+using AICore.Entity;
+using AICore.Map;
+using AICore.Util;
 
-namespace AIBehaviours
+namespace AICore
 {
     public class World
     {
@@ -14,9 +13,6 @@ namespace AIBehaviours
 
         public readonly List<MovingEntity> Entities = new List<MovingEntity>();
         public readonly List<Obstacle> Obstacles = new List<Obstacle>();
-
-        public int Width { get; }
-        public int Height { get; }
 
         public World(int width, int height)
         {
@@ -29,6 +25,9 @@ namespace AIBehaviours
             GenerateRandomObstacles();
             _map = new CoarseMap(Width, Height, Obstacles);
         }
+
+        public int Width { get; }
+        public int Height { get; }
 
         private void GenerateRandomObstacles()
         {

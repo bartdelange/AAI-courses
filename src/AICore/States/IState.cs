@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AILib.States
+﻿namespace AICore.States
 {
-    interface IState<T>
+    internal interface IState<T>
     {
         void Enter(EntityState<T> state);
         void Update(EntityState<T> state);

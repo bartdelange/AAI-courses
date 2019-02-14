@@ -1,4 +1,5 @@
 ﻿using AIBehaviours;
+using AIBehaviours.Controls;
 
 namespace AIBehaviours
 {
@@ -35,7 +36,7 @@ namespace AIBehaviours
             this.addVehicleButton = new System.Windows.Forms.Button();
             this.entityList = new System.Windows.Forms.ListBox();
             this.removeVehicleButton = new System.Windows.Forms.Button();
-            this.worldPanel = new AIBehaviours.DoubleBufferedPanel();
+            this.worldPanel = new DoubleBufferedPanel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.entityOverviewPanel.SuspendLayout();
             this.groupBox1.SuspendLayout();

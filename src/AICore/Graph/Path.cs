@@ -1,6 +1,6 @@
 using System;
 
-namespace AIBehaviours.Graph
+namespace AICore.Graph
 {
     public class Path<T> : IComparable
     {

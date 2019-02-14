@@ -1,15 +1,12 @@
 ﻿using System.Drawing;
-using AIBehaviours.Entity;
-using AIBehaviours.Util;
+using AICore.Entity;
+using AICore.Util;
 
-namespace AIBehaviours.Behaviour
+namespace AICore.Behaviour
 {
     public abstract class SteeringBehaviour
     {
         public double Weight = 100;
-
-        public MovingEntity MovingEntity { get; }
-        public MovingEntity Target { get; }
 
         protected SteeringBehaviour(MovingEntity movingEntity, MovingEntity target, double weight)
         {
@@ -18,6 +15,9 @@ namespace AIBehaviours.Behaviour
             MovingEntity = movingEntity;
             Target = target;
         }
+
+        public MovingEntity MovingEntity { get; }
+        public MovingEntity Target { get; }
 
         public abstract Vector2D Calculate(float deltaTime);
 

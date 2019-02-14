@@ -1,16 +1,14 @@
 ﻿using System.Collections.Generic;
-using AIBehaviours.Entity;
-using AIBehaviours.Util;
+using AICore.Entity;
+using AICore.Util;
 
-namespace AIBehaviours.Map
+namespace AICore.Map
 {
     public class CoarseMap : BaseMap
     {
-        public int Width { get; }
-        public int Height { get; }
         private const int Density = 40;
-        private readonly Dictionary<Vector2D, bool> _vectors = new Dictionary<Vector2D, bool>();
         private readonly List<Obstacle> _obstacles;
+        private readonly Dictionary<Vector2D, bool> _vectors = new Dictionary<Vector2D, bool>();
 
 
         public CoarseMap(int w, int h, List<Obstacle> obstacles)
@@ -22,7 +20,7 @@ namespace AIBehaviours.Map
             var x0y0 = new Vector2D(Density, Density);
             GenerateEdges(x0y0);
 
-            var xWyH = new Vector2D((Width / Density) * Density, (Height / Density) * Density);
+            var xWyH = new Vector2D(Width / Density * Density, Height / Density * Density);
             GenerateEdges(xWyH);
 
             // Run dijkstra
@@ -31,6 +29,9 @@ namespace AIBehaviours.Map
             // TODO create A* algorithm
             // AStar(start, target)
         }
+
+        public int Width { get; }
+        public int Height { get; }
 
         public void GenerateEdges(Vector2D start)
         {
@@ -50,6 +51,7 @@ namespace AIBehaviours.Map
                     GenerateEdges(next);
                 }
             }
+
             if (!(start._X - Density <= 0))
             {
                 var next = new Vector2D(start._X - Density, start._Y);
@@ -72,6 +74,7 @@ namespace AIBehaviours.Map
                     GenerateEdges(next);
                 }
             }
+
             if (!(start._Y - Density <= 0))
             {
                 var next = new Vector2D(start._X, start._Y - Density);
@@ -94,6 +97,7 @@ namespace AIBehaviours.Map
                     GenerateEdges(next);
                 }
             }
+
             if (!(start._X - Density <= 0) && !(start._Y + Density >= Height))
             {
                 var next = new Vector2D(start._X - Density, start._Y + Density);
@@ -104,6 +108,7 @@ namespace AIBehaviours.Map
                     GenerateEdges(next);
                 }
             }
+
             if (!(start._X - Density <= 0) && !(start._Y - Density <= 0))
             {
                 var next = new Vector2D(start._X - Density, start._Y - Density);
@@ -114,6 +119,7 @@ namespace AIBehaviours.Map
                     GenerateEdges(next);
                 }
             }
+
             if (!(start._X + Density >= Width) && !(start._Y - Density <= 0))
             {
                 var next = new Vector2D(start._X + Density, start._Y - Density);

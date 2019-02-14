@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace AIBehaviours
+namespace AIBehaviours.Controls
 {
     internal sealed class DoubleBufferedPanel : Panel
     {

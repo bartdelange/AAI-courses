@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Drawing;
-using AIBehaviours.Entity;
-using AIBehaviours.Util;
+using AICore.Entity;
+using AICore.Util;
 
-namespace AIBehaviours.Behaviour.Individual
+namespace AICore.Behaviour.Individual
 {
     public class WanderBehaviour : SteeringBehaviour
     {

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using AIBehaviours.Util;
+using AICore.Util;
 
-namespace AIBehaviours.Graph
+namespace AICore.Graph
 {
     public abstract class Graph<T> : IGraph<T>
     {

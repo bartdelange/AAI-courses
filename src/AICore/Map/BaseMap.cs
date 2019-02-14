@@ -1,8 +1,8 @@
 ﻿using System.Drawing;
-using AIBehaviours.Graph;
-using AIBehaviours.Util;
+using AICore.Graph;
+using AICore.Util;
 
-namespace AIBehaviours.Map
+namespace AICore.Map
 {
     public abstract class BaseMap : Graph<Vector2D>
     {

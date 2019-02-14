@@ -1,19 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
-using AIBehaviours.Entity;
-using AIBehaviours.Behaviour;
-using System.Linq;
+using AICore;
+using AICore.Behaviour;
+using AICore.Entity;
+using AICore.Model;
 
-namespace AIBehaviours
+namespace AIBehaviours.Controls
 {
     public partial class BehaviourControl : UserControl
     {
-        public readonly Type BehaviourType;
-
-        private readonly World _world;
         private readonly ListBox _entityList;
         private readonly Random _random = new Random();
+
+        private readonly World _world;
+        public readonly Type BehaviourType;
 
         public BehaviourControl(BehaviourItem behaviour, ListBox entityList, World world)
         {
@@ -41,7 +41,7 @@ namespace AIBehaviours
 
         public void UpdateEntities()
         {
-            foreach(MovingEntity movingEntity in _entityList.SelectedItems)
+            foreach (MovingEntity movingEntity in _entityList.SelectedItems)
             {
                 // Remove instance of current steering behaviour
                 movingEntity
@@ -53,11 +53,11 @@ namespace AIBehaviours
 
                 var randomTarget = GetRandomTarget(movingEntity);
 
-                var steeringBehaviour = (SteeringBehaviour)Activator.CreateInstance(
+                var steeringBehaviour = (SteeringBehaviour) Activator.CreateInstance(
                     BehaviourType,
                     movingEntity,
                     randomTarget,
-                    (double)weightInput.Value
+                    (double) weightInput.Value
                 );
 
                 movingEntity.SteeringBehaviours.Add(steeringBehaviour);

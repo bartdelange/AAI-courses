@@ -1,9 +1,9 @@
 using System.Drawing;
 using System.Linq;
-using AIBehaviours.Entity;
-using AIBehaviours.Util;
+using AICore.Entity;
+using AICore.Util;
 
-namespace AIBehaviours.Behaviour.Group
+namespace AICore.Behaviour.Group
 {
     public class CohesionBehaviour : SteeringBehaviour
     {
@@ -14,7 +14,7 @@ namespace AIBehaviours.Behaviour.Group
         public CohesionBehaviour(MovingEntity movingEntity, MovingEntity target, double weight)
             : base(movingEntity, target, weight)
         {
-            _radius = (int)(MovingEntity.Radius * 1.5);
+            _radius = (int) (MovingEntity.Radius * 1.5);
         }
 
         public override Vector2D Calculate(float deltaTime)

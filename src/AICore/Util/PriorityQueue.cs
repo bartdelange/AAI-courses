@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using AIBehaviours.Graph;
+using AICore.Graph;
 
-namespace AIBehaviours.Util
+namespace AICore.Util
 {
     public class PriorityQueue<T> where T : IComparable
     {

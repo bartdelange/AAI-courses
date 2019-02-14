@@ -1,11 +1,6 @@
-﻿using AIBehaviours.Entity;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AILib.States
+﻿namespace AICore.States
 {
-    class EntityState<T>
+    internal class EntityState<T>
     {
         public IState<T> CurrentState { get; private set; }
         public T Entity { get; }

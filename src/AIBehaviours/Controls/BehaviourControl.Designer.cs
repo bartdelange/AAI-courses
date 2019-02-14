@@ -1,4 +1,4 @@
-﻿namespace AIBehaviours
+﻿namespace AIBehaviours.Controls
 {
     partial class BehaviourControl
     {

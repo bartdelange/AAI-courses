@@ -1,12 +1,9 @@
-﻿using AIBehaviours.Entity;
-using AILib.Entity;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
+using AICore.Entity;
 
-namespace AILib.States
+namespace AICore.States
 {
-    class Attack : IState<Coward>
+    internal class Attack : IState<Coward>
     {
         public void Enter(EntityState<Coward> state)
         {
@@ -23,10 +20,7 @@ namespace AILib.States
             Console.WriteLine("Attacking...");
             state.Entity.Strength -= 1;
 
-            if (state.Entity.Strength < 5)
-            {
-                state.SetState(new Hide());
-            }
+            if (state.Entity.Strength < 5) state.SetState(new Hide());
         }
     }
 }

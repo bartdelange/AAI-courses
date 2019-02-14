@@ -1,4 +1,4 @@
-namespace AIBehaviours.Graph
+namespace AICore.Graph
 {
     public interface IVertex
     {
