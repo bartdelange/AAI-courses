@@ -20,7 +20,7 @@ namespace AIBehaviours.Graph
         public void Reset()
         {
             _Distance = double.MaxValue;
-            _PreviousVertex = default;
+            _PreviousVertex = default(Vertex<T>);
             _Visited = false;
         }
     }
