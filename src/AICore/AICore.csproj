@@ -53,7 +53,7 @@
     <Compile Include="Behaviour\Individual\WanderBehaviour.cs" />
     <Compile Include="Behaviour\SteeringBehaviour.cs" />
     <Compile Include="Entity\BaseGameEntity.cs" />
-    <Compile Include="Entity\Enemy.cs" />
+    <Compile Include="Entity\Coward.cs" />
     <Compile Include="Entity\GameObject.cs" />
     <Compile Include="Entity\MovingEntity.cs" />
     <Compile Include="Entity\Obstacle.cs" />
