@@ -8,12 +8,12 @@ namespace AICore.Util
         /// <summary>
         ///     Position on x (horizontal) axis
         /// </summary>
-        public readonly double _X;
+        public readonly double X;
 
         /// <summary>
         ///     Position on y (vertical) axis
         /// </summary>
-        public readonly double _Y;
+        public readonly double Y;
 
         public Vector2D()
         {
@@ -21,8 +21,8 @@ namespace AICore.Util
 
         public Vector2D(double x, double y)
         {
-            _X = x;
-            _Y = y;
+            X = x;
+            Y = y;
         }
 
         public double Length()
@@ -32,12 +32,12 @@ namespace AICore.Util
 
         public double LengthSquared()
         {
-            return _X * _X + _Y * _Y;
+            return X * X + Y * Y;
         }
 
         public double Dot(Vector2D target)
         {
-            return _X * target._X + _Y * target._Y;
+            return X * target.X + Y * target.Y;
         }
 
         public Vector2D Normalize()
@@ -47,12 +47,12 @@ namespace AICore.Util
             if (!(length > double.Epsilon))
                 return this;
 
-            return new Vector2D(_X / length, _Y / length);
+            return new Vector2D(X / length, Y / length);
         }
 
         public Vector2D Perpendicular()
         {
-            return new Vector2D(-_Y, _X);
+            return new Vector2D(-Y, X);
         }
 
         public Vector2D Truncate(double max)
@@ -68,7 +68,7 @@ namespace AICore.Util
         /// <returns></returns>
         public override string ToString()
         {
-            return $"({_X},{_Y})";
+            return $"({X},{Y})";
         }
 
 
@@ -76,12 +76,12 @@ namespace AICore.Util
         {
             if (!(obj is Vector2D)) return false;
 
-            return Math.Abs(((Vector2D) obj)._X - _X) < 0.0000001 && Math.Abs(((Vector2D) obj)._Y - _Y) < 0.0000001;
+            return Math.Abs(((Vector2D) obj).X - X) < 0.0000001 && Math.Abs(((Vector2D) obj).Y - Y) < 0.0000001;
         }
 
         public override int GetHashCode()
         {
-            return (_X + _Y).GetHashCode();
+            return (X + Y).GetHashCode();
         }
 
         #region operator overrides
@@ -94,7 +94,7 @@ namespace AICore.Util
         /// <returns></returns>
         public static Vector2D operator -(Vector2D vector, double value)
         {
-            return new Vector2D(vector._X - value, vector._Y - value);
+            return new Vector2D(vector.X - value, vector.Y - value);
         }
 
         public static Vector2D operator -(Vector2D vector, float value)
@@ -110,7 +110,7 @@ namespace AICore.Util
         //
         public static Vector2D operator -(Vector2D v1, Vector2D v2)
         {
-            return new Vector2D(v1._X - v2._X, v1._Y - v2._Y);
+            return new Vector2D(v1.X - v2.X, v1.Y - v2.Y);
         }
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace AICore.Util
         /// <returns></returns>
         public static Vector2D operator +(Vector2D vector, double value)
         {
-            return new Vector2D(vector._X + value, vector._Y + value);
+            return new Vector2D(vector.X + value, vector.Y + value);
         }
 
         public static Vector2D operator +(Vector2D vector, float value)
@@ -137,7 +137,7 @@ namespace AICore.Util
         //
         public static Vector2D operator +(Vector2D v1, Vector2D v2)
         {
-            return new Vector2D(v1._X + v2._X, v1._Y + v2._Y);
+            return new Vector2D(v1.X + v2.X, v1.Y + v2.Y);
         }
 
         /// <summary>
@@ -148,7 +148,7 @@ namespace AICore.Util
         /// <returns></returns>
         public static Vector2D operator *(Vector2D vector, double scalar)
         {
-            return new Vector2D(vector._X * scalar, vector._Y * scalar);
+            return new Vector2D(vector.X * scalar, vector.Y * scalar);
         }
 
         public static Vector2D operator *(Vector2D vector, float scalar)
@@ -171,9 +171,9 @@ namespace AICore.Util
         {
             // Can't divide by zero
             if (scalar.Equals(0))
-                return new Vector2D(vector._X, vector._Y);
+                return new Vector2D(vector.X, vector.Y);
 
-            return new Vector2D(vector._X / scalar, vector._Y / scalar);
+            return new Vector2D(vector.X / scalar, vector.Y / scalar);
         }
 
         public static Vector2D operator /(Vector2D vector, float scalar)
@@ -197,7 +197,7 @@ namespace AICore.Util
         /// <returns></returns>
         public static explicit operator PointF(Vector2D vector)
         {
-            return new PointF((float) vector._X, (float) vector._Y);
+            return new PointF((float) vector.X, (float) vector.Y);
         }
 
         /// <summary>
@@ -207,7 +207,7 @@ namespace AICore.Util
         /// <returns></returns>
         public static explicit operator Point(Vector2D vector)
         {
-            return new Point((int) vector._X, (int) vector._Y);
+            return new Point((int) vector.X, (int) vector.Y);
         }
 
         #endregion

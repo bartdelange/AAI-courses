@@ -35,7 +35,7 @@ namespace AICore.Entity
             var matrix = new Matrix();
 
             matrix.Rotate(Heading, Side);
-            matrix.Translate(Pos._X, Pos._Y);
+            matrix.Translate(Pos.X, Pos.Y);
 
             // Transform the vector to world space	
             p1 = matrix.TransformVector2Ds(p1);

@@ -36,7 +36,7 @@ namespace AICore.Behaviour.Individual
             var matrix = new Matrix();
 
             matrix.Rotate(MovingEntity.Heading, MovingEntity.Side);
-            matrix.Translate(MovingEntity.Pos._X, MovingEntity.Pos._Y);
+            matrix.Translate(MovingEntity.Pos.X, MovingEntity.Pos.Y);
 
             // Transform the vector to world space
             return matrix.TransformVector2Ds(localTarget);
@@ -54,8 +54,8 @@ namespace AICore.Behaviour.Individual
             g.DrawEllipse(
                 new Pen(Color.Red),
                 new Rectangle(
-                    (int) guide._X,
-                    (int) guide._Y,
+                    (int) guide.X,
+                    (int) guide.Y,
                     4,
                     4
                 )

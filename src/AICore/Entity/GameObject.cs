@@ -19,7 +19,7 @@ namespace AICore.Entity
 
         public virtual void Render(Graphics g)
         {
-            g.FillEllipse(Brushes.Black, new Rectangle((int) Pos._X, (int) Pos._Y, 10, 10));
+            g.FillEllipse(Brushes.Black, new Rectangle((int) Pos.X, (int) Pos.Y, 10, 10));
         }
     }
 }

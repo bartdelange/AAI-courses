@@ -1,15 +1,28 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 using AICore.Entity;
+using AICore.Graph;
 using AICore.Util;
 
 namespace AICore.Map
 {
     public class CoarseMap : BaseMap
     {
-        private const int Density = 40;
+        private const int Density = 20;
         private readonly List<Obstacle> _obstacles;
         private readonly Dictionary<Vector2D, bool> _vectors = new Dictionary<Vector2D, bool>();
+        private readonly IEnumerable<Vertex<Vector2D>> _examplePath;
 
+
+        private readonly Brush _brushStart = new SolidBrush(Color.FromArgb(128, Color.Cyan));
+        private readonly Brush _brushTarget = new SolidBrush(Color.FromArgb(128, Color.Red));
+        private readonly Brush _brushVisited = new SolidBrush(Color.FromArgb(128, Color.DarkGreen));
+        private readonly Brush _brushNotVisited = new SolidBrush(Color.FromArgb(128, Color.RoyalBlue));
+        private readonly Pen _pen = new Pen(Color.DeepPink, 2);
+
+        private readonly Vector2D _start;
+        private readonly Vector2D _target;
 
         public CoarseMap(int w, int h, List<Obstacle> obstacles)
         {
@@ -23,16 +36,18 @@ namespace AICore.Map
             var xWyH = new Vector2D(Width / Density * Density, Height / Density * Density);
             GenerateEdges(xWyH);
 
-            // Run dijkstra
-            //Dijkstra(v1);
+            _start = x0y0;
+            _target = xWyH;
 
-            // TODO create A* algorithm
-            // AStar(start, target)
+            _examplePath = AStar(_start, _target, (startV, targetV) => Math.Abs(
+                (startV.X - targetV.X) + (startV.Y - targetV.Y)
+            ));
         }
 
         public int Width { get; }
         public int Height { get; }
 
+        #region Floodfilling
         public void GenerateEdges(Vector2D start)
         {
             if (_vectors.TryGetValue(start, out var processed))
@@ -41,9 +56,9 @@ namespace AICore.Map
             _vectors.Add(start, true);
 
             // Horizontal edges
-            if (!(start._X + Density >= Width))
+            if (!(start.X + Density >= Width))
             {
-                var next = new Vector2D(start._X + Density, start._Y);
+                var next = new Vector2D(start.X + Density, start.Y);
 
                 if (!HasCollision(next))
                 {
@@ -52,9 +67,9 @@ namespace AICore.Map
                 }
             }
 
-            if (!(start._X - Density <= 0))
+            if (!(start.X - Density <= 0))
             {
-                var next = new Vector2D(start._X - Density, start._Y);
+                var next = new Vector2D(start.X - Density, start.Y);
 
                 if (!HasCollision(next))
                 {
@@ -64,9 +79,9 @@ namespace AICore.Map
             }
 
             // Vertical edges
-            if (!(start._Y + Density >= Height))
+            if (!(start.Y + Density >= Height))
             {
-                var next = new Vector2D(start._X, start._Y + Density);
+                var next = new Vector2D(start.X, start.Y + Density);
 
                 if (!HasCollision(next))
                 {
@@ -75,9 +90,9 @@ namespace AICore.Map
                 }
             }
 
-            if (!(start._Y - Density <= 0))
+            if (!(start.Y - Density <= 0))
             {
-                var next = new Vector2D(start._X, start._Y - Density);
+                var next = new Vector2D(start.X, start.Y - Density);
 
                 if (!HasCollision(next))
                 {
@@ -87,9 +102,9 @@ namespace AICore.Map
             }
 
             // Diagonal edges
-            if (!(start._X + Density >= Width) && !(start._Y + Density >= Height))
+            if (!(start.X + Density >= Width) && !(start.Y + Density >= Height))
             {
-                var next = new Vector2D(start._X + Density, start._Y + Density);
+                var next = new Vector2D(start.X + Density, start.Y + Density);
 
                 if (!HasCollision(next))
                 {
@@ -98,9 +113,9 @@ namespace AICore.Map
                 }
             }
 
-            if (!(start._X - Density <= 0) && !(start._Y + Density >= Height))
+            if (!(start.X - Density <= 0) && !(start.Y + Density >= Height))
             {
-                var next = new Vector2D(start._X - Density, start._Y + Density);
+                var next = new Vector2D(start.X - Density, start.Y + Density);
 
                 if (!HasCollision(next))
                 {
@@ -109,9 +124,9 @@ namespace AICore.Map
                 }
             }
 
-            if (!(start._X - Density <= 0) && !(start._Y - Density <= 0))
+            if (!(start.X - Density <= 0) && !(start.Y - Density <= 0))
             {
-                var next = new Vector2D(start._X - Density, start._Y - Density);
+                var next = new Vector2D(start.X - Density, start.Y - Density);
 
                 if (!HasCollision(next))
                 {
@@ -120,9 +135,9 @@ namespace AICore.Map
                 }
             }
 
-            if (!(start._X + Density >= Width) && !(start._Y - Density <= 0))
+            if (!(start.X + Density >= Width) && !(start.Y - Density <= 0))
             {
-                var next = new Vector2D(start._X + Density, start._Y - Density);
+                var next = new Vector2D(start.X + Density, start.Y - Density);
 
                 if (!HasCollision(next))
                 {
@@ -142,8 +157,8 @@ namespace AICore.Map
         {
             foreach (var obstacle in _obstacles)
             {
-                var deltaX = obstacle.Pos._X - end._X;
-                var deltaY = obstacle.Pos._Y - end._Y;
+                var deltaX = obstacle.Pos.X - end.X;
+                var deltaY = obstacle.Pos.Y - end.Y;
                 var extraRadius = Density / 2;
                 var collisionZoneThreshold = (obstacle.Radius + extraRadius) * (obstacle.Radius + extraRadius);
 
@@ -152,6 +167,29 @@ namespace AICore.Map
             }
 
             return false;
+        }
+        #endregion
+
+        public override async void Render(Graphics g)
+        {
+            base.Render(g);
+
+            foreach (var edge in SearchedVertexMap)
+            {
+                g.FillEllipse(edge.Value.Visited ? _brushVisited : _brushNotVisited,
+                    new Rectangle((Point) (edge.Value.Data - 5), new Size(10, 10)));
+            }
+            
+            g.FillEllipse(_brushTarget,
+                new Rectangle((Point) (_target - 5), new Size(10, 10)));
+            g.FillEllipse(_brushStart,
+                new Rectangle((Point) (_start - 5), new Size(10, 10)));
+
+
+            foreach (var vertex in _examplePath)
+            {
+                g.DrawLine(_pen, (Point) vertex.PreviousVertex.Data, (Point) vertex.Data);
+            }
         }
     }
 }

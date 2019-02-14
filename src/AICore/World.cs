@@ -37,8 +37,8 @@ namespace AICore
             while (clutterRemaining > 0)
             {
                 // Create a random radius between Obstacle._MinRadius and (Obstacle._MaxRadius || Clutter remaining)
-                var maxRand = Math.Min(clutterRemaining, Obstacle._MaxRadius);
-                var obstacleRadius = rand.Next(Obstacle._MinRadius, Math.Max(maxRand, Obstacle._MinRadius));
+                var maxRand = Math.Min(clutterRemaining, Obstacle.MaxRadius);
+                var obstacleRadius = rand.Next(Obstacle.MinRadius, Math.Max(maxRand, Obstacle.MinRadius));
 
                 // Create a position while keeping the obs
                 var randX = Math.Min(Width - obstacleRadius, rand.Next(obstacleRadius, Width));

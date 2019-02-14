@@ -57,17 +57,17 @@ namespace AICore.Entity
 
         private static Vector2D WrapToBounds(Vector2D pos, int width, int height)
         {
-            if (pos._X > width)
-                return new Vector2D(0, pos._Y);
+            if (pos.X > width)
+                return new Vector2D(0, pos.Y);
 
-            if (pos._Y > height)
-                return new Vector2D(pos._X, 0);
+            if (pos.Y > height)
+                return new Vector2D(pos.X, 0);
 
-            if (pos._X < 0)
-                return new Vector2D(width, pos._Y);
+            if (pos.X < 0)
+                return new Vector2D(width, pos.Y);
 
-            if (pos._Y < 0)
-                return new Vector2D(pos._X, height);
+            if (pos.Y < 0)
+                return new Vector2D(pos.X, height);
 
             return pos;
         }

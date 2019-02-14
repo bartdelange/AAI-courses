@@ -7,14 +7,14 @@ namespace AICore.Util
     public class PriorityQueue<T> where T : IComparable
     {
         private int _currentSize;
-        public T[] _Heap;
+        public T[] Heap;
 
         /// <summary>
         ///     Create empty PriorityQueue
         /// </summary>
         public PriorityQueue()
         {
-            _Heap = new T[2];
+            Heap = new T[2];
         }
 
 
@@ -25,11 +25,11 @@ namespace AICore.Util
         public PriorityQueue(IReadOnlyCollection<T> collection)
         {
             _currentSize = collection.Count;
-            _Heap = new T[_currentSize + 1];
+            Heap = new T[_currentSize + 1];
 
             var i = 1;
             foreach (var element in collection)
-                _Heap[i++] = element;
+                Heap[i++] = element;
 
             BuildHeap();
         }
@@ -44,7 +44,7 @@ namespace AICore.Util
             if (IsEmpty())
                 throw new NoSuchElementException();
 
-            return _Heap[1];
+            return Heap[1];
         }
 
         /// <summary>
@@ -71,17 +71,17 @@ namespace AICore.Util
         /// <returns></returns>
         public bool Enqueue(T value)
         {
-            if (_currentSize + 1 == _Heap.Length)
+            if (_currentSize + 1 == Heap.Length)
                 DoubleArray();
 
             // Percolate up
             var hole = ++_currentSize;
-            _Heap[0] = value;
+            Heap[0] = value;
 
-            for (; value.CompareTo(_Heap[hole / 2]) < 0; hole /= 2)
-                _Heap[hole] = _Heap[hole / 2];
+            for (; value.CompareTo(Heap[hole / 2]) < 0; hole /= 2)
+                Heap[hole] = Heap[hole / 2];
 
-            _Heap[hole] = value;
+            Heap[hole] = value;
 
             return true;
         }
@@ -95,7 +95,7 @@ namespace AICore.Util
             var minItem = Peek();
 
             // Get rid of the last leaf/decrement
-            _Heap[1] = _Heap[_currentSize--];
+            Heap[1] = Heap[_currentSize--];
 
             // Arrange the tree to fulfill the properties
             PercolateDown(1);
@@ -110,23 +110,23 @@ namespace AICore.Util
         private void PercolateDown(int hole)
         {
             int child;
-            var temporary = _Heap[hole];
+            var temporary = Heap[hole];
 
             for (; hole * 2 <= _currentSize; hole = child)
             {
                 child = hole * 2;
 
-                if (child != _currentSize && _Heap[child + 1].CompareTo(_Heap[child]) < 0)
+                if (child != _currentSize && Heap[child + 1].CompareTo(Heap[child]) < 0)
                     child++;
 
-                if (_Heap[child].CompareTo(temporary) < 0)
-                    _Heap[hole] = _Heap[child];
+                if (Heap[child].CompareTo(temporary) < 0)
+                    Heap[hole] = Heap[child];
 
                 else
                     break;
             }
 
-            _Heap[hole] = temporary;
+            Heap[hole] = temporary;
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace AICore.Util
         /// </summary>
         private void DoubleArray()
         {
-            Array.Resize(ref _Heap, _Heap.Length * 2);
+            Array.Resize(ref Heap, Heap.Length * 2);
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace AICore.Util
         public override string ToString()
         {
             var heapCopy = new T[_currentSize];
-            Array.Copy(_Heap, 1, heapCopy, 0, _currentSize);
+            Array.Copy(Heap, 1, heapCopy, 0, _currentSize);
 
             var queue = new PriorityQueue<T>(heapCopy);
             var processedQueue = "";
@@ -178,7 +178,7 @@ namespace AICore.Util
             if (index >= _currentSize)
                 return "";
 
-            var result = _Heap[index + 1] + " "; // Root
+            var result = Heap[index + 1] + " "; // Root
             result += ToStringPreOrder(2 * index + 1); // Left subtree
             result += ToStringPreOrder(2 * index + 2); // Right subtree
 
@@ -197,7 +197,7 @@ namespace AICore.Util
 
             var result = ToStringPostOrder(2 * index + 1); // Left subtree
             result += ToStringPostOrder(2 * index + 2); // Right subtree
-            result += _Heap[index + 1] + " "; // Root
+            result += Heap[index + 1] + " "; // Root
 
             return result;
         }
@@ -213,7 +213,7 @@ namespace AICore.Util
                 return "";
 
             var result = ToStringInOrder(2 * index + 1); // Left subtree
-            result += _Heap[index + 1] + " "; // Root
+            result += Heap[index + 1] + " "; // Root
             result += ToStringInOrder(2 * index + 2); // Right subtree
 
             return result;

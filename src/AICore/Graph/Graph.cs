@@ -7,7 +7,8 @@ namespace AICore.Graph
 {
     public abstract class Graph<T> : IGraph<T>
     {
-        protected Dictionary<T, Vertex<T>> _VertexMap = new Dictionary<T, Vertex<T>>();
+        protected Dictionary<T, Vertex<T>> VertexMap = new Dictionary<T, Vertex<T>>();
+        protected Dictionary<T, Vertex<T>> SearchedVertexMap = new Dictionary<T, Vertex<T>>();
 
         /// <summary>
         ///     Try to get the vertex by vertex name, if it does not exist create a
@@ -16,10 +17,10 @@ namespace AICore.Graph
         /// <param name="vertexName"></param>
         public Vertex<T> GetVertex(T vertexData)
         {
-            if (_VertexMap.TryGetValue(vertexData, out var vertex)) return vertex;
+            if (VertexMap.TryGetValue(vertexData, out var vertex)) return vertex;
 
             vertex = new Vertex<T>(vertexData);
-            _VertexMap.Add(vertexData, vertex);
+            VertexMap.Add(vertexData, vertex);
 
             return vertex;
         }
@@ -35,7 +36,7 @@ namespace AICore.Graph
             var sourceVertex = GetVertex(sourceVertexData);
             var destinationVertex = GetVertex(destinationVertexData);
 
-            sourceVertex._AdjacentVertices.Add(new Edge<T>(destinationVertex, cost));
+            sourceVertex.AdjacentVertices[destinationVertexData] = new Edge<T>(destinationVertex, cost);
         }
 
         /// <summary>
@@ -53,14 +54,14 @@ namespace AICore.Graph
         {
             var output = "";
 
-            foreach (var vertex in _VertexMap.Values)
+            foreach (var vertex in VertexMap.Values)
             {
-                var adjacentVertexes = vertex._AdjacentVertices.Aggregate(
+                var adjacentVertexes = vertex.AdjacentVertices.Aggregate(
                     "",
-                    (accumulator, edge) => accumulator += $" {edge._Destination._Data}({edge._Cost})"
+                    (accumulator, edge) => accumulator += $" {edge.Value.Destination.Data}({edge.Value.Cost})"
                 );
 
-                output += $"{vertex._Data} -->{adjacentVertexes}\n";
+                output += $"{vertex.Data} -->{adjacentVertexes}\n";
             }
 
             return output;
@@ -71,7 +72,9 @@ namespace AICore.Graph
         /// </summary>
         protected void ClearAll()
         {
-            foreach (var vertex in _VertexMap.Values)
+            foreach (var vertex in VertexMap.Values)
+                vertex.Reset();
+            foreach (var vertex in SearchedVertexMap.Values)
                 vertex.Reset();
         }
 
@@ -83,10 +86,10 @@ namespace AICore.Graph
         {
             var result = "";
 
-            if (destination._PreviousVertex != null)
-                result += " to " + PathToString(destination._PreviousVertex);
+            if (destination.PreviousVertex != null)
+                result += " to " + PathToString(destination.PreviousVertex);
 
-            return destination._Data + result;
+            return destination.Data + result;
         }
 
         /// <summary>
@@ -96,13 +99,13 @@ namespace AICore.Graph
         /// <exception cref="NoSuchElementException"></exception>
         public string PathToString(T destination)
         {
-            if (!_VertexMap.TryGetValue(destination, out var vertex))
+            if (!VertexMap.TryGetValue(destination, out var vertex))
                 throw new NoSuchElementException();
 
-            if (vertex._Distance == double.MaxValue)
+            if (vertex.Distance == double.MaxValue)
                 return destination + " is unreachable";
 
-            return $"(Cost is: {vertex._Distance}) {PathToString(vertex)}";
+            return $"(Cost is: {vertex.Distance}) {PathToString(vertex)}";
         }
 
         /// <summary>
@@ -110,11 +113,11 @@ namespace AICore.Graph
         /// </summary>
         public bool IsConnected()
         {
-            Unweighted(_VertexMap.First().Value._Data);
+            Unweighted(VertexMap.First().Value.Data);
 
-            foreach (var vertex in _VertexMap.Values)
+            foreach (var vertex in VertexMap.Values)
                 // Return false when any vertex has not been visited
-                if (!vertex._Visited)
+                if (!vertex.Visited)
                     return false;
 
             return true;
@@ -131,33 +134,34 @@ namespace AICore.Graph
         {
             ClearAll();
 
-            if (!_VertexMap.TryGetValue(startVertex, out var start))
+            if (!VertexMap.TryGetValue(startVertex, out var start))
                 throw new NoSuchElementException();
 
             var queue = new Queue<Vertex<T>>();
 
             // Add start vertex to queue
             queue.Enqueue(start);
-            start._Distance = 0;
+            start.Distance = 0;
 
             while (queue.Count != 0)
             {
                 var currentVertex = queue.Dequeue();
 
                 // Set visited to true so we can check if the graph is connected or not
-                currentVertex._Visited = true;
+                currentVertex.Visited = true;
 
-                currentVertex._AdjacentVertices.ForEach(edge =>
+
+                foreach (var edge in currentVertex.AdjacentVertices)
                 {
-                    var adjacentVertex = edge._Destination;
+                    var adjacentVertex = edge.Value.Destination;
 
-                    if (adjacentVertex._Distance != double.MaxValue) return;
+                    if (Math.Abs(adjacentVertex.Distance - double.MaxValue) > 0.000000001) continue;
 
-                    adjacentVertex._Distance = currentVertex._Distance + 1;
-                    adjacentVertex._PreviousVertex = currentVertex;
+                    adjacentVertex.Distance = currentVertex.Distance + 1;
+                    adjacentVertex.PreviousVertex = currentVertex;
 
                     queue.Enqueue(adjacentVertex);
-                });
+                }
             }
         }
 
@@ -171,57 +175,114 @@ namespace AICore.Graph
         {
             ClearAll();
 
-            if (!_VertexMap.TryGetValue(startValue, out var startVertex))
+            if (!VertexMap.TryGetValue(startValue, out var startVertex))
                 throw new NoSuchElementException();
 
             var priorityQueue = new PriorityQueue<Path<T>>();
 
             // Add start path to priority queue
             priorityQueue.Enqueue(new Path<T>(startVertex, 0));
-            startVertex._Distance = 0;
+            startVertex.Distance = 0;
 
             var nodesSeen = 0;
-            while (!priorityQueue.IsEmpty() && nodesSeen < _VertexMap.Count)
+            while (!priorityQueue.IsEmpty() && nodesSeen < VertexMap.Count)
             {
                 var vertexRecord = priorityQueue.Dequeue();
-                var vertex = vertexRecord._Destination;
+                var vertex = vertexRecord.Destination;
 
                 // Don't revisit vertex
-                if (vertex._Visited) continue;
+                if (vertex.Visited) continue;
 
-                vertex._Visited = true;
+                vertex.Visited = true;
                 nodesSeen++;
 
-                vertex._AdjacentVertices.ForEach(edge =>
+                foreach (var edge in vertex.AdjacentVertices)
                 {
-                    var adjacentVertex = edge._Destination;
-                    var edgeCost = edge._Cost;
+                    var adjacentVertex = edge.Value.Destination;
+                    var edgeCost = edge.Value.Cost;
 
                     if (edgeCost < 0)
                         throw new GraphException("Graph has negative edges");
 
                     // Don't update the distance of to the adjacent vertex when the distance is higher
-                    if (!(vertex._Distance + edgeCost < adjacentVertex._Distance))
+                    if (!(vertex.Distance + edgeCost < adjacentVertex.Distance))
                         return;
 
-                    adjacentVertex._Distance = vertex._Distance + edgeCost;
-                    adjacentVertex._PreviousVertex = vertex;
+                    adjacentVertex.Distance = vertex.Distance + edgeCost;
+                    adjacentVertex.PreviousVertex = vertex;
 
-                    priorityQueue.Enqueue(new Path<T>(adjacentVertex, adjacentVertex._Distance));
-                });
+                    priorityQueue.Enqueue(new Path<T>(adjacentVertex, adjacentVertex.Distance));
+                }
             }
         }
 
-        public void AStar(T startValue)
+        
+        public IEnumerable<Vertex<T>> AStar(T startValue, T targetValue, Func<T, T, double> calcHeuristics)
         {
             ClearAll();
 
-            if (!_VertexMap.TryGetValue(startValue, out var startVertex))
+            if (!VertexMap.TryGetValue(startValue, out var startVertex))
                 throw new NoSuchElementException();
 
-            throw new NotImplementedException();
-        }
+            var found = false;
+            
+            var priorityQueue = new PriorityQueue<Path<T>>();
 
+            // Add start path to priority queue
+            priorityQueue.Enqueue(new Path<T>(startVertex, 0));
+            startVertex.Distance = 0;
+
+            while (!found && !priorityQueue.IsEmpty())
+            {
+                var vertexRecord = priorityQueue.Dequeue();
+                var vertex = vertexRecord.Destination;
+
+                vertex.Visited = true;
+                foreach (var edge in vertex.AdjacentVertices)
+                {
+                    var adjacentVertex = edge.Value.Destination;
+                    var edgeCost = edge.Value.Cost;
+                    var heuristics = calcHeuristics(adjacentVertex.Data, targetValue);
+
+                    // Don't revisit vertex
+                    if (adjacentVertex.Visited) 
+                        continue;
+
+                    if (edgeCost < 0)
+                        throw new GraphException("Graph has negative edges");
+
+                    // Don't update the distance of to the adjacent vertex when the distance is higher
+                    if (!(vertex.Distance + edgeCost < adjacentVertex.Distance))
+                        continue;
+
+                    adjacentVertex.Distance = vertex.Distance + edgeCost;
+                    adjacentVertex.PreviousVertex = vertex;
+
+                    priorityQueue.Enqueue(new Path<T>(adjacentVertex, edgeCost + heuristics));
+                    SearchedVertexMap[adjacentVertex.Data] = adjacentVertex;
+
+                    if (adjacentVertex.Data.Equals(targetValue))
+                    {
+                        found = true;
+                    }
+                }
+            }
+
+            var path = new List<Vertex<T>>();
+            
+            if (SearchedVertexMap.TryGetValue(targetValue, out var targetVertex))
+            {
+                while (targetVertex.PreviousVertex != null)
+                {
+                    path.Add(targetVertex);
+                    targetVertex = targetVertex.PreviousVertex;
+                }
+            }
+
+            path.Reverse();
+            return path;
+        }
+        
         #endregion
     }
 

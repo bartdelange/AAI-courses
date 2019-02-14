@@ -4,13 +4,13 @@ namespace AICore.Graph
 {
     public class Path<T> : IComparable
     {
-        public double _Cost;
-        public Vertex<T> _Destination;
+        public double Cost;
+        public Vertex<T> Destination;
 
         public Path(Vertex<T> destination, double cost)
         {
-            _Destination = destination;
-            _Cost = cost;
+            Destination = destination;
+            Cost = cost;
         }
 
         /// <summary>
@@ -22,11 +22,13 @@ namespace AICore.Graph
         {
             var path = (Path<T>) obj;
 
-            return _Cost < path._Cost
-                ? -1
-                : _Cost > path._Cost
-                    ? 1
-                    : 0;
+            if (Cost < path.Cost)
+                return -1;
+
+            if (Cost > path.Cost)
+                return 1;
+            
+            return 0;
         }
     }
 }

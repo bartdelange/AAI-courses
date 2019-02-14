@@ -5,10 +5,10 @@ namespace AICore.Entity
 {
     public class Obstacle : GameObject
     {
-        public static int _MinRadius = 10;
-        public static int _MaxRadius = 100;
+        public static int MinRadius = 10;
+        public static int MaxRadius = 100;
 
-        public Obstacle(Vector2D pos, World w) : this(pos, w, _MinRadius)
+        public Obstacle(Vector2D pos, World w) : this(pos, w, MinRadius)
         {
         }
 
@@ -22,7 +22,7 @@ namespace AICore.Entity
         public override void Render(Graphics g)
         {
             g.FillEllipse(Brushes.Black,
-                new Rectangle((int) Pos._X - Radius, (int) Pos._Y - Radius, Radius * 2, Radius * 2));
+                new Rectangle((int) Pos.X - Radius, (int) Pos.Y - Radius, Radius * 2, Radius * 2));
         }
     }
 }
