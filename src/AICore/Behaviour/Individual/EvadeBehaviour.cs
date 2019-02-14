@@ -3,7 +3,7 @@ using AIBehaviours.Util;
 
 namespace AIBehaviours.Behaviour.Individual
 {
-    internal class EvadeBehaviour : SteeringBehaviour
+    public class EvadeBehaviour : SteeringBehaviour
     {
         private const double ThreatRange = 100.0;
 

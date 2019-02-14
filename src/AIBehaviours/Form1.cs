@@ -23,7 +23,7 @@ namespace AIBehaviours
             new BehaviourItem {Type = typeof(ArriveBehaviour), Name = "Individual - Arrive"},
             new BehaviourItem {Type = typeof(FleeBehaviour), Name = "Individual - Flee"},
             new BehaviourItem {Type = typeof(SeekBehaviour), Name = "Individual - Seek"},
-            new BehaviourItem {Type = typeof(PursuitBehavior), Name = "Individual - Pursuit"},
+            new BehaviourItem {Type = typeof(PursuitBehaviour), Name = "Individual - Pursuit"},
             new BehaviourItem {Type = typeof(EvadeBehaviour), Name = "Individual - Evade"},
             new BehaviourItem {Type = typeof(WanderBehaviour), Name = "Individual - Wander"},
             new BehaviourItem {Type = typeof(SeparationBehaviour), Name = "Group - Separation"},

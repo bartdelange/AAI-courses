@@ -3,7 +3,7 @@ using AIBehaviours.Util;
 
 namespace AIBehaviours.Behaviour.Individual
 {
-    internal class SeekBehaviour : SteeringBehaviour
+    public class SeekBehaviour : SteeringBehaviour
     {
         public SeekBehaviour(MovingEntity movingEntity, MovingEntity target, double weight)
             : base(movingEntity, target, weight)

@@ -3,7 +3,7 @@ using AIBehaviours.Util;
 
 namespace AIBehaviours.Entity
 {
-    internal class Vehicle : MovingEntity
+    public class Vehicle : MovingEntity
     {
         private readonly Pen _objectPen = new Pen(Color.Black, 2);
         private readonly Pen _velocityPen = new Pen(Color.Red, 2);

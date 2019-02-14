@@ -1,0 +1,29 @@
+﻿using AILib.Entity;
+using System;
+
+namespace AILib.States
+{
+    class Hide : IState<Coward>
+    {
+        public void Enter(EntityState<Coward> state)
+        {
+            Console.WriteLine("Enter Hide");
+        }
+
+        public void Leave(EntityState<Coward> state)
+        {
+            Console.WriteLine("Leave Hide");
+        }
+
+        public void Update(EntityState<Coward> state)
+        {
+            Console.WriteLine("Hiding...");
+            state.Entity.Strength += 1;
+
+            if (true)
+            {// !(Enemy close)
+                state.SetState(new Patrol());
+            }
+        }
+    }
+}

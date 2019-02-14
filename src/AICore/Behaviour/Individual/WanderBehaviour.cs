@@ -5,7 +5,7 @@ using AIBehaviours.Util;
 
 namespace AIBehaviours.Behaviour.Individual
 {
-    internal class WanderBehaviour : SteeringBehaviour
+    public class WanderBehaviour : SteeringBehaviour
     {
         private const double WanderRadius = 50;
 

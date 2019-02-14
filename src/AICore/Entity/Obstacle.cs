@@ -22,7 +22,7 @@ namespace AIBehaviours.Entity
 
         public int Radius { get; set; }
 
-        public async override void Render(Graphics g)
+        public override void Render(Graphics g)
         {
             g.FillEllipse(Brushes.Black, new Rectangle((int) Pos._X - Radius, (int) Pos._Y - Radius, Radius * 2, Radius* 2));
         }

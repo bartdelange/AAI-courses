@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AIBehaviours", "AIBehaviour
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AAITests", "AAITests\AAITests.csproj", "{7AC478D3-70EB-4676-ADF3-AE08E6EBB89C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AIGame", "AIGame\AIGame.csproj", "{73EAE649-1F04-4ADA-BD27-5A7293B2C7DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AICore", "AICore\AICore.csproj", "{ADE19426-DC0B-4CD8-8F00-2198BD3D568C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{7AC478D3-70EB-4676-ADF3-AE08E6EBB89C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7AC478D3-70EB-4676-ADF3-AE08E6EBB89C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7AC478D3-70EB-4676-ADF3-AE08E6EBB89C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73EAE649-1F04-4ADA-BD27-5A7293B2C7DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73EAE649-1F04-4ADA-BD27-5A7293B2C7DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73EAE649-1F04-4ADA-BD27-5A7293B2C7DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73EAE649-1F04-4ADA-BD27-5A7293B2C7DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADE19426-DC0B-4CD8-8F00-2198BD3D568C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADE19426-DC0B-4CD8-8F00-2198BD3D568C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADE19426-DC0B-4CD8-8F00-2198BD3D568C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADE19426-DC0B-4CD8-8F00-2198BD3D568C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

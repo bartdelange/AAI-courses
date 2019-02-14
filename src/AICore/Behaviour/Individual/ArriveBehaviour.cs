@@ -4,7 +4,7 @@ using AIBehaviours.Util;
 
 namespace AIBehaviours.Behaviour.Individual
 {
-    internal class ArriveBehaviour : SteeringBehaviour
+    public class ArriveBehaviour : SteeringBehaviour
     {
         private const double DecelerationSpeed = 1;
         private const double DecelerationTweaker = 0.3;

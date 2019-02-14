@@ -3,7 +3,7 @@ using AIBehaviours.Util;
 
 namespace AIBehaviours.Behaviour.Individual
 {
-    internal class FleeBehaviour : SteeringBehaviour
+    public class FleeBehaviour : SteeringBehaviour
     {
         private const int Boundary = 100 * 100;
 

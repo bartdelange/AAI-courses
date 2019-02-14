@@ -3,9 +3,9 @@ using AIBehaviours.Util;
 
 namespace AIBehaviours.Behaviour.Individual
 {
-    internal class PursuitBehavior : SteeringBehaviour
+    public class PursuitBehaviour : SteeringBehaviour
     {
-        public PursuitBehavior(MovingEntity movingEntity, MovingEntity target, double weight)
+        public PursuitBehaviour(MovingEntity movingEntity, MovingEntity target, double weight)
             : base(movingEntity, target, weight)
         {
         }
