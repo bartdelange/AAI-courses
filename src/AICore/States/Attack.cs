@@ -21,8 +21,9 @@ namespace AILib.States
         public void Update(EntityState<Coward> state)
         {
             Console.WriteLine("Attacking...");
+            state.Entity.Strength -= 1;
 
-            if(state.Entity.Strength < 5)
+            if (state.Entity.Strength < 5)
             {
                 state.SetState(new Hide());
             }
