@@ -192,8 +192,8 @@ namespace AICore.Graph
 
                 // Don't revisit vertex
                 if (vertex.Visited) continue;
-
                 vertex.Visited = true;
+
                 nodesSeen++;
 
                 foreach (var edge in vertex.AdjacentVertices)
@@ -216,8 +216,11 @@ namespace AICore.Graph
             }
         }
 
-        
-        public IEnumerable<Vertex<T>> AStar(T startValue, T targetValue, Func<T, T, double> calcHeuristics)
+        public IEnumerable<Vertex<T>> AStar(
+            T startValue, 
+            T targetValue, 
+            IHeuristic<T> heuristic
+        )
         {
             ClearAll();
 
@@ -242,7 +245,7 @@ namespace AICore.Graph
                 {
                     var adjacentVertex = edge.Value.Destination;
                     var edgeCost = edge.Value.Cost;
-                    var heuristics = calcHeuristics(adjacentVertex.Data, targetValue);
+                    var heuristics = heuristic.Calculate(adjacentVertex.Data, targetValue);
 
                     // Don't revisit vertex
                     if (adjacentVertex.Visited) 

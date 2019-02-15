@@ -39,9 +39,7 @@ namespace AICore.Map
             _start = x0y0;
             _target = xWyH;
 
-            _examplePath = AStar(_start, _target, (startV, targetV) => Math.Abs(
-                (startV.X - targetV.X) + (startV.Y - targetV.Y)
-            ));
+            _examplePath = AStar(_start, _target, new Manhattan());
         }
 
         public int Width { get; }
@@ -170,7 +168,7 @@ namespace AICore.Map
         }
         #endregion
 
-        public override async void Render(Graphics g)
+        public override void Render(Graphics g)
         {
             base.Render(g);
 
