@@ -101,6 +101,13 @@ namespace AIBehaviours
             if (ModifierKeys == Keys.Control)
             {
                 _world.AddTarget(e.X, e.Y);
+                worldPanel.Invalidate();
+                return;
+            }
+            if (ModifierKeys == Keys.Shift)
+            {
+                _world.AddStart(e.X, e.Y);
+                worldPanel.Invalidate();
                 return;
             }
 

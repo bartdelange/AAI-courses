@@ -13,7 +13,9 @@ namespace AICore
         private readonly BaseMap _map;
 
         public readonly List<MovingEntity> Entities = new List<MovingEntity>();
-        public readonly List<Obstacle> Obstacles = new List<Obstacle>();
+        private readonly List<Obstacle> Obstacles = new List<Obstacle>();
+        private Vector2 _start;
+        private Vector2 _target;
 
         public World(int width, int height)
         {
@@ -71,7 +73,22 @@ namespace AICore
 
         public void AddTarget(float x, float y)
         {
-            Debug.WriteLine(_map.FindVector(x, y));
+            _target = _map.FindVector(x, y);
+
+            if (_start != Vector2.Zero)
+            {
+                _map.CalcPath(_start, _target);
+            }
+        }
+
+        public void AddStart(float x, float y)
+        {
+            _start = _map.FindVector(x, y);   
+
+            if (_target != Vector2.Zero)
+            {
+                _map.CalcPath(_start, _target);
+            }
         }
     }
 }

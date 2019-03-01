@@ -74,8 +74,8 @@ namespace AICore.Graph
         {
             foreach (var vertex in VertexMap.Values)
                 vertex.Reset();
-            foreach (var vertex in SearchedVertexMap.Values)
-                vertex.Reset();
+
+            SearchedVertexMap = new Dictionary<T, Vertex<T>>();
         }
 
         /// <summary>

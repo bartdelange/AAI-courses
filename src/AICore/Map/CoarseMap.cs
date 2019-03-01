@@ -13,7 +13,10 @@ namespace AICore.Map
         private const int Density = 20;
         private readonly List<Obstacle> _obstacles;
         private readonly Dictionary<Vector2, bool> _vectors = new Dictionary<Vector2, bool>();
-        private readonly IEnumerable<Vertex<Vector2>> _examplePath;
+        private IEnumerable<Vertex<Vector2>> _path;
+
+        private Vector2 _start;
+        private Vector2 _target;
 
 
         private readonly Brush _brushStart = new SolidBrush(Color.FromArgb(128, Color.Cyan));
@@ -21,9 +24,6 @@ namespace AICore.Map
         private readonly Brush _brushVisited = new SolidBrush(Color.FromArgb(128, Color.DarkGreen));
         private readonly Brush _brushNotVisited = new SolidBrush(Color.FromArgb(128, Color.RoyalBlue));
         private readonly Pen _pen = new Pen(Color.DeepPink, 2);
-
-        private readonly Vector2 _start;
-        private readonly Vector2 _target;
 
         public CoarseMap(int w, int h, List<Obstacle> obstacles)
         {
@@ -36,11 +36,8 @@ namespace AICore.Map
 
             var xWyH = new Vector2(Width / Density * Density, Height / Density * Density);
             GenerateEdges(xWyH);
-
-            _start = x0y0;
-            _target = xWyH;
-
-            _examplePath = AStar(_start, _target, new Manhattan());
+            
+            CalcPath(x0y0, xWyH);
         }
 
         private int Width { get; }
@@ -185,7 +182,7 @@ namespace AICore.Map
                 new Rectangle( _start.Minus(5).ToPoint(), new Size(10, 10)));
 
 
-            foreach (var vertex in _examplePath)
+            foreach (var vertex in _path)
             {
                 g.DrawLine(_pen,  vertex.PreviousVertex.Data.ToPoint(),  vertex.Data.ToPoint());
             }
@@ -193,6 +190,11 @@ namespace AICore.Map
 
         public override Vector2 FindVector(float x, float y)
         {
+            if (x > Width || x < 0)
+                throw new ArgumentOutOfRangeException(nameof(x));
+            if (y > Height || y < 0)
+                throw new ArgumentOutOfRangeException(nameof(y));
+            
             var roundedX = (int) Math.Round (x, MidpointRounding.AwayFromZero) / Density * Density;
             var roundedY = (int) Math.Round (y, MidpointRounding.AwayFromZero) / Density * Density;
             
@@ -203,7 +205,34 @@ namespace AICore.Map
                 return vector;
             }
 
-            throw new KeyNotFoundException("The specified coordinates could not be found in the mapped vertices");
+
+            var steps = Math.Max(Height,Width)/Density;
+            // Lazy search around till we find one (do this [steps] times
+            for (var i = 0; i <= steps; i++)
+            {
+                var vectorTop = new Vector2(roundedX, roundedY + Density * i);
+                var vectorRight = new Vector2(roundedX + Density * i, roundedY);
+                var vectorBottom = new Vector2(roundedX, roundedY - Density * i);
+                var vectorLeft = new Vector2(roundedX - Density * i, roundedY);
+
+                if (_vectors.ContainsKey(vectorTop))
+                    return vectorTop;
+                if (_vectors.ContainsKey(vectorRight))
+                    return vectorRight;
+                if (_vectors.ContainsKey(vectorBottom))
+                    return vectorBottom;
+                if (_vectors.ContainsKey(vectorLeft))
+                    return vectorLeft;
+            }
+            
+            throw new IndexOutOfRangeException("No vector was found at or close to the given x and y");
+        }
+
+        public override void CalcPath(Vector2 start, Vector2 target)
+        {
+            _start = start;
+            _target = target;
+            _path = AStar(_start, _target, new Manhattan());
         }
     }
 }

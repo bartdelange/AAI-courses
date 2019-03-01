@@ -24,5 +24,7 @@ namespace AICore.Map
         }
 
         public abstract Vector2 FindVector(float x, float y);
+
+        public abstract void CalcPath(Vector2 start, Vector2 destination);
     }
 }
