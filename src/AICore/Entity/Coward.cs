@@ -1,5 +1,4 @@
 ﻿using System.Numerics;
-using AICore.Util;
 
 namespace AICore.Entity
 {

@@ -193,7 +193,10 @@ namespace AICore.Map
 
         public override Vector2 FindVector(float x, float y)
         {
-            var vector = new Vector2(x, y);
+            var roundedX = (int) Math.Round (x, MidpointRounding.AwayFromZero) / Density * Density;
+            var roundedY = (int) Math.Round (y, MidpointRounding.AwayFromZero) / Density * Density;
+            
+            var vector = new Vector2(roundedX, roundedY);
 
             if (_vectors.ContainsKey(vector))
             {

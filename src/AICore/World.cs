@@ -5,7 +5,6 @@ using System.Drawing;
 using System.Numerics;
 using AICore.Entity;
 using AICore.Map;
-using AICore.Util;
 
 namespace AICore
 {

@@ -1,6 +1,5 @@
 ﻿using System.Numerics;
 using AICore.Entity;
-using AICore.Util;
 
 namespace AICore.Behaviour.Individual
 {

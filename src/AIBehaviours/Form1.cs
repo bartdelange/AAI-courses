@@ -10,7 +10,6 @@ using AICore.Behaviour.Group;
 using AICore.Behaviour.Individual;
 using AICore.Entity;
 using AICore.Model;
-using AICore.Util;
 using Timer = System.Timers.Timer;
 
 namespace AIBehaviours

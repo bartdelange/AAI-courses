@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Numerics;
-using System.Xml.Linq;
 using AICore.Graph;
 using AICore.Util;
 
@@ -13,7 +10,7 @@ namespace AICore.Map
         private readonly Brush _brush = new SolidBrush(Color.LightSeaGreen);
         private readonly Pen _pen = new Pen(Color.DarkSeaGreen);
 
-        public virtual async void Render(Graphics g)
+        public virtual void Render(Graphics g)
         {
             foreach (var edge in VertexMap)
             {
