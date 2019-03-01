@@ -1,5 +1,6 @@
 using System.Drawing;
 using System.Linq;
+using System.Numerics;
 using AICore.Entity;
 using AICore.Util;
 
@@ -9,17 +10,17 @@ namespace AICore.Behaviour.Group
     {
         private readonly Brush _brush = new SolidBrush(Color.FromArgb(25, 255, 0, 0));
 
-        public SeparationBehaviour(MovingEntity movingEntity, MovingEntity target, double weight)
+        public SeparationBehaviour(MovingEntity movingEntity, MovingEntity target, float weight)
             : base(movingEntity, target, weight)
         {
         }
 
-        public override Vector2D Calculate(float deltaTime)
+        public override Vector2 Calculate(float deltaTime)
         {
-            if (MovingEntity.Neighbors.Count < 1) return new Vector2D();
+            if (MovingEntity.Neighbors.Count < 1) return new Vector2();
 
             var force = MovingEntity.Neighbors.Aggregate(
-                new Vector2D(),
+                new Vector2(),
                 (steeringForce, neighbor) => steeringForce + (MovingEntity.Pos - neighbor.Pos),
                 steeringForce => steeringForce / MovingEntity.Neighbors.Count
             );
@@ -34,7 +35,7 @@ namespace AICore.Behaviour.Group
             g.FillEllipse(
                 _brush,
                 new Rectangle(
-                    (Point) (MovingEntity.Pos - MovingEntity.Radius),
+                    MovingEntity.Pos.Minus(MovingEntity.Radius).ToPoint(),
                     new Size(size, size)
                 )
             );

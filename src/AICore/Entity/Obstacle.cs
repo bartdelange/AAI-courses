@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Numerics;
 using AICore.Util;
 
 namespace AICore.Entity
@@ -8,11 +9,11 @@ namespace AICore.Entity
         public static int MinRadius = 10;
         public static int MaxRadius = 100;
 
-        public Obstacle(Vector2D pos, World w) : this(pos, w, MinRadius)
+        public Obstacle(Vector2 pos, World w) : this(pos, w, MinRadius)
         {
         }
 
-        public Obstacle(Vector2D pos, World w, int radius) : base(pos, w)
+        public Obstacle(Vector2 pos, World w, int radius) : base(pos, w)
         {
             Radius = radius;
         }

@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Numerics;
+using System.Xml.Linq;
 using AICore.Graph;
 using AICore.Util;
 
 namespace AICore.Map
 {
-    public abstract class BaseMap : Graph<Vector2D>
+    public abstract class BaseMap : Graph<Vector2>
     {
         private readonly Brush _brush = new SolidBrush(Color.LightSeaGreen);
         private readonly Pen _pen = new Pen(Color.DarkSeaGreen);
@@ -17,11 +19,13 @@ namespace AICore.Map
             {
                 foreach (var adjacentEdge in edge.Value.AdjacentVertices)
                 {
-                    g.DrawLine(_pen, (Point) adjacentEdge.Value.Destination.Data, (Point) edge.Value.Data);
+                    g.DrawLine(_pen,  adjacentEdge.Value.Destination.Data.ToPoint(), edge.Value.Data.ToPoint());
                 }
 
-                g.FillEllipse(_brush, new Rectangle((Point) (edge.Value.Data - 2), new Size(5, 5)));
+                g.FillEllipse(_brush, new Rectangle( edge.Value.Data.Minus(2).ToPoint(), new Size(5, 5)));
             }
         }
+
+        public abstract Vector2 FindVector(float x, float y);
     }
 }

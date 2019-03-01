@@ -1,4 +1,5 @@
-﻿using AICore.Entity;
+﻿using System.Numerics;
+using AICore.Entity;
 using AICore.Util;
 
 namespace AICore.Behaviour.Individual
@@ -7,18 +8,18 @@ namespace AICore.Behaviour.Individual
     {
         private const double ThreatRange = 100.0;
 
-        public EvadeBehaviour(MovingEntity movingEntity, MovingEntity target, double weight)
+        public EvadeBehaviour(MovingEntity movingEntity, MovingEntity target, float weight)
             : base(movingEntity, target, weight)
         {
         }
 
-        public override Vector2D Calculate(float deltaTime)
+        public override Vector2 Calculate(float deltaTime)
         {
             var toPursuer = Target.Pos - MovingEntity.Pos;
 
             // Only flee if the target is within 'panic distance'. Work in distance squared space.
             if (toPursuer.LengthSquared() > ThreatRange * ThreatRange)
-                return new Vector2D(0, 0);
+                return new Vector2(0, 0);
 
             // The lookahead time is proportional to the distance between the pursuer
             // and the pursuer; and is inversely proportional to the sum of the
@@ -28,7 +29,7 @@ namespace AICore.Behaviour.Individual
             var predictedPosition = (Target.Pos + Target.Velocity) * lookAheadTime;
 
             //now flee away from predicted future position of the pursuer
-            return (MovingEntity.Pos - predictedPosition).Normalize() *
+            return Vector2.Normalize(MovingEntity.Pos - predictedPosition) *
                    MovingEntity.MaxSpeed -
                    MovingEntity.Velocity;
         }

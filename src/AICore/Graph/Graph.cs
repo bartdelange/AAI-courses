@@ -261,7 +261,7 @@ namespace AICore.Graph
                     adjacentVertex.Distance = vertex.Distance + edgeCost;
                     adjacentVertex.PreviousVertex = vertex;
 
-                    priorityQueue.Enqueue(new Path<T>(adjacentVertex, edgeCost + heuristics));
+                    priorityQueue.Enqueue(new Path<T>(adjacentVertex, adjacentVertex.Distance + heuristics));
                     SearchedVertexMap[adjacentVertex.Data] = adjacentVertex;
 
                     if (adjacentVertex.Data.Equals(targetValue))

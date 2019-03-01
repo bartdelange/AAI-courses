@@ -34,6 +34,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -81,7 +82,7 @@
     <Compile Include="States\Patrol.cs" />
     <Compile Include="Util\Matrix.cs" />
     <Compile Include="Util\PriorityQueue.cs" />
-    <Compile Include="Util\Vector2D.cs" />
+    <Compile Include="Util\Vector2Ext.cs" />
     <Compile Include="World.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

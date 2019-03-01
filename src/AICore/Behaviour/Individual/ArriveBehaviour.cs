@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using AICore.Entity;
 using AICore.Util;
 
@@ -9,26 +10,26 @@ namespace AICore.Behaviour.Individual
         private const double DecelerationSpeed = 1;
         private const double DecelerationTweaker = 0.3;
 
-        public ArriveBehaviour(MovingEntity movingEntity, MovingEntity target, double weight)
+        public ArriveBehaviour(MovingEntity movingEntity, MovingEntity target, float weight)
             : base(movingEntity, target, weight)
         {
         }
 
-        public override Vector2D Calculate(float deltaTime)
+        public override Vector2 Calculate(float deltaTime)
         {
             var toTarget = Target.Pos - MovingEntity.Pos;
 
             //calculate the distance to the target
             var dist = toTarget.Length();
 
-            if (!(dist > 0)) return new Vector2D();
+            if (!(dist > 0)) return new Vector2();
 
             //because Deceleration is enumerated as an int, this value is required
             //to provide fine tweaking of the deceleration..
 
             //calculate the speed required to reach the target given the desired
             //deceleration
-            var speed = dist / (DecelerationSpeed * DecelerationTweaker);
+            var speed = (float) (dist / (DecelerationSpeed * DecelerationTweaker));
 
             //make sure the velocity does not exceed the max
             speed = Math.Min(speed, MovingEntity.MaxSpeed);

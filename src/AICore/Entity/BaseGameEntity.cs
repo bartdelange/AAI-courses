@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using AICore.Util;
 
 namespace AICore.Entity
@@ -9,7 +10,7 @@ namespace AICore.Entity
     {
         public List<MovingEntity> Neighbors;
 
-        protected BaseGameEntity(Vector2D pos, World w) : base(pos, w)
+        protected BaseGameEntity(Vector2 pos, World w) : base(pos, w)
         {
         }
 

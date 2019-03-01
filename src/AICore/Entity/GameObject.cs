@@ -1,17 +1,18 @@
 ﻿using System.Drawing;
+using System.Numerics;
 using AICore.Util;
 
 namespace AICore.Entity
 {
     public class GameObject
     {
-        protected GameObject(Vector2D pos, World w)
+        protected GameObject(Vector2 pos, World w)
         {
             Pos = pos;
             MyWorld = w;
         }
 
-        public Vector2D Pos { get; set; }
+        public Vector2 Pos { get; set; }
 
         protected float Scale { get; set; }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Numerics;
 using System.Timers;
 using System.Windows.Forms;
 using AIBehaviours.Controls;
@@ -98,12 +99,18 @@ namespace AIBehaviours
 
         private void WorldPanel_MouseClick(object sender, MouseEventArgs e)
         {
-            foreach (MovingEntity entity in entityList.SelectedItems) entity.Pos = new Vector2D(e.X, e.Y);
+            if (ModifierKeys == Keys.Control)
+            {
+                _world.AddTarget(e.X, e.Y);
+                return;
+            }
+
+            foreach (MovingEntity entity in entityList.SelectedItems) entity.Pos = new Vector2(e.X, e.Y);
         }
 
         private void AddVehicleButton_Click(object sender, EventArgs e)
         {
-            var randomPosition = new Vector2D(_random.Next(0, worldPanel.Width), _random.Next(0, worldPanel.Height));
+            var randomPosition = new Vector2(_random.Next(0, worldPanel.Width), _random.Next(0, worldPanel.Height));
 
             var newVehicle = new Vehicle(
                 randomPosition,

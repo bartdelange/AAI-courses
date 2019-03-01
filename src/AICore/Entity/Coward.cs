@@ -1,4 +1,5 @@
-﻿using AICore.Util;
+﻿using System.Numerics;
+using AICore.Util;
 
 namespace AICore.Entity
 {
@@ -6,7 +7,7 @@ namespace AICore.Entity
     {
         public int Strength = 10;
 
-        public Coward(Vector2D position, World world)
+        public Coward(Vector2 position, World world)
             : base(position, world)
         {
         }

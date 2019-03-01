@@ -1,5 +1,6 @@
 using System.Drawing;
 using System.Linq;
+using System.Numerics;
 using AICore.Entity;
 using AICore.Util;
 
@@ -11,24 +12,24 @@ namespace AICore.Behaviour.Group
 
         private readonly int _radius;
 
-        public CohesionBehaviour(MovingEntity movingEntity, MovingEntity target, double weight)
+        public CohesionBehaviour(MovingEntity movingEntity, MovingEntity target, float weight)
             : base(movingEntity, target, weight)
         {
             _radius = (int) (MovingEntity.Radius * 1.5);
         }
 
-        public override Vector2D Calculate(float deltaTime)
+        public override Vector2 Calculate(float deltaTime)
         {
-            if (MovingEntity.Neighbors.Count < 1) return new Vector2D();
+            if (MovingEntity.Neighbors.Count < 1) return new Vector2();
 
             var centerOfMass = MovingEntity.Neighbors.Aggregate(
-                new Vector2D(),
+                new Vector2(),
                 (position, neighbor) => position + neighbor.Pos
             );
 
             var targetPosition = centerOfMass / MovingEntity.Neighbors.Count;
 
-            return (targetPosition - MovingEntity.Pos).Normalize() * MovingEntity.MaxSpeed;
+            return Vector2.Normalize(targetPosition - MovingEntity.Pos) * MovingEntity.MaxSpeed;
         }
 
         public override void Render(Graphics g)
@@ -38,7 +39,7 @@ namespace AICore.Behaviour.Group
             g.FillEllipse(
                 _brush,
                 new Rectangle(
-                    (Point) (MovingEntity.Pos - _radius),
+                    MovingEntity.Pos.Minus(_radius).ToPoint(),
                     new Size(size, size)
                 )
             );

@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Numerics;
 using AICore.Entity;
 using AICore.Util;
 
@@ -6,9 +7,9 @@ namespace AICore.Behaviour
 {
     public abstract class SteeringBehaviour
     {
-        public double Weight = 100;
+        public float Weight = 100;
 
-        protected SteeringBehaviour(MovingEntity movingEntity, MovingEntity target, double weight)
+        protected SteeringBehaviour(MovingEntity movingEntity, MovingEntity target, float weight)
         {
             Weight = weight;
 
@@ -19,7 +20,7 @@ namespace AICore.Behaviour
         public MovingEntity MovingEntity { get; }
         public MovingEntity Target { get; }
 
-        public abstract Vector2D Calculate(float deltaTime);
+        public abstract Vector2 Calculate(float deltaTime);
 
         public virtual void Render(Graphics g)
         {

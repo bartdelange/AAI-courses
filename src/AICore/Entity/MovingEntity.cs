@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using AICore.Behaviour;
 using AICore.Util;
 
@@ -7,7 +8,7 @@ namespace AICore.Entity
 {
     public abstract class MovingEntity : BaseGameEntity
     {
-        protected MovingEntity(Vector2D pos, World w) : base(pos, w)
+        protected MovingEntity(Vector2 pos, World w) : base(pos, w)
         {
         }
 
@@ -17,9 +18,9 @@ namespace AICore.Entity
         public int Radius { get; set; } = 100;
 
         //	
-        public Vector2D Velocity { get; set; } = new Vector2D(1, 1);
-        public Vector2D Heading { get; set; } = new Vector2D(1, 1);
-        public Vector2D Side { get; set; } = new Vector2D(1, 1);
+        public Vector2 Velocity { get; set; } = new Vector2(1, 1);
+        public Vector2 Heading { get; set; } = new Vector2(1, 1);
+        public Vector2 Side { get; set; } = new Vector2(1, 1);
 
         //	
         public List<SteeringBehaviour> SteeringBehaviours { get; set; } = new List<SteeringBehaviour>();
@@ -30,7 +31,7 @@ namespace AICore.Entity
 
             var steeringForce =
                 SteeringBehaviours.Aggregate(
-                    new Vector2D(),
+                    new Vector2(),
                     (accumulator, behaviour) =>
                     {
                         // Stop when steeringforce exceeds max speed
@@ -48,26 +49,26 @@ namespace AICore.Entity
 
             if (Velocity.LengthSquared() > 0.00000001)
             {
-                Heading = Velocity.Normalize();
+                Heading = Vector2.Normalize(Velocity);
                 Side = Heading.Perpendicular();
             }
 
             Pos = WrapToBounds(Pos, MyWorld.Width, MyWorld.Height);
         }
 
-        private static Vector2D WrapToBounds(Vector2D pos, int width, int height)
+        private static Vector2 WrapToBounds(Vector2 pos, int width, int height)
         {
             if (pos.X > width)
-                return new Vector2D(0, pos.Y);
+                return new Vector2(0, pos.Y);
 
             if (pos.Y > height)
-                return new Vector2D(pos.X, 0);
+                return new Vector2(pos.X, 0);
 
             if (pos.X < 0)
-                return new Vector2D(width, pos.Y);
+                return new Vector2(width, pos.Y);
 
             if (pos.Y < 0)
-                return new Vector2D(pos.X, height);
+                return new Vector2(pos.X, height);
 
             return pos;
         }

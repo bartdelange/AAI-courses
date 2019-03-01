@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
+using System.Numerics;
 using AICore.Entity;
 using AICore.Map;
 using AICore.Util;
@@ -19,8 +21,8 @@ namespace AICore
             Width = width;
             Height = height;
 
-            Entities.Add(new Vehicle(new Vector2D(100, 60), Color.DarkRed, this));
-            Entities.Add(new Vehicle(new Vector2D(250, 250), Color.Blue, this));
+            Entities.Add(new Vehicle(new Vector2(100, 60), Color.DarkRed, this));
+            Entities.Add(new Vehicle(new Vector2(250, 250), Color.Blue, this));
 
             GenerateRandomObstacles();
             _map = new CoarseMap(Width, Height, Obstacles);
@@ -45,7 +47,7 @@ namespace AICore
                 var randY = Math.Min(Height - obstacleRadius, rand.Next(obstacleRadius, Height));
 
                 // Add obstacle to the world and subtract its size from the available clutter
-                Obstacles.Add(new Obstacle(new Vector2D(randX, randY), this, obstacleRadius));
+                Obstacles.Add(new Obstacle(new Vector2(randX, randY), this, obstacleRadius));
                 clutterRemaining -= obstacleRadius;
             }
         }
@@ -66,6 +68,11 @@ namespace AICore
 
             Obstacles.ForEach(e => e.Render(g));
             _map.Render(g);
+        }
+
+        public void AddTarget(float x, float y)
+        {
+            Debug.WriteLine(_map.FindVector(x, y));
         }
     }
 }

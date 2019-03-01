@@ -1,11 +1,12 @@
-﻿using AICore.Entity;
+﻿using System.Numerics;
+using AICore.Entity;
 using AICore.Util;
 
 namespace AICore.Behaviour.Individual
 {
     public class SeekBehaviour : SteeringBehaviour
     {
-        public SeekBehaviour(MovingEntity movingEntity, MovingEntity target, double weight)
+        public SeekBehaviour(MovingEntity movingEntity, MovingEntity target, float weight)
             : base(movingEntity, target, weight)
         {
         }
@@ -13,9 +14,9 @@ namespace AICore.Behaviour.Individual
         /// <summary>
         ///     Set a velocity that will make the agent move the world target
         /// </summary>
-        public override Vector2D Calculate(float deltaTime)
+        public override Vector2 Calculate(float deltaTime)
         {
-            return (Target.Pos - MovingEntity.Pos).Normalize() * MovingEntity.MaxSpeed;
+            return Vector2.Normalize(Target.Pos - MovingEntity.Pos) * MovingEntity.MaxSpeed;
         }
     }
 }

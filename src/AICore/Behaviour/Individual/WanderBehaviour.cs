@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Numerics;
 using AICore.Entity;
 using AICore.Util;
 
@@ -7,31 +8,31 @@ namespace AICore.Behaviour.Individual
 {
     public class WanderBehaviour : SteeringBehaviour
     {
-        private const double WanderRadius = 50;
+        private const float WanderRadius = 50;
 
-        private const double WanderDistance = 25;
+        private const float WanderDistance = 25;
 
-        private const double WanderJitter = 25;
+        private const float WanderJitter = 25;
 
         private static readonly Random Random = new Random();
 
-        private Vector2D _wanderTarget = new Vector2D(0, 0);
+        private Vector2 _wanderTarget = new Vector2(0, 0);
 
-        public WanderBehaviour(MovingEntity movingEntity, MovingEntity target, double weight)
+        public WanderBehaviour(MovingEntity movingEntity, MovingEntity target, float weight)
             : base(movingEntity, target, weight)
         {
         }
 
-        public override Vector2D Calculate(float deltaTime)
+        public override Vector2 Calculate(float deltaTime)
         {
-            var addToPerimeter = new Vector2D(RandomClamped() * WanderJitter, RandomClamped() * WanderJitter);
-            _wanderTarget = (_wanderTarget + addToPerimeter).Normalize() * WanderRadius +
-                            new Vector2D(WanderDistance, 0);
+            var addToPerimeter = new Vector2(RandomClamped() * WanderJitter, RandomClamped() * WanderJitter);
+            _wanderTarget = Vector2.Normalize(_wanderTarget + addToPerimeter) * WanderRadius +
+                            new Vector2(WanderDistance, 0);
 
             return PointToWorldSpace(_wanderTarget) - MovingEntity.Pos;
         }
 
-        private Vector2D PointToWorldSpace(Vector2D localTarget)
+        private Vector2 PointToWorldSpace(Vector2 localTarget)
         {
             var matrix = new Matrix();
 
@@ -39,12 +40,12 @@ namespace AICore.Behaviour.Individual
             matrix.Translate(MovingEntity.Pos.X, MovingEntity.Pos.Y);
 
             // Transform the vector to world space
-            return matrix.TransformVector2Ds(localTarget);
+            return matrix.TransformVector2s(localTarget);
         }
 
-        private static double RandomClamped()
+        private static float RandomClamped()
         {
-            return Random.NextDouble() - Random.NextDouble();
+            return (float) (Random.NextDouble() - Random.NextDouble());
         }
 
         public override void Render(Graphics g)

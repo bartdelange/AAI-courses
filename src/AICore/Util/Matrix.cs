@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 
 namespace AICore.Util
 {
@@ -32,7 +33,7 @@ namespace AICore.Util
         /// <summary>
         ///     Rotates matrix by using the given vectors
         /// </summary>
-        public void Rotate(Vector2D heading, Vector2D side)
+        public void Rotate(Vector2 heading, Vector2 side)
         {
             var matrix = new MatrixStructure
             {
@@ -57,18 +58,18 @@ namespace AICore.Util
         /// </summary>
         /// <param name="angle">
         /// </param>
-        public void Rotate(double angle)
+        public void Rotate(float angle)
         {
             var sin = Math.Sin(angle);
             var cos = Math.Cos(angle);
 
             var matrix = new MatrixStructure
             {
-                P11 = cos,
-                P12 = sin,
+                P11 = (float) cos,
+                P12 = (float) sin,
                 P13 = 0,
-                P21 = -sin,
-                P22 = cos,
+                P21 = (float) -sin,
+                P22 = (float) cos,
                 P23 = 0,
                 P31 = 0,
                 P32 = 0,
@@ -85,7 +86,7 @@ namespace AICore.Util
         /// </param>
         /// <param name="y">
         /// </param>
-        public void Translate(double x, double y)
+        public void Translate(float x, float y)
         {
             var matrix = new MatrixStructure
             {
@@ -105,12 +106,12 @@ namespace AICore.Util
             MatrixMultiply(matrix);
         }
 
-        public Vector2D TransformVector2Ds(Vector2D localVector)
+        public Vector2 TransformVector2s(Vector2 localVector)
         {
             var x = _matrix.P11 * localVector.X + _matrix.P21 * localVector.Y + _matrix.P31;
             var y = _matrix.P12 * localVector.X + _matrix.P22 * localVector.Y + _matrix.P32;
 
-            return new Vector2D(x, y);
+            return new Vector2(x, y);
         }
 
         public override string ToString()
@@ -120,15 +121,15 @@ namespace AICore.Util
 
         private class MatrixStructure
         {
-            public double P11 = 1;
-            public double P12;
-            public double P13;
-            public double P21;
-            public double P22 = 1;
-            public double P23;
-            public double P31;
-            public double P32;
-            public double P33 = 1;
+            public float P11 = 1;
+            public float P12;
+            public float P13;
+            public float P21;
+            public float P22 = 1;
+            public float P23;
+            public float P31;
+            public float P32;
+            public float P33 = 1;
 
             public override string ToString()
             {
