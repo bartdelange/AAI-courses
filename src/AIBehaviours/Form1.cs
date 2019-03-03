@@ -104,6 +104,7 @@ namespace AIBehaviours
                 worldPanel.Invalidate();
                 return;
             }
+
             if (ModifierKeys == Keys.Shift)
             {
                 _world.AddStart(e.X, e.Y);

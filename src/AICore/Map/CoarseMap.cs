@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Numerics;
 using AICore.Entity;
 using AICore.Graph;
+using AICore.Graph.Heuristic;
 using AICore.Util;
 
 namespace AICore.Map
@@ -16,7 +17,7 @@ namespace AICore.Map
         private IEnumerable<Vertex<Vector2>> _path;
 
         private Vector2 _start;
-        private Vector2 _target;
+        private Vector2 _destination;
 
 
         private readonly Brush _brushStart = new SolidBrush(Color.FromArgb(128, Color.Cyan));
@@ -37,7 +38,7 @@ namespace AICore.Map
             var xWyH = new Vector2(Width / Density * Density, Height / Density * Density);
             GenerateEdges(xWyH);
             
-            CalcPath(x0y0, xWyH);
+            CalculatePath(x0y0, xWyH);
         }
 
         private int Width { get; }
@@ -177,7 +178,8 @@ namespace AICore.Map
             }
             
             g.FillEllipse(_brushTarget,
-                new Rectangle( _target.Minus(5).ToPoint(), new Size(10, 10)));
+                new Rectangle( _destination.Minus(5).ToPoint(), new Size(10, 10)));
+
             g.FillEllipse(_brushStart,
                 new Rectangle( _start.Minus(5).ToPoint(), new Size(10, 10)));
 
@@ -192,6 +194,7 @@ namespace AICore.Map
         {
             if (x > Width || x < 0)
                 throw new ArgumentOutOfRangeException(nameof(x));
+
             if (y > Height || y < 0)
                 throw new ArgumentOutOfRangeException(nameof(y));
             
@@ -207,6 +210,7 @@ namespace AICore.Map
 
 
             var steps = Math.Max(Height,Width)/Density;
+
             // Lazy search around till we find one (do this [steps] times
             for (var i = 0; i <= steps; i++)
             {
@@ -217,10 +221,13 @@ namespace AICore.Map
 
                 if (_vectors.ContainsKey(vectorTop))
                     return vectorTop;
+
                 if (_vectors.ContainsKey(vectorRight))
                     return vectorRight;
+
                 if (_vectors.ContainsKey(vectorBottom))
                     return vectorBottom;
+
                 if (_vectors.ContainsKey(vectorLeft))
                     return vectorLeft;
             }
@@ -228,11 +235,11 @@ namespace AICore.Map
             throw new IndexOutOfRangeException("No vector was found at or close to the given x and y");
         }
 
-        public override void CalcPath(Vector2 start, Vector2 target)
+        public override void CalculatePath(Vector2 start, Vector2 destination)
         {
             _start = start;
-            _target = target;
-            _path = AStar(_start, _target, new Manhattan());
+            _destination = destination;
+            _path = AStar(_start, _destination, new Manhattan());
         }
     }
 }
