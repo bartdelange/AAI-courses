@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AICore.Graph.Heuristic;
 using AICore.Util;
 
 namespace AICore.Graph
@@ -217,8 +218,8 @@ namespace AICore.Graph
         }
 
         public IEnumerable<Vertex<T>> AStar(
-            T startValue, 
-            T targetValue, 
+            T startValue,
+            T targetValue,
             IHeuristic<T> heuristic
         )
         {

@@ -65,9 +65,9 @@
     <Compile Include="Graph\Edge.cs" />
     <Compile Include="Graph\Graph.cs" />
     <Compile Include="Graph\IGraph.cs" />
-    <Compile Include="Graph\IHeuristic.cs" />
+    <Compile Include="Graph\Heuristics\IHeuristic.cs" />
     <Compile Include="Graph\IVertex.cs" />
-    <Compile Include="Graph\Manhattan.cs" />
+    <Compile Include="Graph\Heuristics\Manhattan.cs" />
     <Compile Include="Graph\Path.cs" />
     <Compile Include="Graph\Vertex.cs" />
     <Compile Include="Map\BaseMap.cs" />

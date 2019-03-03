@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Numerics;
 
-namespace AICore.Graph
+namespace AICore.Graph.Heuristic
 {
     class Manhattan : IHeuristic<Vector2>
     {

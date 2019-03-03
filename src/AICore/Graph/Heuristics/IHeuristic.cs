@@ -1,5 +1,5 @@
 ﻿
-namespace AICore.Graph
+namespace AICore.Graph.Heuristic
 {
     public interface IHeuristic<T>
     {
