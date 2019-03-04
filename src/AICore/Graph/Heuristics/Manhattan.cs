@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Numerics;
+using AICore.Graph.Heuristic;
 
-namespace AICore.Graph.Heuristic
+namespace AICore.Graph.Heuristics
 {
-    class Manhattan : IHeuristic<Vector2>
+    public class Manhattan : IHeuristic<Vector2>
     {
         public double Calculate(Vector2 v1, Vector2 v2)
         {

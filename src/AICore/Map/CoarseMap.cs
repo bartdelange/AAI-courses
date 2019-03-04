@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Numerics;
 using AICore.Entity;
 using AICore.Graph;
-using AICore.Graph.Heuristic;
+using AICore.Graph.Heuristics;
 using AICore.Util;
 
 namespace AICore.Map
@@ -18,7 +18,6 @@ namespace AICore.Map
 
         private Vector2 _start;
         private Vector2 _destination;
-
 
         private readonly Brush _brushStart = new SolidBrush(Color.FromArgb(128, Color.Cyan));
         private readonly Brush _brushTarget = new SolidBrush(Color.FromArgb(128, Color.Red));
@@ -38,7 +37,7 @@ namespace AICore.Map
             var xWyH = new Vector2(Width / Density * Density, Height / Density * Density);
             GenerateEdges(xWyH);
             
-            CalculatePath(x0y0, xWyH);
+            FindPath(x0y0, xWyH);
         }
 
         private int Width { get; }
@@ -235,10 +234,11 @@ namespace AICore.Map
             throw new IndexOutOfRangeException("No vector was found at or close to the given x and y");
         }
 
-        public override void CalculatePath(Vector2 start, Vector2 destination)
+        public override void FindPath(Vector2 start, Vector2 destination)
         {
             _start = start;
             _destination = destination;
+            
             _path = AStar(_start, _destination, new Manhattan());
         }
     }

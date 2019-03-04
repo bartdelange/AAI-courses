@@ -1,5 +1,26 @@
+using AICore.Graph;
+using AICore.Graph.Heuristic;
+using Xunit;
+using Xunit.Abstractions;
+
 namespace AAITests
 {
+    #region TestClasses
+
+    public class StringGraph : Graph<string>
+    {
+    }
+
+    public class StringHeuristic : IHeuristic<string>
+    {
+        public double Calculate(string startVertex, string targetVertex)
+        {
+            return 1;
+        }
+    }
+
+    #endregion
+
     public class GraphTests
     {
         public GraphTests(ITestOutputHelper output)
@@ -11,7 +32,7 @@ namespace AAITests
 
         private Graph<string> CreateGraph()
         {
-            var graph = new Graph<string>();
+            var graph = new StringGraph();
 
             // V0
             graph.AddEdge("V0", "V1", 2);
@@ -46,12 +67,12 @@ namespace AAITests
         [Fact]
         public void Should_AddEdge()
         {
-            var myGraph = new Graph<string>();
+            var myGraph = new StringGraph();
             myGraph.AddEdge("V0", "V1", 5);
 
             var myVertex = myGraph.GetVertex("V0");
 
-            Assert.Equal(5, myVertex._AdjacentVertices[0]._Cost);
+            Assert.Equal(5, myVertex.AdjacentVertices["V1"].Cost);
         }
 
         [Fact]
@@ -59,15 +80,15 @@ namespace AAITests
         {
             var myGraph = CreateGraph();
 
-            myGraph.AStar("V0");
+            myGraph.AStar("V0", "V5", new StringHeuristic());
 
-            Assert.Equal(0, myGraph.GetVertex("V0")._Distance);
-            Assert.Equal(2, myGraph.GetVertex("V1")._Distance);
-            Assert.Equal(3, myGraph.GetVertex("V2")._Distance);
-            Assert.Equal(1, myGraph.GetVertex("V3")._Distance);
-            Assert.Equal(3, myGraph.GetVertex("V4")._Distance);
-            Assert.Equal(6, myGraph.GetVertex("V5")._Distance);
-            Assert.Equal(5, myGraph.GetVertex("V6")._Distance);
+            Assert.Equal(0, myGraph.GetVertex("V0").Distance);
+            Assert.Equal(2, myGraph.GetVertex("V1").Distance);
+            Assert.Equal(3, myGraph.GetVertex("V2").Distance);
+            Assert.Equal(1, myGraph.GetVertex("V3").Distance);
+            Assert.Equal(3, myGraph.GetVertex("V4").Distance);
+            Assert.Equal(9, myGraph.GetVertex("V5").Distance);
+            Assert.Equal(5, myGraph.GetVertex("V6").Distance);
         }
 
         [Fact]
@@ -77,24 +98,24 @@ namespace AAITests
 
             myGraph.Dijkstra("V0");
 
-            Assert.Equal(0, myGraph.GetVertex("V0")._Distance);
-            Assert.Equal(2, myGraph.GetVertex("V1")._Distance);
-            Assert.Equal(3, myGraph.GetVertex("V2")._Distance);
-            Assert.Equal(1, myGraph.GetVertex("V3")._Distance);
-            Assert.Equal(3, myGraph.GetVertex("V4")._Distance);
-            Assert.Equal(6, myGraph.GetVertex("V5")._Distance);
-            Assert.Equal(5, myGraph.GetVertex("V6")._Distance);
+            Assert.Equal(0, myGraph.GetVertex("V0").Distance);
+            Assert.Equal(2, myGraph.GetVertex("V1").Distance);
+            Assert.Equal(3, myGraph.GetVertex("V2").Distance);
+            Assert.Equal(1, myGraph.GetVertex("V3").Distance);
+            Assert.Equal(3, myGraph.GetVertex("V4").Distance);
+            Assert.Equal(9, myGraph.GetVertex("V5").Distance);
+            Assert.Equal(5, myGraph.GetVertex("V6").Distance);
         }
 
         [Fact]
         public void Should_GetVertex()
         {
-            var myGraph = new Graph<string>();
+            var myGraph = new StringGraph();
             myGraph.AddEdge("V0", "V1", 5);
 
             var myVertex = myGraph.GetVertex("V0");
 
-            Assert.Equal("V0", myVertex._Data);
+            Assert.Equal("V0", myVertex.Data);
         }
 
         [Fact]
@@ -111,7 +132,7 @@ namespace AAITests
         [Fact]
         public void Should_ReturnFalse_When_IsNotConnected()
         {
-            var myGraph = new Graph<string>();
+            var myGraph = new StringGraph();
 
             myGraph.AddEdge("V0", "V1", 2);
             myGraph.AddEdge("V2", "V3", 3);
@@ -149,13 +170,13 @@ namespace AAITests
 
             myGraph.Unweighted("V0");
 
-            Assert.Equal(0, myGraph.GetVertex("V0")._Distance);
-            Assert.Equal(1, myGraph.GetVertex("V1")._Distance);
-            Assert.Equal(2, myGraph.GetVertex("V2")._Distance);
-            Assert.Equal(1, myGraph.GetVertex("V3")._Distance);
-            Assert.Equal(2, myGraph.GetVertex("V4")._Distance);
-            Assert.Equal(2, myGraph.GetVertex("V5")._Distance);
-            Assert.Equal(2, myGraph.GetVertex("V6")._Distance);
+            Assert.Equal(0, myGraph.GetVertex("V0").Distance);
+            Assert.Equal(1, myGraph.GetVertex("V1").Distance);
+            Assert.Equal(2, myGraph.GetVertex("V2").Distance);
+            Assert.Equal(1, myGraph.GetVertex("V3").Distance);
+            Assert.Equal(2, myGraph.GetVertex("V4").Distance);
+            Assert.Equal(2, myGraph.GetVertex("V5").Distance);
+            Assert.Equal(2, myGraph.GetVertex("V6").Distance);
         }
     }
 }

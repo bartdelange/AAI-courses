@@ -77,7 +77,7 @@ namespace AICore
 
             if (_start != Vector2.Zero)
             {
-                _map.CalculatePath(_start, _target);
+                _map.FindPath(_start, _target);
             }
         }
 
@@ -87,7 +87,7 @@ namespace AICore
 
             if (_target != Vector2.Zero)
             {
-                _map.CalculatePath(_start, _target);
+                _map.FindPath(_start, _target);
             }
         }
     }
