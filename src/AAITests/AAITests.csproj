@@ -13,7 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AIBehaviours\AIBehaviours.csproj" />
     <ProjectReference Include="..\AICore\AICore.csproj" />
   </ItemGroup>
 
