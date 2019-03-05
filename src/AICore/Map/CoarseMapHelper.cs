@@ -16,6 +16,7 @@ namespace AICore.Map
     {
         public IEnumerable<Vector2> CurrentPath;
         public Dictionary<Vector2, Vertex<Vector2>> VisitedVertices;
+        public IEnumerable<Vector2> SmoothedPath;
         
         public void Draw(Graphics graphics)
         {
@@ -32,6 +33,7 @@ namespace AICore.Map
             var brushVisited = new SolidBrush(Color.FromArgb(128, Color.DarkGreen));
             var brushNotVisited = new SolidBrush(Color.FromArgb(128, Color.RoyalBlue));
             var pen = new Pen(Color.DeepPink, 2);
+            var smoothedPathPen = new Pen(Color.Gold, 2);
 
             foreach (var edge in VisitedVertices)
             {
@@ -51,11 +53,17 @@ namespace AICore.Map
                 new Rectangle(start.Minus(5).ToPoint(), new Size(10, 10))
             );
 
-
             var previousVector2 = start;
             foreach (var vector2 in CurrentPath)
             {
                 graphics.DrawLine(pen, previousVector2.ToPoint(), vector2.ToPoint());
+                previousVector2 = vector2;
+            }
+            
+            previousVector2 = start;
+            foreach (var vector2 in SmoothedPath)
+            {
+                graphics.DrawLine(smoothedPathPen, previousVector2.ToPoint(), vector2.ToPoint());
                 previousVector2 = vector2;
             }
         }

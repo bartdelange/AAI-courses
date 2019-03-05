@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Numerics;
 using AICore.Entity;
+using AICore.Graph;
 using AICore.Graph.Heuristics;
 
 namespace AICore.Map
@@ -10,27 +12,17 @@ namespace AICore.Map
     public class CoarseMap : BaseMap
     {
         private const int Density = 20;
-
-        private readonly List<Obstacle> _obstacles;
         private readonly Dictionary<Vector2, bool> _vectors = new Dictionary<Vector2, bool>();
-
         private readonly CoarseMapHelper _coarseMapHelper = new CoarseMapHelper();
 
-        public CoarseMap(int w, int h, List<Obstacle> obstacles)
+        public CoarseMap(int w, int h, List<Obstacle> obstacles) : base (w, h, obstacles)
         {
-            Width = w;
-            Height = h;
-            _obstacles = obstacles;
-
-            var x0Y0 = new Vector2(Density, Density);
-            GenerateEdges(x0Y0);
+            var x0y0 = new Vector2(Density, Density);
+            GenerateEdges(x0y0);
 
             var xWyH = new Vector2(Width / Density * Density, Height / Density * Density);
             GenerateEdges(xWyH);
         }
-
-        private int Width { get; }
-        private int Height { get; }
 
         #region Floodfilling
 
@@ -139,11 +131,11 @@ namespace AICore.Map
             AddEdge(end, start, Vector2.Distance(start, end));
         }
 
-        public bool HasCollision(Vector2 end)
+        protected bool HasCollision(Vector2 end)
         {
             const int extraRadius = Density / 2;
 
-            foreach (var obstacle in _obstacles)
+            foreach (var obstacle in Obstacles)
             {
                 var deltaX = obstacle.Pos.X - end.X;
                 var deltaY = obstacle.Pos.Y - end.Y;
@@ -163,6 +155,8 @@ namespace AICore.Map
 
         public override void Render(Graphics g)
         {
+            base.Render(g);
+            
             foreach (var vector in _vectors)
             {
                 g.DrawEllipse(new Pen(Color.Red), vector.Key.X - 1, vector.Key.Y - 1, 3, 3);
@@ -206,12 +200,59 @@ namespace AICore.Map
         public override IEnumerable<Vector2> FindPath(Vector2 start, Vector2 destination)
         {
             var path = AStar(FindClosestVertex(start), FindClosestVertex(destination), new Manhattan());
-
+            
             // Update CoarseMapHelper
             _coarseMapHelper.CurrentPath = path.Item1;
+            _coarseMapHelper.SmoothedPath = SmoothPath(path.Item1);
             _coarseMapHelper.VisitedVertices = path.Item2;
 
             return path.Item1;
+        }
+        
+        
+        private IEnumerable<Vector2> SmoothPath(IEnumerable<Vector2> path)
+        {
+            // The start is always path[0].previous
+            var smoothedPath = new List<Vector2>();
+            var workingPath = path.ToList();
+            var current = workingPath[0];
+            var next = workingPath[1];
+            
+            foreach(var vector in path) {
+                // Skip if we are on _current_
+                if (current == vector || next == vector) continue;
+                
+                // This in combination with the above if always skips the direct neighbour vector as this path is already possible
+                var start = current;
+                var target = vector;
+                
+                var direction = Vector2.Normalize(target - start);
+                var newVector = start;
+                var pathPossible = true;
+
+                for (var i = 0; i * Obstacle.MinRadius <= Vector2.Distance(start, target); i++)
+                {
+                    newVector += direction * Obstacle.MinRadius;
+
+                    // If we don't have a collision proceed to next interval
+                    if (!HasCollision(newVector)) continue;
+                    
+                    // We have a collision, so a path to this vector is not possible
+                    pathPossible = false;
+                }
+
+                next = new Vector2(vector.X, vector.Y);
+                
+                if (!pathPossible)
+                {
+                    current = new Vector2(vector.X, vector.Y);
+                    smoothedPath.Add(current);
+                }
+            }
+            
+            current = new Vector2(next.X, next.Y);
+            smoothedPath.Add(current);
+            return smoothedPath;
         }
     }
 

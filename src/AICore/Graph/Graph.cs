@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using AICore.Graph.Heuristics;
@@ -282,7 +283,7 @@ namespace AICore.Graph
                 }
             }
 
-            path.Reverse();
+            path = Enumerable.Reverse(path).ToList();
             
             return new Tuple<IEnumerable<T>, Dictionary<T, Vertex<T>>>(path, visitedVertexMap);
         }
