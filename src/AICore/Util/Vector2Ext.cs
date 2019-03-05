@@ -27,8 +27,8 @@ namespace AICore.Util
 
         public static Vector2 ApplyMatrix(this Vector2 vector2, Matrix3 matrix)
         {
-            var x = matrix.P11 * vector2.X + matrix.P21 * vector2.Y + matrix.P31;
-            var y = matrix.P12 * vector2.X + matrix.P22 * vector2.Y + matrix.P32;
+            var x = matrix.P11 * vector2.X + matrix.P21 * vector2.Y + matrix.P13;
+            var y = matrix.P12 * vector2.X + matrix.P22 * vector2.Y + matrix.P23;
 
             return new Vector2(x, y);
         }

@@ -35,10 +35,9 @@ namespace AICore.Behaviour.Individual
 
         private Vector2 PointToWorldSpace(Vector2 localTarget)
         {
-            var matrix = new Matrix3();
-
-            matrix.Rotate(MovingEntity.Heading, MovingEntity.Side);
-            matrix.Translate(MovingEntity.Pos);
+            var matrix = new Matrix3()
+                .Rotate(MovingEntity.Heading, MovingEntity.Side)
+                .Translate(MovingEntity.Pos);
 
             // Transform the vector to world space
             return localTarget.ApplyMatrix(matrix);

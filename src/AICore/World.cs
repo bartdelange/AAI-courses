@@ -23,7 +23,6 @@ namespace AICore
             Height = height;
 
             Entities.Add(new Vehicle(new Vector2(100, 60), Color.DarkRed, this));
-            Entities.Add(new Vehicle(new Vector2(250, 250), Color.Blue, this));
 
             GenerateRandomObstacles();
             
@@ -60,15 +59,15 @@ namespace AICore
 
         public void Render(Graphics g)
         {
+            Obstacles.ForEach(e => e.Render(g));
+
+            Map.Render(g);
+                        
             Entities.ForEach(e =>
             {
                 e.SteeringBehaviours.ForEach(sb => sb.Render(g));
                 e.Render(g);
             });
-
-            Obstacles.ForEach(e => e.Render(g));
-            
-            Map.Render(g);
         }
     }
 }

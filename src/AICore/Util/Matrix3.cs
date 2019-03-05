@@ -176,8 +176,6 @@ namespace AICore.Util
                 P22 = side.Y,
             };
 
-            // Console.WriteLine("Rotate\n" + matrix);	
-
             return rotateMatrix * matrix;
         }
         

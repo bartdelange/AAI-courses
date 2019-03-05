@@ -33,10 +33,9 @@ namespace AICore.Entity
             var p3 = new Vector2(5, 0);
             var p2 = new Vector2(-8, -5);
 
-            var matrix = new Matrix3();
-
-            matrix.Rotate(Heading, Side);
-            matrix.Translate(Pos);
+            var matrix = new Matrix3()
+                .Rotate(Heading, Side)
+                .Translate(Pos);
 
             // Transform the vector to world space and create points that define polygon.	
             PointF[] curvePoints =
