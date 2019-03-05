@@ -206,7 +206,7 @@ namespace AICore.Map
             _coarseMapHelper.SmoothedPath = SmoothPath(path.Item1);
             _coarseMapHelper.VisitedVertices = path.Item2;
 
-            return path.Item1;
+            return _coarseMapHelper.SmoothedPath;
         }
         
         
