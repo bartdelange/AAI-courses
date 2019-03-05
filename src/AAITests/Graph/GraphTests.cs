@@ -1,9 +1,9 @@
 using AICore.Graph;
-using AICore.Graph.Heuristic;
+using AICore.Graph.Heuristics;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace AAITests
+namespace AAITests.Graph
 {
     #region TestClasses
 

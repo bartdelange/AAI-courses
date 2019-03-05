@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using System.Drawing;
+using System.Numerics;
 using AICore.Entity;
 
 namespace AICore.Behaviour.Individual
@@ -20,6 +21,10 @@ namespace AICore.Behaviour.Individual
             if (distance > Boundary) return new Vector2();
 
             return Vector2.Normalize(MovingEntity.Pos - Target.Pos) * MovingEntity.MaxSpeed - MovingEntity.Velocity;
+        }
+
+        public override void Render(Graphics g)
+        {
         }
     }
 }

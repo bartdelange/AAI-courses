@@ -16,4 +16,9 @@
     <ProjectReference Include="..\AICore\AICore.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Behaviour\Group" />
+    <Folder Include="Behaviour\Individual" />
+  </ItemGroup>
+
 </Project>

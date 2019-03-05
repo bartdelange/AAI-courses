@@ -1,21 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using AICore.Graph.Heuristic;
+using AICore.Graph.Heuristics;
 using AICore.Util;
 
 namespace AICore.Graph
 {
     public abstract class Graph<T> : IGraph<T>
     {
-        protected Dictionary<T, Vertex<T>> VertexMap = new Dictionary<T, Vertex<T>>();
-        protected Dictionary<T, Vertex<T>> SearchedVertexMap = new Dictionary<T, Vertex<T>>();
+        protected readonly Dictionary<T, Vertex<T>> VertexMap = new Dictionary<T, Vertex<T>>();
 
         /// <summary>
         ///     Try to get the vertex by vertex name, if it does not exist create a
         ///     new one and add it to the vertex map
         /// </summary>
-        /// <param name="vertexName"></param>
+        /// <param name="vertexData"></param>
         public Vertex<T> GetVertex(T vertexData)
         {
             if (VertexMap.TryGetValue(vertexData, out var vertex)) return vertex;
@@ -59,7 +58,7 @@ namespace AICore.Graph
             {
                 var adjacentVertexes = vertex.AdjacentVertices.Aggregate(
                     "",
-                    (accumulator, edge) => accumulator += $" {edge.Value.Destination.Data}({edge.Value.Cost})"
+                    (accumulator, edge) => accumulator + $" {edge.Value.Destination.Data}({edge.Value.Cost})"
                 );
 
                 output += $"{vertex.Data} -->{adjacentVertexes}\n";
@@ -75,8 +74,6 @@ namespace AICore.Graph
         {
             foreach (var vertex in VertexMap.Values)
                 vertex.Reset();
-
-            SearchedVertexMap = new Dictionary<T, Vertex<T>>();
         }
 
         /// <summary>
@@ -217,13 +214,15 @@ namespace AICore.Graph
             }
         }
 
-        public IEnumerable<Vertex<T>> AStar(
+        public Tuple<IEnumerable<T>, Dictionary<T, Vertex<T>>> AStar(
             T startValue,
             T targetValue,
             IHeuristic<T> heuristic
         )
         {
             ClearAll();
+            
+            var visitedVertexMap = new Dictionary<T, Vertex<T>>();
 
             if (!VertexMap.TryGetValue(startValue, out var startVertex))
                 throw new NoSuchElementException();
@@ -263,7 +262,7 @@ namespace AICore.Graph
                     adjacentVertex.PreviousVertex = vertex;
 
                     priorityQueue.Enqueue(new Path<T>(adjacentVertex, adjacentVertex.Distance + heuristics));
-                    SearchedVertexMap[adjacentVertex.Data] = adjacentVertex;
+                    visitedVertexMap[adjacentVertex.Data] = adjacentVertex;
 
                     if (adjacentVertex.Data.Equals(targetValue))
                     {
@@ -272,19 +271,20 @@ namespace AICore.Graph
                 }
             }
 
-            var path = new List<Vertex<T>>();
+            var path = new List<T>();
             
-            if (SearchedVertexMap.TryGetValue(targetValue, out var targetVertex))
+            if (visitedVertexMap.TryGetValue(targetValue, out var targetVertex))
             {
                 while (targetVertex.PreviousVertex != null)
                 {
-                    path.Add(targetVertex);
+                    path.Add(targetVertex.Data);
                     targetVertex = targetVertex.PreviousVertex;
                 }
             }
 
             path.Reverse();
-            return path;
+            
+            return new Tuple<IEnumerable<T>, Dictionary<T, Vertex<T>>>(path, visitedVertexMap);
         }
         
         #endregion

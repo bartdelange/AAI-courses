@@ -26,7 +26,8 @@ namespace AICore.Behaviour.Individual
         public override Vector2 Calculate(float deltaTime)
         {
             var addToPerimeter = new Vector2(RandomClamped() * WanderJitter, RandomClamped() * WanderJitter);
-            _wanderTarget = Vector2.Normalize(_wanderTarget + addToPerimeter) * WanderRadius +
+
+            _wanderTarget = (Vector2.Normalize(_wanderTarget + addToPerimeter) * WanderRadius) +
                             new Vector2(WanderDistance, 0);
 
             return PointToWorldSpace(_wanderTarget) - MovingEntity.Pos;
@@ -34,13 +35,13 @@ namespace AICore.Behaviour.Individual
 
         private Vector2 PointToWorldSpace(Vector2 localTarget)
         {
-            var matrix = new Matrix();
+            var matrix = new Matrix3();
 
             matrix.Rotate(MovingEntity.Heading, MovingEntity.Side);
-            matrix.Translate(MovingEntity.Pos.X, MovingEntity.Pos.Y);
+            matrix.Translate(MovingEntity.Pos);
 
             // Transform the vector to world space
-            return matrix.TransformVector2s(localTarget);
+            return localTarget.ApplyMatrix(matrix);
         }
 
         private static float RandomClamped()

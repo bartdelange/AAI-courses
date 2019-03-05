@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using System.Drawing;
+using System.Numerics;
 using AICore.Entity;
 
 namespace AICore.Behaviour.Individual
@@ -19,16 +20,19 @@ namespace AICore.Behaviour.Individual
             // Add turn around time
             const float coefficient = 0.5f;
             lookAheadTime += (Vector2.Dot(MovingEntity.Heading, Vector2.Normalize(toEvader)) - 1) * -coefficient;
+            
+            var seekBehaviour = new SeekBehaviour(
+                MovingEntity, 
+                Target.Pos + MovingEntity.Velocity * lookAheadTime,
+                Weight
+            );
 
             // Seek to predicted position
-            return Seek(Target.Pos + MovingEntity.Velocity * lookAheadTime);
+            return seekBehaviour.Calculate(deltaTime);
         }
 
-        private Vector2 Seek(Vector2 targetPosition)
+        public override void Render(Graphics g)
         {
-            return Vector2.Normalize(targetPosition - MovingEntity.Pos) *
-                   MovingEntity.MaxSpeed -
-                   MovingEntity.Velocity;
         }
     }
 }

@@ -33,22 +33,17 @@ namespace AICore.Entity
             var p3 = new Vector2(5, 0);
             var p2 = new Vector2(-8, -5);
 
-            var matrix = new Matrix();
+            var matrix = new Matrix3();
 
             matrix.Rotate(Heading, Side);
-            matrix.Translate(Pos.X, Pos.Y);
+            matrix.Translate(Pos);
 
-            // Transform the vector to world space	
-            p1 = matrix.TransformVector2s(p1);
-            p2 = matrix.TransformVector2s(p2);
-            p3 = matrix.TransformVector2s(p3);
-
-            // Create points that define polygon.	
+            // Transform the vector to world space and create points that define polygon.	
             PointF[] curvePoints =
             {
-                p1.ToPointF(),
-                p2.ToPointF(),
-                p3.ToPointF()
+                p1.ApplyMatrix(matrix).ToPointF(),
+                p2.ApplyMatrix(matrix).ToPointF(),
+                p3.ApplyMatrix(matrix).ToPointF()
             };
 
             g.DrawPolygon(_objectPen, curvePoints);

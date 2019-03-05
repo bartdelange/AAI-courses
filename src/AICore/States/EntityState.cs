@@ -1,9 +1,14 @@
 ﻿namespace AICore.States
 {
-    internal class EntityState<T>
+    public class EntityState<T>
     {
         public IState<T> CurrentState { get; private set; }
         public T Entity { get; }
+        
+        public EntityState(T entity)
+        {
+            Entity = entity;
+        }
 
         public void SetState(IState<T> nextState)
         {

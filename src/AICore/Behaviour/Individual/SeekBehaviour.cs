@@ -1,13 +1,17 @@
-﻿using System.Numerics;
+﻿using System.Drawing;
+using System.Numerics;
 using AICore.Entity;
 
 namespace AICore.Behaviour.Individual
 {
     public class SeekBehaviour : SteeringBehaviour
     {
-        public SeekBehaviour(MovingEntity movingEntity, MovingEntity target, float weight)
-            : base(movingEntity, target, weight)
+        private Vector2 _targetPosition;
+        
+        public SeekBehaviour(MovingEntity movingEntity, Vector2 targetPosition, float weight)
+            : base(movingEntity, null, weight)
         {
+            _targetPosition = targetPosition;
         }
 
         /// <summary>
@@ -15,7 +19,11 @@ namespace AICore.Behaviour.Individual
         /// </summary>
         public override Vector2 Calculate(float deltaTime)
         {
-            return Vector2.Normalize(Target.Pos - MovingEntity.Pos) * MovingEntity.MaxSpeed;
+            return Vector2.Normalize(_targetPosition - MovingEntity.Pos) * MovingEntity.MaxSpeed;
+        }
+
+        public override void Render(Graphics g)
+        {
         }
     }
 }

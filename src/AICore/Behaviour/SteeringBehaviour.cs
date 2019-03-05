@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Numerics;
 using AICore.Entity;
 
@@ -6,23 +7,28 @@ namespace AICore.Behaviour
 {
     public abstract class SteeringBehaviour
     {
-        public float Weight = 100;
+        protected MovingEntity MovingEntity { get; }
+        
+        [Obsolete("Target is deprecated, the target should be defined by using the constructor of the behaviour that needs it")]
+        protected MovingEntity Target { get; }
 
-        protected SteeringBehaviour(MovingEntity movingEntity, MovingEntity target, float weight)
+        public float Weight { get; }
+
+        protected SteeringBehaviour(MovingEntity movingEntity, float weight)
         {
             Weight = weight;
-
             MovingEntity = movingEntity;
+        }
+        
+        // TODO Remove targetEntity dependency from base steering behaviour 
+        protected SteeringBehaviour(MovingEntity movingEntity, MovingEntity target, float weight) 
+            : this(movingEntity, weight)
+        {
             Target = target;
         }
 
-        public MovingEntity MovingEntity { get; }
-        public MovingEntity Target { get; }
-
         public abstract Vector2 Calculate(float deltaTime);
 
-        public virtual void Render(Graphics g)
-        {
-        }
+        public abstract void Render(Graphics g);
     }
 }

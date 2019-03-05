@@ -1,6 +1,6 @@
 ﻿namespace AICore.States
 {
-    internal interface IState<T>
+    public interface IState<T>
     {
         void Enter(EntityState<T> state);
         void Update(EntityState<T> state);

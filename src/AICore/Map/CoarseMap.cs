@@ -3,27 +3,18 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Numerics;
 using AICore.Entity;
-using AICore.Graph;
 using AICore.Graph.Heuristics;
-using AICore.Util;
 
 namespace AICore.Map
 {
     public class CoarseMap : BaseMap
     {
         private const int Density = 20;
+
         private readonly List<Obstacle> _obstacles;
         private readonly Dictionary<Vector2, bool> _vectors = new Dictionary<Vector2, bool>();
-        private IEnumerable<Vertex<Vector2>> _path;
 
-        private Vector2 _start;
-        private Vector2 _destination;
-
-        private readonly Brush _brushStart = new SolidBrush(Color.FromArgb(128, Color.Cyan));
-        private readonly Brush _brushTarget = new SolidBrush(Color.FromArgb(128, Color.Red));
-        private readonly Brush _brushVisited = new SolidBrush(Color.FromArgb(128, Color.DarkGreen));
-        private readonly Brush _brushNotVisited = new SolidBrush(Color.FromArgb(128, Color.RoyalBlue));
-        private readonly Pen _pen = new Pen(Color.DeepPink, 2);
+        private readonly CoarseMapHelper _coarseMapHelper = new CoarseMapHelper();
 
         public CoarseMap(int w, int h, List<Obstacle> obstacles)
         {
@@ -31,22 +22,21 @@ namespace AICore.Map
             Height = h;
             _obstacles = obstacles;
 
-            var x0y0 = new Vector2(Density, Density);
-            GenerateEdges(x0y0);
+            var x0Y0 = new Vector2(Density, Density);
+            GenerateEdges(x0Y0);
 
             var xWyH = new Vector2(Width / Density * Density, Height / Density * Density);
             GenerateEdges(xWyH);
-            
-            FindPath(x0y0, xWyH);
         }
 
         private int Width { get; }
         private int Height { get; }
 
         #region Floodfilling
+
         public void GenerateEdges(Vector2 start)
         {
-            if (_vectors.TryGetValue(start, out var processed))
+            if (_vectors.TryGetValue(start, out _))
                 return;
 
             _vectors.Add(start, true);
@@ -151,95 +141,84 @@ namespace AICore.Map
 
         public bool HasCollision(Vector2 end)
         {
+            const int extraRadius = Density / 2;
+
             foreach (var obstacle in _obstacles)
             {
                 var deltaX = obstacle.Pos.X - end.X;
                 var deltaY = obstacle.Pos.Y - end.Y;
-                var extraRadius = Density / 2;
+
                 var collisionZoneThreshold = (obstacle.Radius + extraRadius) * (obstacle.Radius + extraRadius);
 
                 if (deltaX * deltaX + deltaY * deltaY <= collisionZoneThreshold)
+                {
                     return true;
+                }
             }
 
             return false;
         }
+
         #endregion
 
         public override void Render(Graphics g)
         {
-            base.Render(g);
-
-            foreach (var edge in SearchedVertexMap)
+            foreach (var vector in _vectors)
             {
-                g.FillEllipse(edge.Value.Visited ? _brushVisited : _brushNotVisited,
-                    new Rectangle( edge.Value.Data.Minus(5).ToPoint(), new Size(10, 10)));
+                g.DrawEllipse(new Pen(Color.Red), vector.Key.X - 1, vector.Key.Y - 1, 3, 3);
             }
-            
-            g.FillEllipse(_brushTarget,
-                new Rectangle( _destination.Minus(5).ToPoint(), new Size(10, 10)));
 
-            g.FillEllipse(_brushStart,
-                new Rectangle( _start.Minus(5).ToPoint(), new Size(10, 10)));
-
-
-            foreach (var vertex in _path)
-            {
-                g.DrawLine(_pen,  vertex.PreviousVertex.Data.ToPoint(),  vertex.Data.ToPoint());
-            }
+            _coarseMapHelper.Draw(g);
         }
 
-        public override Vector2 FindVector(float x, float y)
+        public override Vector2 FindClosestVertex(Vector2 position)
         {
-            if (x > Width || x < 0)
-                throw new ArgumentOutOfRangeException(nameof(x));
+            var roundedPosition = new Vector2(
+                (float) Math.Round(position.X / Density, MidpointRounding.AwayFromZero) * Density,
+                (float) Math.Round(position.Y / Density, MidpointRounding.AwayFromZero) * Density
+            );
 
-            if (y > Height || y < 0)
-                throw new ArgumentOutOfRangeException(nameof(y));
-            
-            var roundedX = (int) Math.Round (x, MidpointRounding.AwayFromZero) / Density * Density;
-            var roundedY = (int) Math.Round (y, MidpointRounding.AwayFromZero) / Density * Density;
-            
-            var vector = new Vector2(roundedX, roundedY);
+            // STEPS MUST BE EVEN!
+            var steps = 10;
 
-            if (_vectors.ContainsKey(vector))
-            {
-                return vector;
-            }
-
-
-            var steps = Math.Max(Height,Width)/Density;
+            Vector2 currentVector;
 
             // Lazy search around till we find one (do this [steps] times
             for (var i = 0; i <= steps; i++)
             {
-                var vectorTop = new Vector2(roundedX, roundedY + Density * i);
-                var vectorRight = new Vector2(roundedX + Density * i, roundedY);
-                var vectorBottom = new Vector2(roundedX, roundedY - Density * i);
-                var vectorLeft = new Vector2(roundedX - Density * i, roundedY);
+                for (var j = 0; j <= steps; j++)
+                {
+                    var currI = i % 2 == 0 ? i : -(i - 1);
+                    var currJ = j % 2 == 0 ? j : -(j - 1);
+                    
+                    currentVector = roundedPosition + new Vector2(Density * currI, Density * currJ);
 
-                if (_vectors.ContainsKey(vectorTop))
-                    return vectorTop;
-
-                if (_vectors.ContainsKey(vectorRight))
-                    return vectorRight;
-
-                if (_vectors.ContainsKey(vectorBottom))
-                    return vectorBottom;
-
-                if (_vectors.ContainsKey(vectorLeft))
-                    return vectorLeft;
+                    if (_vectors.ContainsKey(currentVector))
+                    {
+                        return currentVector;
+                    }
+                }
             }
-            
-            throw new IndexOutOfRangeException("No vector was found at or close to the given x and y");
+
+            throw new VectorNotFoundException("No vector found at or close to given x and y in CoarseMap");
         }
 
-        public override void FindPath(Vector2 start, Vector2 destination)
+        public override IEnumerable<Vector2> FindPath(Vector2 start, Vector2 destination)
         {
-            _start = start;
-            _destination = destination;
-            
-            _path = AStar(_start, _destination, new Manhattan());
+            var path = AStar(FindClosestVertex(start), FindClosestVertex(destination), new Manhattan());
+
+            // Update CoarseMapHelper
+            _coarseMapHelper.CurrentPath = path.Item1;
+            _coarseMapHelper.VisitedVertices = path.Item2;
+
+            return path.Item1;
+        }
+    }
+
+    public class VectorNotFoundException : Exception
+    {
+        public VectorNotFoundException(string message) : base(message)
+        {
         }
     }
 }

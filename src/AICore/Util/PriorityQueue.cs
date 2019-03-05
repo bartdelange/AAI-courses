@@ -4,7 +4,7 @@ using AICore.Graph;
 
 namespace AICore.Util
 {
-    public class PriorityQueue<T> where T : IComparable
+    public class PriorityQueue<T> where T : IComparable<T>
     {
         private int _currentSize;
         public T[] Heap;

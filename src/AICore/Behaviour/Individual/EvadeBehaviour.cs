@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using System.Drawing;
+using System.Numerics;
 using AICore.Entity;
 
 namespace AICore.Behaviour.Individual
@@ -31,6 +32,10 @@ namespace AICore.Behaviour.Individual
             return Vector2.Normalize(MovingEntity.Pos - predictedPosition) *
                    MovingEntity.MaxSpeed -
                    MovingEntity.Velocity;
+        }
+
+        public override void Render(Graphics g)
+        {
         }
     }
 }

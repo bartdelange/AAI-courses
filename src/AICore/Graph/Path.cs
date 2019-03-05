@@ -1,34 +1,59 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace AICore.Graph
 {
-    public class Path<T> : IComparable
+    public class Path<T> : IComparable<Path<T>>, IEnumerable<Vertex<T>>
     {
-        public double Cost;
-        public Vertex<T> Destination;
+        private readonly double _cost;
+        
+        public readonly Vertex<T> Destination;
 
         public Path(Vertex<T> destination, double cost)
         {
+            _cost = cost;
+            
             Destination = destination;
-            Cost = cost;
         }
 
         /// <summary>
-        ///     Implementation of Comparable interface
+        /// Implementation of Comparable interface
         /// </summary>
-        /// <param name="obj"></param>
+        /// <param name="other"></param>
         /// <returns></returns>
-        public int CompareTo(object obj)
+        public int CompareTo(Path<T> other)
         {
-            var path = (Path<T>) obj;
+            if (_cost < other._cost)
+            {
+                return -1;                
+            }
 
-            if (Cost < path.Cost)
-                return -1;
-
-            if (Cost > path.Cost)
+            if (_cost > other._cost)
+            {                
                 return 1;
+            }
             
             return 0;
+        }
+
+        public IEnumerator<Vertex<T>> GetEnumerator()
+        {
+            var currentWaypoint = Destination;
+
+            // Continue iteration when previousVertex is not empty
+            while (currentWaypoint.PreviousVertex != null)
+            {
+                yield return currentWaypoint;
+                
+                // Set next waypoint
+                currentWaypoint = Destination;
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }

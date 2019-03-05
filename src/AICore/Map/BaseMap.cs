@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Numerics;
 using AICore.Graph;
 using AICore.Util;
@@ -23,8 +24,8 @@ namespace AICore.Map
             }
         }
 
-        public abstract Vector2 FindVector(float x, float y);
+        public abstract Vector2 FindClosestVertex(Vector2 position);
 
-        public abstract void FindPath(Vector2 start, Vector2 destination);
+        public abstract IEnumerable<Vector2> FindPath(Vector2 start, Vector2 destination);
     }
 }

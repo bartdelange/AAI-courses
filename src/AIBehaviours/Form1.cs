@@ -70,16 +70,17 @@ namespace AIBehaviours
 
         private void UpdateForm()
         {
-            var entitiesArray = _world.Entities.ToArray();
-
+            if (_world == null)
+            {
+                return;
+            }
+            
             entityList.Items.Clear();
-            entityList.Items.AddRange(entitiesArray);
+            entityList.Items.AddRange(_world.Entities.ToArray());
 
             foreach (var control in entityOverviewPanel.Controls)
             {
-                if (!(control is BehaviourControl)) continue;
-
-                ((BehaviourControl) control).UpdateEntities();
+                (control as BehaviourControl)?.UpdateEntities();
             }
         }
 
@@ -98,21 +99,10 @@ namespace AIBehaviours
 
         private void WorldPanel_MouseClick(object sender, MouseEventArgs e)
         {
-            if (ModifierKeys == Keys.Control)
+            foreach (MovingEntity entity in entityList.SelectedItems)
             {
-                _world.AddTarget(e.X, e.Y);
-                worldPanel.Invalidate();
-                return;
+                entity.Pos = new Vector2(e.X, e.Y);
             }
-
-            if (ModifierKeys == Keys.Shift)
-            {
-                _world.AddStart(e.X, e.Y);
-                worldPanel.Invalidate();
-                return;
-            }
-
-            foreach (MovingEntity entity in entityList.SelectedItems) entity.Pos = new Vector2(e.X, e.Y);
         }
 
         private void AddVehicleButton_Click(object sender, EventArgs e)

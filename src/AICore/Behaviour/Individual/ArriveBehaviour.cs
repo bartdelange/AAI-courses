@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Numerics;
 using AICore.Entity;
 
@@ -9,14 +10,17 @@ namespace AICore.Behaviour.Individual
         private const double DecelerationSpeed = 1;
         private const double DecelerationTweaker = 0.3;
 
-        public ArriveBehaviour(MovingEntity movingEntity, MovingEntity target, float weight)
-            : base(movingEntity, target, weight)
+        private readonly Vector2 _targetPosition;
+
+        public ArriveBehaviour(MovingEntity movingEntity, Vector2 targetPosition, float weight)
+            : base(movingEntity, null, weight)
         {
+            _targetPosition = targetPosition;
         }
 
         public override Vector2 Calculate(float deltaTime)
         {
-            var toTarget = Target.Pos - MovingEntity.Pos;
+            var toTarget = _targetPosition - MovingEntity.Pos;
 
             //calculate the distance to the target
             var dist = toTarget.Length();
@@ -39,6 +43,10 @@ namespace AICore.Behaviour.Individual
             var desiredVelocity = toTarget * speed / dist;
 
             return desiredVelocity - MovingEntity.Velocity;
+        }
+
+        public override void Render(Graphics g)
+        {
         }
     }
 }
