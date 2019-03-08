@@ -12,9 +12,8 @@ namespace AICore.Behaviour.Group
 {
     public class AlignmentBehaviour : ISteeringBehaviour
     {
-        private readonly MovingEntity _movingEntity;
-
         private readonly Brush _brush = new SolidBrush(Color.FromArgb(25, 0, 0, 255));
+        private readonly MovingEntity _movingEntity;
 
         public AlignmentBehaviour(MovingEntity movingEntity, MovingEntity target)
         {

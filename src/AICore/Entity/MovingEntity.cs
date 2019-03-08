@@ -1,7 +1,5 @@
 #region
 
-using System.Collections.Generic;
-using System.Linq;
 using System.Numerics;
 using AICore.Behaviour;
 using AICore.Util;
@@ -17,11 +15,6 @@ namespace AICore.Entity
         public readonly float MaxSpeed = 100;
         public readonly int Radius = 100;
 
-        //	
-        public Vector2 Velocity { get; set; } = new Vector2(1, 1);
-        public Vector2 Heading { get; set; } = new Vector2(1, 1);
-        public Vector2 Side { get; set; } = new Vector2(1, 1);
-
         // Entity behaviour
         public ISteeringBehaviour SteeringBehaviour;
 
@@ -29,11 +22,16 @@ namespace AICore.Entity
         {
         }
 
+        //	
+        public Vector2 Velocity { get; set; } = new Vector2(1, 1);
+        public Vector2 Heading { get; set; } = new Vector2(1, 1);
+        public Vector2 Side { get; set; } = new Vector2(1, 1);
+
         public override void Update(float delta)
         {
             FindNeighbors(Radius);
 
-            Vector2 acceleration = SteeringBehaviour == null
+            var acceleration = SteeringBehaviour == null
                 ? new Vector2()
                 : SteeringBehaviour.Calculate(delta) / Mass;
 

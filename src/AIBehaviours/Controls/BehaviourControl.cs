@@ -52,11 +52,11 @@ namespace AIBehaviours.Controls
 
                 var randomTarget = GetRandomTarget(movingEntity);
 
-                movingEntity.SteeringBehaviour = (ISteeringBehaviour)Activator.CreateInstance(
+                movingEntity.SteeringBehaviour = (ISteeringBehaviour) Activator.CreateInstance(
                     BehaviourType,
                     movingEntity,
                     randomTarget,
-                    (double)weightInput.Value
+                    (double) weightInput.Value
                 );
             }
         }

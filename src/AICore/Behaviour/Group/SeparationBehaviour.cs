@@ -12,9 +12,8 @@ namespace AICore.Behaviour.Group
 {
     public class SeparationBehaviour : ISteeringBehaviour
     {
-        private readonly MovingEntity _movingEntity;
-
         private readonly Brush _brush = new SolidBrush(Color.FromArgb(25, 255, 0, 0));
+        private readonly MovingEntity _movingEntity;
 
         public SeparationBehaviour(MovingEntity movingEntity)
         {

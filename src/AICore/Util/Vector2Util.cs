@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿#region
+
+using System;
 using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
+
+#endregion
 
 namespace AICore.Util
 {
@@ -14,8 +14,8 @@ namespace AICore.Util
         public static Vector2 GetRandom(Vector2 max, Vector2 min = new Vector2())
         {
             return new Vector2(
-                _random.Next((int)min.X, (int)max.X),
-                _random.Next((int)min.Y, (int)max.Y)
+                _random.Next((int) min.X, (int) max.X),
+                _random.Next((int) min.Y, (int) max.Y)
             );
         }
     }

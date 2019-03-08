@@ -57,7 +57,7 @@ namespace AIBehaviours
             var movingEntity = _world.Entities.First();
 
             var path = _world.Map.FindPath(
-                movingEntity.Pos, 
+                movingEntity.Pos,
                 new Vector2(mouseEventArgs.X, mouseEventArgs.Y)
             );
 

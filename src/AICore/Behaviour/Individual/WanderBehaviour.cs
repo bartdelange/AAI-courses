@@ -1,22 +1,25 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Drawing;
 using System.Numerics;
 using AICore.Entity;
+
+#endregion
 
 namespace AICore.Behaviour.Individual
 {
     public class WanderBehaviour : ISteeringBehaviour
     {
-        private static readonly Random Random = new Random();
-
         private const float WanderRadius = 50;
         private const float WanderDistance = 25;
         private const float WanderJitter = 25;
-
-        private Vector2 _wanderTarget = new Vector2(0, 0);
+        private static readonly Random Random = new Random();
 
         private readonly MovingEntity _movingEntity;
         private readonly MovingEntity _target;
+
+        private Vector2 _wanderTarget = new Vector2(0, 0);
 
         public WanderBehaviour(MovingEntity movingEntity, MovingEntity target)
         {
@@ -28,15 +31,10 @@ namespace AICore.Behaviour.Individual
         {
             var addToPerimeter = new Vector2(RandomClamped() * WanderJitter, RandomClamped() * WanderJitter);
 
-            _wanderTarget = (Vector2.Normalize(_wanderTarget + addToPerimeter) * WanderRadius)
+            _wanderTarget = Vector2.Normalize(_wanderTarget + addToPerimeter) * WanderRadius
                             + new Vector2(WanderDistance, 0);
 
             return _movingEntity.GetPointToWorldSpace(_wanderTarget) - _movingEntity.Pos;
-        }
-
-        private static float RandomClamped()
-        {
-            return (float) (Random.NextDouble() - Random.NextDouble());
         }
 
         public void Draw(Graphics g)
@@ -52,6 +50,11 @@ namespace AICore.Behaviour.Individual
                     4
                 )
             );
+        }
+
+        private static float RandomClamped()
+        {
+            return (float) (Random.NextDouble() - Random.NextDouble());
         }
     }
 }

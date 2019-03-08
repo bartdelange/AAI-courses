@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Numerics;
@@ -11,6 +13,8 @@ using AICore.Behaviour.Individual;
 using AICore.Entity;
 using AICore.Model;
 using Timer = System.Timers.Timer;
+
+#endregion
 
 namespace AIBehaviours
 {

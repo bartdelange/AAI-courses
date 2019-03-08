@@ -12,15 +12,15 @@ namespace AICore.Behaviour.Individual
 {
     public class PathFollowingBehaviour : ISteeringBehaviour
     {
-        private readonly MovingEntity _movingEntity;
-
-        private readonly IEnumerator<Vector2> _pathEnumerator;
-        private readonly Vector2 _finalWaypoint;
-
         /// <summary>
         ///     Determines how close an agent must be to a waypoint before it seeks the next waypoint
         /// </summary>
         private const int SeekDistance = 5;
+
+        private readonly Vector2 _finalWaypoint;
+        private readonly MovingEntity _movingEntity;
+
+        private readonly IEnumerator<Vector2> _pathEnumerator;
 
         /// <summary>
         ///     Creates a new instance for PathFollowingBehaviour
@@ -40,12 +40,12 @@ namespace AICore.Behaviour.Individual
         {
             if (_pathEnumerator.Current == _finalWaypoint)
             {
-                var arriveBehaviour = new ArriveBehaviour(_movingEntity, _pathEnumerator.Current);                
+                var arriveBehaviour = new ArriveBehaviour(_movingEntity, _pathEnumerator.Current);
                 return arriveBehaviour.Calculate(deltaTime);
             }
-            
+
             var distanceToWayPoint = (_movingEntity.Pos - _pathEnumerator.Current).LengthSquared();
-        
+
             // Set new waypoint
             if (distanceToWayPoint < SeekDistance) _pathEnumerator.MoveNext();
 

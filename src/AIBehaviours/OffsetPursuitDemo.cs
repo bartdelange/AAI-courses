@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿#region
+
+using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Timers;
@@ -8,6 +10,8 @@ using AICore.Behaviour.Individual;
 using AICore.Entity;
 using AICore.Util;
 using Timer = System.Timers.Timer;
+
+#endregion
 
 namespace AIBehaviours
 {
@@ -35,7 +39,7 @@ namespace AIBehaviours
             timer.Enabled = true;
         }
 
-        World CreateWorld(int width, int height)
+        private World CreateWorld(int width, int height)
         {
             var world = new World(worldPanel.Width, worldPanel.Height);
 
@@ -51,9 +55,9 @@ namespace AIBehaviours
                 new Vehicle(Vector2Util.GetRandom(max), _world)
             };
 
-            for (int i = 0; i < entities.Count(); i++)
+            for (var i = 0; i < entities.Count(); i++)
             {
-                var entity = entities[i]; 
+                var entity = entities[i];
 
                 entity.SteeringBehaviour = new PursuitBehaviour(entity, leader);
             }

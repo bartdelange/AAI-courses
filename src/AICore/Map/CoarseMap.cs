@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Numerics;
 using AICore.Entity;
+using AICore.Graph;
 using AICore.Graph.Heuristics;
 
 #endregion
@@ -40,8 +41,6 @@ namespace AICore.Map
 
         private Vector2? HasVector(Vector2 v)
         {
-            Console.WriteLine(v);
-
             if (_vectors.ContainsKey(v)) return v;
 
             return null;
@@ -49,18 +48,17 @@ namespace AICore.Map
 
         public override Vector2 FindClosestVertex(Vector2 position)
         {
-            Vector2 closestVector = new Vector2();
-            float closestLength = float.MaxValue;
+            var closestVector = new Vector2();
+            var closestLength = float.MaxValue;
 
-            foreach(var vector in _vectors)
+            foreach (var vector in _vectors)
             {
                 var currentLength = Math.Abs((vector.Key - position).LengthSquared());
 
-                if(currentLength < closestLength)
-                {
-                    closestLength = currentLength;
-                    closestVector = vector.Key;
-                }
+                if (!(currentLength < closestLength)) continue;
+
+                closestLength = currentLength;
+                closestVector = vector.Key;
             }
 
             return closestVector;
@@ -68,23 +66,38 @@ namespace AICore.Map
 
         public override IEnumerable<Vector2> FindPath(Vector2 start, Vector2 destination)
         {
-            var path = AStar(FindClosestVertex(start), FindClosestVertex(destination), new Manhattan());
+            var closestStart = FindClosestVertex(start);
+            var closestDest = FindClosestVertex(destination);
 
-            var fullPath = path.Item1.ToList();
+            var path = default(Tuple<IEnumerable<Vector2>, Dictionary<Vector2, Vertex<Vector2>>>);
+
+            if (closestStart != closestDest)
+                try
+                {
+                    path = AStar(closestStart, closestDest, new Manhattan());
+                }
+                catch (NoSuchElementException)
+                {
+                }
+
+            var fullPath = new List<Vector2>();
+
+            if (path != null && path.Item1.Any())
+                fullPath = path.Item1.ToList();
+
             fullPath.Insert(0, start);
             fullPath.Add(destination);
 
             var smoothedPath = SmoothPath(fullPath);
 
             // Update CoarseMapHelper
-            _coarseMapHelper.VisitedVertices = path.Item2;
+            _coarseMapHelper.VisitedVertices = path?.Item2 ?? new Dictionary<Vector2, Vertex<Vector2>>();
 
             _coarseMapHelper.CurrentPath = fullPath;
             _coarseMapHelper.SmoothedPath = smoothedPath;
 
             return smoothedPath;
         }
-
 
         private IEnumerable<Vector2> SmoothPath(IEnumerable<Vector2> path)
         {
@@ -110,24 +123,25 @@ namespace AICore.Map
                 var newVector = start;
                 var pathPossible = true;
 
-                for (var i = 0; i * Obstacle.MinRadius <= Vector2.Distance(start, target); i++)
+                var stepDistance = Obstacle.MinRadius / 4;
+                for (var i = 0; i * stepDistance <= Vector2.Distance(start, target); i++)
                 {
-                    newVector += direction * Obstacle.MinRadius;
+                    newVector += direction * stepDistance;
 
                     // If we don't have a collision proceed to next interval
-                    if (!HasCollision(newVector)) continue;
+                    if (!HasCollision(newVector, 0)) continue;
 
                     // We have a collision, so a path to this vector is not possible
                     pathPossible = false;
                 }
 
-                next = new Vector2(vector.X, vector.Y);
-
                 if (!pathPossible)
                 {
-                    current = new Vector2(vector.X, vector.Y);
+                    current = new Vector2(next.X, next.Y);
                     smoothedPath.Add(current);
                 }
+
+                next = new Vector2(vector.X, vector.Y);
             }
 
             current = new Vector2(next.X, next.Y);
@@ -242,10 +256,8 @@ namespace AICore.Map
             AddEdge(end, start, Vector2.Distance(start, end));
         }
 
-        protected bool HasCollision(Vector2 end)
+        protected bool HasCollision(Vector2 end, int extraRadius = Density / 2)
         {
-            const int extraRadius = Density / 2;
-
             foreach (var obstacle in Obstacles)
             {
                 var deltaX = obstacle.Pos.X - end.X;

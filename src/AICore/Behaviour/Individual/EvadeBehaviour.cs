@@ -37,8 +37,8 @@ namespace AICore.Behaviour.Individual
             var predictedPosition = (_target.Pos + _target.Velocity) * lookAheadTime;
 
             //now flee away from predicted future position of the pursuer
-            return (Vector2.Normalize(_movingEntity.Pos - predictedPosition) * _movingEntity.MaxSpeed)
-                - _movingEntity.Velocity;
+            return Vector2.Normalize(_movingEntity.Pos - predictedPosition) * _movingEntity.MaxSpeed
+                   - _movingEntity.Velocity;
         }
 
         public void Draw(Graphics g)

@@ -1,13 +1,17 @@
-﻿using System.Drawing;
+﻿#region
+
+using System.Drawing;
 using System.Numerics;
 using AICore.Entity;
+
+#endregion
 
 namespace AICore.Behaviour.Individual
 {
     public class SeekBehaviour : ISteeringBehaviour
     {
-        private readonly Vector2 _targetPosition;
         private readonly MovingEntity _movingEntity;
+        private readonly Vector2 _targetPosition;
 
         public SeekBehaviour(MovingEntity movingEntity, Vector2 targetPosition)
         {

@@ -12,10 +12,9 @@ namespace AICore.Behaviour.Group
 {
     public class CohesionBehaviour : ISteeringBehaviour
     {
+        private readonly Brush _brush = new SolidBrush(Color.FromArgb(25, 255, 255, 0));
         private readonly MovingEntity _movingEntity;
         private readonly int _radius;
-
-        private readonly Brush _brush = new SolidBrush(Color.FromArgb(25, 255, 255, 0));
 
         public CohesionBehaviour(MovingEntity movingEntity, MovingEntity target)
         {

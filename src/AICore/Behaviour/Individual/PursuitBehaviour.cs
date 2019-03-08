@@ -1,6 +1,10 @@
-﻿using System.Drawing;
+﻿#region
+
+using System.Drawing;
 using System.Numerics;
 using AICore.Entity;
+
+#endregion
 
 namespace AICore.Behaviour.Individual
 {
@@ -24,7 +28,7 @@ namespace AICore.Behaviour.Individual
             // Add turn around time33
             const float coefficient = 0.5f;
             lookAheadTime += (Vector2.Dot(_movingEntity.Heading, Vector2.Normalize(toEvader)) - 1) * -coefficient;
-            
+
             var seekBehaviour = new SeekBehaviour(
                 _movingEntity,
                 _target.Pos + _movingEntity.Velocity * lookAheadTime

@@ -26,10 +26,7 @@ namespace AICore.Behaviour.Individual
             var distance = (_movingEntity.Pos - _target.Pos).LengthSquared();
 
             // Only flee if the target is within 'panic distance'.
-            if (distance > Boundary)
-            {
-                return new Vector2();
-            }
+            if (distance > Boundary) return new Vector2();
 
             return Vector2.Normalize(_movingEntity.Pos - _target.Pos) * _movingEntity.MaxSpeed - _movingEntity.Velocity;
         }

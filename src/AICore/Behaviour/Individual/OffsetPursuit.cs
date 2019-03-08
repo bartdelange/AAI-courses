@@ -10,8 +10,8 @@ namespace AICore.Behaviour.Individual
 {
     public class OffsetPursuit : ISteeringBehaviour
     {
-        private readonly MovingEntity _movingEntity;
         private readonly MovingEntity _leader;
+        private readonly MovingEntity _movingEntity;
 
         private readonly Vector2 _offset;
 
@@ -28,7 +28,7 @@ namespace AICore.Behaviour.Individual
             var toOffset = worldOffsetPosition - _movingEntity.Pos;
 
             var lookAheadTime = toOffset.Length() / (_movingEntity.MaxSpeed + _leader.Velocity.Length());
-            var targetPosition = worldOffsetPosition + (_leader.Velocity * lookAheadTime);
+            var targetPosition = worldOffsetPosition + _leader.Velocity * lookAheadTime;
 
             var arriveBehaviour = new ArriveBehaviour(_movingEntity, targetPosition);
 

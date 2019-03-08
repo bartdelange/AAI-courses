@@ -1,7 +1,9 @@
+#region
+
 using AICore.Graph;
 using AICore.Graph.Heuristics;
-using Xunit;
-using Xunit.Abstractions;
+
+#endregion
 
 namespace AAITests.Graph
 {
