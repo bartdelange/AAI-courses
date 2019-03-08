@@ -24,7 +24,7 @@ namespace AICore.Behaviour.Individual
             var lookAheadTime = toOffset.Length() / (MovingEntity.MaxSpeed + _leader.Velocity.Length());
             var targetPosition = worldOffsetPosition + _leader.Velocity * lookAheadTime;
 
-            var arriveBehaviour = new ArriveBehaviour(MovingEntity, targetPosition, eight);
+            var arriveBehaviour = new ArriveBehaviour(MovingEntity, targetPosition, weight);
 
             return arriveBehaviour.Calculate(deltaTime);
         }

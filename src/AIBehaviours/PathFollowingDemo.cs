@@ -15,14 +15,16 @@ namespace AIBehaviours
 
         private readonly World _world;
 
+        public Menu menu;
+
         public PathFollowingDemo()
         {
             InitializeComponent();
 
             Width = 1000;
             Height = 800;
-            worldPanel.Width = 1000;
-            worldPanel.Height = 800;
+            worldPanel.Width = Width;
+            worldPanel.Height = Height;
 
             _world = new World(worldPanel.Width, worldPanel.Height);
 
@@ -57,6 +59,11 @@ namespace AIBehaviours
             
             movingEntity.SteeringBehaviours.Clear();
             movingEntity.SteeringBehaviours.Add(pathFollowingBehaviour);
+        }
+
+        private void PathFollowingDemo_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            menu.Show();
         }
 
         #endregion

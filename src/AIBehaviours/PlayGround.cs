@@ -14,10 +14,12 @@ using Timer = System.Timers.Timer;
 
 namespace AIBehaviours
 {
-    public partial class Form1 : Form
+    public partial class PlayGround : Form
     {
         private const float TimeDelta = 0.8f;
         private readonly Random _random = new Random();
+
+        public Menu menu;
 
         private readonly List<BehaviourItem> _steeringBehaviors = new List<BehaviourItem>
         {
@@ -34,9 +36,14 @@ namespace AIBehaviours
 
         private readonly World _world;
 
-        public Form1()
+        public PlayGround()
         {
             InitializeComponent();
+
+            Width = 1000;
+            Height = 800;
+            worldPanel.Width = Width - entityOverviewPanel.Width;
+            worldPanel.Height = Height;
 
             _world = new World(worldPanel.Width, worldPanel.Height);
 
@@ -128,6 +135,11 @@ namespace AIBehaviours
             _world.Entities.Remove(entity);
 
             UpdateForm();
+        }
+
+        private void PlayGround_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            menu.Show();
         }
 
         #endregion

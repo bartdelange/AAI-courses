@@ -13,7 +13,7 @@ namespace AIBehaviours
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new PathFollowingDemo());
+            Application.Run(new Menu());
         }
     }
 }

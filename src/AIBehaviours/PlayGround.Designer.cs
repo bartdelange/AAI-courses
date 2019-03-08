@@ -3,7 +3,7 @@ using AIBehaviours.Controls;
 
 namespace AIBehaviours
 {
-    partial class Form1
+    partial class PlayGround
     {
         /// <summary>
         /// Required designer variable.
@@ -36,7 +36,7 @@ namespace AIBehaviours
             this.addVehicleButton = new System.Windows.Forms.Button();
             this.entityList = new System.Windows.Forms.ListBox();
             this.removeVehicleButton = new System.Windows.Forms.Button();
-            this.worldPanel = new DoubleBufferedPanel();
+            this.worldPanel = new AIBehaviours.Controls.DoubleBufferedPanel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.entityOverviewPanel.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -48,9 +48,10 @@ namespace AIBehaviours
             this.entityOverviewPanel.AutoScroll = true;
             this.entityOverviewPanel.Controls.Add(this.groupBox1);
             this.entityOverviewPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.entityOverviewPanel.Location = new System.Drawing.Point(3, 3);
+            this.entityOverviewPanel.Location = new System.Drawing.Point(6, 6);
+            this.entityOverviewPanel.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.entityOverviewPanel.Name = "entityOverviewPanel";
-            this.entityOverviewPanel.Size = new System.Drawing.Size(274, 764);
+            this.entityOverviewPanel.Size = new System.Drawing.Size(501, 1410);
             this.entityOverviewPanel.TabIndex = 1;
             // 
             // groupBox1
@@ -59,18 +60,21 @@ namespace AIBehaviours
             this.groupBox1.Controls.Add(this.addVehicleButton);
             this.groupBox1.Controls.Add(this.entityList);
             this.groupBox1.Controls.Add(this.removeVehicleButton);
-            this.groupBox1.Location = new System.Drawing.Point(3, 3);
+            this.groupBox1.Location = new System.Drawing.Point(6, 6);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(249, 161);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.groupBox1.Size = new System.Drawing.Size(454, 293);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Entities";
             // 
             // addVehicleButton
             // 
-            this.addVehicleButton.Location = new System.Drawing.Point(3, 18);
+            this.addVehicleButton.Location = new System.Drawing.Point(6, 33);
+            this.addVehicleButton.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.addVehicleButton.Name = "addVehicleButton";
-            this.addVehicleButton.Size = new System.Drawing.Size(86, 23);
+            this.addVehicleButton.Size = new System.Drawing.Size(158, 42);
             this.addVehicleButton.TabIndex = 2;
             this.addVehicleButton.Text = "Add vehicle";
             this.addVehicleButton.UseVisualStyleBackColor = true;
@@ -79,17 +83,20 @@ namespace AIBehaviours
             // entityList
             // 
             this.entityList.FormattingEnabled = true;
-            this.entityList.Location = new System.Drawing.Point(6, 47);
+            this.entityList.ItemHeight = 24;
+            this.entityList.Location = new System.Drawing.Point(11, 87);
+            this.entityList.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.entityList.Name = "entityList";
             this.entityList.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.entityList.Size = new System.Drawing.Size(237, 95);
+            this.entityList.Size = new System.Drawing.Size(431, 172);
             this.entityList.TabIndex = 3;
             // 
             // removeVehicleButton
             // 
-            this.removeVehicleButton.Location = new System.Drawing.Point(95, 18);
+            this.removeVehicleButton.Location = new System.Drawing.Point(174, 33);
+            this.removeVehicleButton.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.removeVehicleButton.Name = "removeVehicleButton";
-            this.removeVehicleButton.Size = new System.Drawing.Size(108, 23);
+            this.removeVehicleButton.Size = new System.Drawing.Size(198, 42);
             this.removeVehicleButton.TabIndex = 1;
             this.removeVehicleButton.Text = "Remove vehicle";
             this.removeVehicleButton.UseVisualStyleBackColor = true;
@@ -99,9 +106,10 @@ namespace AIBehaviours
             // 
             this.worldPanel.BackColor = System.Drawing.Color.White;
             this.worldPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.worldPanel.Location = new System.Drawing.Point(283, 3);
+            this.worldPanel.Location = new System.Drawing.Point(519, 6);
+            this.worldPanel.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.worldPanel.Name = "worldPanel";
-            this.worldPanel.Size = new System.Drawing.Size(946, 764);
+            this.worldPanel.Size = new System.Drawing.Size(1734, 1410);
             this.worldPanel.TabIndex = 0;
             this.worldPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.WorldPanel_Paint);
             this.worldPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.WorldPanel_MouseClick);
@@ -109,30 +117,33 @@ namespace AIBehaviours
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 280F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 513F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.worldPanel, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.entityOverviewPanel, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1232, 770);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(2259, 1422);
             this.tableLayoutPanel1.TabIndex = 2;
             // 
-            // Form1
+            // PlayGround
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1232, 770);
+            this.ClientSize = new System.Drawing.Size(2259, 1422);
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "Form1";
+            this.Name = "PlayGround";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Steering";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PlayGround_FormClosing);
             this.entityOverviewPanel.ResumeLayout(false);
             this.entityOverviewPanel.PerformLayout();
             this.groupBox1.ResumeLayout(false);
