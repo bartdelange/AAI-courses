@@ -1,9 +1,12 @@
-﻿using System;
-using System.Collections;
+﻿#region
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using AICore.Graph.Heuristics;
 using AICore.Util;
+
+#endregion
 
 namespace AICore.Graph
 {
@@ -222,14 +225,14 @@ namespace AICore.Graph
         )
         {
             ClearAll();
-            
+
             var visitedVertexMap = new Dictionary<T, Vertex<T>>();
 
             if (!VertexMap.TryGetValue(startValue, out var startVertex))
                 throw new NoSuchElementException();
 
             var found = false;
-            
+
             var priorityQueue = new PriorityQueue<Path<T>>();
 
             // Add start path to priority queue
@@ -249,7 +252,7 @@ namespace AICore.Graph
                     var heuristics = heuristic.Calculate(adjacentVertex.Data, targetValue);
 
                     // Don't revisit vertex
-                    if (adjacentVertex.Visited) 
+                    if (adjacentVertex.Visited)
                         continue;
 
                     if (edgeCost < 0)
@@ -265,29 +268,24 @@ namespace AICore.Graph
                     priorityQueue.Enqueue(new Path<T>(adjacentVertex, adjacentVertex.Distance + heuristics));
                     visitedVertexMap[adjacentVertex.Data] = adjacentVertex;
 
-                    if (adjacentVertex.Data.Equals(targetValue))
-                    {
-                        found = true;
-                    }
+                    if (adjacentVertex.Data.Equals(targetValue)) found = true;
                 }
             }
 
             var path = new List<T>();
-            
+
             if (visitedVertexMap.TryGetValue(targetValue, out var targetVertex))
-            {
                 while (targetVertex.PreviousVertex != null)
                 {
                     path.Add(targetVertex.Data);
                     targetVertex = targetVertex.PreviousVertex;
                 }
-            }
 
             path = Enumerable.Reverse(path).ToList();
-            
+
             return new Tuple<IEnumerable<T>, Dictionary<T, Vertex<T>>>(path, visitedVertexMap);
         }
-        
+
         #endregion
     }
 

@@ -1,5 +1,9 @@
-﻿using System.Drawing;
+﻿#region
+
+using System.Drawing;
 using System.Numerics;
+
+#endregion
 
 namespace AICore.Entity
 {

@@ -1,8 +1,12 @@
-﻿using System.Numerics;
+﻿#region
+
+using System.Numerics;
+
+#endregion
 
 namespace AICore.Entity
 {
-    internal class Coward : Vehicle
+    public class Coward : Vehicle
     {
         public int Strength = 10;
 

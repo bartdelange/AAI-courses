@@ -1,5 +1,9 @@
+#region
+
 using System.Drawing;
 using System.Numerics;
+
+#endregion
 
 namespace AICore.Util
 {
@@ -9,7 +13,7 @@ namespace AICore.Util
         {
             return new PointF((int) v.X, (int) v.Y);
         }
-        
+
         public static Point ToPoint(this Vector2 v)
         {
             return new Point((int) v.X, (int) v.Y);
@@ -19,7 +23,7 @@ namespace AICore.Util
         {
             return v - new Vector2(value);
         }
-        
+
         public static Vector2 Perpendicular(this Vector2 v)
         {
             return new Vector2(-v.Y, v.X);

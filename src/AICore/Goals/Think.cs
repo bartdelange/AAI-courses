@@ -1,9 +1,13 @@
-﻿using AICore.Entity;
+﻿#region
+
 using System;
+using AICore.Entity;
+
+#endregion
 
 namespace AICore.Goals
 {
-    class Think : BaseGoal
+    public class Think : BaseGoal
     {
         public override void Update(MovingEntity movingEntity)
         {

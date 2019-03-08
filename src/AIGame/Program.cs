@@ -1,9 +1,13 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Windows.Forms;
+
+#endregion
 
 namespace AIGame
 {
-    internal static class Program
+    public static class Program
     {
         /// <summary>
         ///     The main entry point for the application.

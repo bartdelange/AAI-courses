@@ -1,7 +1,9 @@
+#region
+
 using AICore.Graph;
 using AICore.Graph.Heuristics;
-using Xunit;
-using Xunit.Abstractions;
+
+#endregion
 
 namespace AAITests.Graph
 {
@@ -23,12 +25,12 @@ namespace AAITests.Graph
 
     public class GraphTests
     {
+        private readonly ITestOutputHelper _output;
+
         public GraphTests(ITestOutputHelper output)
         {
             _output = output;
         }
-
-        private readonly ITestOutputHelper _output;
 
         private Graph<string> CreateGraph()
         {

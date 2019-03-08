@@ -1,13 +1,17 @@
-﻿using System.Drawing;
+﻿#region
+
+using System.Drawing;
 using System.Numerics;
 using AICore.Entity;
+
+#endregion
 
 namespace AICore.Behaviour.Individual
 {
     public class SeekBehaviour : SteeringBehaviour
     {
-        private Vector2 _targetPosition;
-        
+        private readonly Vector2 _targetPosition;
+
         public SeekBehaviour(MovingEntity movingEntity, Vector2 targetPosition, float weight)
             : base(movingEntity, null, weight)
         {

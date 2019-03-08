@@ -1,10 +1,9 @@
 ﻿namespace AICore.States
 {
-    class FollowPath
+    public class FollowPath
     {
-        FollowPath()
+        private FollowPath()
         {
-
         }
     }
 }

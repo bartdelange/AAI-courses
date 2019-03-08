@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Numerics;
@@ -12,14 +14,14 @@ using AICore.Entity;
 using AICore.Model;
 using Timer = System.Timers.Timer;
 
+#endregion
+
 namespace AIBehaviours
 {
     public partial class PlayGround : Form
     {
         private const float TimeDelta = 0.8f;
         private readonly Random _random = new Random();
-
-        public Menu menu;
 
         private readonly List<BehaviourItem> _steeringBehaviors = new List<BehaviourItem>
         {
@@ -35,6 +37,8 @@ namespace AIBehaviours
         };
 
         private readonly World _world;
+
+        public Menu menu;
 
         public PlayGround()
         {
@@ -77,18 +81,12 @@ namespace AIBehaviours
 
         private void UpdateForm()
         {
-            if (_world == null)
-            {
-                return;
-            }
-            
+            if (_world == null) return;
+
             entityList.Items.Clear();
             entityList.Items.AddRange(_world.Entities.ToArray());
 
-            foreach (var control in entityOverviewPanel.Controls)
-            {
-                (control as BehaviourControl)?.UpdateEntities();
-            }
+            foreach (var control in entityOverviewPanel.Controls) (control as BehaviourControl)?.UpdateEntities();
         }
 
         #region event handlers
@@ -106,10 +104,7 @@ namespace AIBehaviours
 
         private void WorldPanel_MouseClick(object sender, MouseEventArgs e)
         {
-            foreach (MovingEntity entity in entityList.SelectedItems)
-            {
-                entity.Pos = new Vector2(e.X, e.Y);
-            }
+            foreach (MovingEntity entity in entityList.SelectedItems) entity.Pos = new Vector2(e.X, e.Y);
         }
 
         private void AddVehicleButton_Click(object sender, EventArgs e)

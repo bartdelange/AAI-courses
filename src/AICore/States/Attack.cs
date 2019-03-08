@@ -1,9 +1,13 @@
-﻿using System;
+﻿#region
+
+using System;
 using AICore.Entity;
+
+#endregion
 
 namespace AICore.States
 {
-    internal class Attack : IState<Coward>
+    public class Attack : IState<Coward>
     {
         public void Enter(EntityState<Coward> state)
         {

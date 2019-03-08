@@ -1,12 +1,13 @@
-using System.Numerics;
+#region
+
 using AICore.Util;
-using Xunit;
+
+#endregion
 
 namespace AAITests.Util
 {
     public class Matrix3Tests
     {
-
         [Fact]
         public void Should_CheckEquality()
         {

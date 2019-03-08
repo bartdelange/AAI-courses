@@ -2,13 +2,13 @@
 {
     public class EntityState<T>
     {
-        public IState<T> CurrentState { get; private set; }
-        public T Entity { get; }
-        
         public EntityState(T entity)
         {
             Entity = entity;
         }
+
+        public IState<T> CurrentState { get; private set; }
+        public T Entity { get; }
 
         public void SetState(IState<T> nextState)
         {

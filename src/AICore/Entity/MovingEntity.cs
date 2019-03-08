@@ -1,9 +1,12 @@
-using System;
+#region
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using AICore.Behaviour;
 using AICore.Util;
+
+#endregion
 
 namespace AICore.Entity
 {

@@ -1,8 +1,11 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Drawing;
 using System.Numerics;
 using AICore.Entity;
-using AICore.Util;
+
+#endregion
 
 namespace AICore.Behaviour.Individual
 {
@@ -27,7 +30,7 @@ namespace AICore.Behaviour.Individual
         {
             var addToPerimeter = new Vector2(RandomClamped() * WanderJitter, RandomClamped() * WanderJitter);
 
-            _wanderTarget = (Vector2.Normalize(_wanderTarget + addToPerimeter) * WanderRadius) +
+            _wanderTarget = Vector2.Normalize(_wanderTarget + addToPerimeter) * WanderRadius +
                             new Vector2(WanderDistance, 0);
 
             return MovingEntity.GetPointToWorldSpace(_wanderTarget) - MovingEntity.Pos;

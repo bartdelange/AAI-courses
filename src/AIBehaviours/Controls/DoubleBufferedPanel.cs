@@ -1,8 +1,12 @@
-﻿using System.Windows.Forms;
+﻿#region
+
+using System.Windows.Forms;
+
+#endregion
 
 namespace AIBehaviours.Controls
 {
-    internal sealed class DoubleBufferedPanel : Panel
+    public sealed class DoubleBufferedPanel : Panel
     {
         public DoubleBufferedPanel()
         {

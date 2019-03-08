@@ -1,5 +1,9 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Numerics;
+
+#endregion
 
 namespace AICore.Graph.Heuristics
 {

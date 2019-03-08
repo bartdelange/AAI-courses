@@ -1,8 +1,12 @@
-﻿using AICore.Entity;
+﻿#region
+
+using AICore.Entity;
+
+#endregion
 
 namespace AICore.Goals
 {
-    interface IGoal
+    public interface IGoal
     {
         void Add(IGoal goal);
         void Remove(IGoal goal);

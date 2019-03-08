@@ -1,22 +1,23 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Numerics;
 using AICore.Entity;
 using AICore.Map;
 
+#endregion
+
 namespace AICore
 {
     public class World
     {
-        public int Width { get; }
-        public int Height { get; }
-        
-        public readonly BaseMap Map;
-
         public readonly List<MovingEntity> Entities = new List<MovingEntity>();
+
+        public readonly BaseMap Map;
         public readonly List<Obstacle> Obstacles = new List<Obstacle>();
-        
+
         public World(int width, int height)
         {
             Width = width;
@@ -25,9 +26,12 @@ namespace AICore
             Entities.Add(new Vehicle(new Vector2(100, 60), Color.DarkRed, this));
 
             GenerateRandomObstacles();
-            
+
             Map = new CoarseMap(Width, Height, Obstacles);
         }
+
+        public int Width { get; }
+        public int Height { get; }
 
         private void GenerateRandomObstacles()
         {
@@ -46,7 +50,7 @@ namespace AICore
 
                 // Add obstacle to the world and subtract its size from the available clutter
                 Obstacles.Add(new Obstacle(new Vector2(randX, randY), this, obstacleRadius));
-                
+
                 clutterRemaining -= obstacleRadius;
             }
         }
@@ -62,7 +66,7 @@ namespace AICore
             Obstacles.ForEach(e => e.Render(g));
 
             Map.Render(g);
-                        
+
             Entities.ForEach(e =>
             {
                 e.SteeringBehaviours.ForEach(sb => sb.Render(g));

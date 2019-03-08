@@ -1,27 +1,29 @@
-﻿using System.Collections.Generic;
+﻿#region
+
+using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using System.Numerics;
 using AICore.Entity;
 using AICore.Graph;
-using AICore.Graph.Heuristics;
 using AICore.Util;
+
+#endregion
 
 namespace AICore.Map
 {
     public abstract class BaseMap : Graph<Vector2>
     {
         private readonly Brush _brush = new SolidBrush(Color.LightSeaGreen);
-        private readonly Pen _pen = new Pen(Color.DarkSeaGreen);
-        
+        private readonly Brush _brushNotVisited = new SolidBrush(Color.FromArgb(128, Color.RoyalBlue));
+
         private readonly Brush _brushStart = new SolidBrush(Color.FromArgb(128, Color.Cyan));
         private readonly Brush _brushTarget = new SolidBrush(Color.FromArgb(128, Color.Red));
         private readonly Brush _brushVisited = new SolidBrush(Color.FromArgb(128, Color.DarkGreen));
-        private readonly Brush _brushNotVisited = new SolidBrush(Color.FromArgb(128, Color.RoyalBlue));
+        private readonly Pen _pen = new Pen(Color.DarkSeaGreen);
         private readonly Pen _penPath = new Pen(Color.DeepPink, 2);
         private readonly Pen _penSmoothedPath = new Pen(Color.Gold, 2);
-        
-        
+
+
         protected List<Obstacle> Obstacles;
         protected IEnumerable<Vertex<Vector2>> Path;
         protected IEnumerable<Vertex<Vector2>> SmoothedPath;
@@ -44,9 +46,9 @@ namespace AICore.Map
             foreach (var edge in VertexMap)
             {
                 foreach (var adjacentEdge in edge.Value.AdjacentVertices)
-                    g.DrawLine(_pen,  adjacentEdge.Value.Destination.Data.ToPoint(), edge.Value.Data.ToPoint());
+                    g.DrawLine(_pen, adjacentEdge.Value.Destination.Data.ToPoint(), edge.Value.Data.ToPoint());
 
-                g.FillEllipse(_brush, new Rectangle( edge.Value.Data.Minus(2).ToPoint(), new Size(5, 5)));
+                g.FillEllipse(_brush, new Rectangle(edge.Value.Data.Minus(2).ToPoint(), new Size(5, 5)));
             }
         }
 

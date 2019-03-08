@@ -1,3 +1,5 @@
+#region
+
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -5,29 +7,28 @@ using System.Numerics;
 using AICore.Graph;
 using AICore.Util;
 
+#endregion
+
 namespace AICore.Map
 {
-    interface IHelper
+    public interface IHelper
     {
         void Draw(Graphics graphics);
     }
-    
+
     public class CoarseMapHelper : IHelper
     {
         public IEnumerable<Vector2> CurrentPath;
-        public Dictionary<Vector2, Vertex<Vector2>> VisitedVertices;
         public IEnumerable<Vector2> SmoothedPath;
-        
+        public Dictionary<Vector2, Vertex<Vector2>> VisitedVertices;
+
         public void Draw(Graphics graphics)
         {
-            if (CurrentPath == null || VisitedVertices == null || !CurrentPath.Any())
-            {
-                return;
-            }
-            
+            if (CurrentPath == null || VisitedVertices == null || !CurrentPath.Any()) return;
+
             var start = CurrentPath.First();
             var destination = CurrentPath.First();
-            
+
             var brushStart = new SolidBrush(Color.FromArgb(128, Color.Cyan));
             var brushTarget = new SolidBrush(Color.FromArgb(128, Color.Red));
             var brushVisited = new SolidBrush(Color.FromArgb(128, Color.DarkGreen));
@@ -36,12 +37,10 @@ namespace AICore.Map
             var smoothedPathPen = new Pen(Color.Gold, 2);
 
             foreach (var edge in VisitedVertices)
-            {
                 graphics.FillEllipse(
                     edge.Value.Visited ? brushVisited : brushNotVisited,
                     new Rectangle(edge.Value.Data.Minus(5).ToPoint(), new Size(10, 10))
                 );
-            }
 
             graphics.FillEllipse(
                 brushTarget,
@@ -59,7 +58,7 @@ namespace AICore.Map
                 graphics.DrawLine(pen, previousVector2.ToPoint(), vector2.ToPoint());
                 previousVector2 = vector2;
             }
-            
+
             previousVector2 = start;
             foreach (var vector2 in SmoothedPath)
             {

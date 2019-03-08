@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿#region
+
 using System.Linq;
 using System.Numerics;
 using System.Timers;
@@ -6,6 +7,8 @@ using System.Windows.Forms;
 using AICore;
 using AICore.Behaviour.Individual;
 using Timer = System.Timers.Timer;
+
+#endregion
 
 namespace AIBehaviours
 {
@@ -52,11 +55,11 @@ namespace AIBehaviours
         private void WorldPanel_MouseClick(object sender, MouseEventArgs mouseEventArgs)
         {
             var movingEntity = _world.Entities.First();
-            
+
             var path = _world.Map.FindPath(movingEntity.Pos, new Vector2(mouseEventArgs.X, mouseEventArgs.Y));
 
             var pathFollowingBehaviour = new PathFollowingBehaviour(path, movingEntity, 100);
-            
+
             movingEntity.SteeringBehaviours.Clear();
             movingEntity.SteeringBehaviours.Add(pathFollowingBehaviour);
         }

@@ -1,11 +1,15 @@
-﻿using AICore.Entity;
+﻿#region
+
 using System.Collections.Generic;
+using AICore.Entity;
+
+#endregion
 
 namespace AICore.Goals
 {
-    abstract class BaseGoal : IGoal
+    public abstract class BaseGoal : IGoal
     {
-        private List<IGoal> _goals = new List<IGoal>();
+        private readonly List<IGoal> _goals = new List<IGoal>();
 
         public void Add(IGoal goal)
         {

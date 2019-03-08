@@ -1,39 +1,37 @@
+#region
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
+
+#endregion
 
 namespace AICore.Graph
 {
     public class Path<T> : IComparable<Path<T>>, IEnumerable<Vertex<T>>
     {
         private readonly double _cost;
-        
+
         public readonly Vertex<T> Destination;
 
         public Path(Vertex<T> destination, double cost)
         {
             _cost = cost;
-            
+
             Destination = destination;
         }
 
         /// <summary>
-        /// Implementation of Comparable interface
+        ///     Implementation of Comparable interface
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
         public int CompareTo(Path<T> other)
         {
-            if (_cost < other._cost)
-            {
-                return -1;                
-            }
+            if (_cost < other._cost) return -1;
 
-            if (_cost > other._cost)
-            {                
-                return 1;
-            }
-            
+            if (_cost > other._cost) return 1;
+
             return 0;
         }
 
@@ -45,7 +43,7 @@ namespace AICore.Graph
             while (currentWaypoint.PreviousVertex != null)
             {
                 yield return currentWaypoint;
-                
+
                 // Set next waypoint
                 currentWaypoint = Destination;
             }
