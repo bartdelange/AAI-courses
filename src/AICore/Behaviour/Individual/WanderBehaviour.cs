@@ -30,17 +30,7 @@ namespace AICore.Behaviour.Individual
             _wanderTarget = (Vector2.Normalize(_wanderTarget + addToPerimeter) * WanderRadius) +
                             new Vector2(WanderDistance, 0);
 
-            return PointToWorldSpace(_wanderTarget) - MovingEntity.Pos;
-        }
-
-        private Vector2 PointToWorldSpace(Vector2 localTarget)
-        {
-            var matrix = new Matrix3()
-                .Rotate(MovingEntity.Heading, MovingEntity.Side)
-                .Translate(MovingEntity.Pos);
-
-            // Transform the vector to world space
-            return localTarget.ApplyMatrix(matrix);
+            return MovingEntity.GetPointToWorldSpace(_wanderTarget) - MovingEntity.Pos;
         }
 
         private static float RandomClamped()
@@ -50,7 +40,7 @@ namespace AICore.Behaviour.Individual
 
         public override void Render(Graphics g)
         {
-            var guide = PointToWorldSpace(_wanderTarget);
+            var guide = MovingEntity.GetPointToWorldSpace(_wanderTarget);
 
             g.DrawEllipse(
                 new Pen(Color.Red),

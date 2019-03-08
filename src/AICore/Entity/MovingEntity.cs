@@ -79,4 +79,17 @@ namespace AICore.Entity
             return $"{Velocity}";
         }
     }
+
+    public static class MovingEntityExtensionMethods
+    {
+        public static Vector2 GetPointToWorldSpace(this MovingEntity movingEntity, Vector2 localTarget)
+        {
+            var matrix = new Matrix3()
+                .Rotate(movingEntity.Heading, movingEntity.Side)
+                .Translate(movingEntity.Pos);
+
+            // Transform the vector to world space
+            return localTarget.ApplyMatrix(matrix);
+        }
+    }
 }
