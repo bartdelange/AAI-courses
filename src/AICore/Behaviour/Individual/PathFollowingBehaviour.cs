@@ -25,14 +25,9 @@ namespace AICore.Behaviour.Individual
         public PathFollowingBehaviour(IEnumerable<Vector2> path, MovingEntity movingEntity, float weight) : 
             base(movingEntity, weight)
         {
-            if (!path.Any())
-            {
-                return;
-            }
-            
             _finalWaypoint = path.Last();
-            _pathEnumerator = path.GetEnumerator();
 
+            _pathEnumerator = path.GetEnumerator();
             _pathEnumerator.MoveNext();
         }
 

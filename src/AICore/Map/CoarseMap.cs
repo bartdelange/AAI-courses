@@ -11,7 +11,8 @@ namespace AICore.Map
 {
     public class CoarseMap : BaseMap
     {
-        private const int Density = 20;
+        private const int Density = 40;
+
         private readonly Dictionary<Vector2, bool> _vectors = new Dictionary<Vector2, bool>();
         private readonly CoarseMapHelper _coarseMapHelper = new CoarseMapHelper();
 
@@ -165,6 +166,18 @@ namespace AICore.Map
             _coarseMapHelper.Draw(g);
         }
 
+        Vector2? HasVector(Vector2 v)
+        {
+            Console.WriteLine(v);
+
+            if (_vectors.ContainsKey(v))
+            {
+                return v;
+            }
+
+            return null;
+        }
+
         public override Vector2 FindClosestVertex(Vector2 position)
         {
             var roundedPosition = new Vector2(
@@ -173,24 +186,38 @@ namespace AICore.Map
             );
 
             // STEPS MUST BE EVEN!
-            var steps = 10;
+            const int radius = 5 * Density;
 
-            Vector2 currentVector;
+            // Check point (xs, ys)
+            Vector2? currentVector;
 
-            // Lazy search around till we find one (do this [steps] times
-            for (var i = 0; i <= steps; i++)
+            for (int d = Density; d < radius; d += Density)
             {
-                for (var j = 0; j <= steps; j++)
+                for (int i = 0; i < d + Density; i += Density)
                 {
-                    var currI = i % 2 == 0 ? i : -(i - 1);
-                    var currJ = j % 2 == 0 ? j : -(j - 1);
-                    
-                    currentVector = roundedPosition + new Vector2(Density * currI, Density * currJ);
+                    currentVector = HasVector(roundedPosition - new Vector2(d + i, i));
 
-                    if (_vectors.ContainsKey(currentVector))
-                    {
-                        return currentVector;
-                    }
+                    if (currentVector != null)
+                        return (Vector2)currentVector;
+
+                    currentVector = HasVector(roundedPosition + new Vector2(d - i, i));
+
+                    if (currentVector != null)
+                        return (Vector2)currentVector;
+                }
+
+
+                for (int i = 0; i < d; i += Density)
+                {
+                    currentVector = HasVector(roundedPosition + new Vector2(-i, d - i));
+
+                    if (currentVector != null)
+                        return (Vector2)currentVector;
+
+                    currentVector = HasVector(roundedPosition + new Vector2(i, d + i));
+
+                    if (currentVector != null)
+                        return (Vector2)currentVector;
                 }
             }
 
@@ -200,27 +227,43 @@ namespace AICore.Map
         public override IEnumerable<Vector2> FindPath(Vector2 start, Vector2 destination)
         {
             var path = AStar(FindClosestVertex(start), FindClosestVertex(destination), new Manhattan());
-            
+
+            var fullPath = path.Item1.ToList();
+            fullPath.Insert(0, start);
+            fullPath.Add(destination);
+
+            var smoothedPath = SmoothPath(fullPath);
+
             // Update CoarseMapHelper
-            _coarseMapHelper.CurrentPath = path.Item1;
-            _coarseMapHelper.SmoothedPath = SmoothPath(path.Item1);
             _coarseMapHelper.VisitedVertices = path.Item2;
 
-            return _coarseMapHelper.SmoothedPath;
+            _coarseMapHelper.CurrentPath = fullPath;
+            _coarseMapHelper.SmoothedPath = smoothedPath;
+
+            return smoothedPath;
         }
         
         
         private IEnumerable<Vector2> SmoothPath(IEnumerable<Vector2> path)
         {
+            if(path.Count() <= 1)
+            {
+                return path;
+            }
+
             // The start is always path[0].previous
             var smoothedPath = new List<Vector2>();
             var workingPath = path.ToList();
+
             var current = workingPath[0];
             var next = workingPath[1];
             
             foreach(var vector in path) {
                 // Skip if we are on _current_
-                if (current == vector || next == vector) continue;
+                if (current == vector || next == vector)
+                {
+                    continue;
+                }
                 
                 // This in combination with the above if always skips the direct neighbour vector as this path is already possible
                 var start = current;
