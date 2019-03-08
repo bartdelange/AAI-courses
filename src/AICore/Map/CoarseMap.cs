@@ -14,7 +14,7 @@ namespace AICore.Map
 {
     public class CoarseMap : BaseMap
     {
-        private const int Density = 40;
+        private const int Density = 50;
         private readonly CoarseMapHelper _coarseMapHelper = new CoarseMapHelper();
 
         private readonly Dictionary<Vector2, bool> _vectors = new Dictionary<Vector2, bool>();
@@ -53,6 +53,12 @@ namespace AICore.Map
                 (float) Math.Round(position.X / Density, MidpointRounding.AwayFromZero) * Density,
                 (float) Math.Round(position.Y / Density, MidpointRounding.AwayFromZero) * Density
             );
+
+            // Just return the rounded position when it is a node in the graph
+            if(HasVector(roundedPosition) != null)
+            {
+                return roundedPosition;
+            }
 
             // STEPS MUST BE EVEN!
             const int radius = 5 * Density;
