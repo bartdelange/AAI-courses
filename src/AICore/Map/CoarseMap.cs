@@ -49,51 +49,21 @@ namespace AICore.Map
 
         public override Vector2 FindClosestVertex(Vector2 position)
         {
-            var roundedPosition = new Vector2(
-                (float) Math.Round(position.X / Density, MidpointRounding.AwayFromZero) * Density,
-                (float) Math.Round(position.Y / Density, MidpointRounding.AwayFromZero) * Density
-            );
+            Vector2 closestVector = new Vector2();
+            float closestLength = float.MaxValue;
 
-            // Just return the rounded position when it is a node in the graph
-            if(HasVector(roundedPosition) != null)
+            foreach(var vector in _vectors)
             {
-                return roundedPosition;
-            }
+                var currentLength = Math.Abs((vector.Key - position).LengthSquared());
 
-            const int radius = 5 * Density;
-            Vector2? currentVector;
-
-            for (var d = Density; d < radius; d += Density)
-            {
-                for (var i = 0; i < d + Density; i += Density)
+                if(currentLength < closestLength)
                 {
-                    currentVector = HasVector(roundedPosition - new Vector2(d + i, i));
-
-                    if (currentVector != null)
-                        return (Vector2) currentVector;
-
-                    currentVector = HasVector(roundedPosition + new Vector2(d - i, i));
-
-                    if (currentVector != null)
-                        return (Vector2) currentVector;
-                }
-
-
-                for (var i = 0; i < d; i += Density)
-                {
-                    currentVector = HasVector(roundedPosition + new Vector2(-i, d - i));
-
-                    if (currentVector != null)
-                        return (Vector2) currentVector;
-
-                    currentVector = HasVector(roundedPosition + new Vector2(i, d + i));
-
-                    if (currentVector != null)
-                        return (Vector2) currentVector;
+                    closestLength = currentLength;
+                    closestVector = vector.Key;
                 }
             }
 
-            throw new VectorNotFoundException("No vector found at or close to given x and y in CoarseMap");
+            return closestVector;
         }
 
         public override IEnumerable<Vector2> FindPath(Vector2 start, Vector2 destination)
