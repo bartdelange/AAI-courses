@@ -60,10 +60,7 @@ namespace AICore.Map
                 return roundedPosition;
             }
 
-            // STEPS MUST BE EVEN!
             const int radius = 5 * Density;
-
-            // Check point (xs, ys)
             Vector2? currentVector;
 
             for (var d = Density; d < radius; d += Density)
