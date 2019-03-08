@@ -69,7 +69,7 @@ namespace AICore
 
             Entities.ForEach(e =>
             {
-                e.SteeringBehaviours.ForEach(sb => sb.Render(g));
+                e.SteeringBehaviour?.Draw(g);
                 e.Render(g);
             });
         }

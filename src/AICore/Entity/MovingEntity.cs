@@ -12,41 +12,44 @@ namespace AICore.Entity
 {
     public abstract class MovingEntity : BaseGameEntity
     {
-        protected MovingEntity(Vector2 pos, World w) : base(pos, w)
-        {
-        }
-
-        //	
-        public float Mass { get; set; } = 15;
-        public float MaxSpeed { get; set; } = 100;
-        public int Radius { get; set; } = 100;
+        // Entity properties
+        public readonly float Mass = 15;
+        public readonly float MaxSpeed = 100;
+        public readonly int Radius = 100;
 
         //	
         public Vector2 Velocity { get; set; } = new Vector2(1, 1);
         public Vector2 Heading { get; set; } = new Vector2(1, 1);
         public Vector2 Side { get; set; } = new Vector2(1, 1);
 
-        //	
-        public List<SteeringBehaviour> SteeringBehaviours { get; set; } = new List<SteeringBehaviour>();
+        // Entity behaviour
+        public ISteeringBehaviour SteeringBehaviour;
+
+        protected MovingEntity(Vector2 pos, World w) : base(pos, w)
+        {
+        }
 
         public override void Update(float delta)
         {
             FindNeighbors(Radius);
 
-            var steeringForce =
-                SteeringBehaviours.Aggregate(
-                    new Vector2(),
-                    (accumulator, behaviour) =>
-                    {
-                        // Stop when steeringforce exceeds max speed
-                        if (accumulator.Length() >= MaxSpeed)
-                            return accumulator;
+            Vector2 acceleration = SteeringBehaviour == null
+                ? new Vector2()
+                : SteeringBehaviour.Calculate(delta) / Mass;
 
-                        return accumulator + behaviour.Calculate(delta) * (behaviour.Weight / 100);
-                    }
-                );
+            /* Weighted sum
+            SteeringBehaviours.Aggregate(
+                new Vector2(),
+                (accumulator, behaviour) =>
+                {
+                    // Stop when steeringforce exceeds max speed
+                    if (accumulator.Length() >= MaxSpeed)
+                        return accumulator;
 
-            var acceleration = steeringForce / Mass;
+                    return accumulator + behaviour.Calculate(delta) * (behaviour.Weight / 100);
+                }
+            );
+            */
 
             Velocity = acceleration * delta;
             Pos += Velocity * delta;

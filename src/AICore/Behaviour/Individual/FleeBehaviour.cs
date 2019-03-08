@@ -8,26 +8,33 @@ using AICore.Entity;
 
 namespace AICore.Behaviour.Individual
 {
-    public class FleeBehaviour : SteeringBehaviour
+    public class FleeBehaviour : ISteeringBehaviour
     {
         private const int Boundary = 100 * 100;
 
-        public FleeBehaviour(MovingEntity movingEntity, MovingEntity target, float weight)
-            : base(movingEntity, target, weight)
+        private readonly MovingEntity _movingEntity;
+        private readonly MovingEntity _target;
+
+        public FleeBehaviour(MovingEntity movingEntity, MovingEntity target)
         {
+            _movingEntity = movingEntity;
+            _target = target;
         }
 
-        public override Vector2 Calculate(float deltaTime)
+        public Vector2 Calculate(float deltaTime)
         {
-            var distance = (MovingEntity.Pos - Target.Pos).LengthSquared();
+            var distance = (_movingEntity.Pos - _target.Pos).LengthSquared();
 
-            // Only flee if the target is within 'panic distance'. Work in distance squared space.
-            if (distance > Boundary) return new Vector2();
+            // Only flee if the target is within 'panic distance'.
+            if (distance > Boundary)
+            {
+                return new Vector2();
+            }
 
-            return Vector2.Normalize(MovingEntity.Pos - Target.Pos) * MovingEntity.MaxSpeed - MovingEntity.Velocity;
+            return Vector2.Normalize(_movingEntity.Pos - _target.Pos) * _movingEntity.MaxSpeed - _movingEntity.Velocity;
         }
 
-        public override void Render(Graphics g)
+        public void Draw(Graphics g)
         {
         }
     }

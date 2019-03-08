@@ -1,39 +1,37 @@
-﻿#region
-
-using System;
+﻿using System;
 using System.Drawing;
 using System.Numerics;
 using AICore.Entity;
 
-#endregion
-
 namespace AICore.Behaviour.Individual
 {
-    public class WanderBehaviour : SteeringBehaviour
+    public class WanderBehaviour : ISteeringBehaviour
     {
-        private const float WanderRadius = 50;
-
-        private const float WanderDistance = 25;
-
-        private const float WanderJitter = 25;
-
         private static readonly Random Random = new Random();
+
+        private const float WanderRadius = 50;
+        private const float WanderDistance = 25;
+        private const float WanderJitter = 25;
 
         private Vector2 _wanderTarget = new Vector2(0, 0);
 
-        public WanderBehaviour(MovingEntity movingEntity, MovingEntity target, float weight)
-            : base(movingEntity, target, weight)
+        private readonly MovingEntity _movingEntity;
+        private readonly MovingEntity _target;
+
+        public WanderBehaviour(MovingEntity movingEntity, MovingEntity target)
         {
+            _movingEntity = movingEntity;
+            _target = target;
         }
 
-        public override Vector2 Calculate(float deltaTime)
+        public Vector2 Calculate(float deltaTime)
         {
             var addToPerimeter = new Vector2(RandomClamped() * WanderJitter, RandomClamped() * WanderJitter);
 
-            _wanderTarget = Vector2.Normalize(_wanderTarget + addToPerimeter) * WanderRadius +
-                            new Vector2(WanderDistance, 0);
+            _wanderTarget = (Vector2.Normalize(_wanderTarget + addToPerimeter) * WanderRadius)
+                            + new Vector2(WanderDistance, 0);
 
-            return MovingEntity.GetPointToWorldSpace(_wanderTarget) - MovingEntity.Pos;
+            return _movingEntity.GetPointToWorldSpace(_wanderTarget) - _movingEntity.Pos;
         }
 
         private static float RandomClamped()
@@ -41,15 +39,15 @@ namespace AICore.Behaviour.Individual
             return (float) (Random.NextDouble() - Random.NextDouble());
         }
 
-        public override void Render(Graphics g)
+        public void Draw(Graphics g)
         {
-            var guide = MovingEntity.GetPointToWorldSpace(_wanderTarget);
+            var guidePosition = _movingEntity.GetPointToWorldSpace(_wanderTarget);
 
             g.DrawEllipse(
                 new Pen(Color.Red),
                 new Rectangle(
-                    (int) guide.X,
-                    (int) guide.Y,
+                    (int) guidePosition.X,
+                    (int) guidePosition.Y,
                     4,
                     4
                 )

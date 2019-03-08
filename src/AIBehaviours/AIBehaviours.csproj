@@ -57,6 +57,18 @@
     <Compile Include="Controls\DoubleBufferedPanel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="OffsetPursuitDemo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OffsetPursuitDemo.designer.cs">
+      <DependentUpon>OffsetPursuitDemo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PathFollowingDemo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PathFollowingDemo.designer.cs">
+      <DependentUpon>PathFollowingDemo.cs</DependentUpon>
+    </Compile>
     <Compile Include="PlayGround.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -69,25 +81,22 @@
     <Compile Include="Menu.Designer.cs">
       <DependentUpon>Menu.cs</DependentUpon>
     </Compile>
-    <Compile Include="PathFollowingDemo.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="PathFollowingDemo.Designer.cs">
-      <DependentUpon>PathFollowingDemo.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Controls\BehaviourControl.resx">
       <DependentUpon>BehaviourControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OffsetPursuitDemo.resx">
+      <DependentUpon>OffsetPursuitDemo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PathFollowingDemo.resx">
+      <DependentUpon>PathFollowingDemo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PlayGround.resx">
       <DependentUpon>PlayGround.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Menu.resx">
       <DependentUpon>Menu.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PathFollowingDemo.resx">
-      <DependentUpon>PathFollowingDemo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -116,6 +125,9 @@
       <Project>{ade19426-dc0b-4cd8-8f00-2198bd3d568c}</Project>
       <Name>AICore</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="NewFolder1\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

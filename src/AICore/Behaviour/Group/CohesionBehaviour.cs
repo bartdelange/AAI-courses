@@ -10,40 +10,42 @@ using AICore.Util;
 
 namespace AICore.Behaviour.Group
 {
-    public class CohesionBehaviour : SteeringBehaviour
+    public class CohesionBehaviour : ISteeringBehaviour
     {
-        private readonly Brush _brush = new SolidBrush(Color.FromArgb(25, 255, 255, 0));
-
+        private readonly MovingEntity _movingEntity;
         private readonly int _radius;
 
-        public CohesionBehaviour(MovingEntity movingEntity, MovingEntity target, float weight)
-            : base(movingEntity, target, weight)
+        private readonly Brush _brush = new SolidBrush(Color.FromArgb(25, 255, 255, 0));
+
+        public CohesionBehaviour(MovingEntity movingEntity, MovingEntity target)
         {
-            _radius = (int) (MovingEntity.Radius * 1.5);
+            _movingEntity = movingEntity;
+
+            _radius = (int) (movingEntity.Radius * 1.5);
         }
 
-        public override Vector2 Calculate(float deltaTime)
+        public Vector2 Calculate(float deltaTime)
         {
-            if (MovingEntity.Neighbors.Count < 1) return new Vector2();
+            if (_movingEntity.Neighbors.Count < 1) return new Vector2();
 
-            var centerOfMass = MovingEntity.Neighbors.Aggregate(
+            var centerOfMass = _movingEntity.Neighbors.Aggregate(
                 new Vector2(),
                 (position, neighbor) => position + neighbor.Pos
             );
 
-            var targetPosition = centerOfMass / MovingEntity.Neighbors.Count;
+            var targetPosition = centerOfMass / _movingEntity.Neighbors.Count;
 
-            return Vector2.Normalize(targetPosition - MovingEntity.Pos) * MovingEntity.MaxSpeed;
+            return Vector2.Normalize(targetPosition - _movingEntity.Pos) * _movingEntity.MaxSpeed;
         }
 
-        public override void Render(Graphics g)
+        public void Draw(Graphics g)
         {
             var size = _radius * 2;
 
             g.FillEllipse(
                 _brush,
                 new Rectangle(
-                    MovingEntity.Pos.Minus(_radius).ToPoint(),
+                    _movingEntity.Pos.Minus(_radius).ToPoint(),
                     new Size(size, size)
                 )
             );

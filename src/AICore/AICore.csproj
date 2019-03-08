@@ -54,7 +54,7 @@
     <Compile Include="Behaviour\Individual\PursuitBehaviour.cs" />
     <Compile Include="Behaviour\Individual\SeekBehaviour.cs" />
     <Compile Include="Behaviour\Individual\WanderBehaviour.cs" />
-    <Compile Include="Behaviour\SteeringBehaviour.cs" />
+    <Compile Include="Behaviour\ISteeringBehaviour.cs" />
     <Compile Include="Entity\BaseGameEntity.cs" />
     <Compile Include="Entity\Coward.cs" />
     <Compile Include="Entity\GameObject.cs" />
@@ -86,7 +86,11 @@
     <Compile Include="Util\Matrix3.cs" />
     <Compile Include="Util\PriorityQueue.cs" />
     <Compile Include="Util\Vector2Ext.cs" />
+    <Compile Include="Util\Vector2Util.cs" />
     <Compile Include="World.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Behaviour\Aggregate\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

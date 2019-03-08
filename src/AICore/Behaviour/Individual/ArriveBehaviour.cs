@@ -9,22 +9,23 @@ using AICore.Entity;
 
 namespace AICore.Behaviour.Individual
 {
-    public class ArriveBehaviour : SteeringBehaviour
+    public class ArriveBehaviour : ISteeringBehaviour
     {
         private const double DecelerationSpeed = 1;
         private const double DecelerationTweaker = 0.3;
 
+        private readonly MovingEntity _movingEntity;
         private readonly Vector2 _targetPosition;
 
-        public ArriveBehaviour(MovingEntity movingEntity, Vector2 targetPosition, float weight)
-            : base(movingEntity, null, weight)
+        public ArriveBehaviour(MovingEntity movingEntity, Vector2 targetPosition)
         {
+            _movingEntity = movingEntity;
             _targetPosition = targetPosition;
         }
 
-        public override Vector2 Calculate(float deltaTime)
+        public Vector2 Calculate(float deltaTime)
         {
-            var toTarget = _targetPosition - MovingEntity.Pos;
+            var toTarget = _targetPosition - _movingEntity.Pos;
 
             //calculate the distance to the target
             var dist = toTarget.Length();
@@ -39,17 +40,17 @@ namespace AICore.Behaviour.Individual
             var speed = (float) (dist / (DecelerationSpeed * DecelerationTweaker));
 
             //make sure the velocity does not exceed the max
-            speed = Math.Min(speed, MovingEntity.MaxSpeed);
+            speed = Math.Min(speed, _movingEntity.MaxSpeed);
 
             //from here proceed just like Seek except we don't need to normalize 
             //the ToTarget vector because we have already gone to the trouble
             //of calculating its length: dist. 
             var desiredVelocity = toTarget * speed / dist;
 
-            return desiredVelocity - MovingEntity.Velocity;
+            return desiredVelocity - _movingEntity.Velocity;
         }
 
-        public override void Render(Graphics g)
+        public void Draw(Graphics g)
         {
         }
     }

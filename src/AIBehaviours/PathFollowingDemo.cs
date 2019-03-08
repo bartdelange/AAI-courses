@@ -56,12 +56,15 @@ namespace AIBehaviours
         {
             var movingEntity = _world.Entities.First();
 
-            var path = _world.Map.FindPath(movingEntity.Pos, new Vector2(mouseEventArgs.X, mouseEventArgs.Y));
+            var path = _world.Map.FindPath(
+                movingEntity.Pos, 
+                new Vector2(mouseEventArgs.X, mouseEventArgs.Y)
+            );
 
-            var pathFollowingBehaviour = new PathFollowingBehaviour(path, movingEntity, 100);
-
-            movingEntity.SteeringBehaviours.Clear();
-            movingEntity.SteeringBehaviours.Add(pathFollowingBehaviour);
+            movingEntity.SteeringBehaviour = new PathFollowingBehaviour(
+                path,
+                movingEntity
+            );
         }
 
         private void PathFollowingDemo_FormClosing(object sender, FormClosingEventArgs e)

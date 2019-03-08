@@ -1,32 +1,30 @@
-﻿#region
-
-using System.Drawing;
+﻿using System.Drawing;
 using System.Numerics;
 using AICore.Entity;
 
-#endregion
-
 namespace AICore.Behaviour.Individual
 {
-    public class SeekBehaviour : SteeringBehaviour
+    public class SeekBehaviour : ISteeringBehaviour
     {
         private readonly Vector2 _targetPosition;
+        private readonly MovingEntity _movingEntity;
 
-        public SeekBehaviour(MovingEntity movingEntity, Vector2 targetPosition, float weight)
-            : base(movingEntity, null, weight)
+        public SeekBehaviour(MovingEntity movingEntity, Vector2 targetPosition)
         {
             _targetPosition = targetPosition;
+            _movingEntity = movingEntity;
         }
 
+        /// <inheritdoc />
         /// <summary>
         ///     Set a velocity that will make the agent move the world target
         /// </summary>
-        public override Vector2 Calculate(float deltaTime)
+        public Vector2 Calculate(float deltaTime)
         {
-            return Vector2.Normalize(_targetPosition - MovingEntity.Pos) * MovingEntity.MaxSpeed;
+            return Vector2.Normalize(_targetPosition - _movingEntity.Pos) * _movingEntity.MaxSpeed;
         }
 
-        public override void Render(Graphics g)
+        public void Draw(Graphics g)
         {
         }
     }
