@@ -3,7 +3,7 @@ using AIBehaviours.Controls;
 
 namespace AIBehaviours
 {
-    partial class PathFollowing
+    partial class PathFollowingDemo
     {
         /// <summary>
         /// Required designer variable.

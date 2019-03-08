@@ -9,13 +9,13 @@ using Timer = System.Timers.Timer;
 
 namespace AIBehaviours
 {
-    public partial class PathFollowing : Form
+    public partial class PathFollowingDemo : Form
     {
         private const float TimeDelta = 0.8f;
 
         private readonly World _world;
 
-        public PathFollowing()
+        public PathFollowingDemo()
         {
             InitializeComponent();
 
