@@ -57,6 +57,7 @@
     <Compile Include="Controls\DoubleBufferedPanel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="DemoBase.cs" />
     <Compile Include="OffsetPursuitDemo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -125,9 +126,6 @@
       <Project>{ade19426-dc0b-4cd8-8f00-2198bd3d568c}</Project>
       <Name>AICore</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="NewFolder1\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

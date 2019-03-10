@@ -41,13 +41,15 @@ namespace AICore.Map
         protected int Width { get; }
         protected int Height { get; }
 
-        public virtual void Render(Graphics g)
+        public virtual void Render(Graphics g, bool graphIsVisible)
         {
+            if (!graphIsVisible) return;
+
             foreach (var edge in VertexMap)
             {
                 foreach (var adjacentEdge in edge.Value.AdjacentVertices)
                     g.DrawLine(_pen, adjacentEdge.Value.Destination.Data.ToPoint(), edge.Value.Data.ToPoint());
-
+    
                 g.FillEllipse(_brush, new Rectangle(edge.Value.Data.Minus(2).ToPoint(), new Size(5, 5)));
             }
         }

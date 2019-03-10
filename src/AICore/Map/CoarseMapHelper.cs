@@ -27,7 +27,7 @@ namespace AICore.Map
             if (CurrentPath == null || VisitedVertices == null || !CurrentPath.Any()) return;
 
             var start = CurrentPath.First();
-            var destination = CurrentPath.First();
+            var destination = CurrentPath.Last();
 
             var brushStart = new SolidBrush(Color.FromArgb(128, Color.Cyan));
             var brushTarget = new SolidBrush(Color.FromArgb(128, Color.Red));

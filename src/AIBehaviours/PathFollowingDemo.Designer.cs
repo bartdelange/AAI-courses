@@ -43,7 +43,6 @@ namespace AIBehaviours
             this.worldPanel.Name = "worldPanel";
             this.worldPanel.Size = new System.Drawing.Size(2259, 1422);
             this.worldPanel.TabIndex = 0;
-            this.worldPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.WorldPanel_Paint);
             this.worldPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.WorldPanel_MouseClick);
             // 
             // PathFollowing
@@ -59,7 +58,6 @@ namespace AIBehaviours
             this.Name = "PathFollowing";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Steering";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PathFollowingDemo_FormClosing);
             this.ResumeLayout(false);
 
         }

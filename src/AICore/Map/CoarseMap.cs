@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Numerics;
 using AICore.Entity;
 using AICore.Graph;
@@ -15,26 +16,25 @@ namespace AICore.Map
 {
     public class CoarseMap : BaseMap
     {
-        private const int Density = 50;
+        private const int Density = 20;
         private readonly CoarseMapHelper _coarseMapHelper = new CoarseMapHelper();
 
         private readonly Dictionary<Vector2, bool> _vectors = new Dictionary<Vector2, bool>();
 
         public CoarseMap(int w, int h, List<Obstacle> obstacles) : base(w, h, obstacles)
         {
-            var x0y0 = new Vector2(Density, Density);
-            GenerateEdges(x0y0);
+            var topRight = new Vector2(10, 10);
+            GenerateEdges(topRight);
 
-            var xWyH = new Vector2(Width / Density * Density, Height / Density * Density);
-            GenerateEdges(xWyH);
+            var workingWidth = Width - 10;
+            var workingHeight = Height - 10;
+            var bottomLeft = new Vector2(Width - workingWidth % Density, Height - workingHeight % Density);
+            GenerateEdges(bottomLeft);
         }
 
-        public override void Render(Graphics g)
+        public override void Render(Graphics g, bool graphIsVisible)
         {
-            base.Render(g);
-
-            foreach (var vector in _vectors)
-                g.DrawEllipse(new Pen(Color.Red), vector.Key.X - 1, vector.Key.Y - 1, 3, 3);
+            base.Render(g, graphIsVisible);
 
             _coarseMapHelper.Draw(g);
         }
@@ -256,8 +256,9 @@ namespace AICore.Map
             AddEdge(end, start, Vector2.Distance(start, end));
         }
 
-        protected bool HasCollision(Vector2 end, int extraRadius = Density / 2)
+        protected bool HasCollision(Vector2 end, int extraRadius = int.MaxValue)
         {
+            extraRadius = extraRadius == int.MaxValue ? Math.Max(Density, Density) / 2 : extraRadius;
             foreach (var obstacle in Obstacles)
             {
                 var deltaX = obstacle.Pos.X - end.X;

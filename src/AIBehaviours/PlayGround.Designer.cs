@@ -111,7 +111,6 @@ namespace AIBehaviours
             this.worldPanel.Name = "worldPanel";
             this.worldPanel.Size = new System.Drawing.Size(1734, 1410);
             this.worldPanel.TabIndex = 0;
-            this.worldPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.WorldPanel_Paint);
             this.worldPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.WorldPanel_MouseClick);
             // 
             // tableLayoutPanel1
@@ -143,7 +142,6 @@ namespace AIBehaviours
             this.Name = "PlayGround";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Steering";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PlayGround_FormClosing);
             this.entityOverviewPanel.ResumeLayout(false);
             this.entityOverviewPanel.PerformLayout();
             this.groupBox1.ResumeLayout(false);

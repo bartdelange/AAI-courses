@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Numerics;
-using System.Timers;
 using System.Windows.Forms;
 using AIBehaviours.Controls;
 using AICore;
@@ -12,13 +11,12 @@ using AICore.Behaviour.Group;
 using AICore.Behaviour.Individual;
 using AICore.Entity;
 using AICore.Model;
-using Timer = System.Timers.Timer;
 
 #endregion
 
 namespace AIBehaviours
 {
-    public partial class PlayGround : Form
+    public partial class PlayGround : DemoBase
     {
         private const float TimeDelta = 0.8f;
         private readonly Random _random = new Random();
@@ -36,26 +34,12 @@ namespace AIBehaviours
             new BehaviourItem {Type = typeof(CohesionBehaviour), Name = "Group - Cohesion"}
         };
 
-        private readonly World _world;
-
-        public Menu menu;
-
         public PlayGround()
         {
             InitializeComponent();
 
-            Width = 1000;
-            Height = 800;
-            worldPanel.Width = Width - entityOverviewPanel.Width;
-            worldPanel.Height = Height;
-
-            _world = new World(worldPanel.Width, worldPanel.Height);
-
-            var timer = new Timer();
-
-            timer.Elapsed += Timer_Elapsed;
-            timer.Interval = 20;
-            timer.Enabled = true;
+            InitWorldTimer();
+            InitWorld(worldPanel);
 
             CreateBehaviourControls();
             UpdateForm();
@@ -64,13 +48,18 @@ namespace AIBehaviours
             entityList.SetSelected(0, true);
         }
 
+        protected override World CreateWorld()
+        {
+            return new World(worldPanel.Width, worldPanel.Height);
+        }
+
         private void CreateBehaviourControls()
         {
             var controlWidth = entityOverviewPanel.Width - SystemInformation.VerticalScrollBarWidth - 6;
 
             _steeringBehaviors.ForEach(behaviour =>
             {
-                var control = new BehaviourControl(behaviour, entityList, _world)
+                var control = new BehaviourControl(behaviour, entityList, World)
                 {
                     Width = controlWidth
                 };
@@ -81,26 +70,15 @@ namespace AIBehaviours
 
         private void UpdateForm()
         {
-            if (_world == null) return;
+            if (World == null) return;
 
             entityList.Items.Clear();
-            entityList.Items.AddRange(_world.Entities.ToArray());
+            entityList.Items.AddRange(World.Entities.ToArray());
 
             foreach (var control in entityOverviewPanel.Controls) (control as BehaviourControl)?.UpdateEntities();
         }
 
         #region event handlers
-
-        private void Timer_Elapsed(object sender, ElapsedEventArgs e)
-        {
-            _world.Update(TimeDelta);
-            worldPanel.Invalidate();
-        }
-
-        private void WorldPanel_Paint(object sender, PaintEventArgs e)
-        {
-            _world.Render(e.Graphics);
-        }
 
         private void WorldPanel_MouseClick(object sender, MouseEventArgs e)
         {
@@ -114,10 +92,10 @@ namespace AIBehaviours
             var newVehicle = new Vehicle(
                 randomPosition,
                 Color.FromArgb(_random.Next(256), _random.Next(256), _random.Next(256)),
-                _world
+                World
             );
 
-            _world.Entities.Add(newVehicle);
+            World.Entities.Add(newVehicle);
 
             UpdateForm();
         }
@@ -127,14 +105,9 @@ namespace AIBehaviours
             if (entityList.SelectedItem == null) return;
 
             var entity = (MovingEntity) entityList.SelectedItem;
-            _world.Entities.Remove(entity);
+            World.Entities.Remove(entity);
 
             UpdateForm();
-        }
-
-        private void PlayGround_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            menu.Show();
         }
 
         #endregion

@@ -61,11 +61,11 @@ namespace AICore
                 entity.Update(timeElapsed);
         }
 
-        public void Render(Graphics g)
+        public void Render(Graphics g, bool showGraph)
         {
             Obstacles.ForEach(e => e.Render(g));
 
-            Map.Render(g);
+            Map.Render(g, showGraph);
 
             Entities.ForEach(e =>
             {

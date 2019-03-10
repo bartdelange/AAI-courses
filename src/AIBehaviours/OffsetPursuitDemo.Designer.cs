@@ -43,8 +43,7 @@ namespace AIBehaviours
             this.worldPanel.Size = new System.Drawing.Size(946, 764);
             this.worldPanel.TabIndex = 0;
             this.worldPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.worldPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.WorldPanel_Paint);
-
+            
             // 
             // Form1
             // 
