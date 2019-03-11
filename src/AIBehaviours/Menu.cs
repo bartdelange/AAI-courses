@@ -16,7 +16,7 @@ namespace AIBehaviours
             InitializeComponent();
 
             demoComboBox.Items.AddRange(_menuItems);
-            demoComboBox.SelectedIndex = 1;
+            demoComboBox.SelectedIndex = 0;
         }
 
         private void OnDemoClose(object sender, FormClosedEventArgs args)
