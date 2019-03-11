@@ -6,8 +6,7 @@ namespace AIBehaviours
 {
     public partial class Menu : Form
     {
-        private readonly object[] _menuItems = new object[]
-        {
+        private readonly object[] _menuItems = {
             new MenuItem("Path following", typeof(PathFollowingDemo)),
             new MenuItem("Offset pursuit", typeof(OffsetPursuitDemo)),
         };
