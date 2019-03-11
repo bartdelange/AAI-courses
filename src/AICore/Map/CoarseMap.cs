@@ -59,19 +59,25 @@ namespace AICore.Map
 
             var path = default(Tuple<IEnumerable<Vector2>, Dictionary<Vector2, Vertex<Vector2>>>);
 
-            if (closestStart != closestDest)
-                try
-                {
-                    path = AStar(closestStart, closestDest, new Manhattan());
-                }
-                catch (NoSuchElementException)
-                {
-                }
+            if (closestStart == closestDest)
+            {                
+                return new [] { closestDest };
+            }
+            
+            try
+            {
+                path = AStar(closestStart, closestDest, new Manhattan());
+            }
+            catch (NoSuchElementException)
+            {
+            }   
 
             var fullPath = new List<Vector2>();
 
             if (path != null && path.Item1.Any())
-                fullPath = path.Item1.ToList();
+            {
+                fullPath = path.Item1.ToList();                
+            }
 
             fullPath.Insert(0, start);
             fullPath.Add(destination);
@@ -134,6 +140,7 @@ namespace AICore.Map
 
             current = new Vector2(next.X, next.Y);
             smoothedPath.Add(current);
+            
             return smoothedPath;
         }
 

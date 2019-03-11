@@ -50,7 +50,7 @@ namespace AICore.Entity
 
         public override string ToString()
         {
-            return $"{_objectPen.Color}";
+            return $"{_objectPen.Color} {base.ToString()}";
         }
     }
 }

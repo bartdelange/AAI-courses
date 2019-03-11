@@ -11,7 +11,10 @@ namespace AICore.Behaviour.Individual
 
         private readonly Vector2 _offset;
 
-        protected OffsetPursuit(MovingEntity movingEntity, MovingEntity leader, Vector2 offset)
+        /// <param name="movingEntity"></param>
+        /// <param name="leader"></param>
+        /// <param name="offset"></param>
+        public OffsetPursuit(MovingEntity movingEntity, MovingEntity leader, Vector2 offset)
         {
             _leader = leader;
             _offset = offset;

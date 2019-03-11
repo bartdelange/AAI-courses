@@ -1,9 +1,13 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 using System.Windows.Forms;
 using AIBehaviours.Controls;
+using AIBehaviours.Utils;
 using AICore;
 using AICore.Behaviour.Individual;
+using AICore.Entity;
+using AICore.Map;
 
 namespace AIBehaviours.Demos
 {
@@ -14,12 +18,18 @@ namespace AIBehaviours.Demos
         public PathFollowingDemo()
         {
             InitializeComponent();
+            
 
             // Create new world instance
             _world = new World(Width, Height);
-            var worldControl = new WorldControl(_world);
+
+            // Populate world
+            _world.Entities = new List<MovingEntity> { new Vehicle(new Vector2(50, 50), _world) };
+            _world.Obstacles = ObstacleUtils.CreateObstacles(Width, Height, 2000);
+            _world.Map = new CoarseMap(Width, Height, _world.Obstacles);
             
-            // Attach event handlers that are used in this demo
+            // Create world control and attach event handlers that are used in this demo
+            var worldControl = new WorldControl(_world);
             worldControl.MouseClick += WorldPanel_MouseClick;
 
             // Create new world control that is used to render the World
