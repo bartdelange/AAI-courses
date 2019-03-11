@@ -12,7 +12,7 @@ namespace AICore.Behaviour.Group
         private readonly MovingEntity _movingEntity;
         private readonly int _radius;
 
-        public CohesionBehaviour(MovingEntity movingEntity, MovingEntity target)
+        public CohesionBehaviour(MovingEntity movingEntity)
         {
             _movingEntity = movingEntity;
 

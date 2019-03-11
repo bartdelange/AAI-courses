@@ -11,7 +11,7 @@ namespace AICore.Behaviour.Group
         private readonly Brush _brush = new SolidBrush(Color.FromArgb(25, 0, 0, 255));
         private readonly MovingEntity _movingEntity;
 
-        public AlignmentBehaviour(MovingEntity movingEntity, MovingEntity target)
+        public AlignmentBehaviour(MovingEntity movingEntity)
         {
             _movingEntity = movingEntity;
         }

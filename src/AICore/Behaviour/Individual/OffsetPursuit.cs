@@ -11,7 +11,7 @@ namespace AICore.Behaviour.Individual
 
         private readonly Vector2 _offset;
 
-        protected OffsetPursuit(MovingEntity movingEntity, MovingEntity leader, Vector2 offset, float weight)
+        protected OffsetPursuit(MovingEntity movingEntity, MovingEntity leader, Vector2 offset)
         {
             _leader = leader;
             _offset = offset;

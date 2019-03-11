@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using AIBehaviours.Demos;
 
@@ -11,7 +10,6 @@ namespace AIBehaviours
         {
             new MenuItem("Path following", typeof(PathFollowingDemo)),
             new MenuItem("Offset pursuit", typeof(OffsetPursuitDemo)),
-            new MenuItem("Behaviour playground", typeof(PlayGround))
         };
 
         public Menu()
@@ -19,6 +17,7 @@ namespace AIBehaviours
             InitializeComponent();
 
             demoComboBox.Items.AddRange(_menuItems);
+            demoComboBox.SelectedIndex = 1;
         }
 
         private void OnDemoClose(object sender, FormClosedEventArgs args)

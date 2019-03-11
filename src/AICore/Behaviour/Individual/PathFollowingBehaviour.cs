@@ -25,11 +25,12 @@ namespace AICore.Behaviour.Individual
         /// <param name="movingEntity"></param>
         public PathFollowingBehaviour(IEnumerable<Vector2> path, MovingEntity movingEntity)
         {
+            _movingEntity = movingEntity;
+
             _finalWaypoint = path.Last();
 
             _pathEnumerator = path.GetEnumerator();
             _pathEnumerator.MoveNext();
-            _movingEntity = movingEntity;
         }
 
         public Vector2 Calculate(float deltaTime)

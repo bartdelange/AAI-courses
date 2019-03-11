@@ -30,30 +30,17 @@ namespace AIBehaviours.Demos
         /// </summary>
         private void InitializeComponent()
         {
-            this.worldPanel = new DoubleBufferedPanel();
             this.SuspendLayout();
             // 
-            // worldPanel
-            // 
-            this.worldPanel.BackColor = System.Drawing.Color.White;
-            this.worldPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.worldPanel.Location = new System.Drawing.Point(283, 3);
-            this.worldPanel.Name = "worldPanel";
-            this.worldPanel.Size = new System.Drawing.Size(946, 764);
-            this.worldPanel.TabIndex = 0;
-            this.worldPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            
-            // 
-            // Form1
+            // OffsetPursuitDemo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1232, 770);
-            this.Controls.Add(this.worldPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "Form1";
+            this.Name = "OffsetPursuitDemo";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Steering";
             this.ResumeLayout(false);
@@ -61,7 +48,6 @@ namespace AIBehaviours.Demos
         }
 
         #endregion
-        private DoubleBufferedPanel worldPanel;
     }
 }
 

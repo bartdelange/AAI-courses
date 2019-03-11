@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Numerics;
+using System.Windows.Forms;
+using AIBehaviours.Controls;
 using AICore;
 using AICore.Behaviour.Individual;
 using AICore.Entity;
@@ -7,20 +9,14 @@ using AICore.Util;
 
 namespace AIBehaviours.Demos
 {
-    public partial class OffsetPursuitDemo : DemoBase
+    public partial class OffsetPursuitDemo : Form
     {
         public OffsetPursuitDemo()
         {
             InitializeComponent();
             
-            InitWorld(worldPanel);
-        }
-
-        protected override World CreateWorld()
-        {
-            base.CreateWorld();
             
-            var world = new World(worldPanel.Width, worldPanel.Height);
+            var world = new World(Width, Height);
 
             var max = new Vector2(Width, Height);
             var leader = new Vehicle(Vector2Util.GetRandom(max), world);
@@ -39,7 +35,7 @@ namespace AIBehaviours.Demos
                 entity.SteeringBehaviour = new PursuitBehaviour(entity, leader);
             }
 
-            return world;
+            Controls.Add(new WorldControl(world));
         }
     }
 }

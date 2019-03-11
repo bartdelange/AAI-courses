@@ -34,14 +34,7 @@ namespace AICore.Map
             _coarseMapHelper.Draw(g);
         }
 
-        private Vector2? HasVector(Vector2 v)
-        {
-            if (_vectors.ContainsKey(v)) return v;
-
-            return null;
-        }
-
-        public override Vector2 FindClosestVertex(Vector2 position)
+        protected virtual Vector2 FindClosestVertex(Vector2 position)
         {
             var closestVector = new Vector2();
             var closestLength = float.MaxValue;

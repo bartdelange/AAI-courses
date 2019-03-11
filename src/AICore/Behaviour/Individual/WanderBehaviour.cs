@@ -13,14 +13,12 @@ namespace AICore.Behaviour.Individual
         private static readonly Random Random = new Random();
 
         private readonly MovingEntity _movingEntity;
-        private readonly MovingEntity _target;
 
         private Vector2 _wanderTarget = new Vector2(0, 0);
 
-        public WanderBehaviour(MovingEntity movingEntity, MovingEntity target)
+        public WanderBehaviour(MovingEntity movingEntity)
         {
             _movingEntity = movingEntity;
-            _target = target;
         }
 
         public Vector2 Calculate(float deltaTime)
