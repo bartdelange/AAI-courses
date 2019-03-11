@@ -1,13 +1,9 @@
-﻿#region
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Numerics;
 using AICore.Entity;
 using AICore.Graph;
 using AICore.Util;
-
-#endregion
 
 namespace AICore.Map
 {

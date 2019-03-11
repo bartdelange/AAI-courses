@@ -1,8 +1,4 @@
-﻿#region
-
-using AICore.Entity;
-
-#endregion
+﻿using AICore.Entity;
 
 namespace AICore.Goals
 {

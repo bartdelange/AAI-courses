@@ -1,8 +1,4 @@
-﻿#region
-
-using System.Numerics;
-
-#endregion
+﻿using System.Numerics;
 
 namespace AICore.Entity
 {

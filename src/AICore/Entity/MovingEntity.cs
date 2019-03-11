@@ -1,10 +1,6 @@
-#region
-
 using System.Numerics;
 using AICore.Behaviour;
 using AICore.Util;
-
-#endregion
 
 namespace AICore.Entity
 {

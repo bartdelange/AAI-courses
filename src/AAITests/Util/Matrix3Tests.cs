@@ -1,8 +1,6 @@
-#region
-
+using System.Numerics;
 using AICore.Util;
-
-#endregion
+using Xunit;
 
 namespace AAITests.Util
 {

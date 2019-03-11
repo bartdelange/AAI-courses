@@ -1,11 +1,7 @@
-﻿#region
-
-using System;
+﻿using System;
 using System.Drawing;
 using System.Numerics;
 using AICore.Entity;
-
-#endregion
 
 namespace AICore.Behaviour.Individual
 {

@@ -1,12 +1,8 @@
-#region
-
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Numerics;
 using AICore.Entity;
-
-#endregion
 
 namespace AICore.Behaviour.Individual
 {

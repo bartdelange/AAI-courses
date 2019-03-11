@@ -1,7 +1,6 @@
-﻿using AIBehaviours;
-using AIBehaviours.Controls;
+﻿using AIBehaviours.Controls;
 
-namespace AIBehaviours
+namespace AIBehaviours.Demos
 {
     partial class PathFollowingDemo
     {

@@ -1,8 +1,4 @@
-﻿#region
-
-using System.Windows.Forms;
-
-#endregion
+﻿using System.Windows.Forms;
 
 namespace AIGame
 {

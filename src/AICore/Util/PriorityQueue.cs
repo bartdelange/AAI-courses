@@ -1,10 +1,6 @@
-﻿#region
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using AICore.Graph;
-
-#endregion
 
 namespace AICore.Util
 {

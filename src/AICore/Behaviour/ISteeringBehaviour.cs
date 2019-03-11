@@ -1,9 +1,5 @@
-﻿#region
-
-using System.Drawing;
+﻿using System.Drawing;
 using System.Numerics;
-
-#endregion
 
 namespace AICore.Behaviour
 {

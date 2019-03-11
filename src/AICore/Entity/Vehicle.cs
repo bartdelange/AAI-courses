@@ -1,10 +1,6 @@
-﻿#region
-
-using System.Drawing;
+﻿using System.Drawing;
 using System.Numerics;
 using AICore.Util;
-
-#endregion
 
 namespace AICore.Entity
 {

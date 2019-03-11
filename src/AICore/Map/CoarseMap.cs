@@ -1,16 +1,11 @@
-﻿#region
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Net.Http.Headers;
 using System.Numerics;
 using AICore.Entity;
 using AICore.Graph;
 using AICore.Graph.Heuristics;
-
-#endregion
 
 namespace AICore.Map
 {
@@ -61,8 +56,8 @@ namespace AICore.Map
                 closestVector = vector.Key;
             }
 
-            return closestVector;
-        }
+        return closestVector;
+    }
 
         public override IEnumerable<Vector2> FindPath(Vector2 start, Vector2 destination)
         {
@@ -250,13 +245,13 @@ namespace AICore.Map
             }
         }
 
-        public void CreateTwoWayEdges(Vector2 start, Vector2 end)
+        private void CreateTwoWayEdges(Vector2 start, Vector2 end)
         {
             AddEdge(start, end, Vector2.Distance(start, end));
             AddEdge(end, start, Vector2.Distance(start, end));
         }
 
-        protected bool HasCollision(Vector2 end, int extraRadius = int.MaxValue)
+        private bool HasCollision(Vector2 end, int extraRadius = int.MaxValue)
         {
             extraRadius = extraRadius == int.MaxValue ? Math.Max(Density, Density) / 2 : extraRadius;
             foreach (var obstacle in Obstacles)

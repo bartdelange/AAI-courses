@@ -1,13 +1,9 @@
-﻿#region
-
-using System;
+﻿using System;
 using System.Windows.Forms;
 using AICore;
 using AICore.Behaviour;
 using AICore.Entity;
 using AICore.Model;
-
-#endregion
 
 namespace AIBehaviours.Controls
 {

@@ -1,12 +1,8 @@
-#region
-
 using System.Drawing;
 using System.Linq;
 using System.Numerics;
 using AICore.Entity;
 using AICore.Util;
-
-#endregion
 
 namespace AICore.Behaviour.Group
 {

@@ -28,77 +28,78 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.header = new System.Windows.Forms.Label();
-            this.playGround = new System.Windows.Forms.Button();
-            this.pathFinding = new System.Windows.Forms.Button();
-            this.menuPanel = new System.Windows.Forms.Panel();
-            this.menuPanel.SuspendLayout();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.menuTitle = new System.Windows.Forms.Label();
+            this.demoComboBox = new System.Windows.Forms.ComboBox();
+            this.submitButton = new System.Windows.Forms.Button();
+            this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // header
+            // flowLayoutPanel1
             // 
-            this.header.Dock = System.Windows.Forms.DockStyle.Top;
-            this.header.Location = new System.Drawing.Point(0, 0);
-            this.header.Name = "header";
-            this.header.Size = new System.Drawing.Size(317, 60);
-            this.header.TabIndex = 0;
-            this.header.Text = "Chose a simulation";
-            this.header.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.flowLayoutPanel1.Controls.Add(this.menuTitle);
+            this.flowLayoutPanel1.Controls.Add(this.demoComboBox);
+            this.flowLayoutPanel1.Controls.Add(this.submitButton);
+            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(173, 115);
+            this.flowLayoutPanel1.TabIndex = 0;
             // 
-            // playGround
+            // menuTitle
             // 
-            this.playGround.Dock = System.Windows.Forms.DockStyle.Top;
-            this.playGround.Location = new System.Drawing.Point(0, 120);
-            this.playGround.Name = "playGround";
-            this.playGround.Size = new System.Drawing.Size(317, 60);
-            this.playGround.TabIndex = 1;
-            this.playGround.Text = "Play ground";
-            this.playGround.UseVisualStyleBackColor = true;
-            this.playGround.Click += new System.EventHandler(this.playGround_Click);
+            this.menuTitle.AutoSize = true;
+            this.menuTitle.Location = new System.Drawing.Point(15, 15);
+            this.menuTitle.Margin = new System.Windows.Forms.Padding(15, 15, 3, 10);
+            this.menuTitle.Name = "menuTitle";
+            this.menuTitle.Size = new System.Drawing.Size(75, 13);
+            this.menuTitle.TabIndex = 0;
+            this.menuTitle.Text = "Select a demo";
             // 
-            // pathFinding
+            // demoComboBox
             // 
-            this.pathFinding.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pathFinding.Location = new System.Drawing.Point(0, 60);
-            this.pathFinding.Name = "pathFinding";
-            this.pathFinding.Size = new System.Drawing.Size(317, 60);
-            this.pathFinding.TabIndex = 2;
-            this.pathFinding.Text = "Path finding";
-            this.pathFinding.UseVisualStyleBackColor = true;
-            this.pathFinding.Click += new System.EventHandler(this.pathFinding_Click);
+            this.demoComboBox.FormattingEnabled = true;
+            this.demoComboBox.Location = new System.Drawing.Point(15, 41);
+            this.demoComboBox.Margin = new System.Windows.Forms.Padding(15, 3, 3, 3);
+            this.demoComboBox.Name = "demoComboBox";
+            this.demoComboBox.Size = new System.Drawing.Size(146, 21);
+            this.demoComboBox.TabIndex = 1;
             // 
-            // menuPanel
+            // submitButton
             // 
-            this.menuPanel.Controls.Add(this.playGround);
-            this.menuPanel.Controls.Add(this.pathFinding);
-            this.menuPanel.Controls.Add(this.header);
-            this.menuPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.menuPanel.Location = new System.Drawing.Point(0, 0);
-            this.menuPanel.Name = "menuPanel";
-            this.menuPanel.Size = new System.Drawing.Size(317, 269);
-            this.menuPanel.TabIndex = 3;
+            this.submitButton.Location = new System.Drawing.Point(15, 75);
+            this.submitButton.Margin = new System.Windows.Forms.Padding(15, 10, 15, 3);
+            this.submitButton.Name = "submitButton";
+            this.submitButton.Size = new System.Drawing.Size(146, 23);
+            this.submitButton.TabIndex = 2;
+            this.submitButton.Text = "Start";
+            this.submitButton.UseVisualStyleBackColor = true;
+            this.submitButton.Click += new System.EventHandler(this.SubmitButton_Click);
             // 
             // Menu
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(317, 269);
-            this.Controls.Add(this.menuPanel);
+            this.ClientSize = new System.Drawing.Size(173, 115);
+            this.Controls.Add(this.flowLayoutPanel1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Menu";
             this.Text = "Menu";
-            this.menuPanel.ResumeLayout(false);
+            this.flowLayoutPanel1.ResumeLayout(false);
+            this.flowLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Label header;
-        private System.Windows.Forms.Button playGround;
-        private System.Windows.Forms.Button pathFinding;
-        private System.Windows.Forms.Panel menuPanel;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.Label menuTitle;
+        private System.Windows.Forms.ComboBox demoComboBox;
+        private System.Windows.Forms.Button submitButton;
     }
 }

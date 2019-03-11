@@ -1,14 +1,10 @@
-﻿#region
-
-using System.Linq;
+﻿using System.Linq;
 using System.Numerics;
 using System.Windows.Forms;
 using AICore;
 using AICore.Behaviour.Individual;
 
-#endregion
-
-namespace AIBehaviours
+namespace AIBehaviours.Demos
 {
     public partial class PathFollowingDemo : DemoBase
     {

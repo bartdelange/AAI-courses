@@ -1,15 +1,11 @@
-﻿#region
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Numerics;
 using AICore;
 using AICore.Behaviour.Individual;
 using AICore.Entity;
 using AICore.Util;
 
-#endregion
-
-namespace AIBehaviours
+namespace AIBehaviours.Demos
 {
     public partial class OffsetPursuitDemo : DemoBase
     {
@@ -17,12 +13,13 @@ namespace AIBehaviours
         {
             InitializeComponent();
             
-            InitWorldTimer();
             InitWorld(worldPanel);
         }
 
         protected override World CreateWorld()
         {
+            base.CreateWorld();
+            
             var world = new World(worldPanel.Width, worldPanel.Height);
 
             var max = new Vector2(Width, Height);

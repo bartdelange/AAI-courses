@@ -1,30 +1,39 @@
-﻿#region
-
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
-
-#endregion
+using AIBehaviours.Demos;
 
 namespace AIBehaviours
 {
     public partial class Menu : Form
     {
+        private readonly object[] _menuItems = new object[]
+        {
+            new MenuItem("Path following", typeof(PathFollowingDemo)),
+            new MenuItem("Offset pursuit", typeof(OffsetPursuitDemo)),
+            new MenuItem("Behaviour playground", typeof(PlayGround))
+        };
+
         public Menu()
         {
             InitializeComponent();
+
+            demoComboBox.Items.AddRange(_menuItems);
         }
 
-        private void pathFinding_Click(object sender, EventArgs e)
+        private void OnDemoClose(object sender, FormClosedEventArgs args)
         {
-            var pF = new PathFollowingDemo {menu = this};
-            pF.Show();
-            Hide();
+            Show();
         }
 
-        private void playGround_Click(object sender, EventArgs e)
+        private void SubmitButton_Click(object sender, EventArgs e)
         {
-            var pG = new PlayGround {menu = this};
-            pG.Show();
+            var menuItem = (MenuItem) demoComboBox.SelectedItem;
+            var demoForm = (Form) Activator.CreateInstance(menuItem.Value);
+
+            demoForm.Show();
+            demoForm.FormClosed += OnDemoClose;
+
             Hide();
         }
     }

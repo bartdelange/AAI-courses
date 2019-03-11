@@ -1,28 +1,23 @@
-﻿#region
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Numerics;
 using System.Windows.Forms;
 using AIBehaviours.Controls;
 using AICore;
+using AICore.Behaviour;
 using AICore.Behaviour.Group;
 using AICore.Behaviour.Individual;
 using AICore.Entity;
 using AICore.Model;
 
-#endregion
-
-namespace AIBehaviours
+namespace AIBehaviours.Demos
 {
     public partial class PlayGround : DemoBase
     {
-        private const float TimeDelta = 0.8f;
         private readonly Random _random = new Random();
 
-        private readonly List<BehaviourItem> _steeringBehaviors = new List<BehaviourItem>
-        {
+        private readonly object[] _steeringBehaviors = {
             new BehaviourItem {Type = typeof(ArriveBehaviour), Name = "Individual - Arrive"},
             new BehaviourItem {Type = typeof(FleeBehaviour), Name = "Individual - Flee"},
             new BehaviourItem {Type = typeof(SeekBehaviour), Name = "Individual - Seek"},
@@ -38,7 +33,6 @@ namespace AIBehaviours
         {
             InitializeComponent();
 
-            InitWorldTimer();
             InitWorld(worldPanel);
 
             CreateBehaviourControls();
@@ -57,7 +51,7 @@ namespace AIBehaviours
         {
             var controlWidth = entityOverviewPanel.Width - SystemInformation.VerticalScrollBarWidth - 6;
 
-            _steeringBehaviors.ForEach(behaviour =>
+            foreach (BehaviourItem behaviour in _steeringBehaviors)
             {
                 var control = new BehaviourControl(behaviour, entityList, World)
                 {
@@ -65,7 +59,7 @@ namespace AIBehaviours
                 };
 
                 entityOverviewPanel.Controls.Add(control);
-            });
+            }
         }
 
         private void UpdateForm()
@@ -73,7 +67,7 @@ namespace AIBehaviours
             if (World == null) return;
 
             entityList.Items.Clear();
-            entityList.Items.AddRange(World.Entities.ToArray());
+            entityList.Items.AddRange(World.Entities);
 
             foreach (var control in entityOverviewPanel.Controls) (control as BehaviourControl)?.UpdateEntities();
         }
