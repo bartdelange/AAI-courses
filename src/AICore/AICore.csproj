@@ -59,6 +59,7 @@
     <Compile Include="Behaviour\Util\PrioritizedDithering.cs" />
     <Compile Include="Behaviour\Util\WeightedTruncatedRunningSumWithPrioritization.cs" />
     <Compile Include="Behaviour\Util\WeightedTruncatedSum.cs" />
+    <Compile Include="Behaviour\Util\ZeroOverlap.cs" />
     <Compile Include="Entity\BaseGameEntity.cs" />
     <Compile Include="Entity\Coward.cs" />
     <Compile Include="Entity\GameObject.cs" />

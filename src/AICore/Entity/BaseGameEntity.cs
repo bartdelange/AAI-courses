@@ -7,6 +7,8 @@ namespace AICore.Entity
 {
     public abstract class BaseGameEntity : GameObject
     {
+        public const int BoundingRadius = 15;
+
         public List<MovingEntity> Neighbors;
 
         protected BaseGameEntity(Vector2 pos, World w) : base(pos, w)
