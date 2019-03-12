@@ -56,6 +56,7 @@
     <Compile Include="Behaviour\Individual\SeekBehaviour.cs" />
     <Compile Include="Behaviour\Individual\WanderBehaviour.cs" />
     <Compile Include="Behaviour\ISteeringBehaviour.cs" />
+    <Compile Include="Behaviour\Util\PrioritizedDithering.cs" />
     <Compile Include="Behaviour\Util\WeightedTruncatedRunningSumWithPrioritization.cs" />
     <Compile Include="Behaviour\Util\WeightedTruncatedSum.cs" />
     <Compile Include="Entity\BaseGameEntity.cs" />

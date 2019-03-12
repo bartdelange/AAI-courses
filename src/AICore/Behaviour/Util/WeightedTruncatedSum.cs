@@ -1,21 +1,24 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Numerics;
+using AICore.Util;
 
 namespace AICore.Behaviour.Util
 {
     public class WeightedTruncatedSum : ISteeringBehaviour
     {
         private readonly Dictionary<ISteeringBehaviour, float> _steeringBehaviours;
-            
-        public WeightedTruncatedSum(Dictionary<ISteeringBehaviour, float> steeringBehaviours)
+        private readonly float _maxSpeed;
+
+        public WeightedTruncatedSum(Dictionary<ISteeringBehaviour, float> steeringBehaviours, float maxSpeed)
         {
             _steeringBehaviours = steeringBehaviours;
+            _maxSpeed = maxSpeed;
         }
 
         public Vector2 Calculate(float deltaTime)
         {
-            var steeringForce = new Vector2();
+            var steeringForce = Vector2.Zero;
             
             foreach (var keyValuePair in _steeringBehaviours)
             {
@@ -25,7 +28,7 @@ namespace AICore.Behaviour.Util
                 steeringForce += steeringBehaviour.Calculate(deltaTime) * weight;
             }
 
-            return (steeringForce / _steeringBehaviours.Count);
+            return steeringForce.Truncate(_maxSpeed);
         }
 
         public void Draw(Graphics g)

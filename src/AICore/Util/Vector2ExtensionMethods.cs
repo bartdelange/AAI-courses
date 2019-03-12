@@ -64,6 +64,22 @@ namespace AICore.Util
         }
 
         /// <summary>
+        /// Truncates given vector when magnitude exceeds given value
+        /// </summary>
+        /// <param name="vector"></param>
+        /// <param name="max"></param>
+        /// <returns></returns>
+        public static Vector2 Truncate(this Vector2 vector, float max)
+        {
+            if (vector.Length() <= max)
+            {
+                return vector;
+            }
+            
+            return Vector2.Normalize(vector) * max;
+        }
+
+        /// <summary>
         /// Transforms given vector with given matrix
         /// </summary>
         /// <param name="vector2"></param>

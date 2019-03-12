@@ -1,15 +1,17 @@
+using System;
 using System.Collections.Specialized;
 using System.Drawing;
 using System.Numerics;
+using AICore.Util;
 
 namespace AICore.Behaviour.Util
 {
-    public class WeightedTruncatedRunningSumWithPrioritization : ISteeringBehaviour
+    public class PrioritizedDithering : ISteeringBehaviour
     {
         private readonly OrderedDictionary _steeringBehaviour;
         private readonly float _maxSpeed;
 
-        public WeightedTruncatedRunningSumWithPrioritization(OrderedDictionary steeringBehaviour, float maxSpeed)
+        public PrioritizedDithering(OrderedDictionary steeringBehaviour, float maxSpeed)
         {
             _steeringBehaviour = steeringBehaviour;
             _maxSpeed = maxSpeed;
@@ -28,21 +30,24 @@ namespace AICore.Behaviour.Util
                 if (remainingSteeringForce <= 0) return steeringForceSum;
              
                 var steeringBehaviour = (ISteeringBehaviour) enumerator.Key;
-                var weight = (float) enumerator.Value;
+                var properties = (Tuple<float, float>) enumerator.Value;
+
+                var weight = properties.Item1;
+                var probability = properties.Item1;
                 
                 var steeringForce = steeringBehaviour.Calculate(deltaTime) * weight;
                 var steeringForceMagnitude = steeringForce.Length();
-
-                // Add steering force to steeringForceSum. Adds as much as possible when addition will exceed maxSpeed.
-                steeringForceSum += (steeringForceMagnitude < remainingSteeringForce) 
-                    ? steeringForce
-                    :(Vector2.Normalize(steeringForce) * remainingSteeringForce);
-
-                // Move to next steering behaviour
+                
+                // Ignore this steering behaviour when magnitude is zero
+                if (steeringForceMagnitude > 0)
+                {
+                    return steeringForce.Truncate(_maxSpeed) * weight / probability;
+                }
+                
                 enumerator.MoveNext();
             }
-
-            return steeringForceSum;
+            
+            return Vector2.Zero;
         }
 
         public void Draw(Graphics g)
