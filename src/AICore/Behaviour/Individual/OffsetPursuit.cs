@@ -23,11 +23,11 @@ namespace AICore.Behaviour.Individual
 
         public Vector2 Calculate(float deltaTime)
         {
-            var worldOffsetPosition = _movingEntity.GetPointToWorldSpace(_offset);
+            var worldOffsetPosition = _leader.GetPointToWorldSpace(_offset);
             var toOffset = worldOffsetPosition - _movingEntity.Pos;
 
             var lookAheadTime = toOffset.Length() / (_movingEntity.MaxSpeed + _leader.Velocity.Length());
-            var targetPosition = worldOffsetPosition + _leader.Velocity * lookAheadTime;
+            var targetPosition = worldOffsetPosition + (_leader.Velocity * lookAheadTime);
 
             var arriveBehaviour = new ArriveBehaviour(_movingEntity, targetPosition);
 

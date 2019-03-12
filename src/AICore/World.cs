@@ -30,7 +30,11 @@ namespace AICore
         {
             Map?.Render(g, graphIsVisible);
             Obstacles?.ForEach(e => e.Render(g));
-            Entities?.ForEach(e => e.Render(g));
+            Entities?.ForEach(e =>
+            {
+                e.Render(g);
+                e.SteeringBehaviour?.Draw(g);
+            });
         }
     }
 }

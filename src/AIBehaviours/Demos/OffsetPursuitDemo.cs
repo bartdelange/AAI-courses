@@ -34,13 +34,13 @@ namespace AIBehaviours.Demos
                 new Vehicle(Vector2Util.GetRandom(worldBound), world)
             };
 
-            MovingEntity previousEntity = null;
+            MovingEntity previousEntity = leader;
             foreach (var entity in entities)
             {                
                 entity.SteeringBehaviour = new OffsetPursuit(
                     entity, 
-                    previousEntity ?? leader, 
-                    new Vector2(20, 20)
+                    previousEntity, 
+                    new Vector2(-100, 0)
                 );
                 
                 previousEntity = entity;

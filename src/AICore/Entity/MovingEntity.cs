@@ -31,20 +31,6 @@ namespace AICore.Entity
                 ? new Vector2()
                 : SteeringBehaviour.Calculate(delta) / Mass;
 
-            /* Weighted sum
-            SteeringBehaviours.Aggregate(
-                new Vector2(),
-                (accumulator, behaviour) =>
-                {
-                    // Stop when steeringforce exceeds max speed
-                    if (accumulator.Length() >= MaxSpeed)
-                        return accumulator;
-
-                    return accumulator + behaviour.Calculate(delta) * (behaviour.Weight / 100);
-                }
-            );
-            */
-
             Velocity = acceleration * delta;
             Pos += Velocity * delta;
 
