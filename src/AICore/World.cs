@@ -26,9 +26,9 @@ namespace AICore
             Entities?.ForEach(e => e.Update(timeElapsed));
         }
 
-        public void Render(Graphics g)
+        public void Render(Graphics g, bool graphIsVisible)
         {
-            Map?.Render(g, true);
+            Map?.Render(g, graphIsVisible);
             Obstacles?.ForEach(e => e.Render(g));
             Entities?.ForEach(e => e.Render(g));
         }

@@ -27,8 +27,10 @@ namespace AIBehaviours
         private void SubmitButton_Click(object sender, EventArgs e)
         {
             var menuItem = (MenuItem) demoComboBox.SelectedItem;
-            var demoForm = (Form) Activator.CreateInstance(menuItem.Value);
+            var demoForm = (Form) Activator.CreateInstance(menuItem.Value, 1000, 800);
 
+            demoForm.Width = 1000;
+            demoForm.Height = 800;
             demoForm.Show();
             demoForm.FormClosed += OnDemoClose;
 

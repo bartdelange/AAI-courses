@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Numerics;
@@ -34,6 +35,8 @@ namespace AICore.Map
             _coarseMapHelper.Draw(g);
         }
 
+        #region Path Finding
+        
         protected virtual Vector2 FindClosestVertex(Vector2 position)
         {
             var closestVector = new Vector2();
@@ -123,7 +126,7 @@ namespace AICore.Map
                     newVector += direction * stepDistance;
 
                     // If we don't have a collision proceed to next interval
-                    if (!HasCollision(newVector, 0)) continue;
+                    if (!HasCollision(newVector, 10)) continue;
 
                     // We have a collision, so a path to this vector is not possible
                     pathPossible = false;
@@ -143,6 +146,8 @@ namespace AICore.Map
             
             return smoothedPath;
         }
+        
+        #endregion
 
         #region Floodfilling
 

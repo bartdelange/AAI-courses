@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Timers;
 using System.Windows.Forms;
 using AICore;
@@ -9,15 +10,18 @@ namespace AIBehaviours.Controls
     {
         private const float TimeDelta = 0.8f;
         private readonly World _world;
+        private bool _graphIsVisible = true;
 
         public WorldControl(World world)
         {
-            Width = 1000;
-            Height = 800;
+            Width = world.Width;
+            Height = world.Height;
             DoubleBuffered = true;
             Dock = DockStyle.Fill;
             
             Paint += WorldPanel_Paint;
+            
+            Focus();
 
             // Save world instance for later use
             _world = world;
@@ -29,9 +33,17 @@ namespace AIBehaviours.Controls
             demoTimer.Enabled = true;
         }
 
+        public void WorldPanel_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar != 'g') return;
+            
+            _graphIsVisible = !_graphIsVisible;
+            Invalidate();
+        }
+
         private void WorldPanel_Paint(object sender, PaintEventArgs e)
         {
-            _world.Render(e.Graphics);
+            _world.Render(e.Graphics, _graphIsVisible);
         }
 
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)

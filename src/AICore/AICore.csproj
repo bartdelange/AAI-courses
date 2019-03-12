@@ -62,6 +62,12 @@
     <Compile Include="Entity\MovingEntity.cs" />
     <Compile Include="Entity\Obstacle.cs" />
     <Compile Include="Entity\Vehicle.cs" />
+    <Compile Include="FuzzyLogic\FuzzyModule.cs" />
+    <Compile Include="FuzzyLogic\FuzzyRule.cs" />
+    <Compile Include="FuzzyLogic\FuzzySet\FuzzySet.cs" />
+    <Compile Include="FuzzyLogic\FuzzySet\Triangle.cs" />
+    <Compile Include="FuzzyLogic\FuzzyTerm.cs" />
+    <Compile Include="FuzzyLogic\FuzzyVariable.cs" />
     <Compile Include="Goals\IGoal.cs" />
     <Compile Include="Goals\BaseGoal.cs" />
     <Compile Include="Goals\Think.cs" />

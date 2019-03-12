@@ -13,12 +13,14 @@ namespace AIBehaviours.Demos
 {
     public partial class OffsetPursuitDemo : Form
     {
-        public OffsetPursuitDemo()
+        public OffsetPursuitDemo(int width = 1000, int height = 800)
         {
             InitializeComponent();
+            Width = width;
+            Height = height;
 
-            var world = new World(Width, Height);
-            var worldBound = new Vector2(Width, Height);
+            var world = new World(ClientSize.Width, ClientSize.Height);
+            var worldBound = new Vector2(ClientSize.Width, ClientSize.Height);
 
             var leader = new Vehicle(Vector2Util.GetRandom(worldBound), Color.Red, world);
             leader.SteeringBehaviour = new WanderBehaviour(leader);
@@ -48,10 +50,12 @@ namespace AIBehaviours.Demos
 
             // Populate world
             world.Entities = entities;
-            world.Obstacles = ObstacleUtils.CreateObstacles(Width, Height, 250);
+            world.Obstacles = ObstacleUtils.CreateObstacles(ClientSize.Width, ClientSize.Height, 250);
             
+            var worldControl = new WorldControl(world);
+            KeyPress += worldControl.WorldPanel_KeyPress;
 
-            Controls.Add(new WorldControl(world));
+            Controls.Add(worldControl);
         }
     }
 }
