@@ -22,16 +22,16 @@ namespace AIBehaviours.Demos
             var world = new World(ClientSize.Width, ClientSize.Height);
             var worldBound = new Vector2(ClientSize.Width, ClientSize.Height);
 
-            var leader = new Vehicle(Vector2Util.GetRandom(worldBound), Color.Red, world);
+            var leader = new Vehicle(Vector2ExtensionMethods.GetRandom(worldBound), Color.Red, world);
             leader.SteeringBehaviour = new WanderBehaviour(leader);
 
             var entities = new List<MovingEntity>
             {
-                new Vehicle(Vector2Util.GetRandom(worldBound), world),
-                new Vehicle(Vector2Util.GetRandom(worldBound), world),
-                new Vehicle(Vector2Util.GetRandom(worldBound), world),
-                new Vehicle(Vector2Util.GetRandom(worldBound), world),
-                new Vehicle(Vector2Util.GetRandom(worldBound), world)
+                new Vehicle(Vector2ExtensionMethods.GetRandom(worldBound), world),
+                new Vehicle(Vector2ExtensionMethods.GetRandom(worldBound), world),
+                new Vehicle(Vector2ExtensionMethods.GetRandom(worldBound), world),
+                new Vehicle(Vector2ExtensionMethods.GetRandom(worldBound), world),
+                new Vehicle(Vector2ExtensionMethods.GetRandom(worldBound), world)
             };
 
             MovingEntity previousEntity = leader;
