@@ -56,6 +56,8 @@
     <Compile Include="Behaviour\Individual\SeekBehaviour.cs" />
     <Compile Include="Behaviour\Individual\WanderBehaviour.cs" />
     <Compile Include="Behaviour\ISteeringBehaviour.cs" />
+    <Compile Include="Behaviour\Util\WeightedTruncatedRunningSumWithPrioritization.cs" />
+    <Compile Include="Behaviour\Util\WeightedTruncatedSum.cs" />
     <Compile Include="Entity\BaseGameEntity.cs" />
     <Compile Include="Entity\Coward.cs" />
     <Compile Include="Entity\GameObject.cs" />
@@ -92,8 +94,7 @@
     <Compile Include="States\Patrol.cs" />
     <Compile Include="Util\Matrix3.cs" />
     <Compile Include="Util\PriorityQueue.cs" />
-    <Compile Include="Util\Vector2Ext.cs" />
-    <Compile Include="Util\Vector2Util.cs" />
+    <Compile Include="Util\Vector2ExtensionMethods.cs" />
     <Compile Include="World.cs" />
   </ItemGroup>
   <ItemGroup>
