@@ -15,6 +15,8 @@ namespace AIBehaviours
         {
             InitializeComponent();
 
+            AcceptButton = submitButton;
+
             demoComboBox.Items.AddRange(_menuItems);
             demoComboBox.SelectedIndex = 0;
         }
