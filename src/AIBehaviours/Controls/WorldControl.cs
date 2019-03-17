@@ -33,14 +33,6 @@ namespace AIBehaviours.Controls
             demoTimer.Enabled = true;
         }
 
-        public void WorldPanel_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar != 'g') return;
-            
-            _graphIsVisible = !_graphIsVisible;
-            Invalidate();
-        }
-
         private void WorldPanel_Paint(object sender, PaintEventArgs e)
         {
             _world.Render(e.Graphics, _graphIsVisible);

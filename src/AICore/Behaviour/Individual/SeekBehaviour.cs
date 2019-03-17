@@ -1,15 +1,15 @@
 ﻿using System.Drawing;
 using System.Numerics;
-using AICore.Entity;
+using AICore.Entity.Contracts;
 
 namespace AICore.Behaviour.Individual
 {
     public class SeekBehaviour : ISteeringBehaviour
     {
-        private readonly MovingEntity _movingEntity;
+        private readonly IMovingEntity _movingEntity;
         private readonly Vector2 _targetPosition;
 
-        public SeekBehaviour(MovingEntity movingEntity, Vector2 targetPosition)
+        public SeekBehaviour(IMovingEntity movingEntity, Vector2 targetPosition)
         {
             _targetPosition = targetPosition;
             _movingEntity = movingEntity;
@@ -21,7 +21,7 @@ namespace AICore.Behaviour.Individual
         /// </summary>
         public Vector2 Calculate(float deltaTime)
         {
-            return Vector2.Normalize(_targetPosition - _movingEntity.Pos) * _movingEntity.MaxSpeed;
+            return Vector2.Normalize(_targetPosition - _movingEntity.Position) * (float) _movingEntity.MaxSpeed;
         }
 
         public void Draw(Graphics g)

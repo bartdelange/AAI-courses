@@ -8,7 +8,9 @@ using AIBehaviours.Utils;
 using AICore;
 using AICore.Behaviour.Individual;
 using AICore.Entity;
-using AICore.Map;
+using AICore.Entity.Contracts;
+using AICore.Graph.PathFinding;
+using AICore.Navigation;
 
 namespace AIBehaviours.Demos
 {
@@ -19,21 +21,27 @@ namespace AIBehaviours.Demos
         public PathFollowingDemo(int width = 1000, int height = 800)
         {
             InitializeComponent();
+            
             Width = width;
             Height = height;
 
+            var worldBounds = new Vector2(width, height);
+
             // Create new world instance
-            _world = new World(ClientSize.Width, ClientSize.Height);
+            _world = new World(worldBounds);
 
             // Populate world
-            _world.Entities = new List<MovingEntity> { new Vehicle(new Vector2(50, 50), _world) };
-            _world.Obstacles = ObstacleUtils.CreateObstacles(ClientSize.Width, ClientSize.Height, 2000);
-            _world.Map = new CoarseMap(ClientSize.Width, ClientSize.Height, _world.Obstacles);
+            _world.Entities = new List<IMovingEntity> { new Vehicle(new Vector2(50, 50), worldBounds) };
+            _world.Obstacles = ObstacleUtils.CreateObstacles(worldBounds, 500);
+
+            // Create navigation layer
+            _world.NavigationLayer = new NavigationLayer(
+                new FineMesh(50, worldBounds, _world.Obstacles)
+            );
             
             // Create world control and attach event handlers that are used in this demo
             var worldControl = new WorldControl(_world);
             worldControl.MouseClick += WorldPanel_MouseClick;
-            KeyPress += worldControl.WorldPanel_KeyPress;
 
             // Create new world control that is used to render the World
             Controls.Add(worldControl);
@@ -43,9 +51,11 @@ namespace AIBehaviours.Demos
         {
             var movingEntity = _world.Entities.First();
 
-            var path = _world.Map.FindPath(
-                movingEntity.Pos,
-                new Vector2(mouseEventArgs.X, mouseEventArgs.Y)
+            var path = _world.NavigationLayer.FindPath(
+                movingEntity.Position,
+                new Vector2(mouseEventArgs.X, mouseEventArgs.Y),
+                new AStar<Vector2>(),
+                new PrecisePathSmoothing()
             );
 
             movingEntity.SteeringBehaviour = new PathFollowingBehaviour(

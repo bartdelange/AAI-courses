@@ -1,40 +1,51 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
-using AICore.Entity;
-using AICore.Map;
+using System.Numerics;
+using AICore.Entity.Contracts;
+using AICore.Navigation;
 
 namespace AICore
 {
     public class World
     {
-        public List<MovingEntity> Entities;
-        public List<Obstacle> Obstacles;
-        public BaseMap Map;
-
-        // TODO Remove obstacle list and baseMap dependency 
-        public World(int width, int height)
-        {
-            Width = width;
-            Height = height;
-        }
-        
         public int Width { get; }
         public int Height { get; }
+
+        // Entities
+        public List<IMovingEntity> Entities;
+        public List<IObstacle> Obstacles;
+        public List<IWall> Walls;
+        public NavigationLayer NavigationLayer;
+
+        // TODO Remove obstacle list and baseMap dependency 
+        public World(Vector2 worldBounds)
+        {
+            Width = (int) worldBounds.X;
+            Height = (int) worldBounds.Y;
+        }
 
         public void Update(float timeElapsed)
         {
             Entities?.ForEach(e => e.Update(timeElapsed));
         }
 
-        public void Render(Graphics g, bool graphIsVisible)
+        private static void Render(Graphics g, IRenderable renderable)
         {
-            Map?.Render(g, graphIsVisible);
-            Obstacles?.ForEach(e => e.Render(g));
-            Entities?.ForEach(e =>
+            if (renderable == null || !renderable.Visible)
             {
-                e.Render(g);
-                e.SteeringBehaviour?.Draw(g);
-            });
+                return;
+            }
+
+            renderable.Render(g);
+        }
+
+        public void Render(Graphics graphics, bool graphIsVisible)
+        {
+            Render(graphics, NavigationLayer);
+
+            Obstacles?.ForEach(entity => Render(graphics, entity));
+            Entities?.ForEach(entity => Render(graphics, entity));
+            Walls?.ForEach(entity => Render(graphics, entity));
         }
     }
 }

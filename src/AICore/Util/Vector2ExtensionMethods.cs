@@ -18,6 +18,45 @@ namespace AICore.Util
             );
         }
         
+        /// <summary>
+        /// Calculates the shortest distance to one of the line segments
+        /// </summary>
+        /// <param name="lineStart">Start of line</param>
+        /// <param name="lineEnd">End of line</param>
+        /// <param name="position">Position to check against</param>
+        /// <returns></returns>
+        public static float SquaredDistanceToLine(
+            Vector2 lineStart, 
+            Vector2 lineEnd, 
+            Vector2 position
+        )
+        {
+            var startDot = (position.X - lineStart.X) * (lineEnd.X - lineStart.X) +
+                           (position.Y - lineStart.Y) * (lineEnd.Y - lineStart.Y);
+
+            // If the angle between Position and A is obtuse and the angle
+            // between A and B is obtuse then the closest vector must be A
+            if (startDot <= 0)
+            {
+                return Vector2.DistanceSquared(lineStart, position);
+            }
+            
+            var endDot = (position.X - lineEnd.X) * (lineStart.X - lineEnd.X) +
+                         (position.Y - lineEnd.Y) * (lineStart.Y - lineEnd.Y);
+
+            // If the angle between Position and B is obtuse and the angle
+            // between B and A is obtuse then the closest vector must be B
+            if (endDot <= 0)
+            {
+                return Vector2.DistanceSquared(lineEnd, position);
+            }
+
+            return Vector2.DistanceSquared(
+                position,
+                lineStart + ((lineEnd - lineStart) * startDot) / (startDot + endDot)
+            );
+        }
+        
         #endregion
         
         #region extension methods
@@ -77,6 +116,45 @@ namespace AICore.Util
             }
             
             return Vector2.Normalize(vector) * max;
+        }
+
+        /// <summary>
+        /// RotateAroundOrigin
+        /// </summary>
+        /// <param name="vector"></param>
+        /// <param name="angle"></param>
+        /// <returns></returns>
+        public static Vector2 RotateAroundOrigin(this Vector2 vector, float angle)
+        {
+            // Create a transformation matrix
+            var transformationMatrix = new Matrix3()
+                .Rotate(angle);
+	
+            // Transform the vector
+            return vector.ApplyMatrix(transformationMatrix);
+        }
+
+        /// <summary>
+        /// When vector exceeds given bounds value will be wrapped
+        /// </summary>
+        /// <param name="position"></param>
+        /// <param name="bounds"></param>
+        /// <returns></returns>
+        public static Vector2 WrapToBounds(this Vector2 position, Vector2 bounds)
+        {
+            if (position.X > bounds.X)
+                return new Vector2(0, position.Y);
+
+            if (position.Y > bounds.Y)
+                return new Vector2(position.X, 0);
+
+            if (position.X < 0)
+                return new Vector2(bounds.X, position.Y);
+
+            if (position.Y < 0)
+                return new Vector2(position.X, bounds.Y);
+
+            return position;
         }
 
         /// <summary>

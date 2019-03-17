@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Numerics;
 using AICore.Entity;
+using AICore.Entity.Contracts;
 
 namespace AICore.Behaviour.Individual
 {
@@ -12,11 +13,11 @@ namespace AICore.Behaviour.Individual
         private const float WanderJitter = 25;
         private static readonly Random Random = new Random();
 
-        private readonly MovingEntity _movingEntity;
+        private readonly IMovingEntity _movingEntity;
 
         private Vector2 _wanderTarget = new Vector2(0, 0);
 
-        public WanderBehaviour(MovingEntity movingEntity)
+        public WanderBehaviour(IMovingEntity movingEntity)
         {
             _movingEntity = movingEntity;
         }
@@ -28,7 +29,7 @@ namespace AICore.Behaviour.Individual
             _wanderTarget = Vector2.Normalize(_wanderTarget + addToPerimeter) * WanderRadius
                             + new Vector2(WanderDistance, 0);
 
-            return _movingEntity.GetPointToWorldSpace(_wanderTarget) - _movingEntity.Pos;
+            return _movingEntity.GetPointToWorldSpace(_wanderTarget) - _movingEntity.Position;
         }
 
         public void Draw(Graphics g)

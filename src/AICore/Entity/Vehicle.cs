@@ -6,28 +6,22 @@ namespace AICore.Entity
 {
     public class Vehicle : MovingEntity
     {
-        private readonly Pen _objectPen = new Pen(Color.Black, 2);
-        private readonly Pen _velocityPen = new Pen(Color.Red, 2);
+        private readonly Pen _pen;
 
-        public Vehicle(Vector2 pos, World w) : base(pos, w)
+        public Vehicle(Vector2 position, Vector2 bounds) : 
+            this(position, bounds, new Pen(Color.DodgerBlue, 2))
         {
-            Velocity = new Vector2(0, 0);
-            Scale = 1;
         }
 
-        public Vehicle(Vector2 pos, Color color, World w) : this(pos, w)
+        public Vehicle(Vector2 position, Vector2 bounds, Pen pen) : base(position, bounds, pen)
         {
-            _objectPen = new Pen(color, 2);
+            _pen = pen;
         }
 
 
         public override void Render(Graphics g)
         {
-            // Draw velocity	
-            g.DrawLine(_velocityPen,
-                Pos.ToPointF(),
-                (Pos + Velocity).ToPointF()
-            );
+            base.Render(g);
 
             var p1 = new Vector2(-8, 5);
             var p3 = new Vector2(5, 0);
@@ -35,7 +29,7 @@ namespace AICore.Entity
 
             var matrix = new Matrix3()
                 .Rotate(Heading, Side)
-                .Translate(Pos);
+                .Translate(Position);
 
             // Transform the vector to world space and create points that define polygon.	
             PointF[] curvePoints =
@@ -45,12 +39,12 @@ namespace AICore.Entity
                 p3.ApplyMatrix(matrix).ToPointF()
             };
 
-            g.DrawPolygon(_objectPen, curvePoints);
+            g.DrawPolygon(_pen, curvePoints);
         }
 
         public override string ToString()
         {
-            return $"{_objectPen.Color} {base.ToString()}";
+            return $"{_pen.Color} {base.ToString()}";
         }
     }
 }

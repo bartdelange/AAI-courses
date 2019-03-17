@@ -1,46 +1,51 @@
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Numerics;
-using AICore.Entity;
+using AICore.Entity.Contracts;
 using AICore.Util;
 
 namespace AICore.Behaviour.Group
 {
-    public class CohesionBehaviour : ISteeringBehaviour
+    public class CohesionBehaviour<T> : ISteeringBehaviour where T : IEntity
     {
-        private readonly Brush _brush = new SolidBrush(Color.FromArgb(25, 255, 255, 0));
-        private readonly MovingEntity _movingEntity;
-        private readonly int _radius;
+        private readonly IMovingEntity _movingEntity;
+        private readonly IEnumerable<T> _neighbours;
 
-        public CohesionBehaviour(MovingEntity movingEntity)
+        private readonly Brush _brush = new SolidBrush(Color.FromArgb(25, 255, 255, 0));
+        private const int Radius = 50;
+
+        public CohesionBehaviour(IMovingEntity movingEntity, IEnumerable<T> neighbours)
         {
             _movingEntity = movingEntity;
-
-            _radius = (int) (movingEntity.Radius * 1.5);
+            _neighbours = neighbours;
         }
 
         public Vector2 Calculate(float deltaTime)
         {
-            if (_movingEntity.Neighbors.Count < 1) return new Vector2();
+            if (!_neighbours.Any())
+            {
+                return new Vector2();
+            }
 
-            var centerOfMass = _movingEntity.Neighbors.Aggregate(
+            var centerOfMass = _neighbours.Aggregate(
                 new Vector2(),
-                (position, neighbor) => position + neighbor.Pos
+                (position, neighbor) => position + neighbor.Position
             );
 
-            var targetPosition = centerOfMass / _movingEntity.Neighbors.Count;
+            var targetPosition = centerOfMass / _neighbours.Count();
 
-            return Vector2.Normalize(targetPosition - _movingEntity.Pos) * _movingEntity.MaxSpeed;
+            return Vector2.Normalize(targetPosition - _movingEntity.Position) * _movingEntity.MaxSpeed;
         }
 
         public void Draw(Graphics g)
         {
-            var size = _radius * 2;
+            const int size = Radius * 2;
 
             g.FillEllipse(
                 _brush,
                 new Rectangle(
-                    _movingEntity.Pos.Minus(_radius).ToPoint(),
+                    _movingEntity.Position.Minus(Radius).ToPoint(),
                     new Size(size, size)
                 )
             );

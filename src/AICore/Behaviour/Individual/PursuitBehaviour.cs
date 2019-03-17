@@ -1,15 +1,15 @@
 ﻿using System.Drawing;
 using System.Numerics;
-using AICore.Entity;
+using AICore.Entity.Contracts;
 
 namespace AICore.Behaviour.Individual
 {
     public class PursuitBehaviour : ISteeringBehaviour
     {
-        private readonly MovingEntity _movingEntity;
-        private readonly MovingEntity _target;
+        private readonly IMovingEntity _movingEntity;
+        private readonly IMovingEntity _target;
 
-        public PursuitBehaviour(MovingEntity movingEntity, MovingEntity target)
+        public PursuitBehaviour(IMovingEntity movingEntity, IMovingEntity target)
         {
             _target = target;
             _movingEntity = movingEntity;
@@ -17,7 +17,7 @@ namespace AICore.Behaviour.Individual
 
         public Vector2 Calculate(float deltaTime)
         {
-            var toEvader = _target.Pos - _movingEntity.Pos;
+            var toEvader = _target.Position - _movingEntity.Position;
 
             var lookAheadTime = toEvader.Length();
 
@@ -27,7 +27,7 @@ namespace AICore.Behaviour.Individual
 
             var seekBehaviour = new SeekBehaviour(
                 _movingEntity,
-                _target.Pos + _movingEntity.Velocity * lookAheadTime
+                _target.Position + _movingEntity.Velocity * lookAheadTime
             );
 
             // Seek to predicted position

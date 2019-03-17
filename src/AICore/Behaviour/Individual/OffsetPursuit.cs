@@ -1,20 +1,21 @@
 ﻿using System.Drawing;
 using System.Numerics;
 using AICore.Entity;
+using AICore.Entity.Contracts;
 
 namespace AICore.Behaviour.Individual
 {
     public class OffsetPursuit : ISteeringBehaviour
     {
-        private readonly MovingEntity _leader;
-        private readonly MovingEntity _movingEntity;
+        private readonly IMovingEntity _leader;
+        private readonly IMovingEntity _movingEntity;
 
         private readonly Vector2 _offset;
 
         /// <param name="movingEntity"></param>
         /// <param name="leader"></param>
         /// <param name="offset"></param>
-        public OffsetPursuit(MovingEntity movingEntity, MovingEntity leader, Vector2 offset)
+        public OffsetPursuit(IMovingEntity movingEntity, IMovingEntity leader, Vector2 offset)
         {
             _leader = leader;
             _offset = offset;
@@ -24,7 +25,7 @@ namespace AICore.Behaviour.Individual
         public Vector2 Calculate(float deltaTime)
         {
             var worldOffsetPosition = _leader.GetPointToWorldSpace(_offset);
-            var toOffset = worldOffsetPosition - _movingEntity.Pos;
+            var toOffset = worldOffsetPosition - _movingEntity.Position;
 
             var lookAheadTime = toOffset.Length() / (_movingEntity.MaxSpeed + _leader.Velocity.Length());
             var targetPosition = worldOffsetPosition + (_leader.Velocity * lookAheadTime);

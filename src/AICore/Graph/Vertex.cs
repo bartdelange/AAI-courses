@@ -1,12 +1,13 @@
+using System;
 using System.Collections.Generic;
 
 namespace AICore.Graph
 {
     public class Vertex<T> : IVertex
     {
-        public Dictionary<T, Edge<T>> AdjacentVertices = new Dictionary<T, Edge<T>>();
-        public T Data;
-        public double Distance;
+        public readonly Dictionary<T, Edge<T>> AdjacentVertices = new Dictionary<T, Edge<T>>();
+        public readonly T Value;
+        public double Distance = double.MaxValue;
         public Vertex<T> PreviousVertex; // Previous vertex on *shortest* path
 
         // Variable used in path finding algorithms
@@ -14,7 +15,7 @@ namespace AICore.Graph
 
         public Vertex(T data)
         {
-            Data = data;
+            Value = data;
         }
 
         public void Reset()

@@ -9,6 +9,7 @@ namespace AIBehaviours
         private readonly object[] _menuItems = {
             new MenuItem("Path following", typeof(PathFollowingDemo)),
             new MenuItem("Offset pursuit", typeof(OffsetPursuitDemo)),
+            new MenuItem("Wall avoidance", typeof(WallAvoidanceDemo)),
         };
 
         public Menu()

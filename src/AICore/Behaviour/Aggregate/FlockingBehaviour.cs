@@ -1,37 +1,32 @@
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Drawing;
 using System.Numerics;
 using AICore.Behaviour.Group;
-using AICore.Entity;
+using AICore.Behaviour.Util;
+using AICore.Entity.Contracts;
 
 namespace AICore.Behaviour.Aggregate
 {
     public class FlockingBehaviour : ISteeringBehaviour
     {
-        private readonly Dictionary<float, ISteeringBehaviour> _steeringBehaviours;
+        private readonly WeightedTruncatedRunningSumWithPrioritization _steeringBehaviour;
 
-        public FlockingBehaviour(MovingEntity movingEntity)
+        public FlockingBehaviour(IMovingEntity movingEntity, IEnumerable<IMovingEntity> neighbours)
         {
-            _steeringBehaviours = new Dictionary<float, ISteeringBehaviour>
-            {
-                {0.3f, new AlignmentBehaviour(movingEntity)},
-                {0.7f, new CohesionBehaviour(movingEntity)}
-            };
+            _steeringBehaviour = new WeightedTruncatedRunningSumWithPrioritization(
+                new OrderedDictionary
+                {
+                    {0.3f, new AlignmentBehaviour<IMovingEntity>(movingEntity, neighbours)},
+                    {0.7f, new CohesionBehaviour<IEntity>(movingEntity, neighbours)}
+                },
+                movingEntity.MaxSpeed
+            );
         }
 
         public Vector2 Calculate(float deltaTime)
         {
-            var steeringForce = new Vector2();
-            
-            foreach (var keyValuePair in _steeringBehaviours)
-            {
-                var weight = keyValuePair.Key;
-                var steeringBehaviour = keyValuePair.Value;
-
-                steeringForce += steeringBehaviour.Calculate(deltaTime) * weight;
-            }
-
-            return steeringForce / _steeringBehaviours.Count;
+            return _steeringBehaviour.Calculate(deltaTime);
         }
 
         public void Draw(Graphics g)

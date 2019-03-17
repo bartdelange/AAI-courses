@@ -6,8 +6,7 @@ namespace AICore.Entity
     {
         public int Strength = 10;
 
-        public Coward(Vector2 position, World world)
-            : base(position, world)
+        public Coward(Vector2 position, Vector2 bounds) : base(position, bounds)
         {
         }
     }

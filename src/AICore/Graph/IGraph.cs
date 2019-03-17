@@ -2,7 +2,7 @@ namespace AICore.Graph
 {
     public interface IGraph<T>
     {
-        Vertex<T> GetVertex(T vertexData);
+        Vertex<T> CreateVertexIfNotExists(T vertexData);
 
         void AddEdge(T sourceVertexData, T destinationVertexData, double cost);
 

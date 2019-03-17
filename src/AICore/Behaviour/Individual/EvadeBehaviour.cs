@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using System.Numerics;
 using AICore.Entity;
+using AICore.Entity.Contracts;
 
 namespace AICore.Behaviour.Individual
 {
@@ -8,10 +9,10 @@ namespace AICore.Behaviour.Individual
     {
         private const double ThreatRange = 100.0;
 
-        private readonly MovingEntity _movingEntity;
-        private readonly MovingEntity _target;
+        private readonly IMovingEntity _movingEntity;
+        private readonly IMovingEntity _target;
 
-        public EvadeBehaviour(MovingEntity movingEntity, MovingEntity target)
+        public EvadeBehaviour(IMovingEntity movingEntity, IMovingEntity target)
         {
             _movingEntity = movingEntity;
             _target = target;
@@ -19,7 +20,7 @@ namespace AICore.Behaviour.Individual
 
         public Vector2 Calculate(float deltaTime)
         {
-            var toPursuer = _target.Pos - _movingEntity.Pos;
+            var toPursuer = _target.Position - _movingEntity.Position;
 
             // Only flee if the target is within 'panic distance'. Work in distance squared space.
             if (toPursuer.LengthSquared() > ThreatRange * ThreatRange)
@@ -30,10 +31,10 @@ namespace AICore.Behaviour.Individual
             // agents' velocities
             var lookAheadTime = toPursuer.Length() / (_movingEntity.MaxSpeed + _target.Velocity.Length());
 
-            var predictedPosition = (_target.Pos + _target.Velocity) * lookAheadTime;
+            var predictedPosition = (_target.Position + _target.Velocity) * lookAheadTime;
 
             //now flee away from predicted future position of the pursuer
-            return Vector2.Normalize(_movingEntity.Pos - predictedPosition) * _movingEntity.MaxSpeed
+            return Vector2.Normalize(_movingEntity.Position - predictedPosition) * _movingEntity.MaxSpeed
                    - _movingEntity.Velocity;
         }
 

@@ -70,7 +70,7 @@ namespace AAITests.Graph
             var myGraph = new StringGraph();
             myGraph.AddEdge("V0", "V1", 5);
 
-            var myVertex = myGraph.GetVertex("V0");
+            var myVertex = myGraph.CreateVertexIfNotExists("V0");
 
             Assert.Equal(5, myVertex.AdjacentVertices["V1"].Cost);
         }
@@ -82,13 +82,13 @@ namespace AAITests.Graph
 
             myGraph.AStar("V0", "V5", new StringHeuristic());
 
-            Assert.Equal(0, myGraph.GetVertex("V0").Distance);
-            Assert.Equal(2, myGraph.GetVertex("V1").Distance);
-            Assert.Equal(3, myGraph.GetVertex("V2").Distance);
-            Assert.Equal(1, myGraph.GetVertex("V3").Distance);
-            Assert.Equal(3, myGraph.GetVertex("V4").Distance);
-            Assert.Equal(9, myGraph.GetVertex("V5").Distance);
-            Assert.Equal(5, myGraph.GetVertex("V6").Distance);
+            Assert.Equal(0, myGraph.CreateVertexIfNotExists("V0").Distance);
+            Assert.Equal(2, myGraph.CreateVertexIfNotExists("V1").Distance);
+            Assert.Equal(3, myGraph.CreateVertexIfNotExists("V2").Distance);
+            Assert.Equal(1, myGraph.CreateVertexIfNotExists("V3").Distance);
+            Assert.Equal(3, myGraph.CreateVertexIfNotExists("V4").Distance);
+            Assert.Equal(9, myGraph.CreateVertexIfNotExists("V5").Distance);
+            Assert.Equal(5, myGraph.CreateVertexIfNotExists("V6").Distance);
         }
 
         [Fact]
@@ -98,13 +98,13 @@ namespace AAITests.Graph
 
             myGraph.Dijkstra("V0");
 
-            Assert.Equal(0, myGraph.GetVertex("V0").Distance);
-            Assert.Equal(2, myGraph.GetVertex("V1").Distance);
-            Assert.Equal(3, myGraph.GetVertex("V2").Distance);
-            Assert.Equal(1, myGraph.GetVertex("V3").Distance);
-            Assert.Equal(3, myGraph.GetVertex("V4").Distance);
-            Assert.Equal(9, myGraph.GetVertex("V5").Distance);
-            Assert.Equal(5, myGraph.GetVertex("V6").Distance);
+            Assert.Equal(0, myGraph.CreateVertexIfNotExists("V0").Distance);
+            Assert.Equal(2, myGraph.CreateVertexIfNotExists("V1").Distance);
+            Assert.Equal(3, myGraph.CreateVertexIfNotExists("V2").Distance);
+            Assert.Equal(1, myGraph.CreateVertexIfNotExists("V3").Distance);
+            Assert.Equal(3, myGraph.CreateVertexIfNotExists("V4").Distance);
+            Assert.Equal(9, myGraph.CreateVertexIfNotExists("V5").Distance);
+            Assert.Equal(5, myGraph.CreateVertexIfNotExists("V6").Distance);
         }
 
         [Fact]
@@ -113,9 +113,9 @@ namespace AAITests.Graph
             var myGraph = new StringGraph();
             myGraph.AddEdge("V0", "V1", 5);
 
-            var myVertex = myGraph.GetVertex("V0");
+            var myVertex = myGraph.CreateVertexIfNotExists("V0");
 
-            Assert.Equal("V0", myVertex.Data);
+            Assert.Equal("V0", myVertex.Value);
         }
 
         [Fact]
@@ -170,13 +170,13 @@ namespace AAITests.Graph
 
             myGraph.Unweighted("V0");
 
-            Assert.Equal(0, myGraph.GetVertex("V0").Distance);
-            Assert.Equal(1, myGraph.GetVertex("V1").Distance);
-            Assert.Equal(2, myGraph.GetVertex("V2").Distance);
-            Assert.Equal(1, myGraph.GetVertex("V3").Distance);
-            Assert.Equal(2, myGraph.GetVertex("V4").Distance);
-            Assert.Equal(2, myGraph.GetVertex("V5").Distance);
-            Assert.Equal(2, myGraph.GetVertex("V6").Distance);
+            Assert.Equal(0, myGraph.CreateVertexIfNotExists("V0").Distance);
+            Assert.Equal(1, myGraph.CreateVertexIfNotExists("V1").Distance);
+            Assert.Equal(2, myGraph.CreateVertexIfNotExists("V2").Distance);
+            Assert.Equal(1, myGraph.CreateVertexIfNotExists("V3").Distance);
+            Assert.Equal(2, myGraph.CreateVertexIfNotExists("V4").Distance);
+            Assert.Equal(2, myGraph.CreateVertexIfNotExists("V5").Distance);
+            Assert.Equal(2, myGraph.CreateVertexIfNotExists("V6").Distance);
         }
     }
 }

@@ -7,6 +7,7 @@ using AIBehaviours.Utils;
 using AICore;
 using AICore.Behaviour.Individual;
 using AICore.Entity;
+using AICore.Entity.Contracts;
 using AICore.Util;
 
 namespace AIBehaviours.Demos
@@ -16,44 +17,49 @@ namespace AIBehaviours.Demos
         public OffsetPursuitDemo(int width = 1000, int height = 800)
         {
             InitializeComponent();
+
             Width = width;
             Height = height;
 
-            var world = new World(ClientSize.Width, ClientSize.Height);
-            var worldBound = new Vector2(ClientSize.Width, ClientSize.Height);
+            var worldBounds = new Vector2(ClientSize.Width, ClientSize.Height);
+            var world = new World(worldBounds);
 
-            var leader = new Vehicle(Vector2ExtensionMethods.GetRandom(worldBound), Color.Red, world);
+            // Create leader entity
+            var leader = new Vehicle(
+                Vector2ExtensionMethods.GetRandom(worldBounds),
+                worldBounds,
+                new Pen(Color.Red)
+            );
+
+            // Add steering behaviour to leader entity
             leader.SteeringBehaviour = new WanderBehaviour(leader);
 
-            var entities = new List<MovingEntity>
+            // Create follower entities
+            var followers = new List<IMovingEntity>
             {
-                new Vehicle(Vector2ExtensionMethods.GetRandom(worldBound), world),
-                new Vehicle(Vector2ExtensionMethods.GetRandom(worldBound), world),
-                new Vehicle(Vector2ExtensionMethods.GetRandom(worldBound), world),
-                new Vehicle(Vector2ExtensionMethods.GetRandom(worldBound), world),
-                new Vehicle(Vector2ExtensionMethods.GetRandom(worldBound), world)
+                new Vehicle(Vector2ExtensionMethods.GetRandom(worldBounds), worldBounds),
+                new Vehicle(Vector2ExtensionMethods.GetRandom(worldBounds), worldBounds),
+                new Vehicle(Vector2ExtensionMethods.GetRandom(worldBounds), worldBounds),
+                new Vehicle(Vector2ExtensionMethods.GetRandom(worldBounds), worldBounds),
+                new Vehicle(Vector2ExtensionMethods.GetRandom(worldBounds), worldBounds)
             };
 
-            MovingEntity previousEntity = leader;
-            foreach (var entity in entities)
-            {                
-                entity.SteeringBehaviour = new OffsetPursuit(
-                    entity, 
-                    previousEntity, 
-                    new Vector2(-100, 0)
-                );
-                
+            // Add steering behaviour to followers
+            IMovingEntity previousEntity = leader;
+            followers.ForEach(entity =>
+            {
+                entity.SteeringBehaviour = new OffsetPursuit(entity, previousEntity, new Vector2(-100, 0));
                 previousEntity = entity;
-            }
+            });
 
-            entities.Add(leader);
+            // Add leader to list of entities
+            followers.Add(leader);
 
             // Populate world
-            world.Entities = entities;
-            world.Obstacles = ObstacleUtils.CreateObstacles(ClientSize.Width, ClientSize.Height, 250);
-            
+            world.Entities = followers;
+
+            // Add world to form
             var worldControl = new WorldControl(world);
-            KeyPress += worldControl.WorldPanel_KeyPress;
 
             Controls.Add(worldControl);
         }

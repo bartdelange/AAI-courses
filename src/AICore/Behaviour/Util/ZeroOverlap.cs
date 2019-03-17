@@ -1,14 +1,15 @@
 using System.Collections.Generic;
 using AICore.Entity;
+using AICore.Entity.Contracts;
 
 namespace AICore.Behaviour.Util
 {
-    public class ZeroOverlap
+    public class ZeroOverlap<T> where T : IEntity
     {
         private readonly MovingEntity _movingEntity;
-        private readonly IEnumerable<BaseGameEntity> _other;
+        private readonly IEnumerable<T> _other;
 
-        public ZeroOverlap(MovingEntity movingEntity, IEnumerable<BaseGameEntity> other)
+        public ZeroOverlap(MovingEntity movingEntity, IEnumerable<T> other)
         {
             _movingEntity = movingEntity;
             _other = other;
@@ -20,16 +21,18 @@ namespace AICore.Behaviour.Util
 
             while (enumerator.Current != null)
             {
+                var entity = enumerator.Current;
+                
                 // Ignore _movingEntity
-                if (enumerator.Current == _movingEntity)
+                if (entity.Equals(_movingEntity))
                 {
                     continue;
                 }
 
-                var toEntity = _movingEntity.Pos - enumerator.Current.Pos;
+                var toEntity = _movingEntity.Position - entity.Position;
                 var distanceToEntity = toEntity.Length();
 
-                var overlapAmount = (BaseGameEntity.BoundingRadius + BaseGameEntity.BoundingRadius) -
+                var overlapAmount = (_movingEntity.BoundingRadius + entity.BoundingRadius) -
                                     distanceToEntity;
 
                 // Ignore when not overlapping
@@ -38,8 +41,8 @@ namespace AICore.Behaviour.Util
                     continue;
                 }
 
-                // Ensure MovingEntity won't overlap any other BaseGameEntity
-                _movingEntity.Pos = _movingEntity.Pos + ((toEntity / distanceToEntity) * overlapAmount);
+                // Ensure MovingEntity won't overlap any other entity
+                _movingEntity.Position = _movingEntity.Position + ((toEntity / distanceToEntity) * overlapAmount);
                 
                 enumerator.MoveNext();
             }

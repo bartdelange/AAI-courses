@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Numerics;
-using AICore.Entity;
+using AICore.Entity.Contracts;
 
 namespace AICore.Behaviour.Individual
 {
@@ -10,10 +10,10 @@ namespace AICore.Behaviour.Individual
         private const double DecelerationSpeed = 1;
         private const double DecelerationTweaker = 0.3;
 
-        private readonly MovingEntity _movingEntity;
+        private readonly IMovingEntity _movingEntity;
         private readonly Vector2 _targetPosition;
 
-        public ArriveBehaviour(MovingEntity movingEntity, Vector2 targetPosition)
+        public ArriveBehaviour(IMovingEntity movingEntity, Vector2 targetPosition)
         {
             _movingEntity = movingEntity;
             _targetPosition = targetPosition;
@@ -21,19 +21,22 @@ namespace AICore.Behaviour.Individual
 
         public Vector2 Calculate(float deltaTime)
         {
-            var toTarget = _targetPosition - _movingEntity.Pos;
+            var toTarget = _targetPosition - _movingEntity.Position;
 
             //calculate the distance to the target
             var dist = toTarget.Length();
 
-            if (!(dist > 0)) return new Vector2();
+            if (dist <= 0)
+            {
+                return new Vector2();
+            }
 
             //because Deceleration is enumerated as an int, this value is required
             //to provide fine tweaking of the deceleration..
 
             //calculate the speed required to reach the target given the desired
             //deceleration
-            var speed = (float) (dist / (DecelerationSpeed * DecelerationTweaker));
+            var speed = Math.Ceiling(dist / (DecelerationSpeed * DecelerationTweaker));
 
             //make sure the velocity does not exceed the max
             speed = Math.Min(speed, _movingEntity.MaxSpeed);
@@ -41,7 +44,7 @@ namespace AICore.Behaviour.Individual
             //from here proceed just like Seek except we don't need to normalize 
             //the ToTarget vector because we have already gone to the trouble
             //of calculating its length: dist. 
-            var desiredVelocity = toTarget * speed / dist;
+            var desiredVelocity = toTarget * (float) speed / dist;
 
             return desiredVelocity - _movingEntity.Velocity;
         }

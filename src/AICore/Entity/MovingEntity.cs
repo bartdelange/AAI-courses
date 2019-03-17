@@ -1,81 +1,69 @@
+using System.Collections.Generic;
+using System.Drawing;
 using System.Numerics;
 using AICore.Behaviour;
+using AICore.Entity.Contracts;
 using AICore.Util;
 
 namespace AICore.Entity
 {
-    public abstract class MovingEntity : BaseGameEntity
+    public abstract class MovingEntity : IMovingEntity
     {
+        // Render properties
+        public bool Visible { get; set; } = true;
+
         // Entity properties
-        public readonly float Mass = 15;
-        public readonly float MaxSpeed = 100;
-        public readonly int Radius = 100;
+        public const float Mass = 20;
+        public const int Radius = 100;
 
-        // Entity behaviour
-        public ISteeringBehaviour SteeringBehaviour;
+        public Vector2 Position { get; set; }
+        private Vector2 Bounds { get; }
+        public int BoundingRadius { get; set; } = 150;
 
-        protected MovingEntity(Vector2 pos, World w) : base(pos, w)
-        {
-        }
-
-        //	
+        //
         public Vector2 Velocity { get; set; } = new Vector2(1, 1);
         public Vector2 Heading { get; set; } = new Vector2(1, 1);
         public Vector2 Side { get; set; } = new Vector2(1, 1);
 
-        public override void Update(float delta)
-        {
-            FindNeighbors(Radius);
+        // Behaviour properties
+        public ISteeringBehaviour SteeringBehaviour { set; get; }
+        public float MaxSpeed { get; set; } = 100;
 
-            var acceleration = SteeringBehaviour == null
-                ? new Vector2()
-                : SteeringBehaviour.Calculate(delta) / Mass;
+        // Render properties
+        private readonly Pen _pen;
+
+        protected MovingEntity(Vector2 position, Vector2 bounds, Pen pen)
+        {
+            Position = position;
+            Bounds = bounds;
+            
+            _pen = pen;
+        }
+
+        public void Update(float delta)
+        {
+            var acceleration = (SteeringBehaviour?.Calculate(delta) / Mass) ?? new Vector2();
 
             Velocity = acceleration * delta;
-            Pos += Velocity * delta;
+            Position += Velocity * delta;
 
-            if (Velocity.LengthSquared() > 0.00000001)
+            if (Velocity.LengthSquared() > 0.000001)
             {
                 Heading = Vector2.Normalize(Velocity);
                 Side = Heading.Perpendicular();
             }
 
-            Pos = WrapToBounds(Pos, MyWorld.Width, MyWorld.Height);
+            Position = Position.WrapToBounds(Bounds);
         }
 
-        private static Vector2 WrapToBounds(Vector2 pos, int width, int height)
+        public virtual void Render(Graphics graphics)
         {
-            if (pos.X > width)
-                return new Vector2(0, pos.Y);
-
-            if (pos.Y > height)
-                return new Vector2(pos.X, 0);
-
-            if (pos.X < 0)
-                return new Vector2(width, pos.Y);
-
-            if (pos.Y < 0)
-                return new Vector2(pos.X, height);
-
-            return pos;
-        }
-
-        public override string ToString()
-        {
-            return $"{Velocity}";
-        }
-    }
-
-    public static class MovingEntityExtensionMethods
-    {
-        public static Vector2 GetPointToWorldSpace(this MovingEntity movingEntity, Vector2 localTarget)
-        {
-            var matrix = new Matrix3()
-                .Rotate(movingEntity.Heading, movingEntity.Side)
-                .Translate(movingEntity.Pos);
-
-            // Transform the vector to world space
-            return localTarget.ApplyMatrix(matrix);
+            // Draw velocity	
+            graphics.DrawLine(
+                _pen,
+                Position.ToPoint(),
+                (Position + Velocity).ToPoint()
+            );
         }
     }
 }

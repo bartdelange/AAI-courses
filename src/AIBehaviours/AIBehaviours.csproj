@@ -61,6 +61,12 @@
     <Compile Include="Demos\PathFollowingDemo.designer.cs">
       <DependentUpon>PathFollowingDemo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Demos\WallAvoidanceDemo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Demos\WallAvoidanceDemo.designer.cs">
+      <DependentUpon>WallAvoidanceDemo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Menu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -76,6 +82,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Demos\PathFollowingDemo.resx">
       <DependentUpon>PathFollowingDemo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Demos\WallAvoidanceDemo.resx">
+      <DependentUpon>WallAvoidanceDemo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Menu.resx">
       <DependentUpon>Menu.cs</DependentUpon>
