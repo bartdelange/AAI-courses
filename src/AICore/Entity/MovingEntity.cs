@@ -46,7 +46,7 @@ namespace AICore.Entity
             Velocity = acceleration * delta;
             Position += Velocity * delta;
 
-            if (Velocity.LengthSquared() > 0.00000000001)
+            if (Velocity.LengthSquared() > 0.01)
             {
                 Heading = Vector2.Normalize(Velocity);
                 Side = Heading.Perpendicular();
@@ -64,7 +64,7 @@ namespace AICore.Entity
             );
 
             graphics.DrawString(
-                $"{Velocity}\n{Position}",
+                $"{Velocity.ToString("##.##")}\n{Position.ToString("##.##")}",
                 SystemFonts.DefaultFont,
                 Brushes.Black,
                 Position.ToPoint()
