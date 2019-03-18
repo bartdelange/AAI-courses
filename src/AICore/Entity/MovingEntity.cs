@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Numerics;
 using AICore.Behaviour;
+using AICore.Behaviour.Util;
 using AICore.Entity.Contracts;
 using AICore.Util;
 
@@ -36,7 +37,7 @@ namespace AICore.Entity
         {
             Position = position;
             Bounds = bounds;
-            
+
             _pen = pen;
         }
 
@@ -47,23 +48,33 @@ namespace AICore.Entity
             Velocity = acceleration * delta;
             Position += Velocity * delta;
 
-            if (Velocity.LengthSquared() > 0.000001)
+            if (Velocity.LengthSquared() > 0.00000000001)
             {
                 Heading = Vector2.Normalize(Velocity);
                 Side = Heading.Perpendicular();
             }
 
             Position = Position.WrapToBounds(Bounds);
+            
+            ZeroOverlap()
         }
 
         public virtual void Render(Graphics graphics)
         {
-            // Draw velocity	
             graphics.DrawLine(
-                _pen,
+                Pens.Red,
                 Position.ToPoint(),
                 (Position + Velocity).ToPoint()
             );
+
+            graphics.DrawString(
+                $"{Velocity}\n{Position}",
+                SystemFonts.DefaultFont,
+                Brushes.Black,
+                Position.ToPoint()
+            );
+            
+            SteeringBehaviour?.Render(graphics);
         }
     }
 }

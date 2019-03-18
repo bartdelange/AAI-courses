@@ -7,12 +7,14 @@ namespace AICore.Behaviour.Util
 {
     public class WeightedTruncatedSum : ISteeringBehaviour
     {
-        private readonly Dictionary<ISteeringBehaviour, float> _steeringBehaviours;
+        public bool Visible { get; set; } = true;
+
+        private readonly List<WeightedSteeringBehaviour> _weightedSteeringBehaviours;
         private readonly float _maxSpeed;
 
-        public WeightedTruncatedSum(Dictionary<ISteeringBehaviour, float> steeringBehaviours, float maxSpeed)
+        public WeightedTruncatedSum(List<WeightedSteeringBehaviour> weightedSteeringBehaviours, float maxSpeed)
         {
-            _steeringBehaviours = steeringBehaviours;
+            _weightedSteeringBehaviours = weightedSteeringBehaviours;
             _maxSpeed = maxSpeed;
         }
 
@@ -20,21 +22,19 @@ namespace AICore.Behaviour.Util
         {
             var steeringForce = Vector2.Zero;
             
-            foreach (var keyValuePair in _steeringBehaviours)
+            foreach (var weightedSteeringBehaviour in _weightedSteeringBehaviours)
             {
-                var steeringBehaviour = keyValuePair.Key;
-                var weight = keyValuePair.Value;
-
-                steeringForce += steeringBehaviour.Calculate(deltaTime) * weight;
+                steeringForce += weightedSteeringBehaviour.SteeringBehaviour.Calculate(deltaTime) * weightedSteeringBehaviour.Weight;
             }
 
             return steeringForce.Truncate(_maxSpeed);
         }
 
-        public void Draw(Graphics g)
+        public void Render(Graphics graphics)
         {
-            // Not implemented by design since this class shouldn't be used as a steering behaviour directly
-            throw new System.NotImplementedException();
+            _weightedSteeringBehaviours.ForEach(
+                weightedSteeringBehaviour => weightedSteeringBehaviour.SteeringBehaviour.Render(graphics)
+            );
         }
     }
 }

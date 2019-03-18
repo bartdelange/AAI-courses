@@ -7,6 +7,8 @@ namespace AICore.Behaviour.Individual
 {
     public class ArriveBehaviour : ISteeringBehaviour
     {
+        public bool Visible { get; set; }
+
         private const double DecelerationSpeed = 1;
         private const double DecelerationTweaker = 0.3;
 
@@ -49,7 +51,7 @@ namespace AICore.Behaviour.Individual
             return desiredVelocity - _movingEntity.Velocity;
         }
 
-        public void Draw(Graphics g)
+        public void Render(Graphics graphics)
         {
         }
     }

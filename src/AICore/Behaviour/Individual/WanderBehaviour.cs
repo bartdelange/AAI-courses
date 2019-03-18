@@ -8,6 +8,8 @@ namespace AICore.Behaviour.Individual
 {
     public class WanderBehaviour : ISteeringBehaviour
     {
+        public bool Visible { get; set; } = true;
+        
         private const float WanderRadius = 50;
         private const float WanderDistance = 25;
         private const float WanderJitter = 25;
@@ -32,11 +34,16 @@ namespace AICore.Behaviour.Individual
             return _movingEntity.GetPointToWorldSpace(_wanderTarget) - _movingEntity.Position;
         }
 
-        public void Draw(Graphics g)
+        private static float RandomClamped()
+        {
+            return (float) (Random.NextDouble() - Random.NextDouble());
+        }
+
+        public void Render(Graphics graphics)
         {
             var guidePosition = _movingEntity.GetPointToWorldSpace(_wanderTarget);
 
-            g.DrawEllipse(
+            graphics.DrawEllipse(
                 new Pen(Color.Red),
                 new Rectangle(
                     (int) guidePosition.X,
@@ -45,11 +52,6 @@ namespace AICore.Behaviour.Individual
                     4
                 )
             );
-        }
-
-        private static float RandomClamped()
-        {
-            return (float) (Random.NextDouble() - Random.NextDouble());
         }
     }
 }

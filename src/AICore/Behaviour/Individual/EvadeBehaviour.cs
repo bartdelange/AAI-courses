@@ -7,6 +7,8 @@ namespace AICore.Behaviour.Individual
 {
     public class EvadeBehaviour : ISteeringBehaviour
     {
+        public bool Visible { get; set; }
+
         private const double ThreatRange = 100.0;
 
         private readonly IMovingEntity _movingEntity;
@@ -38,7 +40,7 @@ namespace AICore.Behaviour.Individual
                    - _movingEntity.Velocity;
         }
 
-        public void Draw(Graphics g)
+        public void Render(Graphics graphics)
         {
         }
     }

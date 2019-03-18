@@ -10,10 +10,12 @@ namespace AICore.Behaviour.Group
 {
     public class SeparationBehaviour<T> : ISteeringBehaviour where T : IEntity
     {
+        public bool Visible { get; set; } = true;
+
         private readonly MovingEntity _movingEntity;
         private readonly IEnumerable<T> _neighbours;
         
-        private readonly Brush _brush = new SolidBrush(Color.FromArgb(25, 255, 0, 0));
+        private readonly Brush _brush = new SolidBrush(Color.FromArgb(25, Color.Red));
 
         public SeparationBehaviour(MovingEntity movingEntity, IEnumerable<T> neighbours)
         {
@@ -35,11 +37,11 @@ namespace AICore.Behaviour.Group
             );
         }
 
-        public void Draw(Graphics g)
+        public void Render(Graphics graphics)
         {
             const int size = MovingEntity.Radius * 2;
 
-            g.FillEllipse(
+            graphics.FillEllipse(
                 _brush,
                 new Rectangle(
                     _movingEntity.Position.Minus(MovingEntity.Radius).ToPoint(),

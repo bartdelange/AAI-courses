@@ -10,15 +10,18 @@ namespace AICore.Behaviour.Aggregate
 {
     public class FlockingBehaviour : ISteeringBehaviour
     {
+        public bool Visible { get; set; } = true;
+
         private readonly WeightedTruncatedRunningSumWithPrioritization _steeringBehaviour;
 
         public FlockingBehaviour(IMovingEntity movingEntity, IEnumerable<IMovingEntity> neighbours)
         {
             _steeringBehaviour = new WeightedTruncatedRunningSumWithPrioritization(
-                new OrderedDictionary
+                new List<WeightedSteeringBehaviour>
                 {
-                    {0.3f, new AlignmentBehaviour<IMovingEntity>(movingEntity, neighbours)},
-                    {0.7f, new CohesionBehaviour<IEntity>(movingEntity, neighbours)}
+                    new WeightedSteeringBehaviour(new AlignmentBehaviour<IMovingEntity>(movingEntity, neighbours),
+                        0.3f),
+                    new WeightedSteeringBehaviour(new CohesionBehaviour<IEntity>(movingEntity, neighbours), 0.7f)
                 },
                 movingEntity.MaxSpeed
             );
@@ -29,8 +32,9 @@ namespace AICore.Behaviour.Aggregate
             return _steeringBehaviour.Calculate(deltaTime);
         }
 
-        public void Draw(Graphics g)
+        public void Render(Graphics graphics)
         {
+            _steeringBehaviour.Render(graphics);
         }
     }
 }

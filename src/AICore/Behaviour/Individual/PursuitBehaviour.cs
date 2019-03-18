@@ -6,6 +6,8 @@ namespace AICore.Behaviour.Individual
 {
     public class PursuitBehaviour : ISteeringBehaviour
     {
+        public bool Visible { get; set; }
+
         private readonly IMovingEntity _movingEntity;
         private readonly IMovingEntity _target;
 
@@ -34,7 +36,7 @@ namespace AICore.Behaviour.Individual
             return seekBehaviour.Calculate(deltaTime);
         }
 
-        public void Draw(Graphics g)
+        public void Render(Graphics graphics)
         {
         }
     }

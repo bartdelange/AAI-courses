@@ -7,6 +7,8 @@ namespace AICore.Behaviour.Individual
 {
     public class OffsetPursuit : ISteeringBehaviour
     {
+        public bool Visible { get; set; }
+
         private readonly IMovingEntity _leader;
         private readonly IMovingEntity _movingEntity;
 
@@ -35,7 +37,7 @@ namespace AICore.Behaviour.Individual
             return arriveBehaviour.Calculate(deltaTime);
         }
 
-        public void Draw(Graphics g)
+        public void Render(Graphics graphics)
         {
         }
     }

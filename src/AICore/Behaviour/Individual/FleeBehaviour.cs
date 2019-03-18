@@ -7,6 +7,8 @@ namespace AICore.Behaviour.Individual
 {
     public class FleeBehaviour : ISteeringBehaviour
     {
+        public bool Visible { get; set; }
+
         private const int Boundary = 100 * 100;
 
         private readonly IMovingEntity _movingEntity;
@@ -31,7 +33,7 @@ namespace AICore.Behaviour.Individual
             return Vector2.Normalize(_movingEntity.Position - _target.Position) * (float) _movingEntity.MaxSpeed - _movingEntity.Velocity;
         }
 
-        public void Draw(Graphics g)
+        public void Render(Graphics graphics)
         {
         }
     }

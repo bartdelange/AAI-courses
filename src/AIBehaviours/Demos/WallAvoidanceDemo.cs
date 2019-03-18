@@ -17,6 +17,8 @@ namespace AIBehaviours.Demos
 {
     internal class MySteeringBehaviour : ISteeringBehaviour
     {
+        public bool Visible { get; set; } = true;
+
         private readonly WeightedTruncatedRunningSumWithPrioritization _aggregateBehaviour;
 
         public MySteeringBehaviour(IMovingEntity entity, IEnumerable<IWall> walls)
@@ -25,10 +27,10 @@ namespace AIBehaviours.Demos
             var wanderBehaviour = new WanderBehaviour(entity);
 
             _aggregateBehaviour = new WeightedTruncatedRunningSumWithPrioritization(
-                new OrderedDictionary
+                new List<WeightedSteeringBehaviour>
                 {
-                    {wallAvoidanceBehaviour, .8f},
-                    {wanderBehaviour, .8f}
+                    new WeightedSteeringBehaviour(wallAvoidanceBehaviour, .5f),
+                    new WeightedSteeringBehaviour(wanderBehaviour, .5f)
                 },
                 entity.MaxSpeed
             );
@@ -39,8 +41,9 @@ namespace AIBehaviours.Demos
             return _aggregateBehaviour.Calculate(deltaTime);
         }
 
-        public void Draw(Graphics g)
+        public void Render(Graphics graphics)
         {
+            _aggregateBehaviour.Render(graphics);
         }
     }
 
@@ -49,17 +52,39 @@ namespace AIBehaviours.Demos
     /// </summary>
     public partial class WallAvoidanceDemo : Form
     {
-        public WallAvoidanceDemo(int width = 1000, int height = 800)
+        public WallAvoidanceDemo(int width, int height)
         {
             InitializeComponent();
 
             Width = width;
             Height = height;
 
+            ClientSize = new Size(width, height);
+
+            
             var worldBounds = new Vector2(ClientSize.Width, ClientSize.Height);
             var world = new World(worldBounds);
 
-            var obstacles = ObstacleUtils.CreateObstacles(worldBounds, 250);
+            var wallMargin = 20;
+            var walls = new List<IWall>()
+            {
+                // Top border
+                new Wall(new Vector2(wallMargin, wallMargin), new Vector2(Width - wallMargin, wallMargin)),
+
+                // Right border
+                new Wall(new Vector2(Width - wallMargin, wallMargin),
+                    new Vector2(Width - wallMargin, Height - wallMargin)),
+
+                // Bottom border
+                new Wall(new Vector2(wallMargin, Height - wallMargin),
+                    new Vector2(Width - wallMargin, Height - wallMargin)),
+
+                // Left border
+                new Wall(new Vector2(wallMargin, wallMargin), new Vector2(wallMargin, Height - wallMargin)),
+            };
+
+            world.Walls = walls;
+
 
             var entities = new List<IMovingEntity>
             {
@@ -77,7 +102,6 @@ namespace AIBehaviours.Demos
             }
 
             // Populate world instance
-            world.Obstacles = obstacles;
             world.Entities = entities;
 
             // Add world to form

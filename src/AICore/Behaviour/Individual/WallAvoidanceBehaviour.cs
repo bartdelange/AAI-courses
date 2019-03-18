@@ -9,25 +9,65 @@ namespace AICore.Behaviour.Individual
 {
     public class WallAvoidanceBehaviour : ISteeringBehaviour
     {
-        private const float FeelerLength = 10;
+        public bool Visible { get; set; } = true;
+
+        private const float FeelerLength = 50;
         private const float HalfPi = (float) (Math.PI / 2);
-        
+
         private readonly IMovingEntity _movingEntity;
-        private readonly IEnumerable<IWall> _obstacles;
-        
+        private readonly IEnumerable<IWall> _walls;
+
         private IEnumerable<Vector2> _feelers;
 
-        public WallAvoidanceBehaviour(IMovingEntity entity, IEnumerable<IWall> obstacles)
+        public WallAvoidanceBehaviour(IMovingEntity entity, IEnumerable<IWall> walls)
         {
             _movingEntity = entity;
-            _obstacles = obstacles;
+            _walls = walls;
+            
+            _feelers = CreateFeelers();
         }
 
         public Vector2 Calculate(float deltaTime)
         {
             _feelers = CreateFeelers();
 
-            return Vector2.Zero;
+            IWall closestWall = null;
+            double? closestDistance = null;
+            Vector2? closestPoint = null;
+
+            foreach (var feeler in _feelers)
+            {
+                foreach (var wall in _walls)
+                {
+                    if (!wall.IntersectsWithLine(
+                        _movingEntity.Position,
+                        feeler,
+                        out var distance,
+                        out var intersectPoint
+                    ))
+                    {
+                        continue;
+                    }
+
+                    // Ignore it intersection if distance is longer than previous feeler
+                    if (distance >= closestDistance) continue;
+
+                    closestDistance = distance;
+                    closestPoint = intersectPoint;
+                    closestWall = wall;
+                }
+            }
+
+            if (closestWall == null || closestPoint == null)
+            {
+                return Vector2.Zero;
+            }
+
+            var overShoot = (Vector2) (_movingEntity.Position - closestPoint);
+
+            //create a force in the direction of the wall normal, with a 
+            //magnitude of the overshoot
+            return closestWall.Normal * overShoot.Length();
         }
 
         /// <summary>
@@ -39,26 +79,29 @@ namespace AICore.Behaviour.Individual
             const float sideFeelerLength = FeelerLength / 2.0f;
 
             var feelers = new Vector2[3];
-            
+
             // Forward pointing feeler
-            feelers[0] = _movingEntity.Position + (FeelerLength * _movingEntity.Heading * _movingEntity.Velocity.Length());
+            feelers[0] = _movingEntity.Position +
+                         (FeelerLength * _movingEntity.Heading * _movingEntity.Velocity.Length());
 
             // Left pointing feeler
-            feelers[1] = _movingEntity.Position + (sideFeelerLength * _movingEntity.Heading.RotateAroundOrigin(HalfPi * 3.5f));
+            feelers[1] = _movingEntity.Position +
+                         (sideFeelerLength * _movingEntity.Heading.RotateAroundOrigin(HalfPi * 3.5f));
 
             // Right pointing feeler
-            feelers[3] = _movingEntity.Position + (sideFeelerLength * _movingEntity.Heading.RotateAroundOrigin(HalfPi * .5f));
+            feelers[2] = _movingEntity.Position +
+                         (sideFeelerLength * _movingEntity.Heading.RotateAroundOrigin(HalfPi * .5f));
 
             return feelers;
         }
 
-        public void Draw(Graphics g)
+        public void Render(Graphics graphics)
         {
             foreach (var feeler in _feelers)
             {
-                g.DrawLine(
-                    new Pen(Color.Chartreuse), 
-                    _movingEntity.Position.ToPoint(), 
+                graphics.DrawLine(
+                    new Pen(Color.Red),
+                    _movingEntity.Position.ToPoint(),
                     feeler.ToPoint()
                 );
             }

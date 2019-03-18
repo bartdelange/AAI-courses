@@ -9,6 +9,8 @@ namespace AICore.Behaviour.Group
 {
     public class CohesionBehaviour<T> : ISteeringBehaviour where T : IEntity
     {
+        public bool Visible { get; set; } = true;
+        
         private readonly IMovingEntity _movingEntity;
         private readonly IEnumerable<T> _neighbours;
 
@@ -38,11 +40,11 @@ namespace AICore.Behaviour.Group
             return Vector2.Normalize(targetPosition - _movingEntity.Position) * _movingEntity.MaxSpeed;
         }
 
-        public void Draw(Graphics g)
+        public void Render(Graphics graphics)
         {
             const int size = Radius * 2;
 
-            g.FillEllipse(
+            graphics.FillEllipse(
                 _brush,
                 new Rectangle(
                     _movingEntity.Position.Minus(Radius).ToPoint(),

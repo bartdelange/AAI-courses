@@ -10,6 +10,8 @@ namespace AICore.Behaviour.Group
 {
     public class AlignmentBehaviour<T> : ISteeringBehaviour where T : IMovingEntity
     {
+        public bool Visible { get; set; } = true;
+        
         private readonly IMovingEntity _movingEntity;
         private readonly IEnumerable<T> _neighbours;
         
@@ -37,11 +39,11 @@ namespace AICore.Behaviour.Group
             );
         }
 
-        public void Draw(Graphics g)
+        public void Render(Graphics graphics)
         {
             const int size = MovingEntity.Radius * 2;
 
-            g.FillEllipse(
+            graphics.FillEllipse(
                 _brush,
                 new Rectangle(
                     _movingEntity.Position.Minus(MovingEntity.Radius).ToPoint(),

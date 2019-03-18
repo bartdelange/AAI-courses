@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Drawing;
 using System.Numerics;
@@ -6,48 +7,52 @@ namespace AICore.Behaviour.Util
 {
     public class WeightedTruncatedRunningSumWithPrioritization : ISteeringBehaviour
     {
-        private readonly OrderedDictionary _steeringBehaviour;
+        public bool Visible { get; set; } = true;
+        
+        private readonly List<WeightedSteeringBehaviour> _weightedSteeringBehaviours;
         private readonly float _maxSpeed;
 
-        public WeightedTruncatedRunningSumWithPrioritization(OrderedDictionary steeringBehaviour, float maxSpeed)
+        public WeightedTruncatedRunningSumWithPrioritization(
+            List<WeightedSteeringBehaviour> steeringBehaviour,
+            float maxSpeed
+        )
         {
-            _steeringBehaviour = steeringBehaviour;
+            _weightedSteeringBehaviours = steeringBehaviour;
             _maxSpeed = maxSpeed;
         }
-        
+
         public Vector2 Calculate(float deltaTime)
         {
-            var enumerator = _steeringBehaviour.GetEnumerator();
-
-            var steeringForceSum = Vector2.Zero;
+            var steeringForceSum = new Vector2();
             var remainingSteeringForce = _maxSpeed;
-            
-            while(enumerator.Current != null)
+
+            foreach (var weightedSteeringBehaviour in _weightedSteeringBehaviours)
             {
                 // Return steering force when we cannot add more speed
-                if (remainingSteeringForce <= 0) return steeringForceSum;
-             
-                var steeringBehaviour = (ISteeringBehaviour) enumerator.Key;
-                var weight = (float) enumerator.Value;
-                
-                var steeringForce = steeringBehaviour.Calculate(deltaTime) * weight;
+                if (steeringForceSum.Length() > _maxSpeed)
+                {
+                    return steeringForceSum;
+                }
+
+                var steeringForce = weightedSteeringBehaviour.SteeringBehaviour.Calculate(deltaTime) *
+                                    weightedSteeringBehaviour.Weight;
+
                 var steeringForceMagnitude = steeringForce.Length();
 
                 // Add steering force to steeringForceSum. Adds as much as possible when addition will exceed maxSpeed.
-                steeringForceSum += (steeringForceMagnitude < remainingSteeringForce) 
+                steeringForceSum += (steeringForceMagnitude < remainingSteeringForce)
                     ? steeringForce
-                    :(Vector2.Normalize(steeringForce) * remainingSteeringForce);
-
-                // Move to next steering behaviour
-                enumerator.MoveNext();
+                    : (Vector2.Normalize(steeringForce) * remainingSteeringForce);
             }
 
             return steeringForceSum;
         }
 
-        public void Draw(Graphics g)
+        public void Render(Graphics graphics)
         {
-            throw new System.NotImplementedException();
+            _weightedSteeringBehaviours.ForEach(
+                weightedSteeringBehaviour => weightedSteeringBehaviour.SteeringBehaviour.Render(graphics)
+            );
         }
     }
 }

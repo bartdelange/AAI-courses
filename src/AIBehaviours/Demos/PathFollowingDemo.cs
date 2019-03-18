@@ -18,7 +18,7 @@ namespace AIBehaviours.Demos
     {
         private readonly World _world;
         
-        public PathFollowingDemo(int width = 1000, int height = 800)
+        public PathFollowingDemo(int width, int height)
         {
             InitializeComponent();
             

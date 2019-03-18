@@ -14,7 +14,7 @@ namespace AIBehaviours.Demos
 {
     public partial class OffsetPursuitDemo : Form
     {
-        public OffsetPursuitDemo(int width = 1000, int height = 800)
+        public OffsetPursuitDemo(int width, int height)
         {
             InitializeComponent();
 

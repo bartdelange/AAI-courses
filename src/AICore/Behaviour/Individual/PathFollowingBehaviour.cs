@@ -9,6 +9,8 @@ namespace AICore.Behaviour.Individual
 {
     public class PathFollowingBehaviour : ISteeringBehaviour
     {
+        public bool Visible { get; set; }
+
         /// <summary>
         /// Determines how close an agent must be to a waypoint before it seeks the next waypoint
         /// </summary>
@@ -51,8 +53,9 @@ namespace AICore.Behaviour.Individual
             return seekBehaviour.Calculate(deltaTime);
         }
 
-        public void Draw(Graphics g)
+        public void Render(Graphics graphics)
         {
+            throw new System.NotImplementedException();
         }
     }
 }

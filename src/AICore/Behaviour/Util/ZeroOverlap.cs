@@ -17,12 +17,8 @@ namespace AICore.Behaviour.Util
 
         public void CheckOverlap()
         {
-            var enumerator = _other.GetEnumerator();
-
-            while (enumerator.Current != null)
+            foreach (var entity in _other)
             {
-                var entity = enumerator.Current;
-                
                 // Ignore _movingEntity
                 if (entity.Equals(_movingEntity))
                 {
@@ -43,11 +39,7 @@ namespace AICore.Behaviour.Util
 
                 // Ensure MovingEntity won't overlap any other entity
                 _movingEntity.Position = _movingEntity.Position + ((toEntity / distanceToEntity) * overlapAmount);
-                
-                enumerator.MoveNext();
             }
-            
-            enumerator.Dispose();
         }
     }
 }

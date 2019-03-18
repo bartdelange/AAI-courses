@@ -26,26 +26,19 @@ namespace AICore
 
         public void Update(float timeElapsed)
         {
-            Entities?.ForEach(e => e.Update(timeElapsed));
-        }
-
-        private static void Render(Graphics g, IRenderable renderable)
-        {
-            if (renderable == null || !renderable.Visible)
+            Entities?.ForEach(e =>
             {
-                return;
-            }
-
-            renderable.Render(g);
+                e.Update(timeElapsed);
+            });
         }
 
         public void Render(Graphics graphics, bool graphIsVisible)
         {
-            Render(graphics, NavigationLayer);
-
-            Obstacles?.ForEach(entity => Render(graphics, entity));
-            Entities?.ForEach(entity => Render(graphics, entity));
-            Walls?.ForEach(entity => Render(graphics, entity));
+            NavigationLayer?.Render(graphics);
+            
+            Obstacles?.ForEach(obstacle => obstacle.Render(graphics));
+            Entities?.ForEach(entity => entity.Render(graphics));
+            Walls?.ForEach(wall => wall.Render(graphics));
         }
     }
 }

@@ -61,6 +61,7 @@
     <Compile Include="Behaviour\Util\WeightedTruncatedRunningSumWithPrioritization.cs" />
     <Compile Include="Behaviour\Util\WeightedTruncatedSum.cs" />
     <Compile Include="Behaviour\Util\ZeroOverlap.cs" />
+    <Compile Include="Behaviour\WeightedSteeringBehaviour.cs" />
     <Compile Include="Entity\Contracts\IEntity.cs" />
     <Compile Include="Entity\Contracts\IGroup.cs" />
     <Compile Include="Entity\Contracts\IMovingEntity.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="Entity\MovingEntity.cs" />
     <Compile Include="Entity\Circle.cs" />
     <Compile Include="Entity\Vehicle.cs" />
+    <Compile Include="Entity\Wall.cs" />
     <Compile Include="FuzzyLogic\FuzzyModule.cs" />
     <Compile Include="FuzzyLogic\FuzzyRule.cs" />
     <Compile Include="FuzzyLogic\FuzzySet\FuzzySet.cs" />
