@@ -1,8 +1,6 @@
-using System.Collections.Generic;
 using System.Drawing;
 using System.Numerics;
 using AICore.Behaviour;
-using AICore.Behaviour.Util;
 using AICore.Entity.Contracts;
 using AICore.Util;
 
@@ -55,8 +53,6 @@ namespace AICore.Entity
             }
 
             Position = Position.WrapToBounds(Bounds);
-            
-            ZeroOverlap()
         }
 
         public virtual void Render(Graphics graphics)
