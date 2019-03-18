@@ -55,7 +55,6 @@ namespace AICore.Behaviour.Individual
 
         public void Render(Graphics graphics)
         {
-            throw new System.NotImplementedException();
         }
     }
 }
