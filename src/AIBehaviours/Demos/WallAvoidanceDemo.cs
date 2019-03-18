@@ -1,52 +1,16 @@
 ﻿using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Drawing;
 using System.Numerics;
 using System.Windows.Forms;
 using AIBehaviours.Controls;
-using AIBehaviours.Utils;
 using AICore;
-using AICore.Behaviour;
-using AICore.Behaviour.Individual;
-using AICore.Behaviour.Util;
+using AICore.Behaviour.Aggregate;
 using AICore.Entity;
 using AICore.Entity.Contracts;
 using AICore.Util;
 
 namespace AIBehaviours.Demos
 {
-    internal class MySteeringBehaviour : ISteeringBehaviour
-    {
-        public bool Visible { get; set; } = true;
-
-        private readonly WeightedTruncatedRunningSumWithPrioritization _aggregateBehaviour;
-
-        public MySteeringBehaviour(IMovingEntity entity, IEnumerable<IWall> walls)
-        {
-            var wallAvoidanceBehaviour = new WallAvoidanceBehaviour(entity, walls);
-            var wanderBehaviour = new WanderBehaviour(entity);
-
-            _aggregateBehaviour = new WeightedTruncatedRunningSumWithPrioritization(
-                new List<WeightedSteeringBehaviour>
-                {
-                    new WeightedSteeringBehaviour(wallAvoidanceBehaviour, .5f),
-                    new WeightedSteeringBehaviour(wanderBehaviour, .5f)
-                },
-                entity.MaxSpeed
-            );
-        }
-
-        public Vector2 Calculate(float deltaTime)
-        {
-            return _aggregateBehaviour.Calculate(deltaTime);
-        }
-
-        public void Render(Graphics graphics)
-        {
-            _aggregateBehaviour.Render(graphics);
-        }
-    }
-
     /// <summary>
     /// 
     /// </summary>
@@ -98,7 +62,7 @@ namespace AIBehaviours.Demos
 
             foreach (var entity in entities)
             {
-                entity.SteeringBehaviour = new MySteeringBehaviour(entity, world.Walls);
+                entity.SteeringBehaviour = new WanderWallAvoidanceBehaviour(entity, world.Walls);
             }
 
             // Populate world instance
