@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using AICore.FuzzyLogic;
 
 namespace AIBehaviours
 {
@@ -13,6 +14,8 @@ namespace AIBehaviours
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            var fh = new FuzzyHelper();
+            fh.InitSampleModule();
             Application.Run(new Menu());
         }
     }

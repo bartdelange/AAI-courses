@@ -46,7 +46,7 @@ namespace AICore.Entity
             Velocity = acceleration * delta;
             Position += Velocity * delta;
 
-            if (Velocity.LengthSquared() > 0.01)
+            if (Velocity.LengthSquared() > 0.000000001)
             {
                 Heading = Vector2.Normalize(Velocity);
                 Side = Heading.Perpendicular();
