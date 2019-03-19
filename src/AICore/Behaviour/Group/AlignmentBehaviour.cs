@@ -41,12 +41,12 @@ namespace AICore.Behaviour.Group
 
         public void Render(Graphics graphics)
         {
-            const int size = MovingEntity.Radius * 2;
+            var size = _movingEntity.BoundingRadius * 2;
 
             graphics.FillEllipse(
                 _brush,
                 new Rectangle(
-                    _movingEntity.Position.Minus(MovingEntity.Radius).ToPoint(),
+                    _movingEntity.Position.Minus(_movingEntity.BoundingRadius).ToPoint(),
                     new Size(size, size)
                 )
             );

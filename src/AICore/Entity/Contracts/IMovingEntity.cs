@@ -13,6 +13,7 @@ namespace AICore.Entity.Contracts
         Vector2 Side { get; set; }
 
         float MaxSpeed { get; set; }
+        float Mass { get; set; }
 
         void Update(float timeDelta);
     }

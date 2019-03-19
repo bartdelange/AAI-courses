@@ -8,25 +8,33 @@ namespace AICore.Entity
 {
     public abstract class MovingEntity : IMovingEntity
     {
-        // Render properties
+        #region render properties
+        
         public bool Visible { get; set; } = true;
+        
+        #endregion
 
-        // Entity properties
-        public const float Mass = 20;
-        public const int Radius = 100;
+        #region entity properties
+        
+        public float MaxSpeed { get; set; } = 100;
 
-        public Vector2 Position { get; set; }
-        private Vector2 Bounds { get; }
+        public float Mass { get; set; } = 20;
+        
         public int BoundingRadius { get; set; } = 150;
 
-        //
+        #endregion
+
+        // Behaviour
+        public ISteeringBehaviour SteeringBehaviour { set; get; }
+                
+        // 
+        public Vector2 Position { get; set; }
         public Vector2 Velocity { get; set; } = new Vector2(1, 1);
         public Vector2 Heading { get; set; } = new Vector2(1, 1);
         public Vector2 Side { get; set; } = new Vector2(1, 1);
-
-        // Behaviour properties
-        public ISteeringBehaviour SteeringBehaviour { set; get; }
-        public float MaxSpeed { get; set; } = 100;
+        
+        //
+        private Vector2 WorldBounds { get; }
 
         // Render properties
         private readonly Pen _pen;
@@ -34,7 +42,7 @@ namespace AICore.Entity
         protected MovingEntity(Vector2 position, Vector2 bounds, Pen pen)
         {
             Position = position;
-            Bounds = bounds;
+            WorldBounds = bounds;
 
             _pen = pen;
         }
@@ -52,7 +60,7 @@ namespace AICore.Entity
                 Side = Heading.Perpendicular();
             }
 
-            Position = Position.WrapToBounds(Bounds);
+            Position = Position.WrapToBounds(WorldBounds);
         }
 
         public virtual void Render(Graphics graphics)

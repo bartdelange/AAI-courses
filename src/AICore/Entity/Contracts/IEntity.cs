@@ -6,6 +6,7 @@ namespace AICore.Entity.Contracts
     public interface IEntity : IRenderable
     {
         Vector2 Position { get; set; }
+        
         int BoundingRadius { get; set; }
     }
 }
