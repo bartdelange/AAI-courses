@@ -5,12 +5,11 @@ using System.Windows.Forms;
 using AIBehaviours.Controls;
 using AIBehaviours.Utils;
 using AICore;
-using AICore.Behaviour;
-using AICore.Behaviour.Aggregate;
-using AICore.Behaviour.Individual;
-using AICore.Behaviour.Util;
 using AICore.Entity;
 using AICore.Entity.Contracts;
+using AICore.SteeringBehaviour;
+using AICore.SteeringBehaviour.Individual;
+using AICore.SteeringBehaviour.Util;
 using AICore.Util;
 
 namespace AIBehaviours.Demos

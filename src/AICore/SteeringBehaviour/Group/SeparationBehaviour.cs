@@ -6,7 +6,7 @@ using AICore.Entity;
 using AICore.Entity.Contracts;
 using AICore.Util;
 
-namespace AICore.Behaviour.Group
+namespace AICore.SteeringBehaviour.Group
 {
     public class SeparationBehaviour<T> : ISteeringBehaviour where T : IEntity
     {

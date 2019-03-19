@@ -1,7 +1,7 @@
 using System.Drawing;
 using System.Numerics;
-using AICore.Behaviour;
 using AICore.Entity.Contracts;
+using AICore.SteeringBehaviour;
 using AICore.Util;
 
 namespace AICore.Entity
@@ -11,6 +11,8 @@ namespace AICore.Entity
         #region render properties
         
         public bool Visible { get; set; } = true;
+        
+        private readonly Brush _boundingCircleBrush = new SolidBrush(Color.FromArgb(50, Color.Red));
         
         #endregion
 
@@ -24,10 +26,8 @@ namespace AICore.Entity
 
         #endregion
 
-        // Behaviour
         public ISteeringBehaviour SteeringBehaviour { set; get; }
-                
-        // 
+               
         public Vector2 Position { get; set; }
         public Vector2 Velocity { get; set; } = new Vector2(1, 1);
         public Vector2 Heading { get; set; } = new Vector2(1, 1);
@@ -36,17 +36,22 @@ namespace AICore.Entity
         //
         private Vector2 WorldBounds { get; }
 
-        // Render properties
-        private readonly Pen _pen;
-
+        /// <summary>
+        /// Base class that is used to create entities that can interact with the world
+        /// </summary>
+        /// <param name="position"></param>
+        /// <param name="bounds"></param>
+        /// <param name="pen"></param>
         protected MovingEntity(Vector2 position, Vector2 bounds, Pen pen)
         {
             Position = position;
             WorldBounds = bounds;
-
-            _pen = pen;
         }
 
+        /// <summary>
+        /// Method that is called when the timer interval elapses
+        /// </summary>
+        /// <param name="delta"></param>
         public void Update(float delta)
         {
             var acceleration = (SteeringBehaviour?.Calculate(delta) / Mass) ?? new Vector2();
@@ -63,22 +68,29 @@ namespace AICore.Entity
             Position = Position.WrapToBounds(WorldBounds);
         }
 
+        /// <summary>
+        /// Visualizes the velocity, bounding radius and position
+        /// </summary>
+        /// <param name="graphics"></param>
         public virtual void Render(Graphics graphics)
         {
+            // visualize the instance position
             graphics.DrawLine(
                 Pens.Red,
                 Position.ToPoint(),
                 (Position + Velocity).ToPoint()
             );
 
+            // visualize the bounding circle
             graphics.FillEllipse(
-                new SolidBrush(Color.FromArgb(50, Color.Red)),
+                _boundingCircleBrush,
                 new Rectangle(
                     (Position - new Vector2(BoundingRadius)).ToPoint(),
                     new Size(BoundingRadius * 2, BoundingRadius * 2)
                 )
             );
 
+            // Print the velocity and position 
             graphics.DrawString(
                 $"{Velocity.ToString("##.##")}\n{Position.ToString("##.##")}",
                 SystemFonts.DefaultFont,
@@ -86,6 +98,7 @@ namespace AICore.Entity
                 Position.ToPoint()
             );
 
+            // Render steering behaviour if it exists
             SteeringBehaviour?.Render(graphics);
         }
     }

@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Drawing;
 using System.Numerics;
-using AICore.Entity;
 using AICore.Entity.Contracts;
 
-namespace AICore.Behaviour.Individual
+namespace AICore.SteeringBehaviour.Individual
 {
     public class WanderBehaviour : ISteeringBehaviour
     {

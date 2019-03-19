@@ -6,11 +6,11 @@ using System.Windows.Forms;
 using AIBehaviours.Controls;
 using AIBehaviours.Utils;
 using AICore;
-using AICore.Behaviour.Individual;
 using AICore.Entity;
 using AICore.Entity.Contracts;
 using AICore.Graph.PathFinding;
 using AICore.Navigation;
+using AICore.SteeringBehaviour.Individual;
 
 namespace AIBehaviours.Demos
 {

@@ -2,11 +2,10 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Numerics;
-using AICore.Entity;
 using AICore.Entity.Contracts;
 using AICore.Util;
 
-namespace AICore.Behaviour.Group
+namespace AICore.SteeringBehaviour.Group
 {
     public class AlignmentBehaviour<T> : ISteeringBehaviour where T : IMovingEntity
     {

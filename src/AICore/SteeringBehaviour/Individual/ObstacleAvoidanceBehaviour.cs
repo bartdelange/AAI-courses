@@ -1,13 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using System.Numerics;
-using AICore.Entity;
 using AICore.Entity.Contracts;
 using AICore.Util;
 
-namespace AICore.Behaviour.Individual
+namespace AICore.SteeringBehaviour.Individual
 {
     public class ObstacleAvoidanceBehaviour : ISteeringBehaviour
     {

@@ -1,11 +1,9 @@
-using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Drawing;
 using System.Numerics;
 using AICore.Util;
 
-namespace AICore.Behaviour.Util
+namespace AICore.SteeringBehaviour.Util
 {
     /// <summary>
     /// Probability coefficient examples for steering behaviours

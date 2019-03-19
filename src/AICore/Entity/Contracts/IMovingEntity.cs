@@ -1,5 +1,5 @@
 using System.Numerics;
-using AICore.Behaviour;
+using AICore.SteeringBehaviour;
 using AICore.Util;
 
 namespace AICore.Entity.Contracts

@@ -1,9 +1,8 @@
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Drawing;
 using System.Numerics;
 
-namespace AICore.Behaviour.Util
+namespace AICore.SteeringBehaviour.Util
 {
     public class WeightedTruncatedRunningSumWithPrioritization : ISteeringBehaviour
     {

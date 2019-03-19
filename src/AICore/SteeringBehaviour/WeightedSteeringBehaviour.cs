@@ -1,6 +1,4 @@
-using System.Collections.Generic;
-
-namespace AICore.Behaviour
+namespace AICore.SteeringBehaviour
 {
     /// <summary>
     /// Example weight values for steering behaviours

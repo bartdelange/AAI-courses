@@ -1,7 +1,7 @@
 using System.Drawing;
 using System.Numerics;
 
-namespace AICore.Behaviour.Individual
+namespace AICore.SteeringBehaviour.Individual
 {
     /// <summary>
     /// Steering behaviour that will apply a constant steering force.

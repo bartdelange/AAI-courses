@@ -5,7 +5,7 @@ using System.Numerics;
 using AICore.Entity.Contracts;
 using AICore.Util;
 
-namespace AICore.Behaviour.Group
+namespace AICore.SteeringBehaviour.Group
 {
     public class CohesionBehaviour<T> : ISteeringBehaviour where T : IEntity
     {

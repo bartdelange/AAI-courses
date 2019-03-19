@@ -5,7 +5,7 @@ using System.Numerics;
 using AICore.Entity.Contracts;
 using AICore.Util;
 
-namespace AICore.Behaviour.Individual
+namespace AICore.SteeringBehaviour.Individual
 {
     public class WallAvoidanceBehaviour : ISteeringBehaviour
     {

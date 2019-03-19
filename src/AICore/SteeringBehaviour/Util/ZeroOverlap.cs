@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using AICore.Entity;
 using AICore.Entity.Contracts;
 
-namespace AICore.Behaviour.Util
+namespace AICore.SteeringBehaviour.Util
 {
     public class ZeroOverlap<T> where T : IEntity
     {

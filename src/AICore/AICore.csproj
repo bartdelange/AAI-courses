@@ -43,28 +43,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Behaviour\Aggregate\FlockingBehaviour.cs" />
-    <Compile Include="Behaviour\Aggregate\WanderWallAvoidanceBehaviour.cs" />
-    <Compile Include="Behaviour\Group\AlignmentBehaviour.cs" />
-    <Compile Include="Behaviour\Group\CohesionBehaviour.cs" />
-    <Compile Include="Behaviour\Group\SeparationBehaviour.cs" />
-    <Compile Include="Behaviour\Individual\ArriveBehaviour.cs" />
-    <Compile Include="Behaviour\Individual\EvadeBehaviour.cs" />
-    <Compile Include="Behaviour\Individual\FleeBehaviour.cs" />
-    <Compile Include="Behaviour\Individual\ConstantSteeringBehaviour.cs" />
-    <Compile Include="Behaviour\Individual\ObstacleAvoidanceBehaviour.cs" />
-    <Compile Include="Behaviour\Individual\OffsetPursuit.cs" />
-    <Compile Include="Behaviour\Individual\PathFollowingBehaviour.cs" />
-    <Compile Include="Behaviour\Individual\PursuitBehaviour.cs" />
-    <Compile Include="Behaviour\Individual\SeekBehaviour.cs" />
-    <Compile Include="Behaviour\Individual\WallAvoidanceBehaviour.cs" />
-    <Compile Include="Behaviour\Individual\WanderBehaviour.cs" />
-    <Compile Include="Behaviour\ISteeringBehaviour.cs" />
-    <Compile Include="Behaviour\Util\PrioritizedDithering.cs" />
-    <Compile Include="Behaviour\Util\WeightedTruncatedRunningSumWithPrioritization.cs" />
-    <Compile Include="Behaviour\Util\WeightedTruncatedSum.cs" />
-    <Compile Include="Behaviour\Util\ZeroOverlap.cs" />
-    <Compile Include="Behaviour\WeightedSteeringBehaviour.cs" />
+    <Compile Include="SteeringBehaviour\Aggregate\FlockingBehaviour.cs" />
+    <Compile Include="SteeringBehaviour\Aggregate\WanderWallAvoidanceBehaviour.cs" />
+    <Compile Include="SteeringBehaviour\Group\AlignmentBehaviour.cs" />
+    <Compile Include="SteeringBehaviour\Group\CohesionBehaviour.cs" />
+    <Compile Include="SteeringBehaviour\Group\SeparationBehaviour.cs" />
+    <Compile Include="SteeringBehaviour\Individual\ArriveBehaviour.cs" />
+    <Compile Include="SteeringBehaviour\Individual\EvadeBehaviour.cs" />
+    <Compile Include="SteeringBehaviour\Individual\FleeBehaviour.cs" />
+    <Compile Include="SteeringBehaviour\Individual\ConstantSteeringBehaviour.cs" />
+    <Compile Include="SteeringBehaviour\Individual\ObstacleAvoidanceBehaviour.cs" />
+    <Compile Include="SteeringBehaviour\Individual\OffsetPursuit.cs" />
+    <Compile Include="SteeringBehaviour\Individual\PathFollowingBehaviour.cs" />
+    <Compile Include="SteeringBehaviour\Individual\PursuitBehaviour.cs" />
+    <Compile Include="SteeringBehaviour\Individual\SeekBehaviour.cs" />
+    <Compile Include="SteeringBehaviour\Individual\WallAvoidanceBehaviour.cs" />
+    <Compile Include="SteeringBehaviour\Individual\WanderBehaviour.cs" />
+    <Compile Include="SteeringBehaviour\ISteeringBehaviour.cs" />
+    <Compile Include="SteeringBehaviour\Util\PrioritizedDithering.cs" />
+    <Compile Include="SteeringBehaviour\Util\WeightedTruncatedRunningSumWithPrioritization.cs" />
+    <Compile Include="SteeringBehaviour\Util\WeightedTruncatedSum.cs" />
+    <Compile Include="SteeringBehaviour\Util\ZeroOverlap.cs" />
+    <Compile Include="SteeringBehaviour\WeightedSteeringBehaviour.cs" />
     <Compile Include="Entity\Contracts\IEntity.cs" />
     <Compile Include="Entity\Contracts\IGroup.cs" />
     <Compile Include="Entity\Contracts\IMovingEntity.cs" />
@@ -132,7 +132,7 @@
     <Compile Include="World.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Behaviour\Aggregate\" />
+    <Folder Include="SteeringBehaviour\Aggregate\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

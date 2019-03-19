@@ -1,12 +1,11 @@
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Drawing;
 using System.Numerics;
-using AICore.Behaviour.Group;
-using AICore.Behaviour.Util;
 using AICore.Entity.Contracts;
+using AICore.SteeringBehaviour.Group;
+using AICore.SteeringBehaviour.Util;
 
-namespace AICore.Behaviour.Aggregate
+namespace AICore.SteeringBehaviour.Aggregate
 {
     public class FlockingBehaviour : ISteeringBehaviour
     {

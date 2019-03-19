@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Numerics;
-using AICore.Behaviour.Individual;
-using AICore.Behaviour.Util;
 using AICore.Entity.Contracts;
+using AICore.SteeringBehaviour.Individual;
+using AICore.SteeringBehaviour.Util;
 
-namespace AICore.Behaviour.Aggregate
+namespace AICore.SteeringBehaviour.Aggregate
 {
     public class WanderWallAvoidanceBehaviour: ISteeringBehaviour
     {

@@ -5,9 +5,9 @@ using System.Windows.Forms;
 using AIBehaviours.Controls;
 using AIBehaviours.Utils;
 using AICore;
-using AICore.Behaviour.Individual;
 using AICore.Entity;
 using AICore.Entity.Contracts;
+using AICore.SteeringBehaviour.Individual;
 using AICore.Util;
 
 namespace AIBehaviours.Demos

@@ -4,9 +4,9 @@ using System.Numerics;
 using System.Windows.Forms;
 using AIBehaviours.Controls;
 using AICore;
-using AICore.Behaviour.Aggregate;
 using AICore.Entity;
 using AICore.Entity.Contracts;
+using AICore.SteeringBehaviour.Aggregate;
 using AICore.Util;
 
 namespace AIBehaviours.Demos

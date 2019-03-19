@@ -1,8 +1,7 @@
-﻿using System.Drawing;
-using System.Numerics;
+﻿using System.Numerics;
 using AICore.Entity.Contracts;
 
-namespace AICore.Behaviour
+namespace AICore.SteeringBehaviour
 {
     public interface ISteeringBehaviour : IRenderable
     {

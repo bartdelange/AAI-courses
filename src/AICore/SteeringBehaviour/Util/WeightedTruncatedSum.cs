@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Numerics;
 using AICore.Util;
 
-namespace AICore.Behaviour.Util
+namespace AICore.SteeringBehaviour.Util
 {
     public class WeightedTruncatedSum : ISteeringBehaviour
     {

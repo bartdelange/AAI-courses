@@ -2,7 +2,7 @@
 using System.Numerics;
 using AICore.Entity.Contracts;
 
-namespace AICore.Behaviour.Individual
+namespace AICore.SteeringBehaviour.Individual
 {
     public class PursuitBehaviour : ISteeringBehaviour
     {
