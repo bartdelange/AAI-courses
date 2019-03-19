@@ -7,6 +7,21 @@ using AICore.Util;
 
 namespace AICore.Behaviour.Util
 {
+    /// <summary>
+    /// Probability coefficient examples for steering behaviours
+    /// 
+    /// WallAvoidance             0.5
+    /// ObstacleAvoidance         0.5
+    /// Separation                0.2
+    /// Alignment                 0.3
+    /// Cohesion                  0.6
+    /// Wander                    0.8
+    /// Seek                      0.8
+    /// Flee                      0.6
+    /// Evade                     1.0
+    /// Hide                      0.8
+    /// Arrive                    0.5
+    /// </summary>
     public class PrioritizedDithering : ISteeringBehaviour
     {
         public bool Visible { get; set; } = true;
