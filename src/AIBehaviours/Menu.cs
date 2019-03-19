@@ -10,6 +10,7 @@ namespace AIBehaviours
             new MenuItem("Path following", typeof(PathFollowingDemo)),
             new MenuItem("Offset pursuit", typeof(OffsetPursuitDemo)),
             new MenuItem("Wall avoidance", typeof(WallAvoidanceDemo)),
+            new MenuItem("Obstacle avoidance", typeof(ObstacleAvoidanceDemo)),
         };
 
         public Menu()

@@ -63,13 +63,21 @@ namespace AICore.Entity
                 (Position + Velocity).ToPoint()
             );
 
+            graphics.FillEllipse(
+                new SolidBrush(Color.FromArgb(50, Color.Red)),
+                new Rectangle(
+                    (Position - new Vector2(BoundingRadius)).ToPoint(),
+                    new Size(BoundingRadius * 2, BoundingRadius * 2)
+                )
+            );
+
             graphics.DrawString(
                 $"{Velocity.ToString("##.##")}\n{Position.ToString("##.##")}",
                 SystemFonts.DefaultFont,
                 Brushes.Black,
                 Position.ToPoint()
             );
-            
+
             SteeringBehaviour?.Render(graphics);
         }
     }

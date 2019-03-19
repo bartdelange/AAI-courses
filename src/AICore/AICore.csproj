@@ -51,6 +51,8 @@
     <Compile Include="Behaviour\Individual\ArriveBehaviour.cs" />
     <Compile Include="Behaviour\Individual\EvadeBehaviour.cs" />
     <Compile Include="Behaviour\Individual\FleeBehaviour.cs" />
+    <Compile Include="Behaviour\Individual\ConstantSteeringBehaviour.cs" />
+    <Compile Include="Behaviour\Individual\ObstacleAvoidanceBehaviour.cs" />
     <Compile Include="Behaviour\Individual\OffsetPursuit.cs" />
     <Compile Include="Behaviour\Individual\PathFollowingBehaviour.cs" />
     <Compile Include="Behaviour\Individual\PursuitBehaviour.cs" />
