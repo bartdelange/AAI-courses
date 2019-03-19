@@ -77,6 +77,9 @@
     <Compile Include="Entity\MovingEntity.cs" />
     <Compile Include="Entity\Circle.cs" />
     <Compile Include="Entity\Vehicle.cs" />
+    <Compile Include="Exceptions\CannotFindPathException.cs" />
+    <Compile Include="Exceptions\GraphException.cs" />
+    <Compile Include="Exceptions\NoSuchElementException.cs" />
     <Compile Include="FuzzyLogic\FuzzyHedges\FzFairly.cs" />
     <Compile Include="FuzzyLogic\FuzzyHedges\FzVery.cs" />
     <Compile Include="FuzzyLogic\FuzzyHelper.cs" />

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using AICore.Graph;
+using AICore.Exceptions;
 
 namespace AICore.Util
 {

@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Numerics;
 using AICore.Entity.Contracts;
+using AICore.Exceptions;
 using AICore.Graph;
 using AICore.Graph.Heuristics;
 using AICore.Graph.PathFinding;

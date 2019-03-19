@@ -1,9 +1,5 @@
-#region
-
 using System.Collections.Generic;
 using AICore.Util;
-
-#endregion
 
 namespace AICore.FuzzyLogic
 {
@@ -48,7 +44,7 @@ namespace AICore.FuzzyLogic
             if (!_fuzzyVars.TryGetValue(key, out var flv))
                 throw new KeyNotFoundException("That FLV was not found in any set");
 
-            //clear the DOMs of all the consequents
+            //clear the DOMs of all the consequences
             SetConfidencesOfConsequentsToZero();
 
             //process the rules            

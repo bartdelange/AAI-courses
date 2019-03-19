@@ -1,6 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
+using AICore.Exceptions;
 using AICore.Graph.Heuristics;
 using AICore.Navigation;
 using AICore.Util;
@@ -95,9 +95,5 @@ namespace AICore.Graph.PathFinding
                 visitedVertices.Values
             );
         }
-    }
-
-    public class CannotFindPathException : Exception
-    {
     }
 }

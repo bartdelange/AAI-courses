@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AICore.Exceptions;
 using AICore.Graph.Heuristics;
 using AICore.Navigation;
 using AICore.Util;
@@ -257,7 +258,7 @@ namespace AICore.Graph
                 var vertex = vertexRecord.Destination;
 
                 vertex.Visited = true;
-                
+
                 foreach (var edge in vertex.AdjacentVertices)
                 {
                     var adjacentVertex = edge.Value.Destination;
@@ -271,14 +272,14 @@ namespace AICore.Graph
                     }
 
                     if (edgeCost < 0)
-                    {                        
+                    {
                         throw new GraphException("Graph has negative edges");
                     }
 
                     // Don't update the distance of to the adjacent vertex when the distance is higher
                     if (!(vertex.Distance + edgeCost < adjacentVertex.Distance))
                     {
-                        continue;                        
+                        continue;
                     }
 
                     adjacentVertex.Distance = vertex.Distance + edgeCost;
@@ -287,7 +288,7 @@ namespace AICore.Graph
                     priorityQueue.Enqueue(
                         new Path<T>(adjacentVertex, adjacentVertex.Distance + heuristics)
                     );
-                    
+
                     visitedVertices[adjacentVertex.Value] = adjacentVertex;
 
                     if (adjacentVertex.Value.Equals(targetValue))
@@ -318,19 +319,4 @@ namespace AICore.Graph
 
         #endregion
     }
-
-    #region Custom error classes
-
-    public class NoSuchElementException : Exception
-    {
-    }
-
-    public class GraphException : Exception
-    {
-        public GraphException(string message) : base(message)
-        {
-        }
-    }
-
-    #endregion
 }
