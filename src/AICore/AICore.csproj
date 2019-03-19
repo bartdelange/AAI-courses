@@ -43,6 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Behaviour\CrowdBehaviour.cs" />
+    <Compile Include="Behaviour\DefenderBehaviour.cs" />
+    <Compile Include="Behaviour\GoalKeeperBehaviour.cs" />
     <Compile Include="Behaviour\Goals\BaseGoal.cs" />
     <Compile Include="Behaviour\Goals\IGoal.cs" />
     <Compile Include="Behaviour\Goals\Think.cs" />
@@ -52,6 +55,8 @@
     <Compile Include="Behaviour\States\Hide.cs" />
     <Compile Include="Behaviour\States\IState.cs" />
     <Compile Include="Behaviour\States\Patrol.cs" />
+    <Compile Include="Behaviour\StrikerBehaviour.cs" />
+    <Compile Include="Entity\MovingEntityExtensionMethods.cs" />
     <Compile Include="SteeringBehaviour\Aggregate\FlockingBehaviour.cs" />
     <Compile Include="SteeringBehaviour\Aggregate\WanderWallAvoidanceBehaviour.cs" />
     <Compile Include="SteeringBehaviour\Group\AlignmentBehaviour.cs" />
