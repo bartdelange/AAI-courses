@@ -16,7 +16,7 @@ namespace AICore.FuzzyLogic
             var targetClose = distToTarget.AddLeftShoulderSet("TargetClose", 0, 25, 150);
             var targetMedium = distToTarget.AddTriangularSet("TargetMedium", 25, 150, 300);
             var targetFar = distToTarget.AddRightShoulderSet("TargetFar", 150, 300, 500);
-            
+
             var ammoStatus = fm.CreateFLV("AmmoStatus");
 
             var ammoLoads = ammoStatus.AddRightShoulderSet("AmmoLoads", 10, 30, 100);

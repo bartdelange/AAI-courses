@@ -18,28 +18,28 @@ namespace AICore.FuzzyLogic.FuzzySets
             _leftOffset = leftOffset;
             _rightOffset = rightOffset;
         }
-        
+
         public override double CalculateDOM(double val)
         {
             double grad;
 
             // Test for the case where the triangle's left or right offsets are zero
             // (to prevent divide by zero errors below)
-            if ((Math.Abs(_rightOffset) < 0.000000001 && Math.Abs(_peakPoint - val) < 0.000000001)
-                || (Math.Abs(_leftOffset) < 0.000000001 && Math.Abs(_peakPoint - val) < 0.000000001))
+            if (Math.Abs(_rightOffset) < 0.000000001 && Math.Abs(_peakPoint - val) < 0.000000001
+                || Math.Abs(_leftOffset) < 0.000000001 && Math.Abs(_peakPoint - val) < 0.000000001)
                 return 1.0;
 
             // Find DOM if left of center
             if (val <= _peakPoint && val >= _peakPoint - _leftOffset)
             {
-                grad = 1.0 / _leftOffset;
+                grad = 1.0d / _leftOffset;
                 return grad * (val - (_peakPoint - _leftOffset));
             }
 
             // Find DOM if right of center
             if (val > _peakPoint && val < _peakPoint + _rightOffset)
             {
-                grad = 1.0 / -_rightOffset;
+                grad = 1.0d / -_rightOffset;
                 return grad * (val - _peakPoint) + 1.0;
             }
 

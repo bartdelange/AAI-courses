@@ -20,5 +20,10 @@ namespace AICore.FuzzyLogic
         {
             _consequence.ORWithDOM(_antecedent.GetDOM());
         }
+
+        public override string ToString()
+        {
+            return $"{_antecedent.GetDOM()}, {_consequence.GetDOM()}";
+        }
     }
 }

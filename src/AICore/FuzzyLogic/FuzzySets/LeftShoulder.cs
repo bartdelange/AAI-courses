@@ -12,7 +12,8 @@ namespace AICore.FuzzyLogic.FuzzySets
         private readonly double _peakPoint;
         private readonly double _rightOffset;
 
-        public LeftShoulder(double leftOffset, double peak, double rightOffset) : base((peak + leftOffset + peak) / 2)
+        public LeftShoulder(double leftOffset, double peak, double rightOffset) : base(
+            (peak + leftOffset + peak) / 2.0d)
         {
             _peakPoint = peak;
             _leftOffset = leftOffset;
@@ -29,7 +30,7 @@ namespace AICore.FuzzyLogic.FuzzySets
 
             if (val >= _peakPoint && val < _peakPoint + _rightOffset)
             {
-                var grad = 1.0 / -_rightOffset;
+                var grad = 1.0d / -_rightOffset;
                 return grad * (val - _peakPoint) + 1.0;
             }
 

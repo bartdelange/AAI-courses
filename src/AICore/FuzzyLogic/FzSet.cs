@@ -1,4 +1,8 @@
+#region
+
 using AICore.FuzzyLogic.FuzzySets;
+
+#endregion
 
 namespace AICore.FuzzyLogic
 {
@@ -9,7 +13,7 @@ namespace AICore.FuzzyLogic
             fZ = fuzzySet;
         }
 
-        private FuzzySet fZ { get; set; }
+        private FuzzySet fZ { get; }
 
         public IFuzzyTerm Clone()
         {

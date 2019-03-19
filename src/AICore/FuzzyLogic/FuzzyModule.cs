@@ -1,7 +1,6 @@
 #region
 
 using System.Collections.Generic;
-using AICore.Graph;
 using AICore.Util;
 
 #endregion
@@ -38,7 +37,7 @@ namespace AICore.FuzzyLogic
         public void Fuzzify(string nameOfFlv, double val)
         {
             if (!_fuzzyVars.TryGetValue(nameOfFlv, out var fuzzyVar))
-                throw new NoSuchElementException("That FLV was not found in any set");
+                throw new KeyNotFoundException("That FLV was not found in any set");
 
             fuzzyVar.Fuzzify(val);
         }
@@ -47,7 +46,7 @@ namespace AICore.FuzzyLogic
         {
             //first make sure the named FLV exists in this module
             if (!_fuzzyVars.TryGetValue(key, out var flv))
-                throw new NoSuchElementException("That FLV was not found in any set");
+                throw new KeyNotFoundException("That FLV was not found in any set");
 
             //clear the DOMs of all the consequents
             SetConfidencesOfConsequentsToZero();

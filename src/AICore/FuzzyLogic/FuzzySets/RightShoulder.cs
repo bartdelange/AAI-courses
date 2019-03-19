@@ -12,7 +12,8 @@ namespace AICore.FuzzyLogic.FuzzySets
         private readonly double _peakPoint;
         private readonly double _rightOffset;
 
-        public RightShoulder(double leftOffset, double peak, double rightOffset) : base((peak + rightOffset + peak) / 2)
+        public RightShoulder(double leftOffset, double peak, double rightOffset) : base(
+            (peak + rightOffset + peak) / 2.0d)
         {
             _peakPoint = peak;
             _leftOffset = leftOffset;
@@ -30,7 +31,7 @@ namespace AICore.FuzzyLogic.FuzzySets
             //find DOM if left of center
             if (val <= _peakPoint && val > _peakPoint - _leftOffset)
             {
-                var grad = 1.0 / _leftOffset;
+                var grad = 1.0d / _leftOffset;
                 return grad * (val - (_peakPoint - _leftOffset));
             }
 

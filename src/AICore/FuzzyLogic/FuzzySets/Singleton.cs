@@ -12,7 +12,7 @@ namespace AICore.FuzzyLogic.FuzzySets
         private readonly double _peakPoint;
         private readonly double _rightOffset;
 
-        public Singleton(double leftOffset, double peak, double rightOffset) : base((peak + leftOffset + peak) / 2)
+        public Singleton(double leftOffset, double peak, double rightOffset) : base((peak + leftOffset + peak) / 2.0d)
         {
             _peakPoint = peak;
             _leftOffset = leftOffset;
