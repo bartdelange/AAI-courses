@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Numerics;
+using AICore.Entity;
 
 namespace AICore.SteeringBehaviour.Util
 {
@@ -50,7 +51,7 @@ namespace AICore.SteeringBehaviour.Util
         public void Render(Graphics graphics)
         {
             _weightedSteeringBehaviours.ForEach(
-                weightedSteeringBehaviour => weightedSteeringBehaviour.SteeringBehaviour.Render(graphics)
+                weightedSteeringBehaviour => weightedSteeringBehaviour.SteeringBehaviour.RenderIfVisible(graphics)
             );
         }
     }

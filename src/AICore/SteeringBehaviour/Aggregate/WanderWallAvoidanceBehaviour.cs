@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Numerics;
+using AICore.Entity;
 using AICore.Entity.Contracts;
 using AICore.SteeringBehaviour.Individual;
 using AICore.SteeringBehaviour.Util;
@@ -35,7 +36,7 @@ namespace AICore.SteeringBehaviour.Aggregate
 
         public void Render(Graphics graphics)
         {
-            _aggregateBehaviour.Render(graphics);
+            _aggregateBehaviour.RenderIfVisible(graphics);
         }
     }
 }

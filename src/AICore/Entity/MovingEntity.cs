@@ -10,7 +10,7 @@ namespace AICore.Entity
     {
         #region render properties
         
-        public bool Visible { get; set; } = true;
+        public bool Visible { get; set; }
         
         private readonly Brush _boundingCircleBrush = new SolidBrush(Color.FromArgb(50, Color.Red));
         
@@ -99,7 +99,7 @@ namespace AICore.Entity
             );
 
             // Render steering behaviour if it exists
-            SteeringBehaviour?.Render(graphics);
+            SteeringBehaviour?.RenderIfVisible(graphics);
         }
     }
 }

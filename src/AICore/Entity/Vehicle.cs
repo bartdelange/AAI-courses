@@ -7,7 +7,7 @@ namespace AICore.Entity
     public class Vehicle : MovingEntity
     {
         private readonly Pen _pen;
-
+        
         public Vehicle(Vector2 position, Vector2 bounds) : 
             this(position, bounds, new Pen(Color.DodgerBlue, 2))
         {
@@ -17,7 +17,6 @@ namespace AICore.Entity
         {
             _pen = pen;
         }
-
 
         public override void Render(Graphics g)
         {

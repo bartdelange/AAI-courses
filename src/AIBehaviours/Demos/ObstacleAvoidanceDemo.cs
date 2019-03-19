@@ -48,7 +48,7 @@ namespace AIBehaviours.Demos
 
         public void Render(Graphics graphics)
         {
-            _aggregateBehaviour.Render(graphics);
+            _aggregateBehaviour.RenderIfVisible(graphics);
 
             var sbv = "";
             _steeringBehaviours.ForEach(sb => sbv += $"{sb.SteeringBehaviour} > {sb.SteeringBehaviour.Calculate(1)}\n");

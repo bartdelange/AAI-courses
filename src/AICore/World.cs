@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Numerics;
+using AICore.Entity;
 using AICore.Entity.Contracts;
 using AICore.Navigation;
 
@@ -34,11 +35,11 @@ namespace AICore
 
         public void Render(Graphics graphics, bool graphIsVisible)
         {
-            NavigationLayer?.Render(graphics);
+            NavigationLayer?.RenderIfVisible(graphics);
             
-            Obstacles?.ForEach(obstacle => obstacle.Render(graphics));
-            Entities?.ForEach(entity => entity.Render(graphics));
-            Walls?.ForEach(wall => wall.Render(graphics));
+            Obstacles?.ForEach(obstacle => obstacle.RenderIfVisible(graphics));
+            Entities?.ForEach(entity => entity.RenderIfVisible(graphics));
+            Walls?.ForEach(wall => wall.RenderIfVisible(graphics));
         }
     }
 }
