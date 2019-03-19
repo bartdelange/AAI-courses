@@ -5,7 +5,7 @@ using AICore.Util;
 
 namespace AICore.Entity
 {
-    public class Circle : IObstacle
+    public class CircleObstacle : IObstacle
     {
         public bool Visible { get; set; } = true;
 
@@ -15,7 +15,7 @@ namespace AICore.Entity
         public const int MinRadius = 10;
         public const int MaxRadius = 100;
 
-        public Circle(Vector2 position, int radius)
+        public CircleObstacle(Vector2 position, int radius)
         {
             Position = position;
             BoundingRadius = radius;

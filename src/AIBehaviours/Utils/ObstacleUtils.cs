@@ -22,8 +22,8 @@ namespace AIBehaviours.Utils
             while (clutterRemaining > 0)
             {
                 // Create a random radius between Circle._MinRadius and (Circle._MaxRadius || Clutter remaining)
-                var maxRand = Math.Min(clutterRemaining, Circle.MaxRadius);
-                var obstacleRadius = random.Next(Circle.MinRadius, (int) Math.Max(maxRand, Circle.MinRadius));
+                var maxRand = Math.Min(clutterRemaining, CircleObstacle.MaxRadius);
+                var obstacleRadius = random.Next(CircleObstacle.MinRadius, (int) Math.Max(maxRand, CircleObstacle.MinRadius));
 
                 // Create a position while keeping the obs
                 var randomX = Math.Min(
@@ -38,7 +38,7 @@ namespace AIBehaviours.Utils
 
                 // Create new obstacle and subtract its size from the available clutter
                 obstacles.Add(
-                    new Circle(
+                    new CircleObstacle(
                         new Vector2(randomX, randomY),
                         obstacleRadius
                     )

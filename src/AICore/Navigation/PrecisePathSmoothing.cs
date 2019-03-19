@@ -32,7 +32,7 @@ namespace AICore.Navigation
                 var newVector = start;
                 var pathPossible = true;
 
-                const int stepDistance = Circle.MinRadius / 4;
+                const int stepDistance = CircleObstacle.MinRadius / 4;
                 const int margin = 10;
                 
                 for (var i = 0; i * stepDistance <= Vector2.Distance(start, target); i++)
