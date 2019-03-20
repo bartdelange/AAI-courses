@@ -23,10 +23,10 @@ namespace AICore.Entity
 
         public Wall(Vector2 startPosition, Vector2 endPosition)
         {
-            var width = startPosition - endPosition;
+            var width = (endPosition - startPosition);
 
 
-            Position = width - width / 2;
+            Position = (width / 2) + startPosition;
             Normal = Vector2.Normalize(width).Perpendicular();
 
             _startPosition = startPosition;
@@ -35,6 +35,19 @@ namespace AICore.Entity
 
         public void Render(Graphics graphics)
         {
+            // Draw normal
+            graphics.DrawLine(
+                Pens.Red,
+                Position.ToPoint(),
+                (Position + Normal * 25).ToPoint()
+            );
+
+            // Draw wall position
+            graphics.FillEllipse(
+                Brushes.Red,
+                new Rectangle((int) Position.X, (int) Position.Y, 5, 5)
+            );
+
             graphics.DrawLine(
                 _wallPen,
                 _startPosition.ToPoint(),

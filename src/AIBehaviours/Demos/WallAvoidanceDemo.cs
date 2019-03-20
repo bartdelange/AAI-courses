@@ -25,7 +25,7 @@ namespace AIBehaviours.Demos
 
             ClientSize = new Size(width, height);
 
-            
+
             var worldBounds = new Vector2(ClientSize.Width, ClientSize.Height);
             var world = new World(worldBounds);
 
@@ -40,11 +40,11 @@ namespace AIBehaviours.Demos
                     new Vector2(Width - wallMargin, Height - wallMargin)),
 
                 // Bottom border
-                new Wall(new Vector2(wallMargin, Height - wallMargin),
-                    new Vector2(Width - wallMargin, Height - wallMargin)),
+                new Wall(new Vector2(Width - wallMargin, Height - wallMargin),
+                    new Vector2(wallMargin, Height - wallMargin)),
 
                 // Left border
-                new Wall(new Vector2(wallMargin, wallMargin), new Vector2(wallMargin, Height - wallMargin)),
+                new Wall(new Vector2(wallMargin, Height - wallMargin), new Vector2(wallMargin, wallMargin)),
             };
 
             world.Walls = walls;

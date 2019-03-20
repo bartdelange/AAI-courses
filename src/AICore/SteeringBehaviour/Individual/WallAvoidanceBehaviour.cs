@@ -12,17 +12,18 @@ namespace AICore.SteeringBehaviour.Individual
     {
         public bool Visible { get; set; } = true;
 
-        private const float FeelerLength = 40;
+        private readonly float _feelerLength = 40;
 
         private readonly IMovingEntity _movingEntity;
         private readonly IEnumerable<IWall> _walls;
 
         private IEnumerable<Vector2> _feelers;
 
-        public WallAvoidanceBehaviour(IMovingEntity entity, IEnumerable<IWall> walls)
+        public WallAvoidanceBehaviour(IMovingEntity entity, IEnumerable<IWall> walls, float feelerLength = 40)
         {
             _movingEntity = entity;
             _walls = walls;
+            _feelerLength = feelerLength;
 
             _feelers = CreateFeelers();
         }
@@ -78,15 +79,14 @@ namespace AICore.SteeringBehaviour.Individual
         /// <returns></returns>
         private IEnumerable<Vector2> CreateFeelers()
         {
-            const float sideFeelerLength = FeelerLength / 2;
-
             var speed = _movingEntity.Velocity.Length();
-
+            
+            var sideFeelerLength = _feelerLength / 2;
             var feelers = new Vector2[3];
 
             // Forward pointing feeler
             feelers[0] = _movingEntity.Position +
-                         FeelerLength * _movingEntity.Heading * speed;
+                         _feelerLength * _movingEntity.Heading * speed;
 
             // Left pointing feeler
             feelers[1] = _movingEntity.Position +

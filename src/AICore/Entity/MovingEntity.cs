@@ -22,7 +22,7 @@ namespace AICore.Entity
 
         public float Mass { get; set; } = 20;
         
-        public int BoundingRadius { get; set; } = 15;
+        public int BoundingRadius { get; set; } = 10;
 
         #endregion
 

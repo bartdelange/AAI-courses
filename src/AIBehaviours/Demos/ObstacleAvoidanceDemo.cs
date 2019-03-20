@@ -27,7 +27,7 @@ namespace AIBehaviours.Demos
         {
             _entity = entity;
             var obstacleAvoidanceBehaviour = new ObstacleAvoidanceBehaviour(entity, obstacles, 50);
-            var constantSteeringBehaviour = new ConstantSteeringBehaviour(entity, new Vector2(50, 50));
+            var constantSteeringBehaviour = new ConstantSteeringBehaviour(new Vector2(0, 50));
 
             _steeringBehaviours = new List<WeightedSteeringBehaviour>
             {

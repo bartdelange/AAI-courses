@@ -11,18 +11,16 @@ namespace AICore.SteeringBehaviour.Individual
     {
         public bool Visible { get; set; }
 
-        private readonly IMovingEntity _movingEntity;
         private readonly Vector2 _direction;
 
-        public ConstantSteeringBehaviour(IMovingEntity movingEntity, Vector2 direction)
+        public ConstantSteeringBehaviour(Vector2 direction)
         {
-            _movingEntity = movingEntity;
             _direction = direction;
         }
 
         public Vector2 Calculate(float deltaTime)
         {
-            return _movingEntity.Position + _direction;
+            return _direction;
         }
 
         public void Render(Graphics graphics)
