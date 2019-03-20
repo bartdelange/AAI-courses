@@ -10,7 +10,7 @@ namespace AICore.Entity
     {
         #region render properties
         
-        public bool Visible { get; set; }
+        public bool Visible { get; set; } = true;
         
         private readonly Brush _boundingCircleBrush = new SolidBrush(Color.FromArgb(50, Color.Red));
         
