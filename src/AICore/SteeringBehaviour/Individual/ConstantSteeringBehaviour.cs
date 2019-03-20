@@ -1,5 +1,6 @@
 using System.Drawing;
 using System.Numerics;
+using AICore.Entity.Contracts;
 
 namespace AICore.SteeringBehaviour.Individual
 {
@@ -10,18 +11,20 @@ namespace AICore.SteeringBehaviour.Individual
     {
         public bool Visible { get; set; }
 
-        private readonly Vector2 _steeringForce;
+        private readonly IMovingEntity _movingEntity;
+        private readonly Vector2 _direction;
 
-        public ConstantSteeringBehaviour(Vector2 steeringForce)
+        public ConstantSteeringBehaviour(IMovingEntity movingEntity, Vector2 direction)
         {
-            _steeringForce = steeringForce;
+            _movingEntity = movingEntity;
+            _direction = direction;
         }
-        
+
         public Vector2 Calculate(float deltaTime)
         {
-            return _steeringForce;
+            return _movingEntity.Position + _direction;
         }
-        
+
         public void Render(Graphics graphics)
         {
         }

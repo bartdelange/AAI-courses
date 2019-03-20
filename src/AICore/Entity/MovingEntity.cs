@@ -18,11 +18,11 @@ namespace AICore.Entity
 
         #region entity properties
         
-        public float MaxSpeed { get; set; } = 100;
+        public float MaxSpeed { get; set; } = 150;
 
         public float Mass { get; set; } = 20;
         
-        public int BoundingRadius { get; set; } = 150;
+        public int BoundingRadius { get; set; } = 15;
 
         #endregion
 

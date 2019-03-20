@@ -22,8 +22,8 @@ namespace AICore.SteeringBehaviour.Aggregate
             _aggregateBehaviour = new WeightedTruncatedRunningSumWithPrioritization(
                 new List<WeightedSteeringBehaviour>
                 {
-                    new WeightedSteeringBehaviour(wallAvoidanceBehaviour, .5f),
-                    new WeightedSteeringBehaviour(wanderBehaviour, .5f)
+                    new WeightedSteeringBehaviour(wallAvoidanceBehaviour, 10f),
+                    new WeightedSteeringBehaviour(wanderBehaviour, 1f)
                 },
                 entity.MaxSpeed
             );

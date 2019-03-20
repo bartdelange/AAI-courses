@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Numerics;
 using AICore.Entity.Contracts;
 using AICore.Util;
@@ -11,8 +12,7 @@ namespace AICore.SteeringBehaviour.Individual
     {
         public bool Visible { get; set; } = true;
 
-        private const float FeelerLength = 50;
-        private const float HalfPi = (float) (Math.PI / 2);
+        private const float FeelerLength = 40;
 
         private readonly IMovingEntity _movingEntity;
         private readonly IEnumerable<IWall> _walls;
@@ -23,7 +23,7 @@ namespace AICore.SteeringBehaviour.Individual
         {
             _movingEntity = entity;
             _walls = walls;
-            
+
             _feelers = CreateFeelers();
         }
 
@@ -34,6 +34,7 @@ namespace AICore.SteeringBehaviour.Individual
             IWall closestWall = null;
             double? closestDistance = null;
             Vector2? closestPoint = null;
+            Vector2? intersectingFeeler = null;
 
             foreach (var feeler in _feelers)
             {
@@ -53,17 +54,18 @@ namespace AICore.SteeringBehaviour.Individual
                     if (distance >= closestDistance) continue;
 
                     closestDistance = distance;
+                    intersectingFeeler = feeler;
                     closestPoint = intersectPoint;
                     closestWall = wall;
                 }
             }
 
-            if (closestWall == null || closestPoint == null)
+            if (closestWall == null || closestPoint == null || intersectingFeeler == null)
             {
                 return Vector2.Zero;
             }
 
-            var overShoot = (Vector2) (_movingEntity.Position - closestPoint);
+            var overShoot = (Vector2) (intersectingFeeler - closestPoint);
 
             //create a force in the direction of the wall normal, with a 
             //magnitude of the overshoot
@@ -76,21 +78,23 @@ namespace AICore.SteeringBehaviour.Individual
         /// <returns></returns>
         private IEnumerable<Vector2> CreateFeelers()
         {
-            const float sideFeelerLength = FeelerLength / 2.0f;
+            const float sideFeelerLength = FeelerLength / 2;
+
+            var speed = _movingEntity.Velocity.Length();
 
             var feelers = new Vector2[3];
 
             // Forward pointing feeler
             feelers[0] = _movingEntity.Position +
-                         (FeelerLength * _movingEntity.Heading * _movingEntity.Velocity.Length());
+                         FeelerLength * _movingEntity.Heading * speed;
 
             // Left pointing feeler
             feelers[1] = _movingEntity.Position +
-                         (sideFeelerLength * _movingEntity.Heading.RotateAroundOrigin(HalfPi * 3.5f));
+                         sideFeelerLength * _movingEntity.Heading.RotateAroundOrigin(35) * speed;
 
             // Right pointing feeler
             feelers[2] = _movingEntity.Position +
-                         (sideFeelerLength * _movingEntity.Heading.RotateAroundOrigin(HalfPi * .5f));
+                         sideFeelerLength * _movingEntity.Heading.RotateAroundOrigin(-35) * speed;
 
             return feelers;
         }

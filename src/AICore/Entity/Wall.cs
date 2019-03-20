@@ -23,7 +23,7 @@ namespace AICore.Entity
 
         public Wall(Vector2 startPosition, Vector2 endPosition)
         {
-            var width = endPosition - startPosition;
+            var width = startPosition - endPosition;
 
 
             Position = width - width / 2;
