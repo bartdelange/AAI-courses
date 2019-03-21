@@ -77,6 +77,7 @@
     <Compile Include="SteeringBehaviour\Individual\WallAvoidanceBehaviour.cs" />
     <Compile Include="SteeringBehaviour\Individual\WanderBehaviour.cs" />
     <Compile Include="SteeringBehaviour\ISteeringBehaviour.cs" />
+    <Compile Include="SteeringBehaviour\Util\HeadingSmoother.cs" />
     <Compile Include="SteeringBehaviour\Util\PrioritizedDithering.cs" />
     <Compile Include="SteeringBehaviour\Util\WeightedTruncatedRunningSumWithPrioritization.cs" />
     <Compile Include="SteeringBehaviour\Util\WeightedTruncatedSum.cs" />

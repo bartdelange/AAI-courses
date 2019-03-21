@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using System.Numerics;
+using AICore.Entity;
 using AICore.Entity.Contracts;
 
 namespace AICore.SteeringBehaviour.Individual

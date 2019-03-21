@@ -1,14 +1,15 @@
 using System.Numerics;
+using AICore.Entity.Contracts;
 using AICore.Util;
 
-namespace AICore.Entity.Contracts
+namespace AICore.Entity
 {
     public static class MovingEntityExtensionMethods
     {
         public static Vector2 GetPointToWorldSpace(this IMovingEntity movingEntity, Vector2 localSpaceTarget)
         {
             var matrix = new Matrix3()
-                .Rotate(movingEntity.Heading, movingEntity.Side)
+                .Rotate(movingEntity.Heading, movingEntity.Heading.Perpendicular())
                 .Translate(movingEntity.Position);
 
             // Transform the vector to world space
@@ -17,13 +18,15 @@ namespace AICore.Entity.Contracts
 
         public static Vector2 GetPointToLocalSpace(this IMovingEntity movingEntity, Vector2 worldSpaceTarget)
         {
+            var side = movingEntity.Heading.Perpendicular();
+
             // Create a transformation matrix
             var tx = -Vector2.Dot(movingEntity.Heading, movingEntity.Position);
-            var ty = -Vector2.Dot(movingEntity.Side, movingEntity.Position);
+            var ty = -Vector2.Dot(side, movingEntity.Position);
 
             var transformationMatrix = new Matrix3(
-                movingEntity.Heading.X, movingEntity.Side.X, tx,
-                movingEntity.Heading.Y, movingEntity.Side.Y, ty,
+                movingEntity.Heading.X, side.X, tx,
+                movingEntity.Heading.Y, side.Y, ty,
                 0, 0, 0
             );
 
@@ -39,7 +42,7 @@ namespace AICore.Entity.Contracts
         public static Vector2 VectorToWorldSpace(this IMovingEntity movingEntity, Vector2 localVector)
         {
             var transformationMatrix = new Matrix3()
-                .Rotate(movingEntity.Heading, movingEntity.Side);
+                .Rotate(movingEntity.Heading, movingEntity.Heading.Perpendicular());
 
             return localVector.ApplyMatrix(transformationMatrix);
         }

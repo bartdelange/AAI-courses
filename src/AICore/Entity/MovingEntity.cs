@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Numerics;
 using AICore.Entity.Contracts;
 using AICore.SteeringBehaviour;
+using AICore.SteeringBehaviour.Util;
 using AICore.Util;
 
 namespace AICore.Entity
@@ -37,12 +39,14 @@ namespace AICore.Entity
         #endregion
 
         public Vector2 Position { get; set; }
-        public Vector2 Velocity { get; set; } = new Vector2(1, 1);
-        public Vector2 Heading { get; set; } = new Vector2(1, 1);
-        public Vector2 Side { get; set; } = new Vector2(1, 1);
+        public Vector2 Velocity { get; set; } = Vector2.One;
+        public Vector2 Heading { get; set; } = Vector2.One;
+        public Vector2 SmoothHeading { get; set; } = Vector2.One;
 
         //
         private Vector2 WorldBounds { get; }
+        
+        private HeadingSmoother _headingSmoother;
 
         /// <summary>
         /// Base class that is used to create entities that can interact with the world
@@ -54,6 +58,8 @@ namespace AICore.Entity
         {
             Position = position;
             WorldBounds = bounds;
+
+            _headingSmoother = new HeadingSmoother(this, 15);
         }
 
         /// <summary>
@@ -70,7 +76,8 @@ namespace AICore.Entity
             if (Velocity.LengthSquared() > 0.000000001)
             {
                 Heading = Vector2.Normalize(Velocity);
-                Side = Heading.Perpendicular();
+                
+                _headingSmoother.Update();
             }
 
             if (Middlewares != null)
@@ -79,7 +86,7 @@ namespace AICore.Entity
                 foreach (var middleware in Middlewares)
                     middleware.Update();
             }
-
+            
             Position = Position.WrapToBounds(WorldBounds);
         }
 
@@ -89,14 +96,14 @@ namespace AICore.Entity
         /// <param name="graphics"></param>
         public virtual void Render(Graphics graphics)
         {
-            if (!Config.Debug) return;
-            
-            // visualize the instance position
+            // visualize the velocity
             graphics.DrawLine(
                 Pens.Red,
                 Position.ToPoint(),
-                (Position + Velocity).ToPoint()
+                (Position + (Velocity * 10)).ToPoint()
             );
+
+            if (!Config.Debug) return;
 
             // visualize the bounding circle
             graphics.FillEllipse(

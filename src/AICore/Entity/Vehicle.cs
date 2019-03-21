@@ -7,8 +7,8 @@ namespace AICore.Entity
     public class Vehicle : MovingEntity
     {
         private readonly Pen _pen;
-        
-        public Vehicle(Vector2 position, Vector2 bounds) : 
+
+        public Vehicle(Vector2 position, Vector2 bounds) :
             this(position, bounds, new Pen(Color.DodgerBlue, 2))
         {
         }
@@ -27,7 +27,7 @@ namespace AICore.Entity
             var p2 = new Vector2(-8, -5);
 
             var matrix = new Matrix3()
-                .Rotate(Heading, Side)
+                .Rotate(SmoothHeading, SmoothHeading.Perpendicular())
                 .Translate(Position);
 
             // Transform the vector to world space and create points that define polygon.	

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Numerics;
+using AICore.Entity;
 using AICore.Entity.Contracts;
 using AICore.Util;
 

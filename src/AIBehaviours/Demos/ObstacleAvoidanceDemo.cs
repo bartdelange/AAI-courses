@@ -28,11 +28,11 @@ namespace AIBehaviours.Demos
         {
             _entity = entity;
             var obstacleAvoidanceBehaviour = new ObstacleAvoidanceBehaviour(entity, obstacles, 40);
-            var wanderBehaviour = new WanderBehaviour(entity);
+            var wanderBehaviour = new WanderBehaviour(entity, 50, 25, 25);
 
             _steeringBehaviours = new List<WeightedSteeringBehaviour>
             {
-                new WeightedSteeringBehaviour(obstacleAvoidanceBehaviour, 10f),
+                new WeightedSteeringBehaviour(obstacleAvoidanceBehaviour, 5f),
                 new WeightedSteeringBehaviour(wanderBehaviour, 1f)
             };
 
@@ -69,16 +69,19 @@ namespace AIBehaviours.Demos
 
             ClientSize = new Size(width, height);
 
-
             var worldBounds = new Vector2(ClientSize.Width, ClientSize.Height);
-            _world = new World(worldBounds);
 
-            _world.Obstacles = EntityUtils.CreateObstacles(worldBounds, 500);
+            _world = new World(worldBounds)
+            {
+                Obstacles = EntityUtils.CreateObstacles(worldBounds, 500)
+            };
+
 
             var entities = EntityUtils.CreateVehicles(
                 50,
                 worldBounds,
-                entity => entity.SteeringBehaviour = new WanderObstacleAvoidanceBehaviour(entity, _world.Obstacles));
+                entity => entity.SteeringBehaviour = new WanderObstacleAvoidanceBehaviour(entity, _world.Obstacles)
+            );
 
             // Populate world instance
             _world.Entities = entities;

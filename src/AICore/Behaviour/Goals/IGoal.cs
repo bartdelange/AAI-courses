@@ -1,6 +1,6 @@
 ﻿using AICore.Entity;
 
-namespace AICore.Goals
+namespace AICore.Behaviour.Goals
 {
     public interface IGoal
     {

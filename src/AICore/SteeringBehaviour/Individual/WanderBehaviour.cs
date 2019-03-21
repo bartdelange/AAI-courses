@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Numerics;
+using AICore.Entity;
 using AICore.Entity.Contracts;
 
 namespace AICore.SteeringBehaviour.Individual
@@ -22,8 +23,8 @@ namespace AICore.SteeringBehaviour.Individual
         public WanderBehaviour(
             IMovingEntity movingEntity,
             float wanderDistance = 50,
-            float wanderRadius = 25,
-            float wanderJitter = 5
+            float wanderRadius = 50,
+            float wanderJitter = 15
         )
         {
             _movingEntity = movingEntity;

@@ -11,6 +11,7 @@ using AICore.Entity.Contracts;
 using AICore.Graph.PathFinding;
 using AICore.Navigation;
 using AICore.SteeringBehaviour.Individual;
+using AICore.SteeringBehaviour.Util;
 
 namespace AIBehaviours.Demos
 {
@@ -30,8 +31,10 @@ namespace AIBehaviours.Demos
             // Create new world instance
             _world = new World(worldBounds);
 
+            var entity = new Vehicle(new Vector2(50, 50), worldBounds);
+
             // Populate world
-            _world.Entities = new List<IMovingEntity> { new Vehicle(new Vector2(50, 50), worldBounds) };
+            _world.Entities = new List<IMovingEntity> { entity };
             _world.Obstacles = EntityUtils.CreateObstacles(worldBounds, 500);
 
             // Create navigation layer

@@ -1,7 +1,7 @@
 ﻿using System;
 using AICore.Entity;
 
-namespace AICore.Goals
+namespace AICore.Behaviour.Goals
 {
     public class Think : BaseGoal
     {

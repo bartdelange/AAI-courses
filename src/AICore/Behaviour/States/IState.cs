@@ -1,4 +1,4 @@
-﻿namespace AICore.States
+﻿namespace AICore.Behaviour.States
 {
     public interface IState<T>
     {

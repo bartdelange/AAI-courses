@@ -12,7 +12,7 @@ namespace AICore.Entity.Contracts
 
         Vector2 Velocity { get; set; }
         Vector2 Heading { get; set; }
-        Vector2 Side { get; set; }
+        Vector2 SmoothHeading { get; set; }
 
         float MaxSpeed { get; set; }
         float Mass { get; set; }

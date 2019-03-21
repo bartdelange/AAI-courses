@@ -1,7 +1,7 @@
 ﻿using System;
 using AICore.Entity;
 
-namespace AICore.States
+namespace AICore.Behaviour.States
 {
     public class Patrol : IState<Coward>
     {

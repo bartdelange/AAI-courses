@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using AICore.Entity;
 
-namespace AICore.Goals
+namespace AICore.Behaviour.Goals
 {
     public abstract class BaseGoal : IGoal
     {
