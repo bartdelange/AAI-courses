@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Numerics;
 using AICore.Entity;
 using AICore.Entity.Contracts;
+using AICore.Util;
 
 namespace AIBehaviours.Utils
 {
-    public static class ObstacleUtils
+    public static class EntityUtils
     {
         public static List<IObstacle> CreateObstacles(Vector2 worldBounds, int clutter)
         {
@@ -23,7 +24,8 @@ namespace AIBehaviours.Utils
             {
                 // Create a random radius between Circle._MinRadius and (Circle._MaxRadius || Clutter remaining)
                 var maxRand = Math.Min(clutterRemaining, CircleObstacle.MaxRadius);
-                var obstacleRadius = random.Next(CircleObstacle.MinRadius, (int) Math.Max(maxRand, CircleObstacle.MinRadius));
+                var obstacleRadius = random.Next(CircleObstacle.MinRadius,
+                    (int) Math.Max(maxRand, CircleObstacle.MinRadius));
 
                 // Create a position while keeping the obs
                 var randomX = Math.Min(
@@ -49,6 +51,23 @@ namespace AIBehaviours.Utils
             }
 
             return obstacles;
+        }
+
+        public static List<IMovingEntity> CreateVehicles(int count, Vector2 worldBounds, Action<Vehicle> createEntityMiddleware)
+        {
+            var vehicles = new List<IMovingEntity>();
+
+            for (var i = 0; i < count; i++)
+            {
+                var entity = new Vehicle(Vector2ExtensionMethods.GetRandom(worldBounds), worldBounds);
+                
+                // Apply middleware when argument is given
+                createEntityMiddleware?.Invoke(entity);
+
+                vehicles.Add(entity);
+            }
+
+            return vehicles;
         }
     }
 }

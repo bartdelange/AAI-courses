@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Numerics;
 using AICore.Entity.Contracts;
@@ -9,30 +11,36 @@ namespace AICore.Entity
     public abstract class MovingEntity : IMovingEntity
     {
         #region render properties
-        
+
         public bool Visible { get; set; } = true;
-        
+
         private readonly Brush _boundingCircleBrush = new SolidBrush(Color.FromArgb(50, Color.Red));
-        
+
         #endregion
 
         #region entity properties
-        
+
         public float MaxSpeed { get; set; } = 150;
 
         public float Mass { get; set; } = 20;
-        
+
         public int BoundingRadius { get; set; } = 10;
 
         #endregion
 
+        #region behaviour properties
+
         public ISteeringBehaviour SteeringBehaviour { set; get; }
-               
+
+        public IEnumerable<IMiddleware> Middlewares { get; set; }
+
+        #endregion
+
         public Vector2 Position { get; set; }
         public Vector2 Velocity { get; set; } = new Vector2(1, 1);
         public Vector2 Heading { get; set; } = new Vector2(1, 1);
         public Vector2 Side { get; set; } = new Vector2(1, 1);
-        
+
         //
         private Vector2 WorldBounds { get; }
 
@@ -65,6 +73,13 @@ namespace AICore.Entity
                 Side = Heading.Perpendicular();
             }
 
+            if (Middlewares != null)
+            {
+                // Apply middleware after steering force was applied
+                foreach (var middleware in Middlewares)
+                    middleware.Update();
+            }
+
             Position = Position.WrapToBounds(WorldBounds);
         }
 
@@ -74,6 +89,8 @@ namespace AICore.Entity
         /// <param name="graphics"></param>
         public virtual void Render(Graphics graphics)
         {
+            if (!Config.Debug) return;
+            
             // visualize the instance position
             graphics.DrawLine(
                 Pens.Red,

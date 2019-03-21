@@ -1,21 +1,20 @@
 using System.Collections.Generic;
-using AICore.Entity;
 using AICore.Entity.Contracts;
 
 namespace AICore.SteeringBehaviour.Util
 {
-    public class ZeroOverlap<T> where T : IEntity
+    public class ZeroOverlap : IMiddleware
     {
-        private readonly MovingEntity _movingEntity;
-        private readonly IEnumerable<T> _other;
+        private readonly IMovingEntity _movingEntity;
+        private readonly IEnumerable<IEntity> _other;
 
-        public ZeroOverlap(MovingEntity movingEntity, IEnumerable<T> other)
+        public ZeroOverlap(IMovingEntity movingEntity, IEnumerable<IEntity> other)
         {
             _movingEntity = movingEntity;
             _other = other;
         }
 
-        public void CheckOverlap()
+        public void Update()
         {
             foreach (var entity in _other)
             {
@@ -37,8 +36,8 @@ namespace AICore.SteeringBehaviour.Util
                     continue;
                 }
 
-                // Ensure MovingEntity won't overlap any other entity
-                _movingEntity.Position = _movingEntity.Position + ((toEntity / distanceToEntity) * overlapAmount);
+                // Ensure that entity won't overlap any other entity
+                _movingEntity.Position = _movingEntity.Position + (toEntity / distanceToEntity * overlapAmount);
             }
         }
     }

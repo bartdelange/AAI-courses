@@ -32,7 +32,7 @@ namespace AIBehaviours.Demos
 
             // Populate world
             _world.Entities = new List<IMovingEntity> { new Vehicle(new Vector2(50, 50), worldBounds) };
-            _world.Obstacles = ObstacleUtils.CreateObstacles(worldBounds, 500);
+            _world.Obstacles = EntityUtils.CreateObstacles(worldBounds, 500);
 
             // Create navigation layer
             _world.NavigationLayer = new NavigationLayer(

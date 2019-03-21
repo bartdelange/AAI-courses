@@ -33,28 +33,6 @@ namespace AICore.Entity
             _endPosition = endPosition;
         }
 
-        public void Render(Graphics graphics)
-        {
-            // Draw normal
-            graphics.DrawLine(
-                Pens.Red,
-                Position.ToPoint(),
-                (Position + Normal * 25).ToPoint()
-            );
-
-            // Draw wall position
-            graphics.FillEllipse(
-                Brushes.Red,
-                new Rectangle((int) Position.X, (int) Position.Y, 5, 5)
-            );
-
-            graphics.DrawLine(
-                _wallPen,
-                _startPosition.ToPoint(),
-                _endPosition.ToPoint()
-            );
-        }
-
         /// <summary>
         /// Checks whether the given line intersects with the wall. when it does the distance and intersectPoint refs are updated
         /// 
@@ -133,6 +111,35 @@ namespace AICore.Entity
 
             // If true lines intersect
             return (r > 0) && (r < 1) && (s > 0) && (s < 1);
+        }
+
+        /// <summary>
+        /// Draws the wall as a line
+        /// </summary>
+        /// <param name="graphics"></param>
+        public void Render(Graphics graphics)
+        {
+            if (Config.Debug)
+            {
+                // Draw normal
+                graphics.DrawLine(
+                    Pens.Red,
+                    Position.ToPoint(),
+                    (Position + Normal * 25).ToPoint()
+                );
+
+                // Draw wall position
+                graphics.FillEllipse(
+                    Brushes.Red,
+                    new Rectangle((int) Position.X, (int) Position.Y, 5, 5)
+                );
+            }
+
+            graphics.DrawLine(
+                _wallPen,
+                _startPosition.ToPoint(),
+                _endPosition.ToPoint()
+            );
         }
     }
 }

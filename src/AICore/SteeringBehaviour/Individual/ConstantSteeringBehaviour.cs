@@ -9,7 +9,7 @@ namespace AICore.SteeringBehaviour.Individual
     /// </summary>
     public class ConstantSteeringBehaviour : ISteeringBehaviour
     {
-        public bool Visible { get; set; }
+        public bool Visible { get; set; } = true;
 
         private readonly Vector2 _direction;
 

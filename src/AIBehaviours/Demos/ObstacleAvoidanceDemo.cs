@@ -80,7 +80,7 @@ namespace AIBehaviours.Demos
             var worldBounds = new Vector2(ClientSize.Width, ClientSize.Height);
             var world = new World(worldBounds);
 
-            world.Obstacles = ObstacleUtils.CreateObstacles(worldBounds, 1000);
+            world.Obstacles = EntityUtils.CreateObstacles(worldBounds, 1000);
 
             var entities = new List<IMovingEntity>
             {

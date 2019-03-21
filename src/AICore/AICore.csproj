@@ -56,7 +56,10 @@
     <Compile Include="Behaviour\States\IState.cs" />
     <Compile Include="Behaviour\States\Patrol.cs" />
     <Compile Include="Behaviour\StrikerBehaviour.cs" />
+    <Compile Include="Config.cs" />
+    <Compile Include="Entity\Contracts\IMiddleware.cs" />
     <Compile Include="Entity\MovingEntityExtensionMethods.cs" />
+    <Compile Include="Enum\EnvironmentVariableName.cs" />
     <Compile Include="SteeringBehaviour\Aggregate\FlockingBehaviour.cs" />
     <Compile Include="SteeringBehaviour\Aggregate\WanderWallAvoidanceBehaviour.cs" />
     <Compile Include="SteeringBehaviour\Group\AlignmentBehaviour.cs" />

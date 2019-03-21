@@ -6,7 +6,7 @@ namespace AICore.SteeringBehaviour.Individual
 {
     public class EvadeBehaviour : ISteeringBehaviour
     {
-        public bool Visible { get; set; }
+        public bool Visible { get; set; } = true;
 
         private const double ThreatRange = 100.0;
 

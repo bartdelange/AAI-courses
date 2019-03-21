@@ -6,7 +6,7 @@ namespace AICore.SteeringBehaviour.Individual
 {
     public class OffsetPursuit : ISteeringBehaviour
     {
-        public bool Visible { get; set; }
+        public bool Visible { get; set; } = true;
 
         private readonly IMovingEntity _leader;
         private readonly IMovingEntity _movingEntity;

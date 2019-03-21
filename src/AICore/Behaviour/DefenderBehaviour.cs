@@ -17,13 +17,13 @@ namespace AICore.Behaviour
     /// </summary>
     public class DefenderBehaviour : ISteeringBehaviour
     {
-        public bool Visible { get; set; }
-        
+        public bool Visible { get; set; } = true;
+
         public Vector2 Calculate(float deltaTime)
         {
             return Vector2.Zero;
         }
-        
+
         public void Render(Graphics graphics)
         {
         }

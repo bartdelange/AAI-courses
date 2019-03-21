@@ -8,7 +8,7 @@ using AICore.SteeringBehaviour.Util;
 
 namespace AICore.SteeringBehaviour.Aggregate
 {
-    public class WanderWallAvoidanceBehaviour: ISteeringBehaviour
+    public class WanderWallAvoidanceBehaviour : ISteeringBehaviour
     {
         public bool Visible { get; set; } = true;
 

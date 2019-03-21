@@ -19,7 +19,7 @@ namespace AICore.SteeringBehaviour.Individual
 
         private IEnumerable<Vector2> _feelers;
 
-        public WallAvoidanceBehaviour(IMovingEntity entity, IEnumerable<IWall> walls, float feelerLength = 40)
+        public WallAvoidanceBehaviour(IMovingEntity entity, IEnumerable<IWall> walls, float feelerLength = 20)
         {
             _movingEntity = entity;
             _walls = walls;

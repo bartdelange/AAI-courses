@@ -8,7 +8,7 @@ namespace AICore.SteeringBehaviour.Individual
 {
     public class PathFollowingBehaviour : ISteeringBehaviour
     {
-        public bool Visible { get; set; }
+        public bool Visible { get; set; } = true;
 
         /// <summary>
         /// Determines how close an agent must be to a waypoint before it seeks the next waypoint

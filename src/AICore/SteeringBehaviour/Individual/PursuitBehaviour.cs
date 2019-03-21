@@ -6,7 +6,7 @@ namespace AICore.SteeringBehaviour.Individual
 {
     public class PursuitBehaviour : ISteeringBehaviour
     {
-        public bool Visible { get; set; }
+        public bool Visible { get; set; } = true;
 
         private readonly IMovingEntity _movingEntity;
         private readonly IMovingEntity _target;

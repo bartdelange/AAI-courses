@@ -7,7 +7,7 @@ namespace AICore.SteeringBehaviour.Individual
 {
     public class ArriveBehaviour : ISteeringBehaviour
     {
-        public bool Visible { get; set; }
+        public bool Visible { get; set; } = true;
 
         private const double DecelerationSpeed = 1;
         private const double DecelerationTweaker = 0.3;
