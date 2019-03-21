@@ -18,8 +18,8 @@ namespace AICore.Entity.Contracts
         public static Vector2 GetPointToLocalSpace(this IMovingEntity movingEntity, Vector2 worldSpaceTarget)
         {
             // Create a transformation matrix
-            var tx = -Vector2.Dot(movingEntity.Position, movingEntity.Heading);
-            var ty = -Vector2.Dot(movingEntity.Position, movingEntity.Side);
+            var tx = -Vector2.Dot(movingEntity.Heading, movingEntity.Position);
+            var ty = -Vector2.Dot(movingEntity.Side, movingEntity.Position);
 
             var transformationMatrix = new Matrix3(
                 movingEntity.Heading.X, movingEntity.Side.X, tx,
@@ -28,6 +28,20 @@ namespace AICore.Entity.Contracts
             );
 
             return worldSpaceTarget.ApplyMatrix(transformationMatrix);
+        }
+
+        /// <summary>
+        /// Transforms a vector from the agent's local space into world space 
+        /// </summary>
+        /// <param name="movingEntity"></param>
+        /// <param name="localVector"></param>
+        /// <returns></returns>
+        public static Vector2 VectorToWorldSpace(this IMovingEntity movingEntity, Vector2 localVector)
+        {
+            var transformationMatrix = new Matrix3()
+                .Rotate(movingEntity.Heading, movingEntity.Side);
+
+            return localVector.ApplyMatrix(transformationMatrix);
         }
     }
 }

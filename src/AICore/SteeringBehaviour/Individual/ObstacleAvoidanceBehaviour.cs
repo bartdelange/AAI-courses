@@ -16,8 +16,9 @@ namespace AICore.SteeringBehaviour.Individual
 
         // Render properties
         private readonly float _detectionBoxLength;
-        private readonly Pen _detectionBoxPen = Pens.Black;
-        private Vector2 _behaviourTarget;
+
+        // Debug property
+        private Vector2 _targetPosition;
 
         public ObstacleAvoidanceBehaviour(
             IMovingEntity movingEntity,
@@ -33,12 +34,12 @@ namespace AICore.SteeringBehaviour.Individual
         public Vector2 Calculate(float deltaTime)
         {
             var currentSpeed = _movingEntity.Velocity.Length();
-            var boxLength = _detectionBoxLength + (currentSpeed / currentSpeed) * _detectionBoxLength;
+            var boxLength = _detectionBoxLength + (currentSpeed / _movingEntity.MaxSpeed) * _detectionBoxLength;
 
-            IObstacle closestIntersectingObstacle = null;
+            IObstacle closestObstacle = null;
 
-            var closestIntersectingObstacleLocalPosition = Vector2.Zero;
-            var closestIntersectingPoint = double.MaxValue;
+            var closestObstacleLocalPosition = Vector2.Zero;
+            var closestPoint = double.MaxValue;
 
             // Find closest intersecting obstacle
             foreach (var obstacle in _obstacles)
@@ -89,47 +90,49 @@ namespace AICore.SteeringBehaviour.Individual
                 }
 
                 // Test to see if this is the closest so far. If it is keep a record of the obstacle and its local coordinates
-                if (intersectionPoint >= closestIntersectingPoint)
+                if (intersectionPoint >= closestPoint)
                 {
                     continue;
                 }
 
-                closestIntersectingPoint = intersectionPoint;
-                closestIntersectingObstacle = obstacle;
-                closestIntersectingObstacleLocalPosition = localPosition;
+                closestPoint = intersectionPoint;
+                closestObstacle = obstacle;
+                closestObstacleLocalPosition = localPosition;
             }
 
-            if (closestIntersectingObstacle == null)
+            if (closestObstacle == null)
             {
-                return Vector2.Zero;
+                _targetPosition = Vector2.Zero;
+                return _targetPosition;
             }
+
+
+            // The closer the agent is to an object, the stronger the steering force should be
+            var multiplier = 1.0f + (_detectionBoxLength - closestObstacleLocalPosition.X) /
+                             _detectionBoxLength;
 
             const float brakingWeight = 0.2f;
 
-            // The closer the agent is to an object, the stronger the steering force should be
-            var multiplier = 1.0f + (_detectionBoxLength - closestIntersectingObstacleLocalPosition.X) /
-                             _detectionBoxLength;
-
             var steeringForce = new Vector2(
-                (closestIntersectingObstacle.BoundingRadius - closestIntersectingObstacleLocalPosition.X) *
-                brakingWeight,
-                (closestIntersectingObstacle.BoundingRadius - closestIntersectingObstacleLocalPosition.Y) *
-                multiplier
+                (closestObstacle.BoundingRadius - closestObstacleLocalPosition.X) * brakingWeight,
+                (closestObstacle.BoundingRadius - closestObstacleLocalPosition.Y) * multiplier
             );
 
-            _behaviourTarget = _movingEntity.GetPointToWorldSpace(steeringForce);
-
-            return _behaviourTarget;
+            _targetPosition = _movingEntity.VectorToWorldSpace(steeringForce);
+            return _targetPosition;
         }
 
         public void Render(Graphics graphics)
         {
-            var detectionBoxPosition = _movingEntity.GetPointToWorldSpace(new Vector2(_detectionBoxLength, 0));
+            if (_targetPosition == Vector2.Zero)
+            {
+                return;
+            }
 
             graphics.DrawLine(
-                _detectionBoxPen,
+                Pens.Black,
                 _movingEntity.Position.ToPoint(),
-                detectionBoxPosition.ToPoint()
+                (_movingEntity.Position + _targetPosition).ToPoint()
             );
         }
     }

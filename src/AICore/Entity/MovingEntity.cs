@@ -107,14 +107,6 @@ namespace AICore.Entity
                 )
             );
 
-            // Print the velocity and position 
-            graphics.DrawString(
-                $"{Velocity.ToString("##.##")}\n{Position.ToString("##.##")}",
-                SystemFonts.DefaultFont,
-                Brushes.Black,
-                Position.ToPoint()
-            );
-
             // Render steering behaviour if it exists
             SteeringBehaviour?.RenderIfVisible(graphics);
         }

@@ -8,27 +8,37 @@ namespace AICore.SteeringBehaviour.Individual
     public class WanderBehaviour : ISteeringBehaviour
     {
         public bool Visible { get; set; } = true;
-        
-        private const float WanderRadius = 50;
-        private const float WanderDistance = 25;
-        private const float WanderJitter = 25;
+
         private static readonly Random Random = new Random();
 
         private readonly IMovingEntity _movingEntity;
 
+        private readonly float _wanderRadius;
+        private readonly float _wanderDistance;
+        private readonly float _wanderJitter;
+
         private Vector2 _wanderTarget = new Vector2(0, 0);
 
-        public WanderBehaviour(IMovingEntity movingEntity)
+        public WanderBehaviour(
+            IMovingEntity movingEntity,
+            float wanderDistance = 50,
+            float wanderRadius = 25,
+            float wanderJitter = 5
+        )
         {
             _movingEntity = movingEntity;
+
+            _wanderDistance = wanderDistance;
+            _wanderRadius = wanderRadius;
+            _wanderJitter = wanderJitter;
         }
 
         public Vector2 Calculate(float deltaTime)
         {
-            var addToPerimeter = new Vector2(RandomClamped() * WanderJitter, RandomClamped() * WanderJitter);
+            var addToPerimeter = new Vector2(RandomClamped() * _wanderJitter, RandomClamped() * _wanderJitter);
 
-            _wanderTarget = Vector2.Normalize(_wanderTarget + addToPerimeter) * WanderRadius
-                            + new Vector2(WanderDistance, 0);
+            _wanderTarget = Vector2.Normalize(_wanderTarget + addToPerimeter) * _wanderRadius
+                            + new Vector2(_wanderDistance, 0);
 
             return _movingEntity.GetPointToWorldSpace(_wanderTarget) - _movingEntity.Position;
         }
