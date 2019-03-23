@@ -1,11 +1,7 @@
-#region
-
 using System;
 using System.Collections.Generic;
 using AICore.FuzzyLogic.FuzzySets;
 using AICore.Util;
-
-#endregion
 
 namespace AICore.FuzzyLogic
 {

@@ -1,8 +1,4 @@
-#region
-
 using System.Linq;
-
-#endregion
 
 namespace AICore.FuzzyLogic.FuzzyOperators
 {

@@ -50,7 +50,7 @@
     <Compile Include="Behaviour\Goals\IGoal.cs" />
     <Compile Include="Behaviour\Goals\Think.cs" />
     <Compile Include="Behaviour\States\AttemptShotOnGoal.cs" />
-    <Compile Include="Behaviour\States\EntityState.cs" />
+    <Compile Include="Behaviour\States\PlayerState.cs" />
     <Compile Include="Behaviour\States\Rest.cs" />
     <Compile Include="Behaviour\States\IState.cs" />
     <Compile Include="Behaviour\States\TryToInterceptBall.cs" />

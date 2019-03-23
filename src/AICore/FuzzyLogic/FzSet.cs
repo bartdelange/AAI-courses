@@ -1,8 +1,4 @@
-#region
-
 using AICore.FuzzyLogic.FuzzySets;
-
-#endregion
 
 namespace AICore.FuzzyLogic
 {
