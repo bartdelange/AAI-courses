@@ -3,11 +3,10 @@ using System.Drawing;
 using System.Numerics;
 using AICore.Entity;
 using AICore.Entity.Contracts;
-using AICore.SteeringBehaviour;
 using AICore.SteeringBehaviour.Individual;
 using AICore.SteeringBehaviour.Util;
 
-namespace AIBehaviours.Demos
+namespace AICore.SteeringBehaviour.Aggregate
 {
     public class WanderObstacleAvoidanceBehaviour : ISteeringBehaviour
     {
@@ -19,7 +18,7 @@ namespace AIBehaviours.Demos
         {
             var steeringBehaviours = new List<WeightedSteeringBehaviour>
             {
-                new WeightedSteeringBehaviour(new ObstacleAvoidanceBehaviour(entity, obstacles, 40), 5f),
+                new WeightedSteeringBehaviour(new ObstacleAvoidanceBehaviour(entity, obstacles, 40), 2f),
                 new WeightedSteeringBehaviour(new WanderBehaviour(entity, 50, 25, 25), 1f)
             };
 

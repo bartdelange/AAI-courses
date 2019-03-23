@@ -11,17 +11,12 @@ using AICore.Util;
 
 namespace AIBehaviours.Demos
 {
-    public partial class OffsetPursuitDemo : Form
+    public class OffsetPursuitDemo : DemoForm
     {
-        public OffsetPursuitDemo(int width, int height)
+        public OffsetPursuitDemo(Size size) : base(size)
         {
-            InitializeComponent();
-
-            Width = width;
-            Height = height;
-
-            var worldBounds = new Vector2(ClientSize.Width, ClientSize.Height);
-            var world = new World(worldBounds);
+            var worldBounds = new Vector2(WorldSize.Width, WorldSize.Height);
+            World = new World(worldBounds);
 
             // Create leader entity
             var leader = new Vehicle(
@@ -55,12 +50,7 @@ namespace AIBehaviours.Demos
             followers.Add(leader);
 
             // Populate world
-            world.Entities = followers;
-
-            // Add world to form
-            var worldControl = new WorldControl(world);
-
-            Controls.Add(worldControl);
+            World.Entities = followers;
         }
     }
 }

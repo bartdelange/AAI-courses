@@ -32,7 +32,7 @@ namespace AICore
             });
         }
 
-        public void Render(Graphics graphics, bool graphIsVisible)
+        public void Render(Graphics graphics)
         {
             NavigationLayer?.RenderIfVisible(graphics);
             

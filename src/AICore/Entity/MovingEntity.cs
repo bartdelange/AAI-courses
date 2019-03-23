@@ -43,7 +43,7 @@ namespace AICore.Entity
 
         //
         private Vector2 WorldBounds { get; }
-        
+
         private readonly HeadingSmoother _headingSmoother;
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace AICore.Entity
             if (Velocity.LengthSquared() > 0.000000001)
             {
                 Heading = Vector2.Normalize(Velocity);
-                
+
                 _headingSmoother.Update();
             }
 
@@ -83,7 +83,7 @@ namespace AICore.Entity
                 foreach (var middleware in Middlewares)
                     middleware.Update();
             }
-            
+
             Position = Position.WrapToBounds(WorldBounds);
         }
 
@@ -93,14 +93,14 @@ namespace AICore.Entity
         /// <param name="graphics"></param>
         public virtual void Render(Graphics graphics)
         {
+            if (!Config.Debug) return;
+
             // visualize the velocity
             graphics.DrawLine(
                 Pens.Red,
                 Position.ToPoint(),
                 (Position + (Velocity * 10)).ToPoint()
             );
-
-            if (!Config.Debug) return;
 
             // visualize the bounding circle
             graphics.FillEllipse(

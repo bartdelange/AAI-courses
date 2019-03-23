@@ -1,11 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Drawing;
 using System.Numerics;
-using System.Windows.Forms;
 using AIBehaviours.Controls;
 using AIBehaviours.Utils;
 using AICore;
-using AICore.Entity;
-using AICore.Entity.Contracts;
 using AICore.SteeringBehaviour.Aggregate;
 using AICore.SteeringBehaviour.Util;
 
@@ -14,64 +12,35 @@ namespace AIBehaviours.Demos
     /// <summary>
     /// 
     /// </summary>
-    public partial class WallAvoidanceDemo : Form
+    public class WallAvoidanceDemo : DemoForm
     {
-        public WallAvoidanceDemo(int width, int height)
+        public WallAvoidanceDemo(Size size) : base(size)
         {
-            Width = width;
-            Height = height;
-
-            InitializeComponent();
-
-            const int wallMargin = 20;
-
-            var walls = new List<IWall>()
-            {
-                // Top border
-                new Wall(
-                    new Vector2(wallMargin, wallMargin),
-                    new Vector2(ClientSize.Width - wallMargin, wallMargin)
-                ),
-
-                // Right border
-                new Wall(
-                    new Vector2(ClientSize.Width - wallMargin, wallMargin),
-                    new Vector2(ClientSize.Width - wallMargin, ClientSize.Height - wallMargin)
-                ),
-
-                // Bottom border
-                new Wall(
-                    new Vector2(ClientSize.Width - wallMargin, ClientSize.Height - wallMargin),
-                    new Vector2(wallMargin, ClientSize.Height - wallMargin)
-                ),
-
-                // Left border
-                new Wall(
-                    new Vector2(wallMargin, ClientSize.Height - wallMargin),
-                    new Vector2(wallMargin, wallMargin)
+            var worldBounds = new Vector2(WorldSize.Width, WorldSize.Height);
+            
+            const int margin = 20;
+            
+            World = new World(worldBounds);
+            
+            // Create walls
+            World.Walls = EntityUtils.CreateCage(
+                new Tuple<Vector2, Vector2>(
+                    new Vector2(margin, margin),
+                    new Vector2(WorldSize.Width - margin, WorldSize.Height - margin)
                 )
-            };
+            );
 
-            var worldBounds = new Vector2(ClientSize.Width, ClientSize.Height);
-            var world = new World(worldBounds);
-
-            world.Walls = walls;
-
-            // Populate world instance
-            world.Entities = EntityUtils.CreateVehicles(
+            // Create vehicles
+            World.Entities = EntityUtils.CreateVehicles(
                 150,
                 worldBounds,
-                (entity) => entity.SteeringBehaviour = new WanderWallAvoidanceBehaviour(entity, world.Walls)
+                (entity) => entity.SteeringBehaviour = new WanderWallAvoidanceBehaviour(entity, World.Walls)
             );
 
-            world.Entities.ForEach(entity =>
-                entity.Middlewares = new[] {new ZeroOverlap(entity, world.Entities)}
+            // Apply zero overlap middleware
+            World.Entities.ForEach(entity =>
+                entity.Middlewares = new[] {new ZeroOverlap(entity, World.Entities)}
             );
-
-            // Add world to form
-            var worldControl = new WorldControl(world);
-
-            Controls.Add(worldControl);
         }
     }
 }

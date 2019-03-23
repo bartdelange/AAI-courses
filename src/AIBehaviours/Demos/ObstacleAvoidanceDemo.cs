@@ -1,26 +1,19 @@
-﻿using System.Numerics;
-using System.Windows.Forms;
+﻿using System.Drawing;
+using System.Numerics;
 using AIBehaviours.Controls;
 using AIBehaviours.Utils;
 using AICore;
+using AICore.SteeringBehaviour.Aggregate;
 
 namespace AIBehaviours.Demos
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    public partial class ObstacleAvoidanceDemo : Form
+    public class ObstacleAvoidanceDemo : DemoForm
     {
-        public ObstacleAvoidanceDemo(int width, int height)
+        public ObstacleAvoidanceDemo(Size size) : base(size)
         {
-            InitializeComponent();
+            var worldBounds = new Vector2(WorldSize.Width, WorldSize.Height);
 
-            Width = width;
-            Height = height;
-
-            var worldBounds = new Vector2(ClientSize.Width, ClientSize.Height);
-
-            var world = new World(worldBounds)
+            World = new World(worldBounds)
             {
                 Obstacles = EntityUtils.CreateObstacles(worldBounds, 500)
             };
@@ -28,16 +21,11 @@ namespace AIBehaviours.Demos
             var entities = EntityUtils.CreateVehicles(
                 50,
                 worldBounds,
-                entity => entity.SteeringBehaviour = new WanderObstacleAvoidanceBehaviour(entity, world.Obstacles)
+                entity => entity.SteeringBehaviour = new WanderObstacleAvoidanceBehaviour(entity, World.Obstacles)
             );
 
             // Populate world instance
-            world.Entities = entities;
-
-            // Add world to form
-            var worldControl = new WorldControl(world);
-
-            Controls.Add(worldControl);
+            World.Entities = entities;
         }
     }
 }

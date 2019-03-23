@@ -69,5 +69,38 @@ namespace AIBehaviours.Utils
 
             return vehicles;
         }
+
+        public static List<IWall> CreateCage(Tuple<Vector2, Vector2> dimensions)
+        {
+            var dimensionsStart = dimensions.Item1;
+            var dimensionsEnd = dimensions.Item2;
+
+            return new List<IWall>()
+            {
+                // Top border
+                new Wall(
+                    new Vector2(dimensionsStart.X, dimensionsStart.Y),
+                    new Vector2(dimensionsEnd.X, dimensionsStart.Y)
+                ),
+
+                // Right border
+                new Wall(
+                    new Vector2(dimensionsEnd.X, dimensionsStart.Y),
+                    new Vector2(dimensionsEnd.X, dimensionsEnd.Y)
+                ),
+
+                // Bottom border
+                new Wall(
+                    new Vector2(dimensionsEnd.X, dimensionsEnd.Y),
+                    new Vector2(dimensionsStart.X, dimensionsEnd.Y)
+                ),
+
+                // Left border
+                new Wall(
+                    new Vector2(dimensionsStart.X, dimensionsEnd.Y),
+                    new Vector2(dimensionsStart.X, dimensionsStart.Y)
+                ),
+            };
+        }
     }
 }
