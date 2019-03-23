@@ -1,14 +1,17 @@
-﻿namespace AICore.Behaviour.States
-{
-    public class EntityState<T>
-    {
-        public EntityState(T entity)
-        {
-            Entity = entity;
-        }
+﻿using AICore.Entity.Contracts;
 
+namespace AICore.Behaviour.States
+{
+    public class PlayerState<T> where T : IPlayer
+    {
         public IState<T> CurrentState { get; private set; }
-        public T Entity { get; }
+        
+        public T Player { get; }
+
+        public PlayerState(T entity)
+        {
+            Player = entity;
+        }
 
         public void SetState(IState<T> nextState)
         {
@@ -18,9 +21,9 @@
             CurrentState = nextState;
         }
 
-        public void Update()
+        public void Update(float deltaTime)
         {
-            CurrentState.Update(this);
+            CurrentState.Update(this, deltaTime);
         }
     }
 }

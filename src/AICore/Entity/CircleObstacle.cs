@@ -23,16 +23,12 @@ namespace AICore.Entity
 
         public void Render(Graphics g)
         {
-            var ellipse = new Rectangle(
-                (int) (Position.X - BoundingRadius),
-                (int) (Position.Y - BoundingRadius),
-                BoundingRadius * 2,
-                BoundingRadius * 2
-            );
-
             g.FillEllipse(
                 new SolidBrush(Color.FromArgb(50, Color.Black)),
-                ellipse
+                Position.X - BoundingRadius,
+                Position.Y - BoundingRadius,
+                BoundingRadius * 2,
+                BoundingRadius * 2
             );
 
             g.FillEllipse(

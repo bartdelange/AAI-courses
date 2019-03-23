@@ -20,30 +20,38 @@ namespace AIBehaviours.Demos
     {
         public WallAvoidanceDemo(int width, int height)
         {
-            InitializeComponent();
-
             Width = width;
             Height = height;
 
-            ClientSize = new Size(width, height);
+            InitializeComponent();
 
             const int wallMargin = 20;
 
             var walls = new List<IWall>()
             {
                 // Top border
-                new Wall(new Vector2(wallMargin, wallMargin), new Vector2(Width - wallMargin, wallMargin)),
+                new Wall(
+                    new Vector2(wallMargin, wallMargin),
+                    new Vector2(ClientSize.Width - wallMargin, wallMargin)
+                ),
 
                 // Right border
-                new Wall(new Vector2(Width - wallMargin, wallMargin),
-                    new Vector2(Width - wallMargin, Height - wallMargin)),
+                new Wall(
+                    new Vector2(ClientSize.Width - wallMargin, wallMargin),
+                    new Vector2(ClientSize.Width - wallMargin, ClientSize.Height - wallMargin)
+                ),
 
                 // Bottom border
-                new Wall(new Vector2(Width - wallMargin, Height - wallMargin),
-                    new Vector2(wallMargin, Height - wallMargin)),
+                new Wall(
+                    new Vector2(ClientSize.Width - wallMargin, ClientSize.Height - wallMargin),
+                    new Vector2(wallMargin, ClientSize.Height - wallMargin)
+                ),
 
                 // Left border
-                new Wall(new Vector2(wallMargin, Height - wallMargin), new Vector2(wallMargin, wallMargin)),
+                new Wall(
+                    new Vector2(wallMargin, ClientSize.Height - wallMargin),
+                    new Vector2(wallMargin, wallMargin)
+                )
             };
 
             var worldBounds = new Vector2(ClientSize.Width, ClientSize.Height);

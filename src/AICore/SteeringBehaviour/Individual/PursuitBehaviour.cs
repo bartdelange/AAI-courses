@@ -9,9 +9,9 @@ namespace AICore.SteeringBehaviour.Individual
         public bool Visible { get; set; } = true;
 
         private readonly IMovingEntity _movingEntity;
-        private readonly IMovingEntity _target;
+        private readonly IEntity _target;
 
-        public PursuitBehaviour(IMovingEntity movingEntity, IMovingEntity target)
+        public PursuitBehaviour(IMovingEntity movingEntity, IEntity target)
         {
             _target = target;
             _movingEntity = movingEntity;

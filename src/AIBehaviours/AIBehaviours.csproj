@@ -73,6 +73,12 @@
     <Compile Include="Demos\WallAvoidanceDemo.designer.cs">
       <DependentUpon>WallAvoidanceDemo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Demos\WeirdSoccerGameDemo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Demos\WeirdSoccerGameDemo.designer.cs">
+      <DependentUpon>WeirdSoccerGameDemo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Menu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -94,6 +100,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Demos\WallAvoidanceDemo.resx">
       <DependentUpon>WallAvoidanceDemo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Demos\WeirdSoccerGameDemo.resx">
+      <DependentUpon>WeirdSoccerGameDemo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Menu.resx">
       <DependentUpon>Menu.cs</DependentUpon>

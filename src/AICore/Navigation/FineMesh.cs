@@ -82,6 +82,7 @@ namespace AICore.Navigation
                 );
             }
 
+            /*
             // Diagonal edges
             if (!(currentPosition.X + _density >= _bounds.X) && !(currentPosition.Y + _density >= _bounds.Y))
             {
@@ -114,6 +115,7 @@ namespace AICore.Navigation
                     new Vector2(currentPosition.X + _density, currentPosition.Y - _density)
                 );
             }
+            */
         }
 
         /// <summary>

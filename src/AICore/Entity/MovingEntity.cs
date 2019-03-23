@@ -46,15 +46,14 @@ namespace AICore.Entity
         //
         private Vector2 WorldBounds { get; }
         
-        private HeadingSmoother _headingSmoother;
+        private readonly HeadingSmoother _headingSmoother;
 
         /// <summary>
         /// Base class that is used to create entities that can interact with the world
         /// </summary>
         /// <param name="position"></param>
         /// <param name="bounds"></param>
-        /// <param name="pen"></param>
-        protected MovingEntity(Vector2 position, Vector2 bounds, Pen pen)
+        protected MovingEntity(Vector2 position, Vector2 bounds)
         {
             Position = position;
             WorldBounds = bounds;

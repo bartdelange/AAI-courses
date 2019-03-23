@@ -26,11 +26,10 @@ namespace AIBehaviours.Demos
             Width = width;
             Height = height;
 
-            var worldBounds = new Vector2(width, height);
+            var worldBounds = new Vector2(ClientSize.Width, ClientSize.Height);
 
             // Create new world instance
             _world = new World(worldBounds);
-
             var entity = new Vehicle(new Vector2(50, 50), worldBounds);
 
             // Populate world

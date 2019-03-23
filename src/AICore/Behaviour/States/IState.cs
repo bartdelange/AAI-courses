@@ -1,9 +1,11 @@
-﻿namespace AICore.Behaviour.States
+﻿using AICore.Entity.Contracts;
+
+namespace AICore.Behaviour.States
 {
-    public interface IState<T>
+    public interface IState<T> where T : IPlayer
     {
-        void Enter(EntityState<T> state);
-        void Update(EntityState<T> state);
-        void Leave(EntityState<T> state);
+        void Enter(PlayerState<T> state);
+        void Update(PlayerState<T> state, float deltaTime);
+        void Leave(PlayerState<T> state);
     }
 }

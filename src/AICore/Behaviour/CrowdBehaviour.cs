@@ -8,9 +8,9 @@ namespace AICore.Behaviour
     /// Behaviour that is used by the striker entity
     ///
     /// Rules:
-    /// - Should follow ball while watching from the sideline    (AlignmentBehaviour) // Should not update the velocity, just the instances' Heading
-    /// - Should avoid obstacles                                 (ObstacleAvoidance)
-    /// - Should stay out of the playing field                   (WallAvoidance)
+    /// - Should look towards ball while watching from the sideline    (AlignmentBehaviour)
+    /// - Should avoid obstacles                                       (ObstacleAvoidance)
+    /// - Should stay out of the playing field                         (WallAvoidance)
     /// </summary>
     public class CrowdBehaviour : ISteeringBehaviour
     {
