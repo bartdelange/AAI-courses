@@ -3,7 +3,6 @@ using System.Drawing;
 using System.Numerics;
 using System.Windows.Forms;
 using AIBehaviours.Controls;
-using AIBehaviours.Utils;
 using AICore;
 using AICore.Entity;
 using AICore.Entity.Contracts;

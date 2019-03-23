@@ -1,5 +1,4 @@
 ﻿using System;
-using AICore.Entity;
 using AICore.Entity.Contracts;
 
 namespace AICore.Behaviour.States

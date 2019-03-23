@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
 using System.Windows.Forms;
@@ -11,7 +10,6 @@ using AICore.Entity.Contracts;
 using AICore.Graph.PathFinding;
 using AICore.Navigation;
 using AICore.SteeringBehaviour.Individual;
-using AICore.SteeringBehaviour.Util;
 
 namespace AIBehaviours.Demos
 {

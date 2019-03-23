@@ -1,11 +1,8 @@
-﻿using System.Drawing;
-using System.Linq;
-using System.Numerics;
+﻿using System.Numerics;
 using System.Windows.Forms;
 using AIBehaviours.Controls;
 using AIBehaviours.Utils;
 using AICore;
-using AICore.Util;
 
 namespace AIBehaviours.Demos
 {

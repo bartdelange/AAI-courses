@@ -1,18 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Net;
 using System.Numerics;
 using System.Windows.Forms;
 using AIBehaviours.Controls;
-using AIBehaviours.Utils;
 using AICore;
 using AICore.Entity;
 using AICore.Entity.Contracts;
-using AICore.SteeringBehaviour.Aggregate;
-using AICore.SteeringBehaviour.Util;
-using AICore.Util;
 
 namespace AIBehaviours.Demos
 {

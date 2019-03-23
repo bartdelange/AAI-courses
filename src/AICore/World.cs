@@ -18,7 +18,6 @@ namespace AICore
         public List<IWall> Walls;
         public NavigationLayer NavigationLayer;
 
-        // TODO Remove obstacle list and baseMap dependency 
         public World(Vector2 worldBounds)
         {
             Width = (int) worldBounds.X;
