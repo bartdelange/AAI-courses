@@ -1,6 +1,7 @@
 using System;
 using System.Drawing;
 using System.Numerics;
+using AICore.Model;
 
 namespace AICore.Util
 {
@@ -9,15 +10,15 @@ namespace AICore.Util
         private static readonly Random Random = new Random();
 
         #region static methods
-        
-        public static Vector2 GetRandom(Vector2 max, Vector2 min = new Vector2())
+
+        public static Vector2 GetRandom(Bounds bounds)
         {
             return new Vector2(
-                Random.Next((int) min.X, (int) max.X),
-                Random.Next((int) min.Y, (int) max.Y)
+                Random.Next((int) bounds.Min.X, (int) bounds.Max.X),
+                Random.Next((int) bounds.Min.Y, (int) bounds.Max.Y)
             );
         }
-        
+
         /// <summary>
         /// Calculates the shortest distance to one of the line segments
         /// </summary>
@@ -26,8 +27,8 @@ namespace AICore.Util
         /// <param name="position">Position to check against</param>
         /// <returns></returns>
         public static float SquaredDistanceToLine(
-            Vector2 lineStart, 
-            Vector2 lineEnd, 
+            Vector2 lineStart,
+            Vector2 lineEnd,
             Vector2 position
         )
         {
@@ -40,7 +41,7 @@ namespace AICore.Util
             {
                 return Vector2.DistanceSquared(lineStart, position);
             }
-            
+
             var endDot = (position.X - lineEnd.X) * (lineStart.X - lineEnd.X) +
                          (position.Y - lineEnd.Y) * (lineStart.Y - lineEnd.Y);
 
@@ -56,11 +57,11 @@ namespace AICore.Util
                 lineStart + ((lineEnd - lineStart) * startDot) / (startDot + endDot)
             );
         }
-        
+
         #endregion
-        
+
         #region extension methods
-        
+
         /// <summary>
         /// Converts vector to PointF
         /// </summary>
@@ -114,7 +115,7 @@ namespace AICore.Util
             {
                 return vector;
             }
-            
+
             return Vector2.Normalize(vector) * max;
         }
 
@@ -129,7 +130,7 @@ namespace AICore.Util
             // Create a transformation matrix
             var transformationMatrix = new Matrix3()
                 .Rotate(angle);
-	
+
             // Transform the vector
             return vector.ApplyMatrix(transformationMatrix);
         }
@@ -140,19 +141,19 @@ namespace AICore.Util
         /// <param name="position"></param>
         /// <param name="bounds"></param>
         /// <returns></returns>
-        public static Vector2 WrapToBounds(this Vector2 position, Vector2 bounds)
+        public static Vector2 WrapToBounds(this Vector2 position, Bounds bounds)
         {
-            if (position.X > bounds.X)
-                return new Vector2(0, position.Y);
+            if (position.X > bounds.Max.X)
+                return new Vector2(bounds.Min.X, position.Y);
 
-            if (position.Y > bounds.Y)
-                return new Vector2(position.X, 0);
+            if (position.Y > bounds.Max.Y)
+                return new Vector2(position.X, bounds.Min.Y);
 
-            if (position.X < 0)
-                return new Vector2(bounds.X, position.Y);
+            if (position.X < bounds.Min.X)
+                return new Vector2(bounds.Max.X, position.Y);
 
-            if (position.Y < 0)
-                return new Vector2(position.X, bounds.Y);
+            if (position.Y < bounds.Min.Y)
+                return new Vector2(position.X, bounds.Max.Y);
 
             return position;
         }
@@ -170,7 +171,7 @@ namespace AICore.Util
 
             return new Vector2(x, y);
         }
-        
+
         #endregion
     }
 }

@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Numerics;
 using AICore.Entity;
 using AICore.Entity.Contracts;
+using AICore.Model;
 using AICore.Util;
 
 namespace AIBehaviours.Utils
 {
     public static class EntityUtils
     {
-        public static List<IObstacle> CreateObstacles(Vector2 worldBounds, int clutter)
+        public static List<IObstacle> CreateObstacles(Bounds bounds, int clutter)
         {
             var random = new Random();
 
@@ -17,7 +18,7 @@ namespace AIBehaviours.Utils
             var obstacles = new List<IObstacle>();
 
             var clutterRemaining = clutter == 0
-                ? Math.Min(worldBounds.X, worldBounds.Y)
+                ? Math.Min(bounds.Max.X, bounds.Max.Y)
                 : clutter;
 
             while (clutterRemaining > 0)
@@ -29,13 +30,13 @@ namespace AIBehaviours.Utils
 
                 // Create a position while keeping the obs
                 var randomX = Math.Min(
-                    worldBounds.X - obstacleRadius,
-                    random.Next(obstacleRadius, (int) worldBounds.X)
+                    bounds.Min.X + obstacleRadius,
+                    random.Next((int) (bounds.Min.X + obstacleRadius), (int) bounds.Max.X)
                 );
 
                 var randomY = Math.Min(
-                    worldBounds.Y - obstacleRadius,
-                    random.Next(obstacleRadius, (int) worldBounds.Y)
+                    bounds.Min.Y + obstacleRadius,
+                    random.Next((int) (bounds.Min.Y + obstacleRadius), (int) bounds.Max.Y)
                 );
 
                 // Create new obstacle and subtract its size from the available clutter
@@ -46,21 +47,25 @@ namespace AIBehaviours.Utils
                     )
                 );
 
-                // TODO add docs to describe what we do here
+                // Decrease clutter remaining until we reach 0
                 clutterRemaining -= obstacleRadius;
             }
 
             return obstacles;
         }
 
-        public static List<IMovingEntity> CreateVehicles(int count, Vector2 worldBounds, Action<Vehicle> createEntityMiddleware)
+        public static List<IMovingEntity> CreateVehicles(
+            int count,
+            Bounds bounds,
+            Action<Vehicle> createEntityMiddleware
+        )
         {
             var vehicles = new List<IMovingEntity>();
 
             for (var i = 0; i < count; i++)
             {
-                var entity = new Vehicle(Vector2ExtensionMethods.GetRandom(worldBounds), worldBounds);
-                
+                var entity = new Vehicle(Vector2ExtensionMethods.GetRandom(bounds));
+
                 // Apply middleware when argument is given
                 createEntityMiddleware?.Invoke(entity);
 
@@ -70,35 +75,32 @@ namespace AIBehaviours.Utils
             return vehicles;
         }
 
-        public static List<IWall> CreateCage(Tuple<Vector2, Vector2> dimensions)
+        public static List<IWall> CreateCage(Bounds bounds)
         {
-            var dimensionsStart = dimensions.Item1;
-            var dimensionsEnd = dimensions.Item2;
-
             return new List<IWall>()
             {
                 // Top border
                 new Wall(
-                    new Vector2(dimensionsStart.X, dimensionsStart.Y),
-                    new Vector2(dimensionsEnd.X, dimensionsStart.Y)
+                    new Vector2(bounds.Min.X, bounds.Min.Y),
+                    new Vector2(bounds.Max.X, bounds.Min.Y)
                 ),
 
                 // Right border
                 new Wall(
-                    new Vector2(dimensionsEnd.X, dimensionsStart.Y),
-                    new Vector2(dimensionsEnd.X, dimensionsEnd.Y)
+                    new Vector2(bounds.Max.X, bounds.Min.Y),
+                    new Vector2(bounds.Max.X, bounds.Max.Y)
                 ),
 
                 // Bottom border
                 new Wall(
-                    new Vector2(dimensionsEnd.X, dimensionsEnd.Y),
-                    new Vector2(dimensionsStart.X, dimensionsEnd.Y)
+                    new Vector2(bounds.Max.X, bounds.Max.Y),
+                    new Vector2(bounds.Min.X, bounds.Max.Y)
                 ),
 
                 // Left border
                 new Wall(
-                    new Vector2(dimensionsStart.X, dimensionsEnd.Y),
-                    new Vector2(dimensionsStart.X, dimensionsStart.Y)
+                    new Vector2(bounds.Min.X, bounds.Max.Y),
+                    new Vector2(bounds.Min.X, bounds.Min.Y)
                 ),
             };
         }

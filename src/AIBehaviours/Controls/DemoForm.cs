@@ -29,6 +29,8 @@ namespace AIBehaviours.Controls
             Size = size;
 
             WorldControl = new WorldControl();
+            World = new World();
+
             Controls.Add(WorldControl);
 
             CreateMenu();

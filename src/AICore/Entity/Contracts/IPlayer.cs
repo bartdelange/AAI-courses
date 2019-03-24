@@ -4,9 +4,9 @@ namespace AICore.Entity.Contracts
 {
     public interface IPlayer : IMovingEntity
     {
-        Vector2 StartPosition { get; set; }
+        Vector2 StartPosition { get; }
         
-        IMovingEntity BallEntity { get; set; }
+        IMovingEntity BallEntity { get; }
 
         float MaxEnergy { get; set; }
         float MinEnergy { get; set; }

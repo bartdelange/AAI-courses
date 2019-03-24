@@ -1,6 +1,11 @@
+using System.Collections.Generic;
 using System.Drawing;
 using System.Numerics;
+using AICore.Entity;
+using AICore.Entity.Contracts;
 using AICore.SteeringBehaviour;
+using AICore.SteeringBehaviour.Individual;
+using AICore.SteeringBehaviour.Util;
 
 namespace AICore.Behaviour
 {
@@ -18,9 +23,23 @@ namespace AICore.Behaviour
     {
         public bool Visible { get; set; } = true;
 
+        private readonly ISteeringBehaviour _steeringBehaviour;
+
+        public GoalKeeperBehaviour(IPlayer goalkeeper, List<IPlayer> team, World world)
+        {
+            _steeringBehaviour = new WeightedTruncatedRunningSumWithPrioritization(
+                new List<WeightedSteeringBehaviour>
+                {
+                    new WeightedSteeringBehaviour(new WallAvoidanceBehaviour(goalkeeper, world.Walls), 10f),
+                    new WeightedSteeringBehaviour(new WanderBehaviour(goalkeeper), 1f)
+                },
+                goalkeeper.MaxSpeed
+            );
+        }
+
         public Vector2 Calculate(float deltaTime)
         {
-            return Vector2.Zero;
+            return _steeringBehaviour.Calculate(deltaTime);
         }
 
         public void Render(Graphics graphics)

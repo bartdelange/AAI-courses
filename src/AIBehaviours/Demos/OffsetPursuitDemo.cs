@@ -1,12 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Numerics;
-using System.Windows.Forms;
 using AIBehaviours.Controls;
-using AICore;
 using AICore.Entity;
 using AICore.Entity.Contracts;
+using AICore.Model;
 using AICore.SteeringBehaviour.Individual;
+using AICore.SteeringBehaviour.Util;
 using AICore.Util;
 
 namespace AIBehaviours.Demos
@@ -15,14 +16,12 @@ namespace AIBehaviours.Demos
     {
         public OffsetPursuitDemo(Size size) : base(size)
         {
-            var worldBounds = new Vector2(WorldSize.Width, WorldSize.Height);
-            World = new World(worldBounds);
+            var bounds = new Bounds(Vector2.Zero, WorldSize);
 
             // Create leader entity
             var leader = new Vehicle(
-                Vector2ExtensionMethods.GetRandom(worldBounds),
-                worldBounds,
-                new Pen(Color.Red)
+                Vector2ExtensionMethods.GetRandom(bounds),
+                Color.Red
             );
 
             // Add steering behaviour to leader entity
@@ -31,11 +30,11 @@ namespace AIBehaviours.Demos
             // Create follower entities
             var followers = new List<IMovingEntity>
             {
-                new Vehicle(Vector2ExtensionMethods.GetRandom(worldBounds), worldBounds),
-                new Vehicle(Vector2ExtensionMethods.GetRandom(worldBounds), worldBounds),
-                new Vehicle(Vector2ExtensionMethods.GetRandom(worldBounds), worldBounds),
-                new Vehicle(Vector2ExtensionMethods.GetRandom(worldBounds), worldBounds),
-                new Vehicle(Vector2ExtensionMethods.GetRandom(worldBounds), worldBounds)
+                new Vehicle(Vector2ExtensionMethods.GetRandom(bounds)),
+                new Vehicle(Vector2ExtensionMethods.GetRandom(bounds)),
+                new Vehicle(Vector2ExtensionMethods.GetRandom(bounds)),
+                new Vehicle(Vector2ExtensionMethods.GetRandom(bounds)),
+                new Vehicle(Vector2ExtensionMethods.GetRandom(bounds))
             };
 
             // Add steering behaviour to followers
@@ -49,8 +48,17 @@ namespace AIBehaviours.Demos
             // Add leader to list of entities
             followers.Add(leader);
 
+            followers.ForEach(entity =>
+            {
+                entity.Middlewares = new IMiddleware[]
+                {
+                    new ZeroOverlapMiddleware(entity, followers),
+                    new WrapAroundMiddleware(entity, bounds),
+                };
+            });
+
             // Populate world
-            World.Entities = followers;
+            World.Entities.AddRange(followers);
         }
     }
 }

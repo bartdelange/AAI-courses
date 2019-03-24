@@ -9,6 +9,7 @@ using AICore;
 using AICore.Entity;
 using AICore.Entity.Contracts;
 using AICore.Graph.PathFinding;
+using AICore.Model;
 using AICore.Navigation;
 using AICore.SteeringBehaviour.Individual;
 
@@ -18,20 +19,15 @@ namespace AIBehaviours.Demos
     {
         public PathFollowingDemo(Size size) : base(size)
         {
-            var worldBounds = new Vector2(WorldSize.Width, WorldSize.Height);
+            var bounds = new Bounds(Vector2.Zero, WorldSize);
 
             // Create new world instance
-            World = new World(worldBounds);
-            var entity = new Vehicle(new Vector2(50, 50), worldBounds);
+            World = new World();
 
             // Populate world
-            World.Entities = new List<IMovingEntity> { entity };
-            World.Obstacles = EntityUtils.CreateObstacles(worldBounds, 500);
-
-            // Create navigation layer
-            World.NavigationLayer = new NavigationLayer(
-                new FineMesh(50, worldBounds, World.Obstacles)
-            );
+            World.Entities.Add(new Vehicle(new Vector2(50, 50)));
+            World.Obstacles.AddRange(EntityUtils.CreateObstacles(bounds, 500));
+            World.NavigationLayer = new NavigationLayer(new FineMesh(50, bounds, World.Obstacles));
             
             // Create world control and attach event handlers that are used in this demo
             WorldControl.MouseClick += WorldPanel_MouseClick;

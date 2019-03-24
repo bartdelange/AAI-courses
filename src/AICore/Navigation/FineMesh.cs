@@ -3,6 +3,7 @@ using System.Linq;
 using System.Numerics;
 using AICore.Entity.Contracts;
 using AICore.Graph;
+using AICore.Model;
 
 namespace AICore.Navigation
 {
@@ -15,9 +16,9 @@ namespace AICore.Navigation
         public IRenderable MeshHelper { get; set; }
 
         private readonly int _density;
-        private readonly Vector2 _bounds;
+        private readonly Bounds _bounds;
 
-        public FineMesh(int density, Vector2 bounds, IEnumerable<IObstacle> obstacles)
+        public FineMesh(int density, Bounds bounds, IEnumerable<IObstacle> obstacles)
         {
             Obstacles = obstacles;
 
@@ -26,9 +27,7 @@ namespace AICore.Navigation
 
             var margin = density / 2;
 
-            var topLeft = new Vector2(margin);
-
-            GenerateEdges(topLeft);
+            GenerateEdges(new Vector2(margin));
         }
 
         #region Floodfilling
@@ -48,7 +47,7 @@ namespace AICore.Navigation
             Mesh.CreateVertexIfNotExists(currentPosition);
 
             // Horizontal edges
-            if (!(currentPosition.X + _density >= _bounds.X))
+            if (!(currentPosition.X + _density >= _bounds.Max.X))
             {
                 TryAddEdge(
                     currentPosition,
@@ -56,7 +55,7 @@ namespace AICore.Navigation
                 );
             }
 
-            if (!(currentPosition.X - _density <= 0))
+            if (!(currentPosition.X - _density <= _bounds.Min.X))
             {
                 TryAddEdge(
                     currentPosition,
@@ -65,7 +64,7 @@ namespace AICore.Navigation
             }
 
             // Vertical edges
-            if (!(currentPosition.Y + _density >= _bounds.Y))
+            if (!(currentPosition.Y + _density >= _bounds.Max.Y))
             {
                 TryAddEdge(
                     currentPosition,
@@ -73,7 +72,7 @@ namespace AICore.Navigation
                 );
             }
 
-            if (!(currentPosition.Y - _density <= 0))
+            if (!(currentPosition.Y - _density <= _bounds.Min.Y))
             {
                 TryAddEdge(
                     currentPosition,

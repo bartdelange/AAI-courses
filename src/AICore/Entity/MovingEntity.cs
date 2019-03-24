@@ -51,10 +51,9 @@ namespace AICore.Entity
         /// </summary>
         /// <param name="position"></param>
         /// <param name="bounds"></param>
-        protected MovingEntity(Vector2 position, Vector2 bounds)
+        protected MovingEntity(Vector2 position)
         {
             Position = position;
-            WorldBounds = bounds;
 
             _headingSmoother = new HeadingSmoother(this, 15);
         }
@@ -77,14 +76,11 @@ namespace AICore.Entity
                 _headingSmoother.Update();
             }
 
-            if (Middlewares != null)
-            {
-                // Apply middleware after steering force was applied
-                foreach (var middleware in Middlewares)
-                    middleware.Update();
-            }
-
-            Position = Position.WrapToBounds(WorldBounds);
+            if (Middlewares == null) return;
+            
+            // Apply middleware after steering force was applied
+            foreach (var middleware in Middlewares)
+                middleware.Update();
         }
 
         /// <summary>

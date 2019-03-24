@@ -6,16 +6,11 @@ namespace AICore.Entity
 {
     public class Vehicle : MovingEntity
     {
-        private readonly Pen _pen;
+        private readonly Brush _brush;
 
-        public Vehicle(Vector2 position, Vector2 bounds) :
-            this(position, bounds, new Pen(Color.DodgerBlue, 2))
+        public Vehicle(Vector2 position, Color? color = null) : base(position)
         {
-        }
-
-        public Vehicle(Vector2 position, Vector2 bounds, Pen pen) : base(position, bounds)
-        {
-            _pen = pen;
+            _brush = new SolidBrush(color ?? Color.DodgerBlue);
         }
 
         public override void Render(Graphics g)
@@ -38,12 +33,7 @@ namespace AICore.Entity
                 p3.ApplyMatrix(matrix).ToPointF()
             };
 
-            g.DrawPolygon(_pen, curvePoints);
-        }
-
-        public override string ToString()
-        {
-            return $"{_pen.Color} {base.ToString()}";
+            g.FillPolygon(_brush, curvePoints);
         }
     }
 }

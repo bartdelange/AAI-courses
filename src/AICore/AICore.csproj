@@ -60,9 +60,11 @@
     <Compile Include="Entity\Ball.cs" />
     <Compile Include="Entity\Contracts\IMiddleware.cs" />
     <Compile Include="Entity\Contracts\IPlayer.cs" />
+    <Compile Include="Entity\SoccerGoal.cs" />
     <Compile Include="Entity\MovingEntityExtensionMethods.cs" />
     <Compile Include="Entity\Player.cs" />
     <Compile Include="Enum\EnvironmentVariableName.cs" />
+    <Compile Include="Model\Bounds.cs" />
     <Compile Include="SteeringBehaviour\Aggregate\FlockingBehaviour.cs" />
     <Compile Include="SteeringBehaviour\Aggregate\InterceptBallBehaviour.cs" />
     <Compile Include="SteeringBehaviour\Aggregate\WanderNearPositionBehaviour.cs" />
@@ -87,7 +89,8 @@
     <Compile Include="SteeringBehaviour\Util\PrioritizedDithering.cs" />
     <Compile Include="SteeringBehaviour\Util\WeightedTruncatedRunningSumWithPrioritization.cs" />
     <Compile Include="SteeringBehaviour\Util\WeightedTruncatedSum.cs" />
-    <Compile Include="SteeringBehaviour\Util\ZeroOverlap.cs" />
+    <Compile Include="SteeringBehaviour\Util\WrapAroundMiddleware.cs" />
+    <Compile Include="SteeringBehaviour\Util\ZeroOverlapMiddleware.cs" />
     <Compile Include="SteeringBehaviour\WeightedSteeringBehaviour.cs" />
     <Compile Include="Entity\Contracts\IEntity.cs" />
     <Compile Include="Entity\Contracts\IGroup.cs" />

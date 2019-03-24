@@ -3,12 +3,12 @@ using AICore.Entity.Contracts;
 
 namespace AICore.SteeringBehaviour.Util
 {
-    public class ZeroOverlap : IMiddleware
+    public class ZeroOverlapMiddleware : IMiddleware
     {
         private readonly IMovingEntity _movingEntity;
         private readonly IEnumerable<IEntity> _other;
 
-        public ZeroOverlap(IMovingEntity movingEntity, IEnumerable<IEntity> other)
+        public ZeroOverlapMiddleware(IMovingEntity movingEntity, IEnumerable<IEntity> other)
         {
             _movingEntity = movingEntity;
             _other = other;
