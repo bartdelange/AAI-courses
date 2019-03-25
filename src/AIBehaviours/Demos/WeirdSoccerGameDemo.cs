@@ -92,7 +92,7 @@ namespace AIBehaviours.Demos
             team.Add(goalKeeper);
 
             // Add behaviours to the entities
-            defenders.ForEach(defender => defender.SteeringBehaviour = new DefenderBehaviour(defender, team, world));
+            defenders.ForEach(defender => defender.SteeringBehaviour = new DefenderModule(defender, team, world));
             strikers.ForEach(striker => striker.SteeringBehaviour = new StrikerBehaviour(striker, team, world));
             goalKeeper.SteeringBehaviour = new GoalKeeperBehaviour(goalKeeper, team, world);
 

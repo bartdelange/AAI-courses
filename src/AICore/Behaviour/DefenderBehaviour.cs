@@ -16,19 +16,21 @@ namespace AICore.Behaviour
     /// Rules:
     /// - Should not move too close to the own goal                             (Arrive / WanderBehaviour)
     /// - Should pursuit the opponent when opponent is within a certain range    (PursuitBehaviour)
+    ///   - Merge top two together so we can have one fuzzy calculation each [interval]
     /// - Should move on a similar defensive line as other defenders            (OffsetPursuit / Arrive)
     /// - Should avoid obstacles in the field                                   (ObstacleAvoidance)
     /// - Should stay within the playing field                                  (WallAvoidance)
     /// - Should kick the ball towards the strikers
+    /// - Should not move when tired                                            (TiredModule)
     /// </summary>
-    public class DefenderBehaviour : ISteeringBehaviour
+    public class DefenderModule : TiredModule, ISteeringBehaviour
     {
         public bool Visible { get; set; } = true;
         
         private FuzzyModule _fm = new FuzzyModule();
         private readonly ISteeringBehaviour _steeringBehaviour;
 
-        public DefenderBehaviour(IPlayer striker, List<IPlayer> team, World world)
+        public DefenderModule(IPlayer striker, List<IPlayer> team, World world)
         {
             _steeringBehaviour = new WeightedTruncatedRunningSumWithPrioritization(
                 new List<WeightedSteeringBehaviour>
@@ -38,6 +40,8 @@ namespace AICore.Behaviour
                 },
                 striker.MaxSpeed
             );
+            
+            InitFuzzyModule();
         }
 
         public Vector2 Calculate(float deltaTime)
@@ -47,7 +51,6 @@ namespace AICore.Behaviour
 
         public void InitFuzzyModule()
         {
-            // TODO: Make the values a bit better
             var distToGoal = _fm.CreateFLV("DistToGoal");
             var goalClose = distToGoal.AddLeftShoulderSet("GoalClose", 0, 25, 150);
             var goalMedium = distToGoal.AddTriangularSet("GoalMedium", 25, 150, 300);

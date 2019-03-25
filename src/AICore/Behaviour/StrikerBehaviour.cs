@@ -13,15 +13,15 @@ namespace AICore.Behaviour
     /// Behaviour that is used by the striker entity
     ///
     /// Rules:
-    /// - Should stay near the opponents goal     (ArriveBehaviour / WanderBehaviour)
-    /// - Should follow other strikers            (OffsetPursuit with (very) low weight)
-    /// - Should avoid obstacles in the field     (ObstacleAvoidance)
-    /// - Should stay within the field            (WallAvoidance)
-    /// - Should move to tactical positions       (Exploring / PathFollowingBehaviour)
-    /// - Should not move when tired
+    /// - Should stay near the opponents goal                 (ArriveBehaviour / WanderBehaviour)
+    /// - Should follow other strikers                        (OffsetPursuit with (very) low weight)
+    /// - Should avoid obstacles in the field                 (ObstacleAvoidance)
+    /// - Should stay within the field                        (WallAvoidance)
+    /// - Should move to tactical positions                   (Exploring / PathFollowingBehaviour)
     /// - Should kick the ball to the opponents goal
+    /// - Should not move when tired                          (TiredModule)
     /// </summary>
-    public class StrikerBehaviour : ISteeringBehaviour
+    public class StrikerBehaviour : TiredModule, ISteeringBehaviour
     {
         public bool Visible { get; set; } = true;
 

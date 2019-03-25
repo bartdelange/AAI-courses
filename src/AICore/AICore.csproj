@@ -56,6 +56,7 @@
     <Compile Include="Behaviour\States\TryToInterceptBall.cs" />
     <Compile Include="Behaviour\States\WanderNearPosition.cs" />
     <Compile Include="Behaviour\StrikerBehaviour.cs" />
+    <Compile Include="Behaviour\TiredModule.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Entity\Ball.cs" />
     <Compile Include="Entity\Contracts\IMiddleware.cs" />
