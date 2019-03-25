@@ -35,6 +35,7 @@ namespace AICore
             Entities?.ForEach(entity => entity.RenderIfVisible(graphics));
             Walls?.ForEach(wall => wall.RenderIfVisible(graphics));
             SoccerGoals?.ForEach(goal => goal.RenderIfVisible(graphics));
+            Ball.Render(graphics);
         }
     }
 }

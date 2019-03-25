@@ -107,7 +107,6 @@
     <Compile Include="Exceptions\NoSuchElementException.cs" />
     <Compile Include="FuzzyLogic\FuzzyHedges\FzFairly.cs" />
     <Compile Include="FuzzyLogic\FuzzyHedges\FzVery.cs" />
-    <Compile Include="FuzzyLogic\FuzzyHelper.cs" />
     <Compile Include="Entity\Wall.cs" />
     <Compile Include="FuzzyLogic\FuzzyModule.cs" />
     <Compile Include="FuzzyLogic\FuzzyRule.cs" />

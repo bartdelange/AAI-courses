@@ -14,8 +14,6 @@ namespace AIBehaviours
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            var fh = new FuzzyHelper();
-            fh.InitSampleModule();
             Application.Run(new Menu());
         }
     }
