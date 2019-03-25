@@ -5,6 +5,7 @@ namespace AICore.Behaviour
     public class TiredModule
     {
         private FuzzyModule _tiredFM = new FuzzyModule();
+        public bool CanMove { get; private set; }
 
         public TiredModule()
         {

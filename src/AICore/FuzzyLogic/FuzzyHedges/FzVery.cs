@@ -4,9 +4,9 @@ namespace AICore.FuzzyLogic.FuzzyHedges
 {
     public class FzVery : IFuzzyTerm
     {
-        private readonly FuzzySet _fuzzySet;
+        private readonly IFuzzyTerm _fuzzySet;
 
-        public FzVery(FuzzySet fuzzySet)
+        public FzVery(IFuzzyTerm fuzzySet)
         {
             _fuzzySet = fuzzySet;
         }

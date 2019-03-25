@@ -14,20 +14,21 @@ namespace AICore.Behaviour
     /// Behaviour that is used by the striker entity
     ///
     /// Rules:
-    /// - Should not move too close to the own goal                             (Arrive / WanderBehaviour)
-    /// - Should pursuit the opponent when opponent is within a certain range    (PursuitBehaviour)
-    ///   - Merge top two together so we can have one fuzzy calculation each [interval]
+    /// - Should not move too close to the own goal                             (Fuzzy: Arrive / WanderBehaviour)
+    /// - Should pursuit the opponent when opponent is within a certain range   (Fuzzy: PursuitBehaviour)
     /// - Should move on a similar defensive line as other defenders            (OffsetPursuit / Arrive)
     /// - Should avoid obstacles in the field                                   (ObstacleAvoidance)
     /// - Should stay within the playing field                                  (WallAvoidance)
-    /// - Should kick the ball towards the strikers
+    /// - Should kick the ball towards the strikers                             (Fuzzy)
     /// - Should not move when tired                                            (TiredModule)
     /// </summary>
     public class DefenderModule : TiredModule, ISteeringBehaviour
     {
         public bool Visible { get; set; } = true;
         
-        private FuzzyModule _fm = new FuzzyModule();
+        private FuzzyModule _fmGoal = new FuzzyModule();
+        private FuzzyModule _fmOpponent = new FuzzyModule();
+        private FuzzyModule _fmBall = new FuzzyModule();
         private readonly ISteeringBehaviour _steeringBehaviour;
 
         public DefenderModule(IPlayer striker, List<IPlayer> team, World world)
@@ -48,39 +49,81 @@ namespace AICore.Behaviour
         {
             return _steeringBehaviour.Calculate(deltaTime);
         }
-
+       
         public void InitFuzzyModule()
         {
-            var distToGoal = _fm.CreateFLV("DistToGoal");
+            InitGoalModule();
+            InitOpponentModule();
+            InitBallModule();
+        }
+
+        public void InitGoalModule()
+        {
+            var distToGoal = _fmGoal.CreateFLV("DistToGoal");
             var goalClose = distToGoal.AddLeftShoulderSet("GoalClose", 0, 25, 150);
             var goalMedium = distToGoal.AddTriangularSet("GoalMedium", 25, 150, 300);
             var goalFar = distToGoal.AddRightShoulderSet("GoalFar", 150, 300, 500);
 
-            var distToOpponent = _fm.CreateFLV("DistToOpponent");
-            var opponentClose = distToOpponent.AddRightShoulderSet("OpponentClose", 10, 30, 100);
-            var opponentMedium = distToOpponent.AddTriangularSet("OpponentMedium", 0, 10, 30);
-            var opponentFar = distToOpponent.AddLeftShoulderSet("OpponentFar", 0, 0, 10);
-
-            var desirability = _fm.CreateFLV("Desirability");
+            var desirability = _fmGoal.CreateFLV("Desirability");
             var veryDesirable = desirability.AddRightShoulderSet("VeryDesirable", 50, 75, 100);
             var desirable = desirability.AddTriangularSet("Desirable", 25, 50, 75);
             var undesirable = desirability.AddLeftShoulderSet("Undesirable", 0, 25, 50);
 
-            _fm.AddRule("goalClose -> undesirable", goalClose, undesirable);
-            _fm.AddRule("goalMedium -> veryDesirable", goalMedium, veryDesirable);
-            _fm.AddRule("goalFar -> undesirable", goalFar, undesirable);
-            _fm.AddRule("opponentFar -> undesirable", opponentFar, undesirable);
-            _fm.AddRule("opponentMedium -> desirable", opponentMedium, desirable);
-            _fm.AddRule("opponentClose -> veryDesirable", opponentClose, veryDesirable);
+            _fmGoal.AddRule("goalClose -> undesirable", goalClose, desirable);
+            _fmGoal.AddRule("goalMedium -> veryDesirable", goalMedium, veryDesirable);
+            _fmGoal.AddRule("goalFar -> undesirable", goalFar, undesirable);
         }
 
-        public double CalculateDistanceDesirability(double goalDist, double opponentDist)
+        public void InitOpponentModule()
         {
-            _fm.Fuzzify("DistToGoal", goalDist);
-            _fm.Fuzzify("DistToOpponent", opponentDist);
+            var distToOpponent = _fmOpponent.CreateFLV("DistToOpponent");
+            var opponentClose = distToOpponent.AddLeftShoulderSet("OpponentClose", 0, 25, 150);
+            var opponentMedium = distToOpponent.AddTriangularSet("OpponentMedium", 25, 150, 300);
+            var opponentFar = distToOpponent.AddRightShoulderSet("OpponentFar", 150, 300, 500);
+
+            var desirability = _fmOpponent.CreateFLV("Desirability");
+            var veryDesirable = desirability.AddRightShoulderSet("VeryDesirable", 50, 75, 100);
+            var desirable = desirability.AddTriangularSet("Desirable", 25, 50, 75);
+            var undesirable = desirability.AddLeftShoulderSet("Undesirable", 0, 25, 50);
+
+            _fmOpponent.AddRule("opponentClose -> undesirable", opponentClose, veryDesirable);
+            _fmOpponent.AddRule("opponentMedium -> veryDesirable", opponentMedium, desirable);
+            _fmOpponent.AddRule("opponentFar -> undesirable", opponentFar, undesirable);
+        }
+        
+        public void InitBallModule()
+        {
+            var distBallToGoal = _fmBall.CreateFLV("DistToBall");
+            var ballClose = distBallToGoal.AddRightShoulderSet("BallClose", 10, 30, 100);
+            var ballMedium = distBallToGoal.AddTriangularSet("BallMedium", 0, 10, 30);
+            var ballFar = distBallToGoal.AddLeftShoulderSet("BallFar", 0, 0, 10);
+
+            var desirability = _fmBall.CreateFLV("Desirability");
+            var undesirable = desirability.AddLeftShoulderSet("Undesirable", 0, 25, 50);
+            var desirable = desirability.AddTriangularSet("Desirable", 25, 50, 75);
+            var veryDesirable = desirability.AddRightShoulderSet("VeryDesirable", 50, 75, 100);
             
-            //this method automatically processes the rules and defuzzifies //the inferred conclusion
-            return _fm.DeFuzzify("Desirability", FuzzyModule.DefuzzifyType.MaxAv);
+            _fmBall.AddRule("ballClose -> undesirable", ballClose, veryDesirable);
+            _fmBall.AddRule("ballMedium -> desirable", ballMedium, desirable);
+            _fmBall.AddRule("ballFar -> veryDesirable", ballFar, undesirable);
+        }
+
+        public double CalculateDistanceToGoalDesirability(double goalDist)
+        {
+            _fmGoal.Fuzzify("DistToGoal", goalDist);
+            return _fmGoal.DeFuzzify("Desirability", FuzzyModule.DefuzzifyType.MaxAv);
+        }
+
+        public double CalculateDistanceToOpponentDesirability(double opponentDist)
+        {
+            _fmOpponent.Fuzzify("DistToOpponent", opponentDist);
+            return _fmOpponent.DeFuzzify("Desirability", FuzzyModule.DefuzzifyType.MaxAv);
+        }
+
+        public double CalculateDistanceToBallDesirability(double ballDist)
+        {
+            _fmBall.Fuzzify("DistToBall", ballDist);
+            return _fmBall.DeFuzzify("Desirability", FuzzyModule.DefuzzifyType.MaxAv);
         }
         
         public void Render(Graphics graphics)
