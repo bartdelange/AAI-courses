@@ -6,6 +6,8 @@ namespace AICore.Entity
 {
     public class Ball : MovingEntity
     {
+        public IPlayer OwnedBy;
+        
         public Ball(Vector2 position, int ballSize = 10) : base(position)
         {
             Position = position;
