@@ -37,7 +37,13 @@ namespace AIBehaviours.Demos
                 new SoccerGoal(playingFieldArea.Center() - new Vector2(-350, 0), new Vector2(10, 150), teamTwo),
             });
 
-            World.Ball = new Ball(new Vector2(playingFieldArea.Max.X / 2, playingFieldArea.Max.Y / 2));
+            // Create ball
+            var ball = new Ball(new Vector2(playingFieldArea.Max.X / 2, playingFieldArea.Max.Y / 2))
+            {
+                Heading = Vector2.One
+            };
+            ball.SteeringBehaviour = new BallBehaviour(ball, World);
+            World.Ball = ball;
 
             // Create walls to contain players
             World.Walls.AddRange(playingFieldAreaWalls);
@@ -92,7 +98,7 @@ namespace AIBehaviours.Demos
             team.Add(goalKeeper);
 
             // Add behaviours to the entities
-            defenders.ForEach(defender => defender.SteeringBehaviour = new DefenderModule(defender, team, world));
+            defenders.ForEach(defender => defender.SteeringBehaviour = new DefenderBehaviour(defender, team, world));
             strikers.ForEach(striker => striker.SteeringBehaviour = new StrikerBehaviour(striker, team, world));
             goalKeeper.SteeringBehaviour = new GoalKeeperBehaviour(goalKeeper, team, world);
 

@@ -12,7 +12,6 @@ namespace AICore
     public class World
     {
         // Entities
-
         public Ball Ball;
 
         public NavigationLayer NavigationLayer;
@@ -25,6 +24,7 @@ namespace AICore
         public void Update(float timeElapsed)
         {
             Entities?.ForEach(e => { e.Update(timeElapsed); });
+            Ball.Update(timeElapsed);
         }
 
         public void Render(Graphics graphics)
@@ -35,7 +35,7 @@ namespace AICore
             Entities?.ForEach(entity => entity.RenderIfVisible(graphics));
             Walls?.ForEach(wall => wall.RenderIfVisible(graphics));
             SoccerGoals?.ForEach(goal => goal.RenderIfVisible(graphics));
-            Ball.Render(graphics);
+            Ball?.RenderIfVisible(graphics);
         }
     }
 }

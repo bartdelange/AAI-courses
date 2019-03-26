@@ -22,7 +22,7 @@ namespace AICore.Behaviour
     /// - Should kick the ball towards the strikers                             (Fuzzy)
     /// - Should not move when tired                                            (TiredModule)
     /// </summary>
-    public class DefenderModule : TiredModule, ISteeringBehaviour
+    public class DefenderBehaviour : TiredModule, ISteeringBehaviour
     {
         public bool Visible { get; set; } = true;
         
@@ -31,7 +31,7 @@ namespace AICore.Behaviour
         private FuzzyModule _fmBall = new FuzzyModule();
         private readonly ISteeringBehaviour _steeringBehaviour;
 
-        public DefenderModule(IPlayer striker, List<IPlayer> team, World world)
+        public DefenderBehaviour(IPlayer striker, List<IPlayer> team, World world)
         {
             _steeringBehaviour = new WeightedTruncatedRunningSumWithPrioritization(
                 new List<WeightedSteeringBehaviour>

@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Behaviour\BallBehaviour.cs" />
     <Compile Include="Behaviour\CrowdBehaviour.cs" />
     <Compile Include="Behaviour\DefenderBehaviour.cs" />
     <Compile Include="Behaviour\GoalKeeperBehaviour.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="SteeringBehaviour\Group\CohesionBehaviour.cs" />
     <Compile Include="SteeringBehaviour\Group\SeparationBehaviour.cs" />
     <Compile Include="SteeringBehaviour\Individual\ArriveBehaviour.cs" />
+    <Compile Include="SteeringBehaviour\Individual\BounceBehaviour.cs" />
     <Compile Include="SteeringBehaviour\Individual\EvadeBehaviour.cs" />
     <Compile Include="SteeringBehaviour\Individual\FleeBehaviour.cs" />
     <Compile Include="SteeringBehaviour\Individual\ConstantSteeringBehaviour.cs" />

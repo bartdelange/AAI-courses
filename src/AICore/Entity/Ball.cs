@@ -4,21 +4,23 @@ using AICore.Entity.Contracts;
 
 namespace AICore.Entity
 {
-    public class Ball : IEntity
+    public class Ball : MovingEntity
     {
-        public bool Visible { get; set; }
-
-        public Vector2 Position { get; set; }
-        public int BoundingRadius { get; set; }
-
-        public Ball(Vector2 position, int ballSize = 20)
+        public Ball(Vector2 position, int ballSize = 20) : base(position)
         {
             Position = position;
             BoundingRadius = ballSize;
         }
 
-        public void Render(Graphics graphics)
+        public void Kicked(Vector2 heading)
         {
+            Heading = heading;
+        }
+
+        public override void Render(Graphics graphics)
+        {
+            base.Render(graphics);
+            
             graphics.FillEllipse(
                 Brushes.CadetBlue,
                 Position.X - BoundingRadius,
