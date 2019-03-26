@@ -103,16 +103,12 @@ namespace AICore.Behaviour
         {
             _fmPosition.Fuzzify("DistToGoal", goalDist);
             _fmPosition.Fuzzify("DistToOptimal", optimalPositionDist);
-            
-            //this method automatically processes the rules and defuzzifies //the inferred conclusion
             return _fmPosition.DeFuzzify("Desirability", FuzzyModule.DefuzzifyType.MaxAv);
         }
 
         public double CalculateDistanceToBallDesirability(double ballDist)
         {
             _fmBall.Fuzzify("DistToBall", ballDist);
-            
-            //this method automatically processes the rules and defuzzifies //the inferred conclusion
             return _fmBall.DeFuzzify("Desirability", FuzzyModule.DefuzzifyType.MaxAv);
         }
 

@@ -15,7 +15,7 @@ namespace AICore.Behaviour
     ///
     /// Rules:
     /// - Should stay near the goal                                (Fuzzy: ArriveBehaviour / WanderBehaviour)  
-    /// - Should kick the ball away when too close to the goal     (Fuzzy)
+    /// - Should kick the ball away when too close to the goal     (Fuzzy: PursuitBehaviour / Ball.Kicked())
     /// - Should avoid obstacles in the field                      (ObstacleAvoidanceBehaviour)
     /// - Should stay within the playing field                     (WallAvoidanceBehaviour)
     /// - Should not move when tired                               (TiredModule)
