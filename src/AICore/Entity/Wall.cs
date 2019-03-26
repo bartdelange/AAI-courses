@@ -15,7 +15,7 @@ namespace AICore.Entity
         public int BoundingRadius { get; set; }
 
         // Render properties
-        private readonly Pen _wallPen = new Pen(Color.FromArgb(80, Color.Black), 3);
+        private readonly Pen _wallPen = new Pen(Color.FromArgb(80, Color.Black), 1);
 
         // Wall properties
         private readonly Vector2 _startPosition;

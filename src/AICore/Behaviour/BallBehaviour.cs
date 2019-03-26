@@ -36,7 +36,8 @@ namespace AICore.Behaviour
             _steeringBehaviour = new WeightedTruncatedRunningSumWithPrioritization(
                 new List<WeightedSteeringBehaviour>
                 {
-                    new WeightedSteeringBehaviour(new BounceBehaviour(ball, world.Walls, ball.BoundingRadius), 10f)
+                    new WeightedSteeringBehaviour(new BounceBehaviour(ball, world.Walls, 3), 10f),
+                    new WeightedSteeringBehaviour(new DecreasingSteeringBehaviour(ball), 10f)
                 },
                 ball.MaxSpeed
             );

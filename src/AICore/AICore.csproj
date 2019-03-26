@@ -79,7 +79,7 @@
     <Compile Include="SteeringBehaviour\Individual\BounceBehaviour.cs" />
     <Compile Include="SteeringBehaviour\Individual\EvadeBehaviour.cs" />
     <Compile Include="SteeringBehaviour\Individual\FleeBehaviour.cs" />
-    <Compile Include="SteeringBehaviour\Individual\ConstantSteeringBehaviour.cs" />
+    <Compile Include="SteeringBehaviour\Individual\DecreasingSteeringBehaviour.cs" />
     <Compile Include="SteeringBehaviour\Individual\ObstacleAvoidanceBehaviour.cs" />
     <Compile Include="SteeringBehaviour\Individual\OffsetPursuit.cs" />
     <Compile Include="SteeringBehaviour\Individual\PathFollowingBehaviour.cs" />

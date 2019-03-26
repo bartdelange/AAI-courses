@@ -15,6 +15,7 @@ namespace AICore.Entity.Contracts
         Vector2 SmoothHeading { get; set; }
 
         float MaxSpeed { get; set; }
+        float CurrentSpeed { get; set; }
         float Mass { get; set; }
 
         void Update(float timeDelta);

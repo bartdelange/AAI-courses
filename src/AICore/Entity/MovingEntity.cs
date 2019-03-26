@@ -21,6 +21,7 @@ namespace AICore.Entity
         #region entity properties
 
         public float MaxSpeed { get; set; } = 150;
+        public float CurrentSpeed { get; set; } = 150;
 
         public float Mass { get; set; } = 20;
 
@@ -41,7 +42,6 @@ namespace AICore.Entity
         public Vector2 Heading { get; set; } = Vector2.One;
         public Vector2 SmoothHeading { get; set; } = Vector2.One;
 
-        //
         private Vector2 WorldBounds { get; }
 
         private readonly HeadingSmoother _headingSmoother;

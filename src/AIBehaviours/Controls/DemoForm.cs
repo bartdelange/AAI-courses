@@ -43,7 +43,7 @@ namespace AIBehaviours.Controls
                 Checked = Config.Debug
             };
 
-            Menu = new MainMenu()
+            Menu = new MainMenu
             {
                 MenuItems =
                 {

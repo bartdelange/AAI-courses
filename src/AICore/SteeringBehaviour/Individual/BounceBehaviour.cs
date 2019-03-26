@@ -10,14 +10,14 @@ namespace AICore.SteeringBehaviour.Individual
     {
         public bool Visible { get; set; } = true;
 
-        private readonly float _feelerLength = 1;
+        private readonly float _feelerLength;
 
         private readonly IMovingEntity _movingEntity;
         private readonly IEnumerable<IWall> _walls;
 
         private IEnumerable<Vector2> _feelers;
 
-        public BounceBehaviour(IMovingEntity entity, IEnumerable<IWall> walls, float feelerLength)
+        public BounceBehaviour(IMovingEntity entity, IEnumerable<IWall> walls, float feelerLength = 10)
         {
             _movingEntity = entity;
             _walls = walls;
@@ -57,11 +57,13 @@ namespace AICore.SteeringBehaviour.Individual
                 }
             }
 
-            var newHeading = _movingEntity.Heading;
-            if (closestWall != null || closestPoint.HasValue || intersectingFeeler.HasValue)
-                newHeading = 2 * Vector2.Dot(_movingEntity.Position, closestWall.Normal) * closestWall.Normal - _movingEntity.Position;
+            if (closestWall == null && !closestPoint.HasValue && !intersectingFeeler.HasValue) return Vector2.Zero;
 
-            return newHeading;
+            var n = Vector2.Normalize(closestWall.Normal);
+            var d = Vector2.Normalize(_movingEntity.Heading);
+            _movingEntity.Heading = d - 2 * Vector2.Dot(d, n) * n * deltaTime;
+
+            return Vector2.Zero;
         }
 
         /// <summary>
