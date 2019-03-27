@@ -26,15 +26,32 @@ namespace AICore.Behaviour
 
         private FuzzyModule _fmGoal = new FuzzyModule();
         private FuzzyModule _fmBall = new FuzzyModule();
-        private readonly ISteeringBehaviour _steeringBehaviour;
+        private readonly ISteeringBehaviour _wanderBehaviour;
+        private readonly ISteeringBehaviour _targetedBehaviour;
+        public SoccerGoal Goal { get; set; }
+        public IPlayer Goalkeeper { get; set; }
 
         public GoalKeeperBehaviour(IPlayer goalkeeper, List<IPlayer> team, World world)
         {
-            _steeringBehaviour = new WeightedTruncatedRunningSumWithPrioritization(
+            Goalkeeper = goalkeeper;
+            Goal = world.SoccerGoals.Find(g => g.TeamName == goalkeeper.TeamName);
+
+            // Wandering behaviour
+            _wanderBehaviour = new WeightedTruncatedRunningSumWithPrioritization(
                 new List<WeightedSteeringBehaviour>
                 {
                     new WeightedSteeringBehaviour(new WallAvoidanceBehaviour(goalkeeper, world.Walls), 10f),
                     new WeightedSteeringBehaviour(new WanderBehaviour(goalkeeper), 1f)
+                },
+                goalkeeper.MaxSpeed
+            );
+
+            // Running towards goal
+            _targetedBehaviour = new WeightedTruncatedRunningSumWithPrioritization(
+                new List<WeightedSteeringBehaviour>
+                {
+                    new WeightedSteeringBehaviour(new WallAvoidanceBehaviour(goalkeeper, world.Walls), 10f),
+                    new WeightedSteeringBehaviour(new ArriveBehaviour(goalkeeper, Goal.Position), 1f)
                 },
                 goalkeeper.MaxSpeed
             );
@@ -44,7 +61,10 @@ namespace AICore.Behaviour
 
         public Vector2 Calculate(float deltaTime)
         {
-            return _steeringBehaviour.Calculate(deltaTime);
+            if (CalculateDistanceToGoalDesirability(Vector2.Distance(Goal.Position, Goalkeeper.Position)) > 50)
+                return _wanderBehaviour.Calculate(deltaTime);
+            
+            return _targetedBehaviour.Calculate(deltaTime);
         }
 
         public void Render(Graphics graphics)

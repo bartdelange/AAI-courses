@@ -13,16 +13,19 @@ namespace AICore.Entity
         public IMovingEntity BallEntity { get; set; }
 
         public float MaxEnergy { get; set; } = 50;
-        public float MinEnergy { get; set; } = 10;
+        public float MinEnergy { get; set; } = 10;   
+        public string TeamName { get; set; } 
+
 
         public float Energy { get; set; }
 
         // Render properties
         private Brush _brush;
 
-        public Player(Vector2 position, Color? color = null) : base(position)
+        public Player(Vector2 position, string teamName, Color? color = null) : base(position)
         {
             StartPosition = position;
+            TeamName = teamName;
 
             _brush = new SolidBrush(color ?? Color.Black);
         }

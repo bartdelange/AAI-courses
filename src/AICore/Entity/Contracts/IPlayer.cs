@@ -10,6 +10,7 @@ namespace AICore.Entity.Contracts
 
         float MaxEnergy { get; set; }
         float MinEnergy { get; set; }
+        string TeamName { get; set; } 
 
         float Energy { get; set; }
 

@@ -12,14 +12,16 @@ namespace AICore.Entity
         public bool Visible { get; set; } = true;
 
         public Vector2 Position { get; }
+        public string TeamName { get; set; }
 
         private readonly Bounds _bounds;
         private readonly Color _teamColor;
 
-        public SoccerGoal(Vector2 position, Vector2 size, Color teamColor)
+        public SoccerGoal(Vector2 position, Vector2 size, string teamName, Color teamColor)
         {
             Position = position;
-
+            TeamName = teamName;
+            
             _bounds = new Bounds(position - size / 2, position + size / 2);
             _teamColor = teamColor;
         }

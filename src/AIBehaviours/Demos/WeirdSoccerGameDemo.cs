@@ -30,11 +30,11 @@ namespace AIBehaviours.Demos
             var teamOne = Color.Red;
             var teamTwo = Color.DeepSkyBlue;
 
-            // Create ball instance
+            // Create the goals
             World.SoccerGoals.AddRange(new[]
             {
-                new SoccerGoal(playingFieldArea.Center() - new Vector2(350, 0), new Vector2(10, 150), teamOne),
-                new SoccerGoal(playingFieldArea.Center() - new Vector2(-350, 0), new Vector2(10, 150), teamTwo),
+                new SoccerGoal(playingFieldArea.Center() - new Vector2(350, 0), new Vector2(10, 150), teamOne.Name, teamOne),
+                new SoccerGoal(playingFieldArea.Center() - new Vector2(-350, 0), new Vector2(10, 150), teamTwo.Name, teamTwo)
             });
 
             // Create ball
@@ -75,20 +75,20 @@ namespace AIBehaviours.Demos
             var size = playingField.Max - playingField.Min;
             var center = size / 2 + playingField.Min;
 
-            var goalKeeper = new Player(new Vector2(center.X + (isOpponent ? 300 : -300), center.Y), teamColor);
+            var goalKeeper = new Player(new Vector2(center.X + (isOpponent ? 300 : -300), center.Y), teamColor.Name, teamColor);
 
             var defenders = new List<IPlayer>
             {
-                new Player(new Vector2(center.X + (isOpponent ? 175 : -175), center.Y - 100), teamColor),
-                new Player(new Vector2(center.X + (isOpponent ? 225 : -225), center.Y), teamColor),
-                new Player(new Vector2(center.X + (isOpponent ? 175 : -175), 435), teamColor)
+                new Player(new Vector2(center.X + (isOpponent ? 175 : -175), center.Y - 100), teamColor.Name, teamColor),
+                new Player(new Vector2(center.X + (isOpponent ? 225 : -225), center.Y), teamColor.Name, teamColor),
+                new Player(new Vector2(center.X + (isOpponent ? 175 : -175), 435), teamColor.Name, teamColor)
             };
 
             var strikers = new List<IPlayer>
             {
-                new Player(new Vector2(center.X + (isOpponent ? 75 : -75), center.Y - 100), teamColor),
-                new Player(new Vector2(center.X + (isOpponent ? 25 : -25), center.Y), teamColor),
-                new Player(new Vector2(center.X + (isOpponent ? 75 : -75), center.Y + 100), teamColor)
+                new Player(new Vector2(center.X + (isOpponent ? 75 : -75), center.Y - 100), teamColor.Name, teamColor),
+                new Player(new Vector2(center.X + (isOpponent ? 25 : -25), center.Y), teamColor.Name, teamColor),
+                new Player(new Vector2(center.X + (isOpponent ? 75 : -75), center.Y + 100), teamColor.Name, teamColor)
             };
 
             var team = new List<IPlayer>();
