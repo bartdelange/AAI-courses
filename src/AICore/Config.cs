@@ -5,6 +5,6 @@ namespace AICore
 {
     public static class Config
     {
-        public static bool Debug = true;
+        public static bool Debug;
     }
 }

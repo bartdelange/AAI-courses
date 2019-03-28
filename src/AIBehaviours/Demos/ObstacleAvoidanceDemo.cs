@@ -18,10 +18,16 @@ namespace AIBehaviours.Demos
             
             World.Obstacles.AddRange(EntityUtils.CreateObstacles(bounds, 500));
 
+            // Create walls
+            const int margin = 20;
+            World.Walls.AddRange(EntityUtils.CreateCage(
+                new Bounds(Vector2.Zero, new Vector2(WorldSize.Width, WorldSize.Height)) - new Vector2(margin)
+            ));
+
             var entities = EntityUtils.CreateVehicles(
                 50,
                 bounds,
-                entity => entity.SteeringBehaviour = new WanderObstacleAvoidanceBehaviour(entity, World.Obstacles)
+                entity => entity.SteeringBehaviour = new WanderWallObstacleAvoidanceBehaviour(entity, World.Obstacles, World.Walls)
             );
             
             World.Entities.AddRange(entities);

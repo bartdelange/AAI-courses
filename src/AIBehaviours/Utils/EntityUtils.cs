@@ -30,12 +30,12 @@ namespace AIBehaviours.Utils
 
                 // Create a position while keeping the obs
                 var randomX = Math.Min(
-                    bounds.Min.X + obstacleRadius,
+                    bounds.Max.X - obstacleRadius,
                     random.Next((int) (bounds.Min.X + obstacleRadius), (int) bounds.Max.X)
                 );
 
                 var randomY = Math.Min(
-                    bounds.Min.Y + obstacleRadius,
+                    bounds.Max.Y - obstacleRadius,
                     random.Next((int) (bounds.Min.Y + obstacleRadius), (int) bounds.Max.Y)
                 );
 

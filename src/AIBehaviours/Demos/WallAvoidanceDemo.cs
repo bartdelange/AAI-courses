@@ -20,9 +20,8 @@ namespace AIBehaviours.Demos
         {
             var bounds = new Bounds(Vector2.Zero, WorldSize);
 
-            const int margin = 20;
-
             // Create walls
+            const int margin = 20;
             World.Walls.AddRange(EntityUtils.CreateCage(
                 new Bounds(Vector2.Zero, new Vector2(WorldSize.Width, WorldSize.Height)) - new Vector2(margin)
             ));

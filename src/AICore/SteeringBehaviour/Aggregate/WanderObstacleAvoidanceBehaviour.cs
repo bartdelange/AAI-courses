@@ -8,17 +8,18 @@ using AICore.SteeringBehaviour.Util;
 
 namespace AICore.SteeringBehaviour.Aggregate
 {
-    public class WanderObstacleAvoidanceBehaviour : ISteeringBehaviour
+    public class WanderWallObstacleAvoidanceBehaviour : ISteeringBehaviour
     {
         public bool Visible { get; set; } = true;
 
         private readonly ISteeringBehaviour _aggregateBehaviour;
 
-        public WanderObstacleAvoidanceBehaviour(IMovingEntity entity, IEnumerable<IObstacle> obstacles)
+        public WanderWallObstacleAvoidanceBehaviour(IMovingEntity entity, IEnumerable<IObstacle> obstacles, IEnumerable<IWall> walls)
         {
             var steeringBehaviours = new List<WeightedSteeringBehaviour>
             {
-                new WeightedSteeringBehaviour(new ObstacleAvoidanceBehaviour(entity, obstacles, 40), 2f),
+                new WeightedSteeringBehaviour(new ObstacleAvoidanceBehaviour(entity, obstacles, 40), 20f),
+                new WeightedSteeringBehaviour(new WallAvoidanceBehaviour(entity, walls), 10f),
                 new WeightedSteeringBehaviour(new WanderBehaviour(entity, 50, 25, 25), 1f)
             };
 

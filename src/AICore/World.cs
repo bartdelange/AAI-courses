@@ -24,7 +24,7 @@ namespace AICore
         public void Update(float timeElapsed)
         {
             Entities?.ForEach(e => { e.Update(timeElapsed); });
-            Ball.Update(timeElapsed);
+            Ball?.Update(timeElapsed);
         }
 
         public void Render(Graphics graphics)
