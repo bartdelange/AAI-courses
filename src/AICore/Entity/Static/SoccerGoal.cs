@@ -3,9 +3,8 @@ using System.Drawing;
 using System.Numerics;
 using AICore.Entity.Contracts;
 using AICore.Model;
-using AICore.Util;
 
-namespace AICore.Entity
+namespace AICore.Entity.Static
 {
     public class SoccerGoal : IRenderable
     {
@@ -17,10 +16,10 @@ namespace AICore.Entity
         private readonly Bounds _bounds;
         private readonly Color _teamColor;
 
-        public SoccerGoal(Vector2 position, Vector2 size, string teamName, Color teamColor)
+        public SoccerGoal(Vector2 position, Vector2 size, Color teamColor)
         {
             Position = position;
-            TeamName = teamName;
+            TeamName = teamColor.Name;
             
             _bounds = new Bounds(position - size / 2, position + size / 2);
             _teamColor = teamColor;

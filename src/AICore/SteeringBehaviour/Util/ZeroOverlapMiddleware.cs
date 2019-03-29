@@ -14,7 +14,7 @@ namespace AICore.SteeringBehaviour.Util
             _other = other;
         }
 
-        public void Update()
+        public void Update(float deltaTime)
         {
             foreach (var entity in _other)
             {

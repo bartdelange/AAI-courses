@@ -1,23 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Numerics;
-using System.Windows.Forms;
 using AIBehaviours.Controls;
 using AIBehaviours.Utils;
 using AICore;
 using AICore.Behaviour;
-using AICore.Entity;
 using AICore.Entity.Contracts;
+using AICore.Entity.Dynamic;
+using AICore.Entity.Static;
 using AICore.Model;
 using AICore.SteeringBehaviour.Util;
-using AICore.Util;
 
 namespace AIBehaviours.Demos
 {
-    /// <summary>
-    /// 
-    /// </summary>
     public class WeirdSoccerGameDemo : DemoForm
     {
         public WeirdSoccerGameDemo(Size size) : base(size)
@@ -26,40 +21,36 @@ namespace AIBehaviours.Demos
 
             var playingFieldArea = new Bounds(Vector2.Zero, WorldSize) - margin;
             var playingFieldAreaWalls = EntityUtils.CreateCage(playingFieldArea);
+            World.Walls.AddRange(playingFieldAreaWalls);
+
+            var playingFieldCenter = playingFieldArea.Center();
 
             var teamOne = Color.Red;
             var teamTwo = Color.DeepSkyBlue;
 
+            // Create goals
+            var teamOneGoal = new SoccerGoal(playingFieldCenter - new Vector2(350, 0), new Vector2(10, 150), teamOne);
+            var teamTwoGoal = new SoccerGoal(playingFieldCenter - new Vector2(-350, 0), new Vector2(10, 150), teamTwo);
+
             // Create the goals
-            World.SoccerGoals.AddRange(new[]
-            {
-                new SoccerGoal(playingFieldArea.Center() - new Vector2(350, 0), new Vector2(10, 150), teamOne.Name, teamOne),
-                new SoccerGoal(playingFieldArea.Center() - new Vector2(-350, 0), new Vector2(10, 150), teamTwo.Name, teamTwo)
-            });
+            World.SoccerGoals.Add(teamOneGoal);
+            World.SoccerGoals.Add(teamTwoGoal);
 
             // Create ball
-            var ball = new Ball(new Vector2(playingFieldArea.Max.X / 2, playingFieldArea.Max.Y / 2))
-            {
-                Heading = Vector2.One
-            };
-            ball.SteeringBehaviour = new BallBehaviour(ball, World);
+            var ball = new Ball(playingFieldCenter, World.Walls);
             World.Ball = ball;
-
+            
             // Create walls to contain players
-            World.Walls.AddRange(playingFieldAreaWalls);
 
+            // Create teams
             var teamRed = CreateTeam(World, playingFieldArea, teamOne);
             var teamBlue = CreateTeam(World, playingFieldArea, teamTwo, true);
 
+            // Add zero overlap middleware to entities
             var entities = new List<IMovingEntity>();
-
             entities.AddRange(teamRed);
             entities.AddRange(teamBlue);
-
-            entities.ForEach(entity => entity.Middlewares = new IMiddleware[]
-            {
-                new ZeroOverlapMiddleware(entity, entities)
-            });
+            entities.ForEach(entity => entity.Middlewares.Add(new ZeroOverlapMiddleware(entity, entities)));
 
             // Add entities to World
             World.Entities.AddRange(entities);
@@ -75,20 +66,20 @@ namespace AIBehaviours.Demos
             var size = playingField.Max - playingField.Min;
             var center = size / 2 + playingField.Min;
 
-            var goalKeeper = new Player(new Vector2(center.X + (isOpponent ? 300 : -300), center.Y), teamColor.Name, teamColor);
+            var goalKeeper = new Player(new Vector2(center.X + (isOpponent ? 300 : -300), center.Y), teamColor);
 
             var defenders = new List<IPlayer>
             {
-                new Player(new Vector2(center.X + (isOpponent ? 175 : -175), center.Y - 100), teamColor.Name, teamColor),
-                new Player(new Vector2(center.X + (isOpponent ? 225 : -225), center.Y), teamColor.Name, teamColor),
-                new Player(new Vector2(center.X + (isOpponent ? 175 : -175), 435), teamColor.Name, teamColor)
+                new Player(new Vector2(center.X + (isOpponent ? 175 : -175), center.Y - 100), teamColor),
+                new Player(new Vector2(center.X + (isOpponent ? 225 : -225), center.Y), teamColor),
+                new Player(new Vector2(center.X + (isOpponent ? 175 : -175), center.Y + 100), teamColor)
             };
 
             var strikers = new List<IPlayer>
             {
-                new Player(new Vector2(center.X + (isOpponent ? 75 : -75), center.Y - 100), teamColor.Name, teamColor),
-                new Player(new Vector2(center.X + (isOpponent ? 25 : -25), center.Y), teamColor.Name, teamColor),
-                new Player(new Vector2(center.X + (isOpponent ? 75 : -75), center.Y + 100), teamColor.Name, teamColor)
+                new Player(new Vector2(center.X + (isOpponent ? 75 : -75), center.Y - 150), teamColor),
+                new Player(new Vector2(center.X + (isOpponent ? 25 : -25), center.Y), teamColor),
+                new Player(new Vector2(center.X + (isOpponent ? 75 : -75), center.Y + 150), teamColor)
             };
 
             var team = new List<IPlayer>();

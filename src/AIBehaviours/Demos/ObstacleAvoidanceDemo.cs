@@ -12,7 +12,7 @@ namespace AIBehaviours.Demos
     {
         public ObstacleAvoidanceDemo(Size size) : base(size)
         {
-            var bounds = new Bounds(new Vector2(), WorldSize);
+            var bounds = new Bounds(Vector2.Zero, WorldSize);
 
             World = new World();
             

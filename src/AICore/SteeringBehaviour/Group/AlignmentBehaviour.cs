@@ -26,7 +26,7 @@ namespace AICore.SteeringBehaviour.Group
         {
             if (!_neighbours.Any())
             {
-                return new Vector2();
+                return Vector2.Zero;
             }
 
             return _neighbours.Aggregate(

@@ -2,7 +2,7 @@
 using System.Numerics;
 using AICore.Util;
 
-namespace AICore.Entity
+namespace AICore.Entity.Dynamic
 {
     public class Vehicle : MovingEntity
     {
@@ -10,6 +10,10 @@ namespace AICore.Entity
 
         public Vehicle(Vector2 position, Color? color = null) : base(position)
         {
+            MaxSpeed = 50;
+            Mass = 25;
+            BoundingRadius = 15;
+            
             _brush = new SolidBrush(color ?? Color.DodgerBlue);
         }
 

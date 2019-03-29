@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Numerics;
 using AICore.Entity.Contracts;
 
-namespace AICore.Entity
+namespace AICore.Entity.Dynamic
 {
     public class Player : MovingEntity, IPlayer
     {        
@@ -20,14 +20,20 @@ namespace AICore.Entity
         public float Energy { get; set; }
 
         // Render properties
-        private Brush _brush;
+        private readonly Brush _brush;
 
-        public Player(Vector2 position, string teamName, Color? color = null) : base(position)
+        public Player(Vector2 position, Color color) : base(position)
         {
             StartPosition = position;
-            TeamName = teamName;
+            TeamName = color.Name;
+            
+            // Set entity properties
+            MaxSpeed = 50;
+            Mass = 15;
+            BoundingRadius = 10;
 
-            _brush = new SolidBrush(color ?? Color.Black);
+            // 
+            _brush = new SolidBrush(color);
         }
 
         public override void Render(Graphics graphics)
@@ -45,7 +51,7 @@ namespace AICore.Entity
 
         public void KickBall(Ball ball, Vector2 position)
         {
-            ball.Kicked(Vector2.Normalize(position));
+            ball.Kick(Vector2.Normalize(position), 500);
         }
 
         public void Dribble(Ball ball)

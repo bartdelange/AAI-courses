@@ -1,4 +1,5 @@
 using System.Numerics;
+using AICore.Entity.Dynamic;
 
 namespace AICore.Entity.Contracts
 {

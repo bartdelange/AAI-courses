@@ -5,6 +5,7 @@ using System.Numerics;
 using AIBehaviours.Controls;
 using AICore.Entity;
 using AICore.Entity.Contracts;
+using AICore.Entity.Dynamic;
 using AICore.Model;
 using AICore.SteeringBehaviour.Individual;
 using AICore.SteeringBehaviour.Util;
@@ -50,11 +51,8 @@ namespace AIBehaviours.Demos
 
             followers.ForEach(entity =>
             {
-                entity.Middlewares = new IMiddleware[]
-                {
-                    new ZeroOverlapMiddleware(entity, followers),
-                    new WrapAroundMiddleware(entity, bounds),
-                };
+                entity.Middlewares.Add(new ZeroOverlapMiddleware(entity, followers));
+                entity.Middlewares.Add(new WrapAroundMiddleware(entity, bounds));
             });
 
             // Populate world

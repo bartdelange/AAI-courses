@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Numerics;
 using AICore.Entity;
 using AICore.Entity.Contracts;
+using AICore.Entity.Static;
 using AICore.FuzzyLogic;
 using AICore.SteeringBehaviour;
 using AICore.SteeringBehaviour.Individual;

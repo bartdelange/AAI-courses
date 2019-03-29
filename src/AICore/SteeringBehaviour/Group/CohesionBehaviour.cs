@@ -27,7 +27,7 @@ namespace AICore.SteeringBehaviour.Group
         {
             if (!_neighbours.Any())
             {
-                return new Vector2();
+                return Vector2.Zero;
             }
 
             var centerOfMass = _neighbours.Aggregate(

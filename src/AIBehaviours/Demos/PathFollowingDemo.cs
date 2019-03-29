@@ -8,6 +8,7 @@ using AIBehaviours.Utils;
 using AICore;
 using AICore.Entity;
 using AICore.Entity.Contracts;
+using AICore.Entity.Dynamic;
 using AICore.Graph.PathFinding;
 using AICore.Model;
 using AICore.Navigation;

@@ -37,12 +37,10 @@ namespace AIBehaviours.Demos
 
             // Apply zero overlap middleware
             World.Entities.ForEach(entity =>
-                entity.Middlewares = new IMiddleware[]
-                {
-                    new ZeroOverlapMiddleware(entity, World.Entities),
-                    new WrapAroundMiddleware(entity, bounds),
-                }
-            );
+            {
+                entity.Middlewares.Add(new ZeroOverlapMiddleware(entity, World.Entities));
+                entity.Middlewares.Add(new ZeroOverlapMiddleware(entity, World.Entities));
+            });
         }
     }
 }

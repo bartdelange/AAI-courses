@@ -30,7 +30,7 @@ namespace AICore.SteeringBehaviour.Individual
 
             if (dist <= 0)
             {
-                return new Vector2();
+                return Vector2.Zero;
             }
 
             //because Deceleration is enumerated as an int, this value is required

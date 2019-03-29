@@ -17,7 +17,7 @@ namespace AICore.SteeringBehaviour.Util
             _bounds = bounds;
         }
 
-        public void Update()
+        public void Update(float deltaTime)
         {
             _movingEntity.Position = _movingEntity.Position.WrapToBounds(_bounds);
         }

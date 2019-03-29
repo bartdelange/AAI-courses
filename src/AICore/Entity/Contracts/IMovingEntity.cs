@@ -8,16 +8,15 @@ namespace AICore.Entity.Contracts
     {
         ISteeringBehaviour SteeringBehaviour { get; set; }
 
-        IEnumerable<IMiddleware> Middlewares { get; set; }
+        List<IMiddleware> Middlewares { get; set; }
 
         Vector2 Velocity { get; set; }
         Vector2 Heading { get; set; }
         Vector2 SmoothHeading { get; set; }
 
         float MaxSpeed { get; set; }
-        float CurrentSpeed { get; set; }
         float Mass { get; set; }
 
-        void Update(float timeDelta);
+        void Update(float deltaTime);
     }
 }

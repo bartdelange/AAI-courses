@@ -4,6 +4,7 @@ using System.Linq;
 using System.Numerics;
 using AICore.Entity;
 using AICore.Entity.Contracts;
+using AICore.Entity.Dynamic;
 using AICore.Util;
 
 namespace AICore.SteeringBehaviour.Group
@@ -27,7 +28,7 @@ namespace AICore.SteeringBehaviour.Group
         {
             if (!_neighbours.Any())
             {
-                return new Vector2();
+                return Vector2.Zero;
             }
 
             return _neighbours.Aggregate(

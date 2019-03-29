@@ -3,7 +3,7 @@ using System.Numerics;
 using AICore.Entity.Contracts;
 using AICore.Util;
 
-namespace AICore.Entity
+namespace AICore.Entity.Static
 {
     public class CircleObstacle : IObstacle
     {

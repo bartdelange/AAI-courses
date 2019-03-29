@@ -4,6 +4,8 @@ using System.Numerics;
 using System.Runtime.Remoting.Messaging;
 using AICore.Entity;
 using AICore.Entity.Contracts;
+using AICore.Entity.Dynamic;
+using AICore.Entity.Static;
 using AICore.Model;
 using AICore.Navigation;
 

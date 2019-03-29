@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Numerics;
 using AICore.Entity;
 using AICore.Entity.Contracts;
+using AICore.Entity.Dynamic;
+using AICore.Entity.Static;
 using AICore.Model;
 using AICore.Util;
 

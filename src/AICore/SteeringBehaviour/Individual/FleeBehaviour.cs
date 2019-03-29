@@ -26,7 +26,7 @@ namespace AICore.SteeringBehaviour.Individual
             // Only flee if the target is within 'panic distance'.
             if (distance > Boundary)
             {
-                return new Vector2();
+                return Vector2.Zero;
             }
 
             return Vector2.Normalize(_movingEntity.Position - _target.Position) * _movingEntity.MaxSpeed -

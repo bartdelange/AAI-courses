@@ -2,6 +2,6 @@ namespace AICore.Entity.Contracts
 {
     public interface IMiddleware
     {
-        void Update();
+        void Update(float deltaTime);
     }
 }
