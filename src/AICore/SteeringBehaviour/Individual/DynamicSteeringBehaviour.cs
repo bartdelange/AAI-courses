@@ -55,13 +55,7 @@ namespace AICore.SteeringBehaviour.Individual
             );
 
             // Take ball when player touches ball
-            var interceptDistance = Math.Pow(_player.BoundingRadius * 2, 2) + Math.Pow(_soccerField.Ball.BoundingRadius, 2);
-            var distance = Vector2.DistanceSquared(_soccerField.Ball.Position, _player.Position);
-
-            if (distance < interceptDistance)
-            {
-                _soccerField.Ball.Owner = _player;
-            }
+            _soccerField.Ball.TakeBall(_player);
             
             return weightedSteeringBehaviour.Calculate(deltaTime);
         }

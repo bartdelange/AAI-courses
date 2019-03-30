@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using AICore.Entity.Contracts;
 using AICore.Model;
 using AICore.Shapes;
@@ -43,6 +45,17 @@ namespace AICore.Entity.Dynamic
             // Set velocity of ball by using player heading and given speed
             Velocity = (Vector2.Normalize(Position - player.Position) * speed / Mass).Truncate(MaxSpeed);
             Owner = null;
+        }
+
+        public void TakeBall(IPlayer player)
+        {
+            var interceptDistance = Math.Pow(player.BoundingRadius * 2, 2) + Math.Pow(BoundingRadius, 2);
+            var distance = Vector2.DistanceSquared(Position, player.Position);
+
+            if (distance < interceptDistance)
+            {
+                Owner = player;
+            }
         }
 
         public override void Update(float deltaTime)
