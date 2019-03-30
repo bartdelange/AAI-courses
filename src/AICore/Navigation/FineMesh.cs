@@ -25,7 +25,7 @@ namespace AICore.Navigation
             _density = density;
             _bounds = bounds;
 
-            GenerateEdges(_bounds.Min);
+            GenerateEdges(_bounds.Center());
         }
 
         #region Floodfilling
