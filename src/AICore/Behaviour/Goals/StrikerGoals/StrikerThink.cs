@@ -11,6 +11,7 @@ namespace AICore.Behaviour.Goals.StrikerGoals
                 
             Add(GoalNames.GoToBall, new GoToBall(player, soccerField));
             Add(GoalNames.DribbleToGoal, new DribbleToGoal(player, soccerField));
+            Add(GoalNames.ShootBallToGoal, new ShootBallToGoal(player, soccerField));
         }
     }
 }
