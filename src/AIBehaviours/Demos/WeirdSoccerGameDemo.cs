@@ -119,7 +119,7 @@ namespace AIBehaviours.Demos
             var playingFieldAreaWalls = EntityUtils.CreateCage(playingFieldArea);
 
             // Create ball
-            var ball = new Ball(playingFieldArea.Center(), playingFieldAreaWalls);
+            var ball = new Ball(playingFieldArea.Center(), _soccerField);
 
             // Create teams
             var teamRed = CreateTeam(Color.Red, playingFieldArea, _soccerField);

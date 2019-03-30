@@ -19,7 +19,6 @@ namespace AICore.Entity.Dynamic
         // Render properties
         private readonly string _positionName;
         private readonly Brush _brush;
-        private readonly Pen _highlightPen = new Pen(Color.PaleGreen, 5);
 
         public Player(string positionName, Vector2 startingPosition, Color color) : base(startingPosition)
         {

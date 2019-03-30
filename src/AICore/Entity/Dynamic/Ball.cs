@@ -1,21 +1,20 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Numerics;
-using System.Security.Cryptography;
-using AICore.Behaviour;
 using AICore.Entity.Contracts;
+using AICore.Shapes;
 using AICore.Util;
 using AICore.Worlds;
 
 namespace AICore.Entity.Dynamic
 {
-    public class Ball : MovingEntity
+    public class Ball : MovingEntity, ICircle
     {
         public IPlayer OwnedBy;
         
-        private readonly IEnumerable<IWall> _walls;
+        private readonly SoccerField _soccerField;
 
-        public Ball(Vector2 position, IEnumerable<IWall> walls) : base(position)
+        public Ball(Vector2 position, SoccerField soccerField) : base(position)
         {
             Position = position;
 
@@ -24,7 +23,7 @@ namespace AICore.Entity.Dynamic
             BoundingRadius = Config.BallRadius;
 
             // Walls are used to check for collision
-            _walls = walls;
+            _soccerField = soccerField;
         }
 
         public void Kick(IPlayer player, float speed)
@@ -41,10 +40,12 @@ namespace AICore.Entity.Dynamic
 
         public override void Update(float deltaTime)
         {
+            CheckGoalCollision();
+            
             const float squaredFriction = Config.BallFriction * Config.BallFriction;
             
             // Check for collisions, if ball has collision reflect velocity
-            if (BallUtils.CheckForCollisions(this, _walls, out var normal))
+            if (BallUtils.CheckForCollisions(this, _soccerField.Sidelines, out var normal))
             {
                 Velocity = Vector2.Reflect(Velocity, normal);
             }
@@ -58,24 +59,25 @@ namespace AICore.Entity.Dynamic
             Velocity += Vector2.Normalize(Velocity) * Config.BallFriction;
             Position += Velocity;
 
-            
             // Update heading
             Heading = Vector2.Normalize(Velocity);
         }
 
-        public override void Render(Graphics graphics)
+        private void CheckGoalCollision()
         {
-            base.Render(graphics);
-
-            graphics.FillEllipse(
-                Brushes.CadetBlue,
-                Position.X - (BoundingRadius),
-                Position.Y - (BoundingRadius),
-                BoundingRadius * 2,
-                BoundingRadius * 2
+            var affectedTeam = _soccerField.Teams.Find(team =>
+                this.PolyIntersectsWithCircle(team.Goal.Polygons,0)
             );
-        }
 
+            // No collision happened, do nothing
+            if (affectedTeam == null)
+            {
+                return;
+            }
+
+            affectedTeam.Goal.Score -= 1;
+        }
+        
         public IPlayer FindClosestPlayer(List<IPlayer> players)
         {
             var smallestDistance = float.MaxValue;
@@ -93,6 +95,19 @@ namespace AICore.Entity.Dynamic
             });
 
             return closestPlayer;
+        }
+
+        public override void Render(Graphics graphics)
+        {
+            base.Render(graphics);
+
+            graphics.FillEllipse(
+                Brushes.CadetBlue,
+                Position.X - (BoundingRadius),
+                Position.Y - (BoundingRadius),
+                BoundingRadius * 2,
+                BoundingRadius * 2
+            );
         }
     }
 }

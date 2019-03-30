@@ -69,6 +69,8 @@
     <Compile Include="Enum\EnvironmentVariableName.cs" />
     <Compile Include="Model\Bounds.cs" />
     <Compile Include="Model\Team.cs" />
+    <Compile Include="Shapes\Circle.cs" />
+    <Compile Include="Shapes\IPolygon.cs" />
     <Compile Include="SteeringBehaviour\Aggregate\FlockingBehaviour.cs" />
     <Compile Include="SteeringBehaviour\Aggregate\InterceptBallBehaviour.cs" />
     <Compile Include="SteeringBehaviour\Aggregate\WallAndObstacleAvoidanceBehaviour.cs" />

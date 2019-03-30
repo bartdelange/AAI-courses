@@ -1,12 +1,9 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Numerics;
-using AICore.Entity;
 using AICore.Entity.Contracts;
-using AICore.Entity.Static;
 using AICore.FuzzyLogic;
 using AICore.SteeringBehaviour;
-using AICore.SteeringBehaviour.Aggregate;
 using AICore.SteeringBehaviour.Individual;
 using AICore.SteeringBehaviour.Util;
 using AICore.Worlds;
