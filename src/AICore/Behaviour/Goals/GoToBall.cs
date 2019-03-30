@@ -44,13 +44,18 @@ namespace AICore.Behaviour.Goals
 
         public override void Update(IPlayer player)
         {
-            Console.WriteLine("Update GoToBall");
+            SoccerField.Ball.TakeBall(Player);
 
             base.Update(player);
         }
 
         public override double CheckDesirability()
         {
+            if (SoccerField.Ball.Owner == Player)
+            {
+                return 0;
+            }
+            
             var ballDist = Vector2.Distance(Player.Position, SoccerField.Ball.Position);
             _fuzzyModule.Fuzzify("DistToBall", ballDist);
             return _fuzzyModule.DeFuzzify("Desirability", FuzzyModule.DefuzzifyType.MaxAv);
