@@ -18,12 +18,6 @@ namespace AICore.Behaviour.States
         public void Update(PlayerState<IPlayer> state, float deltaTime)
         {
             Console.WriteLine("Resting...");
-            state.Player.Energy += 1;
-
-            if (state.Player.Energy >= state.Player.MaxEnergy)
-            {
-                state.SetState(new WanderNearPosition());
-            }
         }
     }
 }

@@ -18,9 +18,6 @@ namespace AICore.Behaviour.States
         public void Update(PlayerState<IPlayer> state, float deltaTime)
         {
             Console.WriteLine("Attacking...");
-            state.Player.Energy -= 1;
-
-            if (state.Player.Energy < 5) state.SetState(new Rest());
         }
     }
 }

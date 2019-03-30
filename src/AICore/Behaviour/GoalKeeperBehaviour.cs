@@ -52,11 +52,11 @@ namespace AICore.Behaviour
             _soccerField = soccerField;
 
             // Wandering behaviour
-            _wanderBehaviour = new PrioritizedDithering(
+            _wanderBehaviour = new WeightedTruncatedRunningSumWithPrioritization(
                 new List<WeightedSteeringBehaviour>
                 {
-                    new WeightedSteeringBehaviour(new WanderWallAvoidanceBehaviour(goalkeeper, _soccerField.Sidelines), 1f, .8f),
-                    new WeightedSteeringBehaviour(new SeekBehaviour(goalkeeper, goalkeeper.Position), 1f, .8f)
+                    new WeightedSteeringBehaviour(new WallAvoidanceBehaviour(goalkeeper, _soccerField.Sidelines), 10f),
+                    new WeightedSteeringBehaviour(new SeekBehaviour(goalkeeper, goalkeeper.Position), 1f)
                 },
                 goalkeeper.MaxSpeed
             );

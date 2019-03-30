@@ -37,7 +37,6 @@ namespace AICore.Behaviour
                 new List<WeightedSteeringBehaviour>
                 {
                     new WeightedSteeringBehaviour(new WallAvoidanceBehaviour(striker, soccerField.Sidelines), 10f),
-                    new WeightedSteeringBehaviour(new WanderBehaviour(striker), 1f)
                 },
                 striker.MaxSpeed
             );

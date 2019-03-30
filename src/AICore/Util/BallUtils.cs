@@ -60,19 +60,14 @@ namespace AICore.Util
             var speed = movingEntity.Velocity.Length();
             
             var sideFeelerLength = feelerLength / 2;
-            var feelers = new Vector2[3];
+            var feelers = new Vector2[1];
 
             // Forward pointing feeler
-            feelers[0] = movingEntity.Position +
-                         feelerLength * movingEntity.Heading * speed;
-
             // Left pointing feeler
-            feelers[1] = movingEntity.Position +
+            feelers[0] = movingEntity.Position +
                          sideFeelerLength * movingEntity.Heading.RotateAroundOrigin(35) * speed;
 
             // Right pointing feeler
-            feelers[2] = movingEntity.Position +
-                         sideFeelerLength * movingEntity.Heading.RotateAroundOrigin(-35) * speed;
 
             return feelers;
         }

@@ -9,8 +9,6 @@ namespace AICore.SteeringBehaviour.Aggregate
     {
         public bool Visible { get; set; }
 
-        private readonly PursuitBehaviour _steeringBehaviour;
-
         public InterceptBallBehaviour(IPlayer player)
         {
             // _steeringBehaviour = new PursuitBehaviour(player);

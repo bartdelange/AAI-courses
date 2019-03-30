@@ -71,6 +71,7 @@
     <Compile Include="Model\Team.cs" />
     <Compile Include="SteeringBehaviour\Aggregate\FlockingBehaviour.cs" />
     <Compile Include="SteeringBehaviour\Aggregate\InterceptBallBehaviour.cs" />
+    <Compile Include="SteeringBehaviour\Aggregate\WallAndObstacleAvoidanceBehaviour.cs" />
     <Compile Include="SteeringBehaviour\Aggregate\WanderNearPositionBehaviour.cs" />
     <Compile Include="SteeringBehaviour\Aggregate\WanderObstacleAvoidanceBehaviour.cs" />
     <Compile Include="SteeringBehaviour\Aggregate\WanderWallAvoidanceBehaviour.cs" />
@@ -149,6 +150,7 @@
     <Compile Include="Worlds\World.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Assets" />
     <Folder Include="SteeringBehaviour\Aggregate\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

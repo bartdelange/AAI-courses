@@ -130,6 +130,7 @@ namespace AICore.Entity.Dynamic
             var acceleration = (SteeringBehaviour?.Calculate(deltaTime) / Mass) ?? Vector2.Zero;
 
             Velocity = acceleration * deltaTime;
+
             Position += Velocity * deltaTime;
 
             if (Velocity.LengthSquared() > 0.000000001)
@@ -151,6 +152,9 @@ namespace AICore.Entity.Dynamic
         {
             if (!Config.Debug) return;
 
+            // Render steering behaviour if it exists
+            SteeringBehaviour?.RenderIfVisible(graphics);
+            
             // visualize the velocity
             graphics.DrawLine(
                 Pens.Red,
@@ -173,9 +177,6 @@ namespace AICore.Entity.Dynamic
                     new Size(BoundingRadius * 2, BoundingRadius * 2)
                 )
             );
-
-            // Render steering behaviour if it exists
-            SteeringBehaviour?.RenderIfVisible(graphics);
         }
     }
 }

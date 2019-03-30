@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Numerics;
+using System.Security.Cryptography;
 using AICore.Behaviour;
 using AICore.Entity.Contracts;
 using AICore.Util;
+using AICore.Worlds;
 
 namespace AICore.Entity.Dynamic
 {
@@ -23,13 +25,18 @@ namespace AICore.Entity.Dynamic
 
             // Walls are used to check for collision
             _walls = walls;
-
-            Kick(new Vector2(.5f, 0), MaxSpeed);
         }
 
-        public void Kick(Vector2 direction, float speed)
+        public void Kick(IPlayer player, float speed)
         {
-            Velocity = (Vector2.Normalize(direction) * speed) / Mass;
+            // Can't kick the ball when player is too far away
+            var distanceToBall = Vector2.DistanceSquared(player.Position, Position);
+
+            const float ballWithinRange = 50 * 50;
+            if (distanceToBall > ballWithinRange) return;
+            
+            // Set velocity of ball by using player heading and given speed
+            Velocity = (Vector2.Normalize(Position - player.Position) * speed / Mass).Truncate(MaxSpeed);
         }
 
         public override void Update(float deltaTime)
@@ -51,6 +58,7 @@ namespace AICore.Entity.Dynamic
             Velocity += Vector2.Normalize(Velocity) * Config.BallFriction;
             Position += Velocity;
 
+            
             // Update heading
             Heading = Vector2.Normalize(Velocity);
         }
@@ -66,6 +74,25 @@ namespace AICore.Entity.Dynamic
                 BoundingRadius * 2,
                 BoundingRadius * 2
             );
+        }
+
+        public IPlayer FindClosestPlayer(List<IPlayer> players)
+        {
+            var smallestDistance = float.MaxValue;
+
+            IPlayer closestPlayer = null;
+            
+            players.ForEach(player =>
+            {
+                var distance = Vector2.DistanceSquared(player.Position, Position);
+
+                if (!(distance < smallestDistance)) return;
+                
+                closestPlayer = player;
+                smallestDistance = distance;
+            });
+
+            return closestPlayer;
         }
     }
 }

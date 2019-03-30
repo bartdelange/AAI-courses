@@ -8,12 +8,14 @@ namespace AICore.Worlds
 {
     public class SoccerField : IWorld
     {
-        // Static entities
-        public readonly List<IWall> Sidelines = new List<IWall>();
-        public readonly List<Team> Teams = new List<Team>();
 
         // Dynamic entities
         public Ball Ball { get; set; }
+        public readonly List<Team> Teams = new List<Team>();
+        
+        // Static entities
+        public readonly List<IWall> Sidelines = new List<IWall>();
+        public readonly List<IObstacle> Obstacles = new List<IObstacle>();
 
         public void Update(float timeElapsed)
         {
@@ -36,6 +38,7 @@ namespace AICore.Worlds
                 team.Players.ForEach(player => player.RenderIfVisible(graphics));
             });
 
+            Obstacles.ForEach(obstacle => obstacle.RenderIfVisible(graphics));
             Sidelines.ForEach(wall => wall.RenderIfVisible(graphics));
         }
     }

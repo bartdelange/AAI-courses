@@ -4,7 +4,7 @@ using AICore.Entity.Contracts;
 namespace AICore.SteeringBehaviour
 {
     public interface ISteeringBehaviour : IRenderable
-    {
+    {        
         /// <summary>
         ///     Method used to calculate a new velocity
         /// </summary>

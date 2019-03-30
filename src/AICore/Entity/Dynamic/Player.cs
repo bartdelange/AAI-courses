@@ -12,32 +12,27 @@ namespace AICore.Entity.Dynamic
         public DateTime Attempt { get; set; } = DateTime.Now;
 
         public float MaxEnergy { get; set; } = 50;
-        public float MinEnergy { get; set; } = 10;   
+        public float MinEnergy { get; set; } = 10;
 
         public float Energy { get; set; }
 
         // Render properties
         private readonly string _positionName;
         private readonly Brush _brush;
+        private readonly Pen _highlightPen = new Pen(Color.PaleGreen, 5);
 
         public Player(string positionName, Vector2 startingPosition, Color color) : base(startingPosition)
         {
             StartPosition = startingPosition;
-            
+
             // Set entity properties
-            MaxSpeed = 50;
-            Mass = 15;
+            MaxSpeed = 25;
+            Mass = 5;
             BoundingRadius = 10;
 
             // 
             _positionName = positionName;
             _brush = new SolidBrush(color);
-        }
-        
-        
-        public void KickBall(Ball ball, Vector2 position)
-        {
-            ball.Kick(Vector2.Normalize(position), 500);
         }
 
         public void Dribble(Ball ball)
@@ -53,7 +48,7 @@ namespace AICore.Entity.Dynamic
         public void Steal(Ball ball)
         {
             var random = new Random();
-            
+
             // Might need to fix this equals check
             if (ball.OwnedBy == this) return;
 
@@ -62,14 +57,12 @@ namespace AICore.Entity.Dynamic
             {
                 ball.OwnedBy = this;
             }
-            
+
             Attempt = DateTime.Now;
         }
 
         public override void Render(Graphics graphics)
         {
-            base.Render(graphics);
-            
             graphics.DrawString(
                 _positionName,
                 SystemFonts.DefaultFont,
@@ -77,13 +70,16 @@ namespace AICore.Entity.Dynamic
                 (Position + new Vector2(10, 10)).ToPoint()
             );
 
-            graphics.FillEllipse(
-                _brush,
-                Position.X - BoundingRadius,
-                Position.Y - BoundingRadius,
+            var rectangle = new Rectangle(
+                (int) (Position.X - BoundingRadius),
+                (int) (Position.Y - BoundingRadius),
                 BoundingRadius * 2,
                 BoundingRadius * 2
             );
+
+            graphics.FillEllipse(_brush, rectangle);
+            
+            base.Render(graphics);
         }
     }
 }
