@@ -41,7 +41,8 @@ namespace AICore.Worlds
         {
             _playingFieldArea = playingFieldArea;
             var center = _playingFieldArea.Center();
-
+            
+            Ball = new Ball(center, this);
 
             Obstacles = new List<IObstacle>
             {
