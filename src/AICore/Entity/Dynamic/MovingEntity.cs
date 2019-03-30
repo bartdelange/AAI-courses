@@ -103,8 +103,8 @@ namespace AICore.Entity.Dynamic
         }
 
         public Vector2 StartPosition { get; }
-        public Vector2 Velocity { get; protected set; } = Vector2.One;
-        public Vector2 Heading { get; protected set; } = Vector2.One;
+        public Vector2 Velocity { get; set; } = Vector2.One;
+        public Vector2 Heading { get; set; } = Vector2.One;
         public Vector2 SmoothHeading { get; set; } = Vector2.One;
 
         private readonly HeadingSmoother _headingSmoother;

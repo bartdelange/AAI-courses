@@ -11,7 +11,7 @@ namespace AICore.Entity.Contracts
         List<IMiddleware> Middlewares { get; set; }
 
         Vector2 StartPosition { get; }
-        Vector2 Velocity { get; }
+        Vector2 Velocity { get; set; }
         Vector2 Heading { get; }
         Vector2 SmoothHeading { get; set; }
 

@@ -107,6 +107,7 @@ namespace AICore.Model
             Players.ForEach(player =>
             {
                 player.Position = player.StartPosition;
+                player.Velocity = Vector2.Zero;
             });
         }
     }
