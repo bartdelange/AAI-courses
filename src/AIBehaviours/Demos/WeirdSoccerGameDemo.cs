@@ -35,9 +35,6 @@ namespace AIBehaviours.Demos
 
             _soccerField = new SoccerField(playingFieldArea);
 
-            // Create ball
-            var ball = new Ball(playingFieldArea.Center(), _soccerField);
-
             // Create teams
             var teamRed = new Team(Color.Red, playingFieldArea, _soccerField);
             var teamBlue = new Team(Color.DeepSkyBlue, playingFieldArea, _soccerField, true);
