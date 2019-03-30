@@ -1,5 +1,6 @@
 using System;
 using AICore.Entity.Contracts;
+using AICore.Exceptions;
 using AICore.FuzzyLogic;
 using AICore.Worlds;
 
@@ -36,12 +37,12 @@ namespace AICore.Behaviour.Goals.StrikerGoals
 
         public override void Activate()
         {
-            throw new NotImplementedException(); // Not needed
+            throw new NotImplementedByException(); // Not needed
         }
 
         public override double CheckDesirability()
         {
-            throw new NotImplementedException(); // Not needed
+            throw new NotImplementedByException(); // Not needed
         }
     }
 }

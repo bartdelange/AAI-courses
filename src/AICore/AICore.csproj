@@ -71,6 +71,7 @@
     <Compile Include="Entity\Static\SoccerGoal.cs" />
     <Compile Include="Entity\Static\Wall.cs" />
     <Compile Include="Enum\EnvironmentVariableName.cs" />
+    <Compile Include="Exceptions\NotImplementedByException.cs" />
     <Compile Include="Model\Bounds.cs" />
     <Compile Include="Model\Team.cs" />
     <Compile Include="Shapes\Circle.cs" />
