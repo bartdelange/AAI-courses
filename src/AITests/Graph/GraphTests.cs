@@ -3,7 +3,7 @@ using AICore.Graph.Heuristics;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace AAITests.Graph
+namespace AITests.Graph
 {
     #region TestClasses
 

@@ -2,7 +2,7 @@ using System.Numerics;
 using AICore.Util;
 using Xunit;
 
-namespace AAITests.Util
+namespace AITests.Util
 {
     public class Matrix3Tests
     {
