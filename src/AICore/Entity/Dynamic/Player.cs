@@ -2,30 +2,27 @@ using System;
 using System.Drawing;
 using System.Numerics;
 using AICore.Entity.Contracts;
+using AICore.Util;
 
 namespace AICore.Entity.Dynamic
 {
     public class Player : MovingEntity, IPlayer
-    {        
+    {
         public Vector2 StartPosition { get; }
         public DateTime Attempt { get; set; } = DateTime.Now;
 
-        public IMovingEntity BallEntity { get; set; }
-
         public float MaxEnergy { get; set; } = 50;
         public float MinEnergy { get; set; } = 10;   
-        public string TeamName { get; set; } 
-
 
         public float Energy { get; set; }
 
         // Render properties
+        private readonly string _positionName;
         private readonly Brush _brush;
 
-        public Player(Vector2 position, Color color) : base(position)
+        public Player(string positionName, Vector2 startingPosition, Color color) : base(startingPosition)
         {
-            StartPosition = position;
-            TeamName = color.Name;
+            StartPosition = startingPosition;
             
             // Set entity properties
             MaxSpeed = 50;
@@ -33,22 +30,11 @@ namespace AICore.Entity.Dynamic
             BoundingRadius = 10;
 
             // 
+            _positionName = positionName;
             _brush = new SolidBrush(color);
         }
-
-        public override void Render(Graphics graphics)
-        {
-            base.Render(graphics);
-
-            graphics.FillEllipse(
-                _brush,
-                Position.X - BoundingRadius,
-                Position.Y - BoundingRadius,
-                BoundingRadius * 2,
-                BoundingRadius * 2
-            );
-        }
-
+        
+        
         public void KickBall(Ball ball, Vector2 position)
         {
             ball.Kick(Vector2.Normalize(position), 500);
@@ -78,6 +64,26 @@ namespace AICore.Entity.Dynamic
             }
             
             Attempt = DateTime.Now;
+        }
+
+        public override void Render(Graphics graphics)
+        {
+            base.Render(graphics);
+            
+            graphics.DrawString(
+                _positionName,
+                SystemFonts.DefaultFont,
+                Brushes.Black,
+                (Position + new Vector2(10, 10)).ToPoint()
+            );
+
+            graphics.FillEllipse(
+                _brush,
+                Position.X - BoundingRadius,
+                Position.Y - BoundingRadius,
+                BoundingRadius * 2,
+                BoundingRadius * 2
+            );
         }
     }
 }

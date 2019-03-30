@@ -5,6 +5,7 @@ using AIBehaviours.Utils;
 using AICore;
 using AICore.Model;
 using AICore.SteeringBehaviour.Aggregate;
+using AICore.Worlds;
 
 namespace AIBehaviours.Demos
 {
@@ -14,23 +15,25 @@ namespace AIBehaviours.Demos
         {
             var bounds = new Bounds(Vector2.Zero, WorldSize);
 
-            World = new World();
+            var world = new World();
             
-            World.Obstacles.AddRange(EntityUtils.CreateObstacles(bounds, 500));
+            world.Obstacles.AddRange(EntityUtils.CreateObstacles(bounds, 500));
 
             // Create walls
             const int margin = 20;
-            World.Walls.AddRange(EntityUtils.CreateCage(
+            world.Walls.AddRange(EntityUtils.CreateCage(
                 new Bounds(Vector2.Zero, new Vector2(WorldSize.Width, WorldSize.Height)) - new Vector2(margin)
             ));
 
             var entities = EntityUtils.CreateVehicles(
                 50,
                 bounds,
-                entity => entity.SteeringBehaviour = new WanderWallObstacleAvoidanceBehaviour(entity, World.Obstacles, World.Walls)
+                entity => entity.SteeringBehaviour = new WanderWallObstacleAvoidanceBehaviour(entity, world.Obstacles, world.Walls)
             );
             
-            World.Entities.AddRange(entities);
+            world.Entities.AddRange(entities);
+
+            World = world;
         }
     }
 }

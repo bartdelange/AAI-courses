@@ -10,6 +10,7 @@ using AICore.Model;
 using AICore.SteeringBehaviour.Individual;
 using AICore.SteeringBehaviour.Util;
 using AICore.Util;
+using AICore.Worlds;
 
 namespace AIBehaviours.Demos
 {
@@ -17,6 +18,7 @@ namespace AIBehaviours.Demos
     {
         public OffsetPursuitDemo(Size size) : base(size)
         {
+            var world = new World(); 
             var bounds = new Bounds(Vector2.Zero, WorldSize);
 
             // Create leader entity
@@ -56,7 +58,9 @@ namespace AIBehaviours.Demos
             });
 
             // Populate world
-            World.Entities.AddRange(followers);
+            world.Entities.AddRange(followers);
+
+            World = world;
         }
     }
 }

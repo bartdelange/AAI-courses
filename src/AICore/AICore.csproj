@@ -68,6 +68,7 @@
     <Compile Include="Entity\Static\Wall.cs" />
     <Compile Include="Enum\EnvironmentVariableName.cs" />
     <Compile Include="Model\Bounds.cs" />
+    <Compile Include="Model\Team.cs" />
     <Compile Include="SteeringBehaviour\Aggregate\FlockingBehaviour.cs" />
     <Compile Include="SteeringBehaviour\Aggregate\InterceptBallBehaviour.cs" />
     <Compile Include="SteeringBehaviour\Aggregate\WanderNearPositionBehaviour.cs" />
@@ -143,7 +144,9 @@
     <Compile Include="Util\Matrix3.cs" />
     <Compile Include="Util\PriorityQueue.cs" />
     <Compile Include="Util\Vector2ExtensionMethods.cs" />
-    <Compile Include="World.cs" />
+    <Compile Include="Worlds\IWorld.cs" />
+    <Compile Include="Worlds\SoccerField.cs" />
+    <Compile Include="Worlds\World.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SteeringBehaviour\Aggregate\" />

@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Reflection.Emit;
 using System.Windows.Forms;
 using AICore;
+using AICore.Worlds;
 using MainMenuItem = System.Windows.Forms.MenuItem;
 
 namespace AIBehaviours.Controls
@@ -11,7 +12,7 @@ namespace AIBehaviours.Controls
     {
         protected WorldControl WorldControl { get; }
 
-        protected World World
+        protected IWorld World
         {
             get => WorldControl.World;
             set => WorldControl.World = value;
@@ -29,7 +30,6 @@ namespace AIBehaviours.Controls
             Size = size;
 
             WorldControl = new WorldControl();
-            World = new World();
 
             Controls.Add(WorldControl);
 

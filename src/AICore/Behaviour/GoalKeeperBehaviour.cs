@@ -6,8 +6,10 @@ using AICore.Entity.Contracts;
 using AICore.Entity.Static;
 using AICore.FuzzyLogic;
 using AICore.SteeringBehaviour;
+using AICore.SteeringBehaviour.Aggregate;
 using AICore.SteeringBehaviour.Individual;
 using AICore.SteeringBehaviour.Util;
+using AICore.Worlds;
 
 namespace AICore.Behaviour
 {
@@ -25,24 +27,36 @@ namespace AICore.Behaviour
     {
         public bool Visible { get; set; } = true;
 
-        private FuzzyModule _fmGoal = new FuzzyModule();
-        private FuzzyModule _fmBall = new FuzzyModule();
+        #region Behaviour properties
+        
+        private readonly IPlayer _entity;
+        private readonly Team _team;
+        private readonly SoccerField _soccerField;
+
         private readonly ISteeringBehaviour _wanderBehaviour;
         private readonly ISteeringBehaviour _targetedBehaviour;
-        public SoccerGoal Goal { get; set; }
-        public IPlayer Goalkeeper { get; set; }
 
-        public GoalKeeperBehaviour(IPlayer goalkeeper, List<IPlayer> team, World world)
+        #endregion
+
+        #region Fuzzy logic properties
+
+        private readonly FuzzyModule _fmGoal = new FuzzyModule();
+        private readonly FuzzyModule _fmBall = new FuzzyModule();
+
+        #endregion
+        
+        public GoalKeeperBehaviour(IPlayer goalkeeper, Team team, SoccerField soccerField)
         {
-            Goalkeeper = goalkeeper;
-            Goal = world.SoccerGoals.Find(g => g.TeamName == goalkeeper.TeamName);
+            _entity = goalkeeper;
+            _team = team;
+            _soccerField = soccerField;
 
             // Wandering behaviour
-            _wanderBehaviour = new WeightedTruncatedRunningSumWithPrioritization(
+            _wanderBehaviour = new PrioritizedDithering(
                 new List<WeightedSteeringBehaviour>
                 {
-                    new WeightedSteeringBehaviour(new WallAvoidanceBehaviour(goalkeeper, world.Walls), 10f),
-                    new WeightedSteeringBehaviour(new WanderBehaviour(goalkeeper), 1f)
+                    new WeightedSteeringBehaviour(new WanderWallAvoidanceBehaviour(goalkeeper, _soccerField.Sidelines), 1f, .8f),
+                    new WeightedSteeringBehaviour(new SeekBehaviour(goalkeeper, goalkeeper.Position), 1f, .8f)
                 },
                 goalkeeper.MaxSpeed
             );
@@ -51,8 +65,8 @@ namespace AICore.Behaviour
             _targetedBehaviour = new WeightedTruncatedRunningSumWithPrioritization(
                 new List<WeightedSteeringBehaviour>
                 {
-                    new WeightedSteeringBehaviour(new WallAvoidanceBehaviour(goalkeeper, world.Walls), 10f),
-                    new WeightedSteeringBehaviour(new ArriveBehaviour(goalkeeper, Goal.Position), 1f)
+                    new WeightedSteeringBehaviour(new WallAvoidanceBehaviour(goalkeeper, _soccerField.Sidelines), 10f),
+                    new WeightedSteeringBehaviour(new ArriveBehaviour(goalkeeper, _entity.StartPosition), 1f)
                 },
                 goalkeeper.MaxSpeed
             );
@@ -62,15 +76,10 @@ namespace AICore.Behaviour
 
         public Vector2 Calculate(float deltaTime)
         {
-            if (CalculateDistanceToGoalDesirability(Vector2.Distance(Goal.Position, Goalkeeper.Position)) > 50)
-                return _wanderBehaviour.Calculate(deltaTime);
-            
-            return _targetedBehaviour.Calculate(deltaTime);
+            return CalculateDistanceToGoalDesirability(Vector2.Distance(_entity.StartPosition, _entity.Position)) > 50
+                ? _wanderBehaviour.Calculate(deltaTime) 
+                : _targetedBehaviour.Calculate(deltaTime);
         }
-
-        public void Render(Graphics graphics)
-        {
-        } 
 
         public void InitFuzzyModule()
         {
@@ -123,5 +132,9 @@ namespace AICore.Behaviour
             _fmBall.Fuzzify("DistToBall", ballDist);
             return _fmBall.DeFuzzify("Desirability", FuzzyModule.DefuzzifyType.MaxAv);
         }
+        
+        public void Render(Graphics graphics)
+        {
+        } 
     }
 }

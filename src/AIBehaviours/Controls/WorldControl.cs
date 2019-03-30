@@ -1,6 +1,7 @@
 using System.Timers;
 using System.Windows.Forms;
 using AICore;
+using AICore.Worlds;
 using Timer = System.Timers.Timer;
 
 namespace AIBehaviours.Controls
@@ -9,7 +10,7 @@ namespace AIBehaviours.Controls
     {
         private const float TimeDelta = 0.8f;
         
-        public World World { get; set; }
+        public IWorld World { get; set; }
 
         public WorldControl()
         {

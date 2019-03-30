@@ -14,10 +14,9 @@ namespace AICore.Behaviour.States
         public void Update(PlayerState<IPlayer> state, float deltaTime)
         {
             // Try to intercept the ball When player is near ball when:
-            // - Ball is near player
+            // - TODO Ball is near player
             // - Player is not too far away from its start position
             if (
-                Vector2.Distance(state.Player.Position, state.Player.BallEntity.Position) < 50 &&
                 Vector2.Distance(state.Player.Position, state.Player.StartPosition) < 150
             )
             {

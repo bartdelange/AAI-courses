@@ -7,6 +7,7 @@ using AICore.FuzzyLogic;
 using AICore.SteeringBehaviour;
 using AICore.SteeringBehaviour.Individual;
 using AICore.SteeringBehaviour.Util;
+using AICore.Worlds;
 
 namespace AICore.Behaviour
 {
@@ -30,12 +31,12 @@ namespace AICore.Behaviour
         private FuzzyModule _fmBall = new FuzzyModule();
         private readonly ISteeringBehaviour _steeringBehaviour;
 
-        public DefenderBehaviour(IPlayer striker, List<IPlayer> team, World world)
+        public DefenderBehaviour(IPlayer striker, Team team, SoccerField soccerField)
         {
             _steeringBehaviour = new WeightedTruncatedRunningSumWithPrioritization(
                 new List<WeightedSteeringBehaviour>
                 {
-                    new WeightedSteeringBehaviour(new WallAvoidanceBehaviour(striker, world.Walls), 10f),
+                    new WeightedSteeringBehaviour(new WallAvoidanceBehaviour(striker, soccerField.Sidelines), 10f),
                     new WeightedSteeringBehaviour(new WanderBehaviour(striker), 1f)
                 },
                 striker.MaxSpeed

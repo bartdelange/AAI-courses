@@ -11,6 +11,8 @@ namespace AICore.Entity.Dynamic
 {
     public abstract class MovingEntity : IMovingEntity
     {
+        private Vector2 _position;
+        
         #region render properties
 
         public bool Visible { get; set; } = true;
@@ -88,7 +90,18 @@ namespace AICore.Entity.Dynamic
         public ISteeringBehaviour SteeringBehaviour { set; get; }
         public List<IMiddleware> Middlewares { get; set; } = new List<IMiddleware>();
 
-        public Vector2 Position { get; set; }
+        public Vector2 Position
+        {
+            get => _position;
+            set
+            {
+                if (value.X == float.NaN || value.Y == float.NaN)
+                    throw new ArgumentException("Invalid position");
+                
+                _position = value;
+            }
+        }
+
         public Vector2 Velocity { get; set; } = Vector2.One;
         public Vector2 Heading { get; set; } = Vector2.One;
         public Vector2 SmoothHeading { get; set; } = Vector2.One;
@@ -142,7 +155,7 @@ namespace AICore.Entity.Dynamic
             graphics.DrawLine(
                 Pens.Red,
                 Position.ToPoint(),
-                (Position + Velocity * 10).ToPoint()
+                (Position + Velocity).ToPoint()
             );
 
             graphics.DrawString(

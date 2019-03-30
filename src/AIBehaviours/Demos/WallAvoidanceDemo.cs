@@ -1,13 +1,11 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Numerics;
 using AIBehaviours.Controls;
 using AIBehaviours.Utils;
-using AICore;
-using AICore.Entity.Contracts;
 using AICore.Model;
 using AICore.SteeringBehaviour.Aggregate;
 using AICore.SteeringBehaviour.Util;
+using AICore.Worlds;
 
 namespace AIBehaviours.Demos
 {
@@ -18,11 +16,13 @@ namespace AIBehaviours.Demos
     {
         public WallAvoidanceDemo(Size size) : base(size)
         {
+            var world = new World();
+            
             var bounds = new Bounds(Vector2.Zero, WorldSize);
 
             // Create walls
             const int margin = 20;
-            World.Walls.AddRange(EntityUtils.CreateCage(
+            world.Walls.AddRange(EntityUtils.CreateCage(
                 new Bounds(Vector2.Zero, new Vector2(WorldSize.Width, WorldSize.Height)) - new Vector2(margin)
             ));
 
@@ -30,17 +30,19 @@ namespace AIBehaviours.Demos
             var vehicles = EntityUtils.CreateVehicles(
                 150,
                 bounds,
-                (entity) => entity.SteeringBehaviour = new WanderWallAvoidanceBehaviour(entity, World.Walls)
+                (entity) => entity.SteeringBehaviour = new WanderWallAvoidanceBehaviour(entity, world.Walls)
             );
 
-            World.Entities.AddRange(vehicles);
+            world.Entities.AddRange(vehicles);
 
             // Apply zero overlap middleware
-            World.Entities.ForEach(entity =>
+            world.Entities.ForEach(entity =>
             {
-                entity.Middlewares.Add(new ZeroOverlapMiddleware(entity, World.Entities));
-                entity.Middlewares.Add(new ZeroOverlapMiddleware(entity, World.Entities));
+                entity.Middlewares.Add(new ZeroOverlapMiddleware(entity, world.Entities));
+                entity.Middlewares.Add(new ZeroOverlapMiddleware(entity, world.Entities));
             });
+
+            World = world;
         }
     }
 }

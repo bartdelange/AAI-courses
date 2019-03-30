@@ -13,12 +13,13 @@ namespace AICore.SteeringBehaviour.Aggregate
 
         public InterceptBallBehaviour(IPlayer player)
         {
-            _steeringBehaviour = new PursuitBehaviour(player, player.BallEntity);
+            // _steeringBehaviour = new PursuitBehaviour(player);
         }
 
         public Vector2 Calculate(float deltaTime)
         {
-            return _steeringBehaviour.Calculate(deltaTime);
+            return Vector2.Zero;
+//            return _steeringBehaviour.Calculate(deltaTime);
         }
 
         public void Render(Graphics graphics)

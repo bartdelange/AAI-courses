@@ -23,7 +23,13 @@ namespace AICore.SteeringBehaviour.Individual
         /// </summary>
         public Vector2 Calculate(float deltaTime)
         {
-            return Vector2.Normalize(_targetPosition - _movingEntity.Position) * _movingEntity.MaxSpeed;
+            var targetPosition = _targetPosition - _movingEntity.Position;
+
+            // Can't divide by zero so we just return Vector2.Zero
+            if (targetPosition == Vector2.Zero)
+                return Vector2.Zero;
+            
+            return Vector2.Normalize(targetPosition) * _movingEntity.MaxSpeed;
         }
 
         public void Render(Graphics graphics)

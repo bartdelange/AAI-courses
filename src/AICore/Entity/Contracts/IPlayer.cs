@@ -7,11 +7,8 @@ namespace AICore.Entity.Contracts
     {
         Vector2 StartPosition { get; }
         
-        IMovingEntity BallEntity { get; }
-
         float MaxEnergy { get; set; }
         float MinEnergy { get; set; }
-        string TeamName { get; set; } 
 
         float Energy { get; set; }
 

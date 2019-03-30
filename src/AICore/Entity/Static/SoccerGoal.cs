@@ -11,18 +11,16 @@ namespace AICore.Entity.Static
         public bool Visible { get; set; } = true;
 
         public Vector2 Position { get; }
-        public string TeamName { get; set; }
 
         private readonly Bounds _bounds;
-        private readonly Color _teamColor;
+        private readonly Brush _goalBrush;
 
         public SoccerGoal(Vector2 position, Vector2 size, Color teamColor)
         {
             Position = position;
-            TeamName = teamColor.Name;
             
             _bounds = new Bounds(position - size / 2, position + size / 2);
-            _teamColor = teamColor;
+            _goalBrush = new SolidBrush(teamColor);
         }
 
         /// <summary>
@@ -40,7 +38,7 @@ namespace AICore.Entity.Static
         public void Render(Graphics graphics)
         {
             graphics.FillRectangle(
-                Brushes.Black,
+                _goalBrush,
                 (Rectangle) _bounds
             );
         }
