@@ -10,7 +10,7 @@ namespace AICore.Shapes
     {
     }
 
-    public static class ICircleExtensionMethods
+    public static class CircleExtensionMethods
     {
         public static bool LineIntersectsWithCircle(this ICircle circle, Vector2 lineStart, Vector2 lineEnd, float margin)
         {

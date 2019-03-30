@@ -6,29 +6,29 @@ namespace AICore.FuzzyLogic
     {
         public FzSet(FuzzySet fuzzySet)
         {
-            fZ = fuzzySet;
+            FZ = fuzzySet;
         }
 
-        private FuzzySet fZ { get; }
+        private FuzzySet FZ { get; }
 
         public IFuzzyTerm Clone()
         {
-            return new FzSet(fZ);
+            return new FzSet(FZ);
         }
 
-        public double GetDOM()
+        public double GetDom()
         {
-            return fZ.GetDOM();
+            return FZ.GetDom();
         }
 
-        public void ClearDOM()
+        public void ClearDom()
         {
-            fZ.ClearDOM();
+            FZ.ClearDom();
         }
 
-        public void ORWithDOM(double value)
+        public void OrWithDom(double value)
         {
-            fZ.ORWithDOM(value);
+            FZ.OrWithDom(value);
         }
     }
 }

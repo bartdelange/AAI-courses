@@ -13,17 +13,17 @@ namespace AICore.FuzzyLogic
 
         public void SetConfidenceOfConsequentToZero()
         {
-            _consequence.ClearDOM();
+            _consequence.ClearDom();
         }
 
         public void Calculate()
         {
-            _consequence.ORWithDOM(_antecedent.GetDOM());
+            _consequence.OrWithDom(_antecedent.GetDom());
         }
 
         public override string ToString()
         {
-            return $"{_antecedent.GetDOM()}, {_consequence.GetDOM()}";
+            return $"{_antecedent.GetDom()}, {_consequence.GetDom()}";
         }
     }
 }

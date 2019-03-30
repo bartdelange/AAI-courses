@@ -15,7 +15,7 @@ namespace AICore.FuzzyLogic.FuzzySets
             _rightOffset = rightOffset;
         }
 
-        public override double CalculateDOM(double val)
+        public override double CalculateDom(double val)
         {
             if (Math.Abs(_rightOffset) < 0.000000001 && Math.Abs(val - _peakPoint) < 0.000000001) return 1.0;
 

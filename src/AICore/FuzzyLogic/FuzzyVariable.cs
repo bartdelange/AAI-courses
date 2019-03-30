@@ -69,7 +69,7 @@ namespace AICore.FuzzyLogic
                 throw new ArgumentOutOfRangeException(nameof(val), "Value out of range");
 
             //for each set in the flv calculate the DOM for the given value
-            foreach (var member in _members) member.Value.SetDOM(member.Value.CalculateDOM(val));
+            foreach (var member in _members) member.Value.SetDom(member.Value.CalculateDom(val));
         }
 
         public double DeFuzzifyMaxAv()
@@ -79,8 +79,8 @@ namespace AICore.FuzzyLogic
 
             foreach (var member in _members)
             {
-                bottom += member.Value.GetDOM();
-                top += member.Value.RepresentativeValue * member.Value.GetDOM();
+                bottom += member.Value.GetDom();
+                top += member.Value.RepresentativeValue * member.Value.GetDom();
             }
 
             //make sure bottom is not equal to zero
@@ -99,8 +99,8 @@ namespace AICore.FuzzyLogic
             for (var samp = 1; samp <= numSamples; ++samp)
                 foreach (var member in _members)
                 {
-                    var contribution = Math.Min(member.Value.CalculateDOM(_minRange + samp * stepSize),
-                        member.Value.GetDOM());
+                    var contribution = Math.Min(member.Value.CalculateDom(_minRange + samp * stepSize),
+                        member.Value.GetDom());
 
                     totalArea += contribution;
                     sumOfMoments += (_minRange + samp * stepSize) * contribution;

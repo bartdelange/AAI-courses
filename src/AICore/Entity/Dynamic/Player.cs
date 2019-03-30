@@ -1,19 +1,20 @@
 using System;
 using System.Drawing;
 using System.Numerics;
+using AICore.Behaviour.Goals;
 using AICore.Entity.Contracts;
 using AICore.Model;
 using AICore.Util;
-using AICore.Worlds;
 
 namespace AICore.Entity.Dynamic
 {
-    public class Player : MovingEntity, IPlayer
+    public class  Player : MovingEntity, IPlayer
     {
-        public Vector2 StartPosition { get; }
+        public new Vector2 StartPosition { get; }
         public Team Team { get; set; }
-        public SoccerField SoccerField { get; set; }
         
+        public BaseGoal ThinkGoal { get; set; }
+
         public DateTime Attempt { get; set; } = DateTime.Now;
 
         public float MaxEnergy { get; set; } = 50;
@@ -37,6 +38,12 @@ namespace AICore.Entity.Dynamic
             // 
             _positionName = positionName;
             _brush = new SolidBrush(color);
+        }
+        
+        public override void Update(float deltaTime)
+        {
+            ThinkGoal?.Update(this);
+            base.Update(deltaTime);
         }
 
         public void Steal(Ball ball)

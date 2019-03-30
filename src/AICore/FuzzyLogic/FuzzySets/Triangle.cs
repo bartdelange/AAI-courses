@@ -15,7 +15,7 @@ namespace AICore.FuzzyLogic.FuzzySets
             _rightOffset = rightOffset;
         }
 
-        public override double CalculateDOM(double val)
+        public override double CalculateDom(double val)
         {
             double grad;
 

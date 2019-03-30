@@ -1,14 +1,19 @@
 using System.Numerics;
+using AICore.Behaviour.Goals;
 using AICore.Entity.Dynamic;
 using AICore.Model;
-using AICore.Worlds;
 
 namespace AICore.Entity.Contracts
 {
     public interface IPlayer : IMovingEntity
     {
-        Vector2 StartPosition { get; }
+        new Vector2 StartPosition { get; }
         Team Team { get; set; }
-        SoccerField SoccerField { get; set; }
+
+        BaseGoal ThinkGoal { get; set; }
+
+        float Energy { get; set; }
+
+        void Steal(Ball ball);
     }
 }

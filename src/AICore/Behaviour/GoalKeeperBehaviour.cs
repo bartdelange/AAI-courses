@@ -81,18 +81,18 @@ namespace AICore.Behaviour
 
         public void InitFuzzyModule()
         {
-            initGoalModule();
+            InitGoalModule();
             InitBallModule();
         }
 
-        public void initGoalModule()
+        public void InitGoalModule()
         {
-            var distToGoal = _fmGoal.CreateFLV("DistToGoal");
+            var distToGoal = _fmGoal.CreateFlv("DistToGoal");
             var goalClose = distToGoal.AddLeftShoulderSet("GoalClose", 0, 25, 150);
             var goalMedium = distToGoal.AddTriangularSet("GoalMedium", 25, 150, 300);
             var goalFar = distToGoal.AddRightShoulderSet("GoalFar", 150, 300, 500);
 
-            var desirability = _fmGoal.CreateFLV("Desirability");
+            var desirability = _fmGoal.CreateFlv("Desirability");
             var veryDesirable = desirability.AddRightShoulderSet("VeryDesirable", 50, 75, 100);
             var desirable = desirability.AddTriangularSet("Desirable", 25, 50, 75);
             var undesirable = desirability.AddLeftShoulderSet("Undesirable", 0, 25, 50);
@@ -104,12 +104,12 @@ namespace AICore.Behaviour
         
         public void InitBallModule()
         {
-            var distBallToGoal = _fmBall.CreateFLV("DistBallToGoal");
+            var distBallToGoal = _fmBall.CreateFlv("DistBallToGoal");
             var ballCloseToGoal = distBallToGoal.AddRightShoulderSet("BallCloseToGoal", 10, 30, 100);
             var ballMediumToGoal = distBallToGoal.AddTriangularSet("BallMediumToGoal", 0, 10, 30);
             var ballFarFromGoal = distBallToGoal.AddLeftShoulderSet("BallFarFromGoal", 0, 0, 10);
 
-            var desirability = _fmBall.CreateFLV("Desirability");
+            var desirability = _fmBall.CreateFlv("Desirability");
             var veryDesirable = desirability.AddRightShoulderSet("VeryDesirable", 50, 75, 100);
             var desirable = desirability.AddTriangularSet("Desirable", 25, 50, 75);
             var undesirable = desirability.AddLeftShoulderSet("Undesirable", 0, 25, 50);

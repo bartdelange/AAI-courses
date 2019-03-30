@@ -12,8 +12,8 @@ namespace AICore.FuzzyLogic.FuzzyOperators
         public IEnumerable<IFuzzyTerm> FuzzyTerms { get; set; }
 
         public abstract IFuzzyTerm Clone();
-        public abstract double GetDOM();
-        public abstract void ClearDOM();
-        public abstract void ORWithDOM(double value);
+        public abstract double GetDom();
+        public abstract void ClearDom();
+        public abstract void OrWithDom(double value);
     }
 }

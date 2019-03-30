@@ -11,7 +11,7 @@ namespace AICore.FuzzyLogic
             Centroid
         }
 
-        private const int _centroidSamplesToUse = 15;
+        private const int CentroidSamplesToUse = 15;
         private readonly Dictionary<string, FuzzyVariable> _fuzzyVars = new Dictionary<string, FuzzyVariable>();
         private readonly Dictionary<string, FuzzyRule> _rules = new Dictionary<string, FuzzyRule>();
 
@@ -20,9 +20,9 @@ namespace AICore.FuzzyLogic
             foreach (var rule in _rules) rule.Value.SetConfidenceOfConsequentToZero();
         }
 
-        public FuzzyVariable CreateFLV(string VarName)
+        public FuzzyVariable CreateFlv(string varName)
         {
-            return _fuzzyVars.GetOrCreate(VarName, new FuzzyVariable());
+            return _fuzzyVars.GetOrCreate(varName, new FuzzyVariable());
         }
 
         public void AddRule(string ruleName, IFuzzyTerm antecedent, IFuzzyTerm consequence)
@@ -53,7 +53,7 @@ namespace AICore.FuzzyLogic
             //now defuzzify the resultant conclusion using the specified method
             switch (method)
             {
-                case DefuzzifyType.Centroid: return flv.DeFuzzifyCentroid(_centroidSamplesToUse);
+                case DefuzzifyType.Centroid: return flv.DeFuzzifyCentroid(CentroidSamplesToUse);
                 case DefuzzifyType.MaxAv: return flv.DeFuzzifyMaxAv();
             }
 

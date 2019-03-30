@@ -16,19 +16,19 @@ namespace AICore.FuzzyLogic.FuzzyHedges
             return new FzFairly(_fuzzySet);
         }
 
-        public double GetDOM()
+        public double GetDom()
         {
-            return _fuzzySet.GetDOM() * _fuzzySet.GetDOM();
+            return _fuzzySet.GetDom() * _fuzzySet.GetDom();
         }
 
-        public void ClearDOM()
+        public void ClearDom()
         {
-            _fuzzySet.ClearDOM();
+            _fuzzySet.ClearDom();
         }
 
-        public void ORWithDOM(double value)
+        public void OrWithDom(double value)
         {
-            _fuzzySet.ORWithDOM(value);
+            _fuzzySet.OrWithDom(value);
         }
     }
 }

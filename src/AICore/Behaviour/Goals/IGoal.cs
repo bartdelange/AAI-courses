@@ -1,12 +1,20 @@
-using AICore.Entity;
+using AICore.Entity.Contracts;
 
 namespace AICore.Behaviour.Goals
 {
+    public enum GoalNames
+    {
+        GoToBall,
+        DribbleToGoal
+    }
+
     public interface IGoal
     {
-        void Add(IGoal goal);
-        void Remove(IGoal goal);
-
-        void Update(MovingEntity movingEntity);
+        void Add(GoalNames goalName, IGoal goal);
+        void Remove(GoalNames goalName);
+        
+        void Activate();
+        void Update(IPlayer player);
+        double CheckDesirability();
     }
 }

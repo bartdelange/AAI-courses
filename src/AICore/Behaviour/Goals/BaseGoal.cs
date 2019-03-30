@@ -1,25 +1,38 @@
 using System.Collections.Generic;
-using AICore.Entity;
+using AICore.Entity.Contracts;
+using AICore.Worlds;
 
 namespace AICore.Behaviour.Goals
 {
+    
     public abstract class BaseGoal : IGoal
     {
-        private readonly List<IGoal> _goals = new List<IGoal>();
+        protected readonly Dictionary<GoalNames, IGoal> _goals = new Dictionary<GoalNames, IGoal>();
+        protected SoccerField SoccerField { get; }
+        protected IPlayer Player { get; }
 
-        public void Add(IGoal goal)
+        public BaseGoal(IPlayer player, SoccerField soccerField)
         {
-            _goals.Add(goal);
+            Player = player;
+            SoccerField = soccerField;
         }
 
-        public void Remove(IGoal goal)
+        public void Add(GoalNames goalName, IGoal goal)
         {
-            _goals.Remove(goal);
+            _goals.Add(goalName, goal);
         }
 
-        public virtual void Update(MovingEntity entity)
+        public void Remove(GoalNames goalName)
         {
-            _goals.ForEach(goal => goal.Update(entity));
+            _goals.Remove(goalName);
         }
+
+        public abstract void Activate();
+
+        public virtual void Update(IPlayer player)
+        {
+        }
+
+        public abstract double CheckDesirability();
     }
 }

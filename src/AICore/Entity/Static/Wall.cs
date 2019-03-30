@@ -52,10 +52,10 @@ namespace AICore.Entity.Static
             double sTop = (start.Y - _startPosition.Y) * (target.X - start.X) -
                           (start.X - _startPosition.X) * (target.Y - start.Y);
 
-            double Bot = (target.X - start.X) * (_endPosition.Y - _startPosition.Y) -
+            double bot = (target.X - start.X) * (_endPosition.Y - _startPosition.Y) -
                          (target.Y - start.Y) * (_endPosition.X - _startPosition.X);
 
-            if (Bot == 0) // Lines are parallel
+            if (bot == 0) // Lines are parallel
             {
                 distance = null;
                 intersectPoint = null;
@@ -63,8 +63,8 @@ namespace AICore.Entity.Static
                 return false;
             }
 
-            var r = rTop / Bot;
-            var s = sTop / Bot;
+            var r = rTop / bot;
+            var s = sTop / bot;
 
             // If true lines intersect
             if (!(r > 0) || !(r < 1) || !(s > 0) || !(s < 1))
@@ -98,16 +98,16 @@ namespace AICore.Entity.Static
             double sTop = (start.Y - _startPosition.Y) * (target.X - start.X) -
                           (start.X - _startPosition.X) * (target.Y - start.Y);
 
-            double Bot = (target.X - start.X) * (_endPosition.Y - _startPosition.Y) -
+            double bot = (target.X - start.X) * (_endPosition.Y - _startPosition.Y) -
                          (target.Y - start.Y) * (_endPosition.X - _startPosition.X);
 
-            if (Bot == 0) // Lines are parallel
+            if (bot == 0) // Lines are parallel
             {
                 return false;
             }
 
-            var r = rTop / Bot;
-            var s = sTop / Bot;
+            var r = rTop / bot;
+            var s = sTop / bot;
 
             // If true lines intersect
             return (r > 0) && (r < 1) && (s > 0) && (s < 1);

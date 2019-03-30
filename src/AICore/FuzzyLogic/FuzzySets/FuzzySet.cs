@@ -2,36 +2,36 @@ namespace AICore.FuzzyLogic.FuzzySets
 {
     public abstract class FuzzySet
     {
-        protected FuzzySet(double RepVal)
+        protected FuzzySet(double repVal)
         {
-            DOM = 0.0d;
-            RepresentativeValue = RepVal;
+            Dom = 0.0d;
+            RepresentativeValue = repVal;
         }
 
-        private double DOM { get; set; }
+        private double Dom { get; set; }
         public double RepresentativeValue { get; }
 
-        public double GetDOM()
+        public double GetDom()
         {
-            return DOM;
+            return Dom;
         }
 
-        public void SetDOM(double val)
+        public void SetDom(double val)
         {
-            DOM = val;
+            Dom = val;
         }
 
-        public void ClearDOM()
+        public void ClearDom()
         {
-            DOM = 0.0d;
+            Dom = 0.0d;
         }
 
-        public void ORWithDOM(double value)
+        public void OrWithDom(double value)
         {
-            if (value > DOM)
-                DOM = value;
+            if (value > Dom)
+                Dom = value;
         }
 
-        public abstract double CalculateDOM(double val);
+        public abstract double CalculateDom(double val);
     }
 }

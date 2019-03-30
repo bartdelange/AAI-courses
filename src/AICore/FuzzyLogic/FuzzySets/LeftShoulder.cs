@@ -16,7 +16,7 @@ namespace AICore.FuzzyLogic.FuzzySets
             _rightOffset = rightOffset;
         }
 
-        public override double CalculateDOM(double val)
+        public override double CalculateDom(double val)
         {
             //test for the case where the left or right offsets are zero
             //(to prevent divide by zero errors below)
@@ -31,7 +31,7 @@ namespace AICore.FuzzyLogic.FuzzySets
             }
 
             //find DOM if left of center
-            if (val < _peakPoint && val >= _peakPoint - _leftOffset) return 1.0;
+            if (val < _peakPoint) return 1.0;
 
             //out of range of this FLV, return zero
             return 0.0;

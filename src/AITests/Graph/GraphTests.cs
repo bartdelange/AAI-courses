@@ -1,7 +1,5 @@
 using AICore.Graph;
 using AICore.Graph.Heuristics;
-using Xunit;
-using Xunit.Abstractions;
 
 namespace AITests.Graph
 {

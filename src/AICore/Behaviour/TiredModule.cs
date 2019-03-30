@@ -4,31 +4,30 @@ namespace AICore.Behaviour
 {
     public class TiredModule
     {
-        private FuzzyModule _tiredFM = new FuzzyModule();
-        public bool CanMove { get; private set; }
+        private FuzzyModule _tiredFm = new FuzzyModule();
 
         public TiredModule()
         {
             // Distance module
-            var tired = _tiredFM.CreateFLV("Tired");
-            var notTired = tired.AddLeftShoulderSet("NotTired", 0, 25, 50);
+            var tired = _tiredFm.CreateFlv("Tired");
+            var notTiredNotTired = tired.AddLeftShoulderSet("NotTired", 0, 25, 50);
             var kindaTired = tired.AddTriangularSet("KindaTired", 25, 50, 75);
             var veryTired = tired.AddRightShoulderSet("VeryTired", 50, 75, 100);
 
-            var moved = _tiredFM.CreateFLV("Moved");
-            var notMoved = moved.AddRightShoulderSet("NotMoved", 0, 25, 50);
-            var movedABit = moved.AddTriangularSet("MovedABit", 25, 50, 75);
-            var movedALot = moved.AddLeftShoulderSet("MovedALot", 50, 75, 100);
+            var energy = _tiredFm.CreateFlv("Energy");
+            var noEnergy = energy.AddRightShoulderSet("NoEnergy", 0, 25, 50);
+            var energyABit = energy.AddTriangularSet("EnergyABit", 25, 50, 75);
+            var energyALot = energy.AddLeftShoulderSet("EnergyALot", 50, 75, 100);
 
-            _tiredFM.AddRule("goalClose -> veryDesirable", notMoved, notTired);
-            _tiredFM.AddRule("goalMedium -> undesirable", movedABit, kindaTired);
-            _tiredFM.AddRule("goalFar -> undesirable", movedALot, veryTired);
+            _tiredFm.AddRule("noEnergy -> veryTired", noEnergy, veryTired);
+            _tiredFm.AddRule("energyABit -> kindaTired", energyABit, kindaTired);
+            _tiredFm.AddRule("energyALot -> veryTired", energyALot, veryTired);
         }
 
         public double CheckTiredness(double movement)
         {
-            _tiredFM.Fuzzify("Moved", movement);
-            return _tiredFM.DeFuzzify("Tired", FuzzyModule.DefuzzifyType.MaxAv);
+            _tiredFm.Fuzzify("Moved", movement);
+            return _tiredFm.DeFuzzify("Tired", FuzzyModule.DefuzzifyType.MaxAv);
         } 
     }
 }

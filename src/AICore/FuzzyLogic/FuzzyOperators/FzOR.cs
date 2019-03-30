@@ -2,30 +2,30 @@ using System.Linq;
 
 namespace AICore.FuzzyLogic.FuzzyOperators
 {
-    public class FzOR : FuzzyOperator
+    public class FzOr : FuzzyOperator
     {
-        public FzOR(params IFuzzyTerm[] terms) : base(terms)
+        public FzOr(params IFuzzyTerm[] terms) : base(terms)
         {
         }
 
         public override IFuzzyTerm Clone()
         {
-            return new FzOR(FuzzyTerms.Select(item => item.Clone()).ToArray());
+            return new FzOr(FuzzyTerms.Select(item => item.Clone()).ToArray());
         }
 
-        public override double GetDOM()
+        public override double GetDom()
         {
-            return FuzzyTerms.Select(fuzzyTerm => fuzzyTerm.GetDOM()).Concat(new[] {double.MinValue}).Max();
+            return FuzzyTerms.Select(fuzzyTerm => fuzzyTerm.GetDom()).Concat(new[] {double.MinValue}).Max();
         }
 
-        public override void ClearDOM()
+        public override void ClearDom()
         {
-            foreach (var fuzzyTerm in FuzzyTerms) fuzzyTerm.ClearDOM();
+            foreach (var fuzzyTerm in FuzzyTerms) fuzzyTerm.ClearDom();
         }
 
-        public override void ORWithDOM(double value)
+        public override void OrWithDom(double value)
         {
-            foreach (var fuzzyTerm in FuzzyTerms) fuzzyTerm.ORWithDOM(value);
+            foreach (var fuzzyTerm in FuzzyTerms) fuzzyTerm.OrWithDom(value);
         }
     }
 }

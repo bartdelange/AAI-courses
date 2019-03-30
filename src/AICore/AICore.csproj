@@ -45,13 +45,13 @@
   <ItemGroup>
     <Compile Include="Behaviour\DefenderBehaviour.cs" />
     <Compile Include="Behaviour\GoalKeeperBehaviour.cs" />
-    <Compile Include="Behaviour\States\AttemptShotOnGoal.cs" />
-    <Compile Include="Behaviour\States\Celebrate.cs" />
-    <Compile Include="Behaviour\States\PlayerState.cs" />
-    <Compile Include="Behaviour\States\Rest.cs" />
-    <Compile Include="Behaviour\States\IState.cs" />
-    <Compile Include="Behaviour\States\TryToInterceptBall.cs" />
-    <Compile Include="Behaviour\States\WanderNearPosition.cs" />
+    <Compile Include="Behaviour\Goals\BaseGoal.cs" />
+    <Compile Include="Behaviour\Goals\DribbleToGoal.cs" />
+    <Compile Include="Behaviour\Goals\GoToBall.cs" />
+    <Compile Include="Behaviour\Goals\IGoal.cs" />
+    <Compile Include="Behaviour\Goals\RestGoal.cs" />
+    <Compile Include="Behaviour\Goals\StrikerGoals\ShootBallToGoal.cs" />
+    <Compile Include="Behaviour\Goals\StrikerGoals\StrikerThink.cs" />
     <Compile Include="Behaviour\StrikerBehaviour.cs" />
     <Compile Include="Behaviour\TiredModule.cs" />
     <Compile Include="Config.cs" />

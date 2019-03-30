@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Numerics;
 using AICore.Behaviour;
+using AICore.Behaviour.Goals;
 using AICore.Entity.Contracts;
 using AICore.Entity.Dynamic;
 using AICore.Entity.Static;
@@ -96,7 +97,7 @@ namespace AICore.Model
             
             // Add behaviours to the entities
             defenders.ForEach(defender => defender.SteeringBehaviour = new DefenderBehaviour(defender, this, soccerField));
-            strikers.ForEach(striker => striker.SteeringBehaviour = new StrikerBehaviour(striker, this, soccerField));
+            strikers.ForEach(striker => striker.ThinkGoal = new StrikerThink(striker, soccerField));
             goalKeeper.SteeringBehaviour = new GoalKeeperBehaviour(goalKeeper, this, soccerField);
         }
 
