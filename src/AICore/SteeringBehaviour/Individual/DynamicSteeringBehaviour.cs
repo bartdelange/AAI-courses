@@ -54,7 +54,7 @@ namespace AICore.SteeringBehaviour.Individual
                 _player.MaxSpeed
             );
 
-            // Take ball when player is very close to ball
+            // Take ball when player touches ball
             var interceptDistance = Math.Pow(_player.BoundingRadius, 2) + Math.Pow(_soccerField.Ball.BoundingRadius, 2);
             var distance = Vector2.DistanceSquared(_soccerField.Ball.Position, _player.Position);
 

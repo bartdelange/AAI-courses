@@ -32,26 +32,28 @@ namespace AICore.Entity.Dynamic
 
         public void Kick(IPlayer player, float speed)
         {
-            Owner = null;
-            
-            // Can't kick the ball when player is too far away
-            var distanceToBall = Vector2.DistanceSquared(player.Position, Position);
-
-            const float ballWithinRange = 50 * 50;
-            if (distanceToBall > ballWithinRange) return;
+            // Cannot kick the ball when not in possession of the ball
+            if (player != Owner)
+            {
+                return;
+            }
             
             // Set velocity of ball by using player heading and given speed
             Velocity = (Vector2.Normalize(Position - player.Position) * speed / Mass).Truncate(MaxSpeed);
+            Owner = null;
         }
 
         public override void Update(float deltaTime)
         {
             CheckGoalCollision();
 
+            // Ball should follow owner when it has one
             if (Owner != null)
             {
+                const float margin = 5;
+                
                 // Should update it to be in front of the player
-                Position = Heading * BoundingRadius + Owner.Position;
+                Position = Owner.Position + Owner.Heading * (Owner.BoundingRadius + BoundingRadius + margin);
                 return;
             }
             

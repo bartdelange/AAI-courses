@@ -2,7 +2,6 @@ using System;
 using System.Drawing;
 using System.Numerics;
 using AICore.Entity.Contracts;
-using AICore.Entity.Static;
 using AICore.Model;
 using AICore.Util;
 using AICore.Worlds;
@@ -38,16 +37,6 @@ namespace AICore.Entity.Dynamic
             // 
             _positionName = positionName;
             _brush = new SolidBrush(color);
-        }
-
-        public void Dribble(Ball ball)
-        {
-            // Might need to fix this equals check
-            if (ball.Owner == this)
-            {
-                // Should update it to be in front of the player
-                ball.Position = Heading * ball.BoundingRadius + Position;
-            }
         }
 
         public void Steal(Ball ball)

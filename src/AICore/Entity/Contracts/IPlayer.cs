@@ -10,8 +10,5 @@ namespace AICore.Entity.Contracts
         Vector2 StartPosition { get; }
         Team Team { get; set; }
         SoccerField SoccerField { get; set; }
-
-        void Dribble(Ball ball);
-        void Steal(Ball ball);
     }
 }
