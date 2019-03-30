@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Numerics;
 using AIBehaviours.Controls;
-using AICore.Entity;
 using AICore.Entity.Contracts;
 using AICore.Entity.Dynamic;
 using AICore.Model;

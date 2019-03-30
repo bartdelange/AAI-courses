@@ -1,7 +1,6 @@
 using System.Drawing;
 using System.Numerics;
 using AICore.Entity.Contracts;
-using AICore.SteeringBehaviour.Individual;
 
 namespace AICore.SteeringBehaviour.Aggregate
 {

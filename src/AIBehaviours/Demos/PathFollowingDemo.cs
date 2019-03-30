@@ -1,18 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Linq;
 using System.Numerics;
 using System.Windows.Forms;
 using AIBehaviours.Controls;
-using AIBehaviours.Utils;
-using AICore;
-using AICore.Entity;
-using AICore.Entity.Contracts;
 using AICore.Entity.Dynamic;
 using AICore.Graph.PathFinding;
 using AICore.Model;
 using AICore.Navigation;
 using AICore.SteeringBehaviour.Individual;
+using AICore.Util;
 using AICore.Worlds;
 
 namespace AIBehaviours.Demos

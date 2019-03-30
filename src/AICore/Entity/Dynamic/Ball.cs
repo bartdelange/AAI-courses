@@ -1,9 +1,8 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Numerics;
-using System.Resources;
-using System.Threading;
 using AICore.Entity.Contracts;
+using AICore.Model;
 using AICore.Shapes;
 using AICore.Util;
 using AICore.Worlds;

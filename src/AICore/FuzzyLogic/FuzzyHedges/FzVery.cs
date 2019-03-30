@@ -1,5 +1,3 @@
-using AICore.FuzzyLogic.FuzzySets;
-
 namespace AICore.FuzzyLogic.FuzzyHedges
 {
     public class FzVery : IFuzzyTerm

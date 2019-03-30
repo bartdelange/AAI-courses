@@ -1,6 +1,6 @@
 using System.Numerics;
 using AICore.Entity.Dynamic;
-using AICore.Worlds;
+using AICore.Model;
 
 namespace AICore.Entity.Contracts
 {

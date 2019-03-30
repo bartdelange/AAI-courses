@@ -1,6 +1,5 @@
 using System;
 using System.Drawing;
-using System.Reflection.Emit;
 using System.Windows.Forms;
 using AICore;
 using AICore.Worlds;

@@ -1,10 +1,10 @@
 ﻿using System.Drawing;
 using System.Numerics;
 using AIBehaviours.Controls;
-using AIBehaviours.Utils;
 using AICore.Model;
 using AICore.SteeringBehaviour.Aggregate;
 using AICore.SteeringBehaviour.Util;
+using AICore.Util;
 using AICore.Worlds;
 
 namespace AIBehaviours.Demos

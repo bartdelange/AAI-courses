@@ -1,6 +1,5 @@
 using System.Timers;
 using System.Windows.Forms;
-using AICore;
 using AICore.Worlds;
 using Timer = System.Timers.Timer;
 

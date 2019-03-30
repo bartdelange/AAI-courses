@@ -109,6 +109,8 @@ namespace AICore.Navigation
 
         public void Render(Graphics graphics)
         {
+            if (!Config.Debug) return;
+            
             // Draw all vertices in navigation mesh
             foreach (var edge in _navigationMesh.Mesh.Vertices)
             {

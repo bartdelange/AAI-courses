@@ -8,7 +8,7 @@ namespace AIBehaviours
     public partial class Menu : Form
     {
         private readonly object[] _menuItems = {
-            new MenuItem("Soccer game", new Size(800, 600), typeof(WeirdSoccerGameDemo)),
+            new MenuItem("Soccer game", new Size(1000, 800), typeof(WeirdSoccerGameDemo)),
             new MenuItem("Path following", new Size(800, 600), typeof(PathFollowingDemo)),
             new MenuItem("Offset pursuit", new Size(800, 600), typeof(OffsetPursuitDemo)),
             new MenuItem("Wall avoidance", new Size(800, 600), typeof(WallAvoidanceDemo)),

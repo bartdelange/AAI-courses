@@ -2,8 +2,8 @@ using System;
 using System.Drawing;
 using System.Numerics;
 using AICore.Entity.Contracts;
+using AICore.Model;
 using AICore.Util;
-using AICore.Worlds;
 
 namespace AICore.Entity.Dynamic
 {

@@ -15,19 +15,17 @@ namespace AICore.Navigation
 
         public IRenderable MeshHelper { get; set; }
 
-        private readonly int _density;
+        private readonly float _density;
         private readonly Bounds _bounds;
 
-        public FineMesh(int density, Bounds bounds, IEnumerable<IObstacle> obstacles)
+        public FineMesh(float density, Bounds bounds, IEnumerable<IObstacle> obstacles)
         {
             Obstacles = obstacles;
 
             _density = density;
             _bounds = bounds;
 
-            var margin = density / 2;
-
-            GenerateEdges(new Vector2(margin));
+            GenerateEdges(_bounds.Min);
         }
 
         #region Floodfilling
@@ -79,41 +77,6 @@ namespace AICore.Navigation
                     new Vector2(currentPosition.X, currentPosition.Y - _density)
                 );
             }
-
-            /*
-            // Diagonal edges
-            if (!(currentPosition.X + _density >= _bounds.X) && !(currentPosition.Y + _density >= _bounds.Y))
-            {
-                TryAddEdge(
-                    currentPosition,
-                    new Vector2(currentPosition.X + _density, currentPosition.Y + _density)
-                );
-            }
-
-            if (!(currentPosition.X - _density <= 0) && !(currentPosition.Y + _density >= _bounds.Y))
-            {
-                TryAddEdge(
-                    currentPosition,
-                    new Vector2(currentPosition.X - _density, currentPosition.Y + _density)
-                );
-            }
-
-            if (!(currentPosition.X - _density <= 0) && !(currentPosition.Y - _density <= 0))
-            {
-                TryAddEdge(
-                    currentPosition,
-                    new Vector2(currentPosition.X - _density, currentPosition.Y - _density)
-                );
-            }
-
-            if (!(currentPosition.X + _density >= _bounds.X) && !(currentPosition.Y - _density <= 0))
-            {
-                TryAddEdge(
-                    currentPosition,
-                    new Vector2(currentPosition.X + _density, currentPosition.Y - _density)
-                );
-            }
-            */
         }
 
         /// <summary>
