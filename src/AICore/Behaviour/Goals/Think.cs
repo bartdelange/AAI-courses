@@ -23,8 +23,8 @@ namespace AICore.Behaviour.Goals.StrikerGoals
         }
         
         private IGoal _activeGoal;
-        
-        public Think(IPlayer player, SoccerField soccerField) : base(player, soccerField)
+
+        protected Think(IPlayer player, SoccerField soccerField) : base(player, soccerField)
         {
         }
 
