@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Numerics;
+using System.Resources;
+using System.Threading;
 using AICore.Entity.Contracts;
 using AICore.Shapes;
 using AICore.Util;
@@ -75,9 +77,21 @@ namespace AICore.Entity.Dynamic
                 return;
             }
 
-            affectedTeam.Goal.Score -= 1;
+            HandleGoal(affectedTeam);
         }
-        
+
+        private void HandleGoal(Team affectedTeam)
+        {
+            affectedTeam.Goal.Score -= 1;
+
+            // Set ball to its initial position
+            Position = StartPosition;
+            Velocity = Vector2.Zero;
+            
+            // Reset teams
+            _soccerField.Teams.ForEach(team => team.Reset());
+        }
+
         public IPlayer FindClosestPlayer(List<IPlayer> players)
         {
             var smallestDistance = float.MaxValue;

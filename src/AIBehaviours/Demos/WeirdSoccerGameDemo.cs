@@ -162,7 +162,7 @@ namespace AIBehaviours.Demos
             // Create goals
             var soccerGoal = new SoccerGoal(
                 playingFieldArea.Center() - new Vector2(isOpponent ? -350 : 350, 0),
-                new Vector2(10, 150),
+                new Vector2(30, 150),
                 teamColor
             );
 

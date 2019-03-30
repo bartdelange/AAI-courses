@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 using AICore.Entity.Contracts;
 using AICore.Entity.Static;
 
@@ -21,6 +22,7 @@ namespace AICore.Worlds
 
                 return _opponent;
             }
+            
             set => _opponent = value;
         }
 
@@ -28,6 +30,14 @@ namespace AICore.Worlds
         {
             Goal = soccerGoal;
             Players = players;
+        }
+
+        public void Reset()
+        {
+            Players.ForEach(player =>
+            {
+                player.Position = player.StartPosition;
+            });
         }
     }
 }

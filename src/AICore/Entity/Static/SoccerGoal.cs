@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Drawing;
 using System.Numerics;
 using AICore.Entity.Contracts;
@@ -14,11 +15,15 @@ namespace AICore.Entity.Static
         public bool Visible { get; set; } = true;
 
         public Vector2 Position { get; }
-        
-        public int Score { get; set; }
+
+        public int Score { get; set; } = Config.InitialScore;
 
         private readonly Bounds _bounds;
+        
+        // Rendering properties
         private readonly Brush _goalBrush;
+        private readonly Brush _scoreBrush;
+        private readonly Font _scoreFont = new Font(FontFamily.GenericSansSerif,18f, FontStyle.Bold);
 
         /// <summary>
         /// Returns a list of vectors using the size and position of the goal
@@ -27,11 +32,13 @@ namespace AICore.Entity.Static
 
         public SoccerGoal(Vector2 position, Vector2 size, Color teamColor)
         {
-            Position = position;
-            
-            _bounds = new Bounds(position - size / 2, position + size / 2);
             _goalBrush = new SolidBrush(teamColor);
+            _scoreBrush = new SolidBrush(Color.FromArgb(teamColor.ToArgb() ^ 0xffffff));
+
             
+            Position = position;
+            _bounds = new Bounds(position - size / 2, position + size / 2);
+
             // Set polygons
             Polygons = new List<Vector2>
             {
@@ -48,12 +55,12 @@ namespace AICore.Entity.Static
                 _goalBrush,
                 (Rectangle) _bounds
             );
-            
+                        
             graphics.DrawString(
                 Score.ToString(),
-                SystemFonts.DefaultFont,
-                Brushes.Red, 
-                Position.ToPoint()
+                _scoreFont,
+                _scoreBrush, 
+                Position.Minus(_scoreFont.Size / 2).ToPoint()
             );
         }
     }
