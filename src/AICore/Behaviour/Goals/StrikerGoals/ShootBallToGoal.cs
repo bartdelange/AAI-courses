@@ -14,7 +14,7 @@ namespace AICore.Behaviour.Goals.StrikerGoals
 
         public override void Enter()
         {
-            throw new NotImplementedException();
+            
         }
 
         public override void Update(float deltaTim)

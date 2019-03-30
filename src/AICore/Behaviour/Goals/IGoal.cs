@@ -3,7 +3,8 @@ namespace AICore.Behaviour.Goals
     public enum GoalNames
     {
         GoToBall,
-        DribbleToGoal
+        DribbleToGoal,
+        RestGoal
     }
 
     public interface IGoal

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 using AICore.Entity.Contracts;
 using AICore.FuzzyLogic;
@@ -53,8 +54,14 @@ namespace AICore.Behaviour.Goals
                 return 0;
             }
             
-            var ballDist = Vector2.Distance(Player.Position, SoccerField.Ball.Position);
-            _fuzzyModule.Fuzzify("DistToBall", ballDist);
+            if (Player.Team.Players.Any(player => player == SoccerField.Ball.Owner))
+            {
+                return 0;
+            }
+            
+            var distanceToBall = Vector2.Distance(Player.Position, SoccerField.Ball.Position);
+            
+            _fuzzyModule.Fuzzify("DistToBall", distanceToBall);
             return _fuzzyModule.DeFuzzify("Desirability", FuzzyModule.DefuzzifyType.MaxAv);
         }
     }

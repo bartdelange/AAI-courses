@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using System.Numerics;
 using AICore.Entity.Contracts;
+using AICore.Util;
 
 namespace AICore.SteeringBehaviour.Individual
 {
@@ -34,7 +35,12 @@ namespace AICore.SteeringBehaviour.Individual
 
         public void Render(Graphics graphics)
         {
-            throw new System.NotImplementedException();
+            var rectangle = new Rectangle(
+                _movingEntity.Position.Minus(2).ToPoint(),
+                new Size(3, 3)
+            );
+            
+            graphics.FillEllipse(Brushes.Red, rectangle);
         }
     }
 }
