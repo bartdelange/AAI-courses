@@ -43,6 +43,7 @@ namespace AICore.Entity.Dynamic
         public override void Update(float deltaTime)
         {
             ThinkGoal?.Update(this);
+            
             base.Update(deltaTime);
         }
 

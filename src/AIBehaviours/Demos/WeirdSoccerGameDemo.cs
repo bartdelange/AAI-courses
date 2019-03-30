@@ -6,6 +6,7 @@ using System.Numerics;
 using System.Windows.Forms;
 using AIBehaviours.Controls;
 using AICore;
+using AICore.Behaviour.Goals;
 using AICore.Entity.Contracts;
 using AICore.Entity.Dynamic;
 using AICore.Model;
@@ -25,12 +26,13 @@ namespace AIBehaviours.Demos
         private IPlayer _activePlayer;
         private ISteeringBehaviour _activePlayerPreviousSteeringBehaviour;
         private DynamicSteeringBehaviour _activePlayerSteeringBehaviour;
+        private BaseGoal _activePlayerPreviousGoal;
 
         public WeirdSoccerGameDemo(Size size) : base(size)
         {
             var margin = new Vector2(15);
             var playingFieldArea = new Bounds(Vector2.Zero, WorldSize) - margin;
-            
+
             _soccerField = new SoccerField(playingFieldArea);
 
             // Create ball
@@ -44,10 +46,11 @@ namespace AIBehaviours.Demos
             teamBlue.Opponent = teamRed;
 
             // Add zero overlap middleware to entities
-            var players = new List<IPlayer>();
-            players.AddRange(teamRed.Players);
-            players.AddRange(teamBlue.Players);
-            players.ForEach(entity => entity.Middlewares.Add(new ZeroOverlapMiddleware(entity, players)));
+            var entities = new List<IMovingEntity>();
+            entities.AddRange(teamRed.Players);
+            entities.AddRange(teamBlue.Players);
+            entities.Add(ball);
+            entities.ForEach(entity => entity.Middlewares.Add(new ZeroOverlapMiddleware(entity, entities)));
 
             // Populate soccerField
             _soccerField.Teams.Add(teamBlue);
@@ -86,7 +89,7 @@ namespace AIBehaviours.Demos
 
                 case Keys.Space:
                     var timespan = DateTime.Now.Subtract(_kickActiveTime).TotalMilliseconds;
-                    
+
                     _soccerField.Ball.Kick(
                         _activePlayer,
                         (float) timespan / Config.BallBuildupRatio
@@ -125,7 +128,7 @@ namespace AIBehaviours.Demos
                 case Keys.Space:
                     if (!_kickActive)
                         _kickActiveTime = DateTime.Now;
-                    
+
                     _kickActive = true;
                     break;
             }
@@ -136,6 +139,7 @@ namespace AIBehaviours.Demos
             if (_activePlayer != null)
             {
                 _activePlayer.SteeringBehaviour = _activePlayerPreviousSteeringBehaviour;
+                _activePlayer.ThinkGoal = _activePlayerPreviousGoal;
             }
 
             var newPlayers = _soccerField
@@ -151,8 +155,10 @@ namespace AIBehaviours.Demos
 
             // Change steering behaviour to allow keyboard controls for active player
             _activePlayerPreviousSteeringBehaviour = _activePlayer.SteeringBehaviour;
+            _activePlayerPreviousGoal = _activePlayer.ThinkGoal;
             _activePlayerSteeringBehaviour = new DynamicSteeringBehaviour(_activePlayer, _soccerField);
             _activePlayer.SteeringBehaviour = _activePlayerSteeringBehaviour;
+            _activePlayer.ThinkGoal = null;
         }
     }
 }
