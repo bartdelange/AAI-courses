@@ -220,6 +220,9 @@ namespace AIBehaviours.Demos
             strikers.ForEach(striker => striker.SteeringBehaviour = new StrikerBehaviour(striker, team, soccerField));
             goalKeeper.SteeringBehaviour = new GoalKeeperBehaviour(goalKeeper, team, soccerField);
 
+            // Add team to player entity
+            players.ForEach(player => player.Team = team);
+
             return team;
         }
 

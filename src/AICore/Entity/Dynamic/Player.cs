@@ -3,12 +3,15 @@ using System.Drawing;
 using System.Numerics;
 using AICore.Entity.Contracts;
 using AICore.Util;
+using AICore.Worlds;
 
 namespace AICore.Entity.Dynamic
 {
     public class Player : MovingEntity, IPlayer
     {
         public Vector2 StartPosition { get; }
+        public Team Team { get; set; }
+        
         public DateTime Attempt { get; set; } = DateTime.Now;
 
         public float MaxEnergy { get; set; } = 50;

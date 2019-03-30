@@ -7,7 +7,7 @@ namespace AICore
         public static bool Debug = Environment.GetEnvironmentVariable("DEBUG") == "1";
         
         // Game properties
-        public const int InitialScore = 10;
+        public const int InitialScore = 9;
         
         // Ball properties
         public const float BallMass = 5f;
