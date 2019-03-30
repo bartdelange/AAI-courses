@@ -2,8 +2,10 @@ using System;
 using System.Drawing;
 using System.Numerics;
 using AICore.Entity.Contracts;
+using AICore.Entity.Static;
 using AICore.Model;
 using AICore.Util;
+using AICore.Worlds;
 
 namespace AICore.Entity.Dynamic
 {
@@ -11,6 +13,7 @@ namespace AICore.Entity.Dynamic
     {
         public Vector2 StartPosition { get; }
         public Team Team { get; set; }
+        public SoccerField SoccerField { get; set; }
         
         public DateTime Attempt { get; set; } = DateTime.Now;
 
@@ -40,7 +43,7 @@ namespace AICore.Entity.Dynamic
         public void Dribble(Ball ball)
         {
             // Might need to fix this equals check
-            if (ball.OwnedBy == this)
+            if (ball.Owner == this)
             {
                 // Should update it to be in front of the player
                 ball.Position = Heading * ball.BoundingRadius + Position;
@@ -52,12 +55,12 @@ namespace AICore.Entity.Dynamic
             var random = new Random();
 
             // Might need to fix this equals check
-            if (ball.OwnedBy == this) return;
+            if (ball.Owner == this) return;
 
             // If we do not add an attempt check it will get it every time (as this is parsed in update / every game tick)
             if (random.NextDouble() > 0.5d && Attempt.AddSeconds(5) <= DateTime.Now)
             {
-                ball.OwnedBy = this;
+                ball.Owner = this;
             }
 
             Attempt = DateTime.Now;

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Numerics;
@@ -14,6 +15,8 @@ namespace AICore.SteeringBehaviour.Individual
         public bool Visible { get; set; } = true;
 
         private readonly IPlayer _player;
+        private readonly SoccerField _soccerField;
+        
         private readonly WeightedSteeringBehaviour _wallObstacleAvoidanceBehaviour;
 
         public bool MoveUp { get; set; }
@@ -24,6 +27,7 @@ namespace AICore.SteeringBehaviour.Individual
         public DynamicSteeringBehaviour(IPlayer player, SoccerField soccerField)
         {
             _player = player;
+            _soccerField = soccerField;
 
             _wallObstacleAvoidanceBehaviour = new WeightedSteeringBehaviour(
                 new WallObstacleAvoidanceBehaviour(player, soccerField.Sidelines, soccerField.Obstacles),
@@ -49,6 +53,16 @@ namespace AICore.SteeringBehaviour.Individual
                 
                 _player.MaxSpeed
             );
+
+            // Take ball when player is very close to ball
+            var interceptDistance = Math.Pow(_player.BoundingRadius, 2) + Math.Pow(_soccerField.Ball.BoundingRadius, 2);
+            var distance = Vector2.DistanceSquared(_soccerField.Ball.Position, _player.Position);
+
+            if (distance < interceptDistance)
+            {
+                _soccerField.Ball.Owner = _player;
+            }
+            
             return weightedSteeringBehaviour.Calculate(deltaTime);
         }
 

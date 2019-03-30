@@ -11,10 +11,13 @@ namespace AICore.Entity.Dynamic
 {
     public class Ball : MovingEntity, ICircle
     {
-        public IPlayer OwnedBy;
-        
         private readonly SoccerField _soccerField;
-
+        
+        /// <summary>
+        /// Player that is currently in possession of the ball
+        /// </summary>
+        public IPlayer Owner;
+        
         public Ball(Vector2 position, SoccerField soccerField) : base(position)
         {
             Position = position;
@@ -29,6 +32,8 @@ namespace AICore.Entity.Dynamic
 
         public void Kick(IPlayer player, float speed)
         {
+            Owner = null;
+            
             // Can't kick the ball when player is too far away
             var distanceToBall = Vector2.DistanceSquared(player.Position, Position);
 
@@ -42,6 +47,13 @@ namespace AICore.Entity.Dynamic
         public override void Update(float deltaTime)
         {
             CheckGoalCollision();
+
+            if (Owner != null)
+            {
+                // Should update it to be in front of the player
+                Position = Heading * BoundingRadius + Owner.Position;
+                return;
+            }
             
             const float squaredFriction = Config.BallFriction * Config.BallFriction;
             
