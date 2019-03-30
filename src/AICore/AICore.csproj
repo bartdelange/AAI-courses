@@ -43,11 +43,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Assets.resx</DependentUpon>
-    </Compile>
     <Compile Include="Behaviour\DefenderBehaviour.cs" />
     <Compile Include="Behaviour\GoalKeeperBehaviour.cs" />
     <Compile Include="Behaviour\Goals\BaseGoal.cs" />
@@ -159,12 +154,6 @@
     <Compile Include="Worlds\IWorld.cs" />
     <Compile Include="Worlds\SoccerField.cs" />
     <Compile Include="Worlds\World.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Assets.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Assets.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\soccer_ball_pattern.jpg" />

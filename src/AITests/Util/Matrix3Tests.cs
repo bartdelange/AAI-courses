@@ -1,4 +1,6 @@
+using System.Numerics;
 using AICore.Util;
+using Xunit;
 
 namespace AITests.Util
 {
