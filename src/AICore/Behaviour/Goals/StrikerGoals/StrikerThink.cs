@@ -30,8 +30,8 @@ namespace AICore.Behaviour.Goals.StrikerGoals
                 }
             }
 
-            desirableGoal?.Activate();
-            desirableGoal?.Update(player);
+            desirableGoal.Activate();
+            desirableGoal.Update(player);
         }
 
         public override void Activate()
