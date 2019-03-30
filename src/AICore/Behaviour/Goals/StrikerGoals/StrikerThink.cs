@@ -3,7 +3,7 @@ using AICore.Entity.Contracts;
 using AICore.FuzzyLogic;
 using AICore.Worlds;
 
-namespace AICore.Behaviour.Goals
+namespace AICore.Behaviour.Goals.StrikerGoals
 {
     public class StrikerThink : BaseGoal
     {

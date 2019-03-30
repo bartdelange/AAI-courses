@@ -2,7 +2,7 @@ using System;
 using AICore.Entity.Contracts;
 using AICore.Worlds;
 
-namespace AICore.Behaviour.Goals
+namespace AICore.Behaviour.Goals.StrikerGoals
 {
     public class ShootBallToGoal : BaseGoal
     {
