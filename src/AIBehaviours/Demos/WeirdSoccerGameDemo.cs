@@ -9,6 +9,7 @@ using AICore;
 using AICore.Behaviour.Goals;
 using AICore.Entity.Contracts;
 using AICore.Entity.Dynamic;
+using AICore.Entity.Static;
 using AICore.Model;
 using AICore.SteeringBehaviour;
 using AICore.SteeringBehaviour.Individual;
@@ -46,13 +47,12 @@ namespace AIBehaviours.Demos
             var entities = new List<IMovingEntity>();
             entities.AddRange(teamRed.Players);
             entities.AddRange(teamBlue.Players);
-            entities.Add(ball);
+            entities.Add(_soccerField.Ball);
             entities.ForEach(entity => entity.Middlewares.Add(new ZeroOverlapMiddleware(entity, entities)));
 
             // Populate soccerField
             _soccerField.Teams.Add(teamBlue);
             _soccerField.Teams.Add(teamRed);
-            _soccerField.Ball = ball;
 
             // Setup game controls            
             KeyDown += OnKeyDown;
