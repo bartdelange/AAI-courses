@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Numerics;
 using AICore.Behaviour;
-using AICore.Behaviour.Goals;
 using AICore.Behaviour.Goals.StrikerGoals;
 using AICore.Entity.Contracts;
 using AICore.Entity.Dynamic;

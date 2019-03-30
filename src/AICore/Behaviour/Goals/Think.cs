@@ -6,7 +6,7 @@ using AICore.Exceptions;
 using AICore.Util;
 using AICore.Worlds;
 
-namespace AICore.Behaviour.Goals.StrikerGoals
+namespace AICore.Behaviour.Goals
 {
     public abstract class Think : BaseGoal, IRenderable
     {
@@ -33,7 +33,7 @@ namespace AICore.Behaviour.Goals.StrikerGoals
         {
         }
 
-        public override void Update(IPlayer player)
+        public override void Update(float deltaTime)
         {
             var desirableGoal = ActiveGoal;
             var currentDesirability = desirableGoal.CheckDesirability();
@@ -48,14 +48,14 @@ namespace AICore.Behaviour.Goals.StrikerGoals
 
             if (desirableGoal != ActiveGoal)
             {
-                desirableGoal.Activate();
+                desirableGoal.Enter();
                 ActiveGoal = desirableGoal;
             }
 
-            desirableGoal.Update(player);
+            desirableGoal.Update(deltaTime);
         }
 
-        public override void Activate()
+        public override void Enter()
         {
             throw new NotImplementedByException(); // Not needed
         }

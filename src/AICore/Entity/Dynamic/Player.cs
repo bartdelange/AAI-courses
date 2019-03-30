@@ -2,7 +2,6 @@ using System;
 using System.Drawing;
 using System.Numerics;
 using AICore.Behaviour.Goals;
-using AICore.Behaviour.Goals.StrikerGoals;
 using AICore.Entity.Contracts;
 using AICore.Model;
 using AICore.Util;
@@ -43,7 +42,7 @@ namespace AICore.Entity.Dynamic
         
         public override void Update(float deltaTime)
         {
-            ThinkGoal?.Update(this);
+            ThinkGoal?.Update(deltaTime);
             
             base.Update(deltaTime);
         }

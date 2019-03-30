@@ -12,17 +12,15 @@ namespace AICore.Behaviour.Goals.StrikerGoals
             soccerField.Ball.Kick(player, soccerField.Ball.MaxSpeed);
         }
 
-        public override void Activate()
+        public override void Enter()
         {
             throw new NotImplementedException();
         }
 
-        public override void Update(IPlayer player)
+        public override void Update(float deltaTim)
         {
             // Add go to ball to entity
             Console.WriteLine("Update ShootBallToGoal");
-
-            base.Update(player);
         }
 
         public override double CheckDesirability()

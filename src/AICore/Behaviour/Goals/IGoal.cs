@@ -1,5 +1,3 @@
-using AICore.Entity.Contracts;
-
 namespace AICore.Behaviour.Goals
 {
     public enum GoalNames
@@ -13,8 +11,8 @@ namespace AICore.Behaviour.Goals
         void Add(GoalNames goalName, IGoal goal);
         void Remove(GoalNames goalName);
         
-        void Activate();
-        void Update(IPlayer player);
+        void Enter();
+        void Update(float deltaTim);
         double CheckDesirability();
     }
 }

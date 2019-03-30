@@ -27,11 +27,9 @@ namespace AICore.Behaviour.Goals
             Goals.Remove(goalName);
         }
 
-        public abstract void Activate();
+        public abstract void Enter();
 
-        public virtual void Update(IPlayer player)
-        {
-        }
+        public abstract void Update(float deltaTime);
 
         public abstract double CheckDesirability();
     }

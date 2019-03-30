@@ -9,8 +9,13 @@ namespace AICore.Behaviour.Goals
         {
         }
 
-        public override void Activate()
+        public override void Enter()
         {
+        }
+
+        public override void Update(float deltaTim)
+        {
+            
         }
 
         public override double CheckDesirability()

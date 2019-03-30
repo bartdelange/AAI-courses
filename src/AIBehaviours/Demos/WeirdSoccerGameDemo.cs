@@ -7,7 +7,6 @@ using System.Windows.Forms;
 using AIBehaviours.Controls;
 using AICore;
 using AICore.Behaviour.Goals;
-using AICore.Behaviour.Goals.StrikerGoals;
 using AICore.Entity.Contracts;
 using AICore.Entity.Dynamic;
 using AICore.Model;

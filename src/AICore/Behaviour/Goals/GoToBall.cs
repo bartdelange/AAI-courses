@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Numerics;
 using AICore.Entity.Contracts;
@@ -33,7 +32,7 @@ namespace AICore.Behaviour.Goals
             _fuzzyModule.AddRule("ballFar -> undesirable", ballFar, veryDesirable);
         }
 
-        public override void Activate()
+        public override void Enter()
         {
             Player.SteeringBehaviour = new WeightedTruncatedRunningSumWithPrioritization(new List<WeightedSteeringBehaviour>
             {
@@ -42,11 +41,9 @@ namespace AICore.Behaviour.Goals
             }, Player.MaxSpeed);
         }
 
-        public override void Update(IPlayer player)
+        public override void Update(float deltaTim)
         {
             SoccerField.Ball.TakeBall(Player);
-
-            base.Update(player);
         }
 
         public override double CheckDesirability()

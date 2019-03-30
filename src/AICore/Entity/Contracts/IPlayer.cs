@@ -1,6 +1,5 @@
 using System.Numerics;
 using AICore.Behaviour.Goals;
-using AICore.Behaviour.Goals.StrikerGoals;
 using AICore.Entity.Dynamic;
 using AICore.Model;
 

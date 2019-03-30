@@ -15,7 +15,7 @@ namespace AICore.Behaviour.Goals
         {
         }
 
-        public override void Activate()
+        public override void Enter()
         {
             Player.SteeringBehaviour = new WeightedTruncatedRunningSumWithPrioritization(new List<WeightedSteeringBehaviour>
             {
@@ -24,11 +24,9 @@ namespace AICore.Behaviour.Goals
             }, Player.MaxSpeed);
         }
 
-        public override void Update(IPlayer player)
+        public override void Update(float deltaTim)
         {
             Console.WriteLine($"Update DribbleToGoal");
-            
-            base.Update(player);
         }
 
         public override double CheckDesirability()
