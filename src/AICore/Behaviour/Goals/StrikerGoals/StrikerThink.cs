@@ -19,19 +19,19 @@ namespace AICore.Behaviour.Goals.StrikerGoals
         
         public override void Update(IPlayer player)
         {
-            IGoal desireableGoal = new RestGoal(Player, SoccerField);
-            var currDesirability = desireableGoal.CheckDesirability();
+            IGoal desirableGoal = new RestGoal(Player, SoccerField);
+            var currDesirability = desirableGoal.CheckDesirability();
             
             foreach (var goal in _goals)
             {
                 if (goal.Value.CheckDesirability() > currDesirability)
                 {
-                    desireableGoal = goal.Value;
+                    desirableGoal = goal.Value;
                 }
             }
 
-            desireableGoal?.Activate();
-            desireableGoal?.Update(player);
+            desirableGoal?.Activate();
+            desirableGoal?.Update(player);
         }
 
         public override void Activate()
