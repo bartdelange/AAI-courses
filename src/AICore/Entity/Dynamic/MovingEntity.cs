@@ -164,13 +164,6 @@ namespace AICore.Entity.Dynamic
                 (Position + Velocity).ToPoint()
             );
 
-            graphics.DrawString(
-                Velocity.ToString("##.##"),
-                SystemFonts.DefaultFont,
-                Brushes.Black,
-                (Position + new Vector2(10, 0)).ToPoint()
-            );
-
             // visualize the bounding circle
             graphics.FillEllipse(
                 _boundingCircleBrush,

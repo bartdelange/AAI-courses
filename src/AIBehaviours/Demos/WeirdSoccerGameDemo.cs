@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using AIBehaviours.Controls;
 using AICore;
 using AICore.Behaviour.Goals;
+using AICore.Behaviour.Goals.StrikerGoals;
 using AICore.Entity.Contracts;
 using AICore.Entity.Dynamic;
 using AICore.Model;
@@ -26,7 +27,7 @@ namespace AIBehaviours.Demos
         private IPlayer _activePlayer;
         private ISteeringBehaviour _activePlayerPreviousSteeringBehaviour;
         private DynamicSteeringBehaviour _activePlayerSteeringBehaviour;
-        private BaseGoal _activePlayerPreviousGoal;
+        private Think _activePlayerPreviousGoal;
 
         public WeirdSoccerGameDemo(Size size) : base(size)
         {

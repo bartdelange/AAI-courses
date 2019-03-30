@@ -2,6 +2,7 @@ using System;
 using System.Drawing;
 using System.Numerics;
 using AICore.Behaviour.Goals;
+using AICore.Behaviour.Goals.StrikerGoals;
 using AICore.Entity.Contracts;
 using AICore.Model;
 using AICore.Util;
@@ -13,7 +14,7 @@ namespace AICore.Entity.Dynamic
         public new Vector2 StartPosition { get; }
         public Team Team { get; set; }
         
-        public BaseGoal ThinkGoal { get; set; }
+        public Think ThinkGoal { get; set; }
 
         public DateTime Attempt { get; set; } = DateTime.Now;
 
@@ -65,11 +66,15 @@ namespace AICore.Entity.Dynamic
 
         public override void Render(Graphics graphics)
         {
+            ThinkGoal?.RenderIfVisible(graphics);
+
+            var textSize = graphics.MeasureString(_positionName, SystemFonts.DefaultFont);
+
             graphics.DrawString(
                 _positionName,
                 SystemFonts.DefaultFont,
                 Brushes.Black,
-                (Position + new Vector2(10, 10)).ToPoint()
+                (Position + new Vector2(-(textSize.Width / 2), -(BoundingRadius + 15))).ToPoint()
             );
 
             var rectangle = new Rectangle(
@@ -80,6 +85,7 @@ namespace AICore.Entity.Dynamic
             );
 
             graphics.FillEllipse(_brush, rectangle);
+            
             
             base.Render(graphics);
         }
