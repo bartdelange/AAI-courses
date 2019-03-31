@@ -13,17 +13,22 @@ namespace AICore.SteeringBehaviour.Aggregate
 
         private readonly WeightedTruncatedRunningSumWithPrioritization _steeringBehaviour;
 
-        public WanderNearPositionBehaviour(IPlayer playerEntity)
+        public WanderNearPositionBehaviour(
+            IMovingEntity entity, 
+            IEnumerable<IWall> walls,
+            IEnumerable<IObstacle> obstacles
+        )
         {
             var steeringBehaviours = new List<WeightedSteeringBehaviour>
             {
-                new WeightedSteeringBehaviour(new SeekBehaviour(playerEntity, playerEntity.StartPosition), 5f),
-                new WeightedSteeringBehaviour(new WanderBehaviour(playerEntity), 1f)
+                new WeightedSteeringBehaviour(new WallObstacleAvoidanceBehaviour(entity, walls, obstacles), 10f),
+                new WeightedSteeringBehaviour(new SeekBehaviour(entity, entity.StartPosition), 5f),
+                new WeightedSteeringBehaviour(new WanderBehaviour(entity), 1f)
             };
 
             _steeringBehaviour = new WeightedTruncatedRunningSumWithPrioritization(
                 steeringBehaviours,
-                playerEntity.MaxSpeed
+                entity.MaxSpeed
             );
         }
 

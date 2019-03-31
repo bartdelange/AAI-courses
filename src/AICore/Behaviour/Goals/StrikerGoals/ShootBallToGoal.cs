@@ -10,7 +10,7 @@ namespace AICore.Behaviour.Goals.StrikerGoals
     {
         private readonly FuzzyModule _fuzzyModule = new FuzzyModule();
 
-        public ShootBallToGoal(IPlayer player, SoccerField soccerField): base(player, soccerField)
+        public ShootBallToGoal(IPlayer player, SoccerField soccerField) : base(player, soccerField)
         {
             var distToGoal = _fuzzyModule.CreateFlv("DistToGoal");
             var goalClose = distToGoal.AddLeftShoulderSet("GoalClose", 0, 25, 50);
@@ -21,6 +21,7 @@ namespace AICore.Behaviour.Goals.StrikerGoals
             var veryDesirable = desirability.AddRightShoulderSet("VeryDesirable", 50, 75, 100);
             var desirable = desirability.AddTriangularSet("Desirable", 25, 50, 75);
             var undesirable = desirability.AddLeftShoulderSet("Undesirable", 0, 25, 50);
+
             _fuzzyModule.AddRule("goalClose -> veryDesirable", goalClose, veryDesirable);
             _fuzzyModule.AddRule("goalMedium -> desirable", goalMedium, desirable);
             _fuzzyModule.AddRule("goalFar -> undesirable", goalFar, undesirable);
@@ -28,7 +29,6 @@ namespace AICore.Behaviour.Goals.StrikerGoals
 
         public override void Enter()
         {
-            
             // TODO: Update heading?
             SoccerField.Ball.Kick(Player, SoccerField.Ball.MaxSpeed);
         }
@@ -43,9 +43,9 @@ namespace AICore.Behaviour.Goals.StrikerGoals
         {
             // If we don't own the ball we can't kick it
             if (SoccerField.Ball.Owner != Player) return 0;
-            
-            var goalDist = Vector2.Distance(Player.Position, Player.Team.Goal.Position);
-            _fuzzyModule.Fuzzify("DistToGoal", goalDist);
+
+            var distanceToGoal = Vector2.Distance(Player.Position, Player.Team.Goal.Position);
+            _fuzzyModule.Fuzzify("DistToGoal", distanceToGoal);
             return _fuzzyModule.DeFuzzify("Desirability", FuzzyModule.DefuzzifyType.MaxAv);
         }
     }

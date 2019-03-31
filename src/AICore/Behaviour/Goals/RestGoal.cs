@@ -12,12 +12,11 @@ namespace AICore.Behaviour.Goals
 
         public override void Enter()
         {
-            Player.SteeringBehaviour = new WanderNearPositionBehaviour(Player);
+            Player.SteeringBehaviour = new WanderNearPositionBehaviour(Player, SoccerField.Sidelines, SoccerField.Obstacles);
         }
 
         public override void Update(float deltaTim)
         {
-            
         }
 
         public override double CheckDesirability()
