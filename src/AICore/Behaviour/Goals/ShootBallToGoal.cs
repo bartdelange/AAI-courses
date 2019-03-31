@@ -52,6 +52,11 @@ namespace AICore.Behaviour.Goals
             Console.WriteLine("Update ShootBallToGoal");
         }
 
+        public override void Leave()
+        {
+            --Player.Energy;
+        }
+
         public override double CheckDesirability()
         {
             // If we don't own the ball we can't kick it

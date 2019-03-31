@@ -19,5 +19,6 @@ namespace AICore.Behaviour.Goals
         void Enter();
         void Update(float deltaTim);
         double CheckDesirability();
+        void Leave();
     }
 }

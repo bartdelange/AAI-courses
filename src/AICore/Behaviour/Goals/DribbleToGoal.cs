@@ -32,9 +32,12 @@ namespace AICore.Behaviour.Goals
         public override double CheckDesirability()
         {
             // If we don't own the ball we can dribble
-            if (SoccerField.Ball.Owner != Player) return 0d;
+            return SoccerField.Ball.Owner != Player ? 0d : 50d;
+        }
 
-            return 50d;
+        public override void Leave()
+        {
+            // 
         }
     }
 }

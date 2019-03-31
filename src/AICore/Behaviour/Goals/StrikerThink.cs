@@ -8,6 +8,7 @@ namespace AICore.Behaviour.Goals
         public StrikerThink(IPlayer player, SoccerField soccerField): base(player, soccerField)
         {
             ActiveGoal = new RestGoal(Player, SoccerField);
+            ActiveGoal.Enter();
                 
             Add(GoalNames.GoToBall, new GoToBall(player, soccerField));
             Add(GoalNames.DribbleToGoal, new DribbleToGoal(player, soccerField));

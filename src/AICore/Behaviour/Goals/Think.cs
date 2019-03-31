@@ -15,11 +15,11 @@ namespace AICore.Behaviour.Goals
 
         protected IGoal ActiveGoal
         {
-            private get
+            get
             {
                 if (_activeGoal == null)
                 {
-                    throw new ArgumentNullException("Default goal not set.");
+                    throw new ArgumentNullException(nameof(ActiveGoal), "Default goal not set.");
                 }
 
                 return _activeGoal;
@@ -51,11 +51,12 @@ namespace AICore.Behaviour.Goals
 
             if (desirableGoal != ActiveGoal)
             {
-                desirableGoal.Enter();
+                ActiveGoal.Leave();
                 ActiveGoal = desirableGoal;
+                ActiveGoal.Enter();
             }
 
-            desirableGoal.Update(deltaTime);
+            ActiveGoal.Update(deltaTime);
         }
 
         public override void Enter()
@@ -64,6 +65,11 @@ namespace AICore.Behaviour.Goals
         }
 
         public override double CheckDesirability()
+        {
+            throw new NotImplementedByDesignException(); // Not needed
+        }
+
+        public override void Leave()
         {
             throw new NotImplementedByDesignException(); // Not needed
         }

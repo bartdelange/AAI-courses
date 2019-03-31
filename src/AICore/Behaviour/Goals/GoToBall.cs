@@ -19,9 +19,9 @@ namespace AICore.Behaviour.Goals
         public GoToBall(IPlayer player, SoccerField soccerField): base(player, soccerField)
         {
             var distToBall = _fuzzyModule.CreateFlv("DistToBall");
-            var ballClose = distToBall.AddLeftShoulderSet("BallClose", 0, 25, 50);
-            var ballMedium = distToBall.AddTriangularSet("BallMedium", 25, 50, 150);
-            var ballFar = distToBall.AddRightShoulderSet("BallFar", 50, 150, 1000);
+            var ballClose = distToBall.AddLeftShoulderSet("BallClose", 0, 50, 100);
+            var ballMedium = distToBall.AddTriangularSet("BallMedium", 50, 100, 150);
+            var ballFar = distToBall.AddRightShoulderSet("BallFar", 100, 150, 1000);
 
             var desirability = _fuzzyModule.CreateFlv("Desirability");
             var veryDesirable = desirability.AddRightShoulderSet("VeryDesirable", 50, 75, 100);
@@ -42,8 +42,9 @@ namespace AICore.Behaviour.Goals
             }, Player.MaxSpeed);
         }
 
-        public override void Update(float deltaTim)
+        public override void Update(float deltaTime)
         {
+            Player.Energy -= 0.5f*deltaTime;
             SoccerField.Ball.TakeBall(Player);
         }
 
@@ -62,8 +63,12 @@ namespace AICore.Behaviour.Goals
             var distanceToBall = Vector2.Distance(Player.Position, SoccerField.Ball.Position);
             
             _fuzzyModule.Fuzzify("DistToBall", distanceToBall);
-            var defuz = _fuzzyModule.DeFuzzify("Desirability", FuzzyModule.DefuzzifyType.MaxAv);
-            return defuz;
+            return _fuzzyModule.DeFuzzify("Desirability", FuzzyModule.DefuzzifyType.MaxAv);
+        }
+
+        public override void Leave()
+        {
+            
         }
     }
 }

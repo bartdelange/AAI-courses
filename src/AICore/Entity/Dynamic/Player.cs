@@ -31,7 +31,7 @@ namespace AICore.Entity.Dynamic
             StartPosition = startingPosition;
 
             // Set entity properties
-            MaxSpeed = 25;
+            MaxSpeed = Config.MaxSpeed;
             Mass = 5;
             BoundingRadius = 10;
 

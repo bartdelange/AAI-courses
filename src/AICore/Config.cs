@@ -16,6 +16,10 @@ namespace AICore
         public const float BallBuildupRatio = 3;
         public const int BallRadius = 8;
         
+        // Player properties
+        public const float MaxSpeed = 25;
+        public const float RestSpeed = 10f;
+        
         // Timeout in ms
         public const double KickTimeout = 1000;
     }

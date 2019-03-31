@@ -22,8 +22,8 @@ namespace AICore.SteeringBehaviour.Aggregate
             var steeringBehaviours = new List<WeightedSteeringBehaviour>
             {
                 new WeightedSteeringBehaviour(new WallObstacleAvoidance(entity, walls, obstacles), 10f),
-                new WeightedSteeringBehaviour(new Seek(entity, entity.StartPosition), 3f),
-                new WeightedSteeringBehaviour(new Wander(entity), 1f)
+                new WeightedSteeringBehaviour(new Wander(entity), .25f),
+                new WeightedSteeringBehaviour(new Seek(entity, entity.StartPosition), .125f)
             };
 
             _steeringBehaviour = new WeightedTruncatedRunningSumWithPrioritization(

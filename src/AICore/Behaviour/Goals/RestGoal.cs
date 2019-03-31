@@ -12,6 +12,7 @@ namespace AICore.Behaviour.Goals
 
         public override void Enter()
         {
+            Player.MaxSpeed = Config.RestSpeed;
             Player.SteeringBehaviour = new WanderNearPositionBehaviour(Player, SoccerField.Sidelines, SoccerField.Obstacles);
         }
 
@@ -19,9 +20,15 @@ namespace AICore.Behaviour.Goals
         {
         }
 
+        public override void Leave()
+        {
+            Player.MaxSpeed = Config.MaxSpeed;
+        }
+
         public override double CheckDesirability()
         {
-            return 10d;
+            // If we own the ball we can't rest 
+            return SoccerField.Ball.Owner == Player ? 0d : 50d;
         }
     }
 }
