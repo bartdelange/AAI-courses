@@ -26,12 +26,15 @@ namespace AICore.Behaviour.Goals
 
         public override void Update(float deltaTim)
         {
-            Console.WriteLine($"Update DribbleToGoal");
+            Console.WriteLine("Update DribbleToGoal");
         }
 
         public override double CheckDesirability()
         {
-            return 0.0d;
+            // If we don't own the ball we can dribble
+            if (SoccerField.Ball.Owner != Player) return 0;
+
+            return 1.0d;
         }
     }
 }

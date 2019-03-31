@@ -19,18 +19,18 @@ namespace AICore.Behaviour.Goals
         public GoToBall(IPlayer player, SoccerField soccerField): base(player, soccerField)
         {
             var distToBall = _fuzzyModule.CreateFlv("DistToBall");
-            var ballClose = distToBall.AddLeftShoulderSet("BallClose", 0, 25, 150);
-            var ballMedium = distToBall.AddTriangularSet("BallMedium", 25, 150, 300);
-            var ballFar = distToBall.AddRightShoulderSet("BallFar", 150, 300, 500);
+            var ballClose = distToBall.AddLeftShoulderSet("BallClose", 0, 25, 50);
+            var ballMedium = distToBall.AddTriangularSet("BallMedium", 25, 50, 150);
+            var ballFar = distToBall.AddRightShoulderSet("BallFar", 50, 150, 1000);
 
             var desirability = _fuzzyModule.CreateFlv("Desirability");
             var veryDesirable = desirability.AddRightShoulderSet("VeryDesirable", 50, 75, 100);
             var desirable = desirability.AddTriangularSet("Desirable", 25, 50, 75);
             var undesirable = desirability.AddLeftShoulderSet("Undesirable", 0, 25, 50);
 
-            _fuzzyModule.AddRule("ballClose -> very(undesirable)", ballClose, new FzVery(undesirable));
+            _fuzzyModule.AddRule("ballClose -> veryDesirable", ballClose, veryDesirable);
             _fuzzyModule.AddRule("ballMedium -> desirable", ballMedium, desirable);
-            _fuzzyModule.AddRule("ballFar -> undesirable", ballFar, veryDesirable);
+            _fuzzyModule.AddRule("ballFar -> Very(undesirable)", ballFar, new FzVery(undesirable));
         }
 
         public override void Enter()

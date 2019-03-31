@@ -4,7 +4,8 @@ namespace AICore.Behaviour.Goals
     {
         GoToBall,
         DribbleToGoal,
-        RestGoal
+        RestGoal,
+        ShootBallToGoal
     }
 
     public interface IGoal
