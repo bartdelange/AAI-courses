@@ -26,7 +26,7 @@ namespace AICore.Behaviour.Goals
             var ballFar = distToBall.AddRightShoulderSet("BallFar", 150, 250, 1000);
 
             var distToPosition = _fuzzyModule.CreateFlv("DistToPosition");
-            var positionClose = distToPosition.AddLeftShoulderSet("PositionClose", 0, 50, 50);
+            var positionClose = distToPosition.AddLeftShoulderSet("PositionClose", 0, 50, 150);
             var positionMedium = distToPosition.AddTriangularSet("PositionMedium", 50, 150, 250);
             var positionFar = distToPosition.AddRightShoulderSet("PositionFar", 150, 250, 1000);
 

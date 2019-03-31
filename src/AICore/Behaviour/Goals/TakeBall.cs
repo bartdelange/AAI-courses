@@ -21,13 +21,13 @@ namespace AICore.Behaviour.Goals
             
             var distFromPosition = _fuzzyModule.CreateFlv("DistFromPosition");
             var positionClose = distFromPosition.AddLeftShoulderSet("PositionClose", 0, 25, 50);
-            var positionMedium = distFromPosition.AddTriangularSet("PositionMedium", 25, 50, 100);
-            var positionFar = distFromPosition.AddRightShoulderSet("PositionFar", 100, 150, 1000);
+            var positionMedium = distFromPosition.AddTriangularSet("PositionMedium", 25, 50, 150);
+            var positionFar = distFromPosition.AddRightShoulderSet("PositionFar", 50, 150, 1000);
 
             var desirability = _fuzzyModule.CreateFlv("Desirability");
-            var veryDesirable = desirability.AddRightShoulderSet("VeryDesirable", 50, 75, 100);
-            var desirable = desirability.AddTriangularSet("Desirable", 25, 50, 75);
             var undesirable = desirability.AddLeftShoulderSet("Undesirable", 0, 25, 50);
+            var desirable = desirability.AddTriangularSet("Desirable", 25, 50, 75);
+            var veryDesirable = desirability.AddRightShoulderSet("VeryDesirable", 50, 75, 100);
 
             _fuzzyModule.AddRule("ballClose -> veryDesirable", ballClose, veryDesirable);
             _fuzzyModule.AddRule("ballMedium -> undesirable", ballMedium, undesirable);
