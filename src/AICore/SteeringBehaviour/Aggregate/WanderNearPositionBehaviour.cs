@@ -22,7 +22,7 @@ namespace AICore.SteeringBehaviour.Aggregate
             var steeringBehaviours = new List<WeightedSteeringBehaviour>
             {
                 new WeightedSteeringBehaviour(new WallObstacleAvoidanceBehaviour(entity, walls, obstacles), 10f),
-                new WeightedSteeringBehaviour(new SeekBehaviour(entity, entity.StartPosition), 5f),
+                new WeightedSteeringBehaviour(new SeekBehaviour(entity, entity.StartPosition), 3f),
                 new WeightedSteeringBehaviour(new WanderBehaviour(entity), 1f)
             };
 

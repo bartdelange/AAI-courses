@@ -19,17 +19,24 @@ namespace AICore.FuzzyLogic
         private void AdjustRangeToFit(double min, double max)
         {
             if (min < _minRange)
+            {
                 _minRange = min;
+            }
 
             if (max > _maxRange)
+            {
                 _maxRange = max;
+            }
         }
 
         public FzSet AddLeftShoulderSet(string name, double minBound, double peak, double maxBound)
         {
             AdjustRangeToFit(minBound, maxBound);
 
-            var leftShoulderSet = _members.GetOrCreate(name, new LeftShoulder(peak - minBound, peak, maxBound - peak));
+            var leftShoulderSet = _members.GetOrCreate(
+                name,
+                new LeftShoulder(peak - minBound, peak, maxBound - peak)
+            );
 
             return new FzSet(leftShoulderSet);
         }
@@ -38,8 +45,10 @@ namespace AICore.FuzzyLogic
         {
             AdjustRangeToFit(minBound, maxBound);
 
-            var rightShoulderSet =
-                _members.GetOrCreate(name, new RightShoulder(peak - minBound, peak, maxBound - peak));
+            var rightShoulderSet = _members.GetOrCreate(
+                name, 
+                new RightShoulder(peak - minBound, peak, maxBound - peak)
+            );
 
             return new FzSet(rightShoulderSet);
         }
@@ -48,7 +57,10 @@ namespace AICore.FuzzyLogic
         {
             AdjustRangeToFit(minBound, maxBound);
 
-            var triangularSet = _members.GetOrCreate(name, new Triangle(peak - minBound, peak, maxBound - peak));
+            var triangularSet = _members.GetOrCreate(
+                name, 
+                new Triangle(peak - minBound, peak, maxBound - peak)
+            );
 
             return new FzSet(triangularSet);
         }
@@ -57,7 +69,10 @@ namespace AICore.FuzzyLogic
         {
             AdjustRangeToFit(minBound, maxBound);
 
-            var singletonSet = _members.GetOrCreate(name, new Singleton(peak - minBound, peak, maxBound - peak));
+            var singletonSet = _members.GetOrCreate(
+                name,
+                new Singleton(peak - minBound, peak, maxBound - peak)
+            );
 
             return new FzSet(singletonSet);
         }
@@ -66,10 +81,15 @@ namespace AICore.FuzzyLogic
         {
             //make sure the value is within the bounds of this variable
             if (!(val >= _minRange && val <= _maxRange))
-                throw new ArgumentOutOfRangeException(nameof(val), "Value out of range");
+            {
+                throw new ArgumentOutOfRangeException(nameof(val), "Value out of range");                
+            }
 
             //for each set in the flv calculate the DOM for the given value
-            foreach (var member in _members) member.Value.SetDom(member.Value.CalculateDom(val));
+            foreach (var member in _members)
+            {
+                member.Value.SetDom(member.Value.CalculateDom(val));
+            }
         }
 
         public double DeFuzzifyMaxAv()
@@ -83,7 +103,7 @@ namespace AICore.FuzzyLogic
                 top += member.Value.RepresentativeValue * member.Value.GetDom();
             }
 
-            //make sure bottom is not equal to zero
+            // Make sure bottom is not equal to zero
             if (Math.Abs(bottom) < 0.000000001) return 0.0;
 
             return top / bottom;
@@ -96,18 +116,25 @@ namespace AICore.FuzzyLogic
             var totalArea = 0.0d;
             var sumOfMoments = 0.0d;
 
-            for (var samp = 1; samp <= numSamples; ++samp)
+            for (var samples = 1; samples <= numSamples; ++samples)
+            {
                 foreach (var member in _members)
                 {
-                    var contribution = Math.Min(member.Value.CalculateDom(_minRange + samp * stepSize),
-                        member.Value.GetDom());
+                    var contribution = Math.Min(
+                        member.Value.CalculateDom(_minRange + samples * stepSize),
+                        member.Value.GetDom()
+                    );
 
                     totalArea += contribution;
-                    sumOfMoments += (_minRange + samp * stepSize) * contribution;
+                    sumOfMoments += (_minRange + samples * stepSize) * contribution;
                 }
+            }
 
-            //make sure total area is not equal to zero
-            if (Math.Abs(totalArea) < 0.000000001) return 0.0d;
+            // Make sure total area is not equal to zero
+            if (Math.Abs(totalArea) < 0.000000001)
+            {
+                return 0.0d;
+            }
 
             return sumOfMoments / totalArea;
         }
