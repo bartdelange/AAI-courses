@@ -2,7 +2,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Numerics;
+using AICore.Entity;
 using AICore.Entity.Contracts;
+using AICore.Navigation;
 
 namespace AICore.SteeringBehaviour.Individual
 {
@@ -15,29 +17,37 @@ namespace AICore.SteeringBehaviour.Individual
         /// </summary>
         private const int SeekDistance = 5;
 
-        private readonly Vector2 _finalWaypoint;
         private readonly IMovingEntity _movingEntity;
-
         private readonly IEnumerator<Vector2> _pathEnumerator;
+        private readonly NavigationHelper _navigationHelper;
+
+        public readonly Vector2 FinalWaypoint;
 
         /// <summary>
         /// Creates a new instance for PathFollowing
         /// </summary>
         /// <param name="path"></param>
         /// <param name="movingEntity"></param>
-        public PathFollowing(IEnumerable<Vector2> path, IMovingEntity movingEntity)
+        public PathFollowing(PathValues<Vector2> pathValues, IMovingEntity movingEntity)
         {
             _movingEntity = movingEntity;
+            
+            var path = pathValues.SmoothPath ?? pathValues.Path;
 
-            _finalWaypoint = path.Last();
-
+            FinalWaypoint = path.Last();
             _pathEnumerator = path.GetEnumerator();
+
+            _navigationHelper = new NavigationHelper
+            {
+                PathValues = pathValues
+            };
+
             _pathEnumerator.MoveNext();
         }
 
         public Vector2 Calculate(float deltaTime)
         {
-            if (_pathEnumerator.Current == _finalWaypoint)
+            if (_pathEnumerator.Current == FinalWaypoint)
             {
                 var arriveBehaviour = new Arrive(_movingEntity, _pathEnumerator.Current);
                 return arriveBehaviour.Calculate(deltaTime);
@@ -54,6 +64,7 @@ namespace AICore.SteeringBehaviour.Individual
 
         public void Render(Graphics graphics)
         {
+            _navigationHelper.RenderIfVisible(graphics);
         }
     }
 }

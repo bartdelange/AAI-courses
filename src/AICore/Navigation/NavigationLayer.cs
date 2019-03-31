@@ -35,7 +35,6 @@ namespace AICore.Navigation
         public bool Visible { get; set; } = true;
 
         private readonly INavigationMesh _navigationMesh;
-        private readonly NavigationHelper _navigationHelper;
 
         // Drawing properties
         private readonly Pen _edgePen = new Pen(Color.FromArgb(50, Color.Black));
@@ -44,8 +43,6 @@ namespace AICore.Navigation
         public NavigationLayer(INavigationMesh navigationMesh)
         {
             _navigationMesh = navigationMesh;
-
-            _navigationHelper = new NavigationHelper();
         }
 
         /// <summary>
@@ -56,7 +53,7 @@ namespace AICore.Navigation
         /// <param name="pathFinding"></param>
         /// <param name="pathSmoothing"></param>
         /// <returns></returns>
-        public IEnumerable<Vector2> FindPath(
+        public PathValues<Vector2> FindPath(
             Vector2 startPosition,
             Vector2 targetPosition,
             IPathFinding<Vector2> pathFinding,
@@ -69,21 +66,21 @@ namespace AICore.Navigation
             // Just return a path with one vertex When start and destination are the same vertex
             if (startVertexPosition == targetVertexPosition)
             {
-                return new[] {targetVertexPosition};
+                return new PathValues<Vector2>(default(IEnumerable<Vector2>), default(IEnumerable<Vertex<Vector2>>));
             }
 
             // Try to find a path with given path finding algorithm
             var fullPath = new List<Vector2>();
-
+            var pathValues = new PathValues<Vector2>(default(IEnumerable<Vector2>), default(IEnumerable<Vertex<Vector2>>)); 
+            
             try
             {
-                var pathValues = pathFinding.FindPath(
+                pathValues = pathFinding.FindPath(
                     _navigationMesh.Mesh,
                     startVertexPosition,
                     targetVertexPosition,
                     new Manhattan()
                 );
-
                 fullPath = pathValues.Path.ToList();
 
                 // Add start and destination to path
@@ -91,20 +88,21 @@ namespace AICore.Navigation
                 fullPath.Add(targetPosition);
                 
                 // Try to create a smooth path
-                pathValues.SmoothPath = pathSmoothing?.CreateSmoothPath(_navigationMesh, fullPath);
-
-                // Save values to NavigationHelper                
-                _navigationHelper.PathValues = pathValues;
+                var smoothPath = pathSmoothing?.CreateSmoothPath(_navigationMesh, fullPath);
+                pathValues.SmoothPath = new List<Vector2>
+                {
+                    startPosition
+                }.Concat(smoothPath ?? new List<Vector2>());
 
                 // Apply path smoothing if argument is not null
-                return pathValues.SmoothPath ?? pathValues.Path;
+                return pathValues;
             }
             catch (NoSuchElementException noSuchElementException)
             {
                 Console.WriteLine(noSuchElementException);
             }
 
-            return fullPath;
+            return pathValues;
         }
 
         public void Render(Graphics graphics)
@@ -127,8 +125,6 @@ namespace AICore.Navigation
                     new Rectangle(edge.Value.Value.Minus(2).ToPoint(), new Size(4, 4))
                 );
             }
-
-            _navigationHelper.RenderIfVisible(graphics);
         }
     }
 }
