@@ -41,10 +41,10 @@ namespace AICore.Entity.Dynamic
         }
         
         public override void Update(float deltaTime)
-        {
-            ThinkGoal?.Update(deltaTime);
-            
+        {            
             base.Update(deltaTime);
+
+            ThinkGoal?.Update(deltaTime);
         }
 
         public void Steal(Ball ball)

@@ -1,6 +1,7 @@
 using System;
 using System.Drawing;
 using System.Numerics;
+using System.Threading;
 using AICore.Entity.Contracts;
 using AICore.Exceptions;
 using AICore.Util;
@@ -40,8 +41,10 @@ namespace AICore.Behaviour.Goals
 
             foreach (var goal in Goals)
             {
-                if (goal.Value.CheckDesirability() > currentDesirability)
+                var goalDesirability = goal.Value.CheckDesirability();
+                if (goalDesirability > currentDesirability)
                 {
+                    currentDesirability = goalDesirability;
                     desirableGoal = goal.Value;
                 }
             }

@@ -96,9 +96,9 @@ namespace AICore.Model
             Players.ForEach(player => player.Team = this);
             
             // Add behaviours to the entities
-            defenders.ForEach(defender => defender.SteeringBehaviour = new DefenderBehaviour(defender, this, soccerField));
+            //defenders.ForEach(defender => defender.SteeringBehaviour = new DefenderBehaviour(defender, this, soccerField));
             strikers.ForEach(striker => striker.ThinkGoal = new StrikerThink(striker, soccerField));
-            goalKeeper.SteeringBehaviour = new GoalKeeperBehaviour(goalKeeper, this, soccerField);
+            //goalKeeper.SteeringBehaviour = new GoalKeeperBehaviour(goalKeeper, this, soccerField);
         }
 
         public void Reset()

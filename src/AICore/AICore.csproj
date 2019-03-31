@@ -43,8 +43,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Behaviour\DefenderBehaviour.cs" />
-    <Compile Include="Behaviour\GoalKeeperBehaviour.cs" />
     <Compile Include="Behaviour\Goals\BaseGoal.cs" />
     <Compile Include="Behaviour\Goals\DribbleToGoal.cs" />
     <Compile Include="Behaviour\Goals\GoToBall.cs" />

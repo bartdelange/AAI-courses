@@ -30,7 +30,7 @@ namespace AICore.Behaviour.Goals
 
             _fuzzyModule.AddRule("ballClose -> veryDesirable", ballClose, veryDesirable);
             _fuzzyModule.AddRule("ballMedium -> desirable", ballMedium, desirable);
-            _fuzzyModule.AddRule("ballFar -> Very(undesirable)", ballFar, new FzVery(undesirable));
+            _fuzzyModule.AddRule("ballFar -> undesirable", ballFar, undesirable);
         }
 
         public override void Enter()

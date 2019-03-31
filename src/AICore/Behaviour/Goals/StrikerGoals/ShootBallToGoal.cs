@@ -15,17 +15,17 @@ namespace AICore.Behaviour.Goals.StrikerGoals
         public ShootBallToGoal(IPlayer player, SoccerField soccerField) : base(player, soccerField)
         {
             var distToGoal = _fuzzyModule.CreateFlv("DistToGoal");
-            var goalClose = distToGoal.AddLeftShoulderSet("GoalClose", 0, 12.5f, 25);
-            var goalMedium = distToGoal.AddTriangularSet("GoalMedium", 12.5f, 25, 250);
-            var goalFar = distToGoal.AddRightShoulderSet("GoalFar", 50, 250, 1000);
+            var goalClose = distToGoal.AddLeftShoulderSet("GoalClose", 0, 50f, 150);
+            var goalMedium = distToGoal.AddTriangularSet("GoalMedium", 50f, 150, 200);
+            var goalFar = distToGoal.AddRightShoulderSet("GoalFar", 150, 200, 1000);
 
             var desirability = _fuzzyModule.CreateFlv("Desirability");
             var veryDesirable = desirability.AddRightShoulderSet("VeryDesirable", 50, 75, 100);
             var desirable = desirability.AddTriangularSet("Desirable", 25, 50, 75);
             var undesirable = desirability.AddLeftShoulderSet("Undesirable", 0, 25, 50);
 
-            _fuzzyModule.AddRule("goalClose -> desirable", goalClose, desirable);
-            _fuzzyModule.AddRule("goalMedium -> desirable", goalMedium, undesirable);
+            _fuzzyModule.AddRule("goalClose -> desirable", goalClose, veryDesirable);
+            _fuzzyModule.AddRule("goalMedium -> desirable", goalMedium, desirable);
             _fuzzyModule.AddRule("goalFar -> undesirable", goalFar, undesirable);
         }
 
@@ -41,7 +41,7 @@ namespace AICore.Behaviour.Goals.StrikerGoals
             }
             
             // TODO: Update heading?
-            SoccerField.Ball.Kick(Player, 1000);
+            SoccerField.Ball.Kick(Player, 100);
 
             _kickTimeout = DateTime.Now.AddMilliseconds(Config.KickTimeout);
         }
@@ -56,8 +56,9 @@ namespace AICore.Behaviour.Goals.StrikerGoals
         {
             // If we don't own the ball we can't kick it
             if (SoccerField.Ball.Owner != Player) return 0;
+            
+            var distanceToGoal = Vector2.Distance(Player.Position, Player.Team.Opponent.Goal.Position);
 
-            var distanceToGoal = Vector2.Distance(Player.Position, Player.Team.Goal.Position) - 100;
             _fuzzyModule.Fuzzify("DistToGoal", distanceToGoal);
             var defuz = _fuzzyModule.DeFuzzify("Desirability", FuzzyModule.DefuzzifyType.MaxAv);
             return defuz;
