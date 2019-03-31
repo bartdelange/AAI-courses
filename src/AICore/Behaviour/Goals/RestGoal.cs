@@ -76,7 +76,12 @@ namespace AICore.Behaviour.Goals
             var random = Vector2ExtensionMethods.GetRandom(new Bounds(new Vector2(-100), new Vector2(100)));
             var newPos = Player.StartPosition + random;
 
-
+            // Check if distance is at least 100
+            if (Vector2.Distance(newPos, Player.Position) < 100)
+            {
+                newPos = GetValidRandomPosition();
+            }
+             
             // Check it is inside bounds
             if (SoccerField.Sidelines.Any(w => w.IntersectsWithLine(Player.StartPosition, newPos)))
             {

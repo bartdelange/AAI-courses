@@ -12,7 +12,7 @@ namespace AICore.Behaviour.Goals
             ActiveGoal.Enter();
             
             // Ball is close to the goal and player is close to its starting position
-            Add(GoalNames.DefendGoal, new DefendGoal(player, soccerField));
+            Add(GoalNames.DefendGoal, new DefendGoalOnLine(player, soccerField));
             
             // Ball is close to player
             Add(GoalNames.TakeBall, new TakeBall(player, soccerField));

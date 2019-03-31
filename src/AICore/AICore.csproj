@@ -46,6 +46,7 @@
     <Compile Include="Behaviour\Goals\BaseGoal.cs" />
     <Compile Include="Behaviour\Goals\DefenderThink.cs" />
     <Compile Include="Behaviour\Goals\DefendGoal.cs" />
+    <Compile Include="Behaviour\Goals\DefendGoalOnLine.cs" />
     <Compile Include="Behaviour\Goals\DribbleToGoal.cs" />
     <Compile Include="Behaviour\Goals\DribbleTowardsNearestPlayer.cs" />
     <Compile Include="Behaviour\Goals\GoalkeeperThink.cs" />
