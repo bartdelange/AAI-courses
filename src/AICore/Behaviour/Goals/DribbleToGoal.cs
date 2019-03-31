@@ -34,7 +34,7 @@ namespace AICore.Behaviour.Goals
             // If we don't own the ball we can dribble
             if (SoccerField.Ball.Owner != Player) return 0;
 
-            return 1.0d;
+            return 100.0d;
         }
     }
 }

@@ -15,5 +15,8 @@ namespace AICore
         public const float BallFriction = -0.75f;
         public const float BallBuildupRatio = 3;
         public const int BallRadius = 8;
+        
+        // Timeout in ms
+        public const double KickTimeout = 1000;
     }
 }

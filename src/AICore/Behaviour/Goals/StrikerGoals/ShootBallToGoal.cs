@@ -8,6 +8,8 @@ namespace AICore.Behaviour.Goals.StrikerGoals
 {
     public class ShootBallToGoal : BaseGoal
     {
+        private DateTime _kickTimeout = DateTime.MinValue;
+
         private readonly FuzzyModule _fuzzyModule = new FuzzyModule();
 
         public ShootBallToGoal(IPlayer player, SoccerField soccerField) : base(player, soccerField)
@@ -29,8 +31,19 @@ namespace AICore.Behaviour.Goals.StrikerGoals
 
         public override void Enter()
         {
+            // Remove steering behaviour
+            Player.SteeringBehaviour = null;
+            
+            // Can't kick the ball too often
+            if (_kickTimeout.Subtract(DateTime.Now).TotalMilliseconds >= 0)
+            {
+                return;
+            }
+            
             // TODO: Update heading?
-            SoccerField.Ball.Kick(Player, SoccerField.Ball.MaxSpeed);
+            SoccerField.Ball.Kick(Player, 1000);
+
+            _kickTimeout = DateTime.Now.AddMilliseconds(Config.KickTimeout);
         }
 
         public override void Update(float deltaTim)
