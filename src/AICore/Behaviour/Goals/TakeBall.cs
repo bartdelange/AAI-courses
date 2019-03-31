@@ -2,6 +2,7 @@ using System.Linq;
 using System.Numerics;
 using AICore.Entity.Contracts;
 using AICore.FuzzyLogic;
+using AICore.SteeringBehaviour;
 using AICore.SteeringBehaviour.Individual;
 using AICore.Worlds;
 
@@ -43,7 +44,9 @@ namespace AICore.Behaviour.Goals
 
         public override void Update(float deltaTime)
         {
-            Player.SteeringBehaviour = new Pursuit(Player, SoccerField.Ball);
+            Player.SteeringBehaviour = CreateAvoidanceEnabledSteeringBehaviour(
+                new WeightedSteeringBehaviour(new Pursuit(Player, SoccerField.Ball), 1f)
+            );
             SoccerField.Ball.TakeBall(Player);
         }
 

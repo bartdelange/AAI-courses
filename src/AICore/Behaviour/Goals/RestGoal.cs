@@ -6,6 +6,7 @@ using AICore.FuzzyLogic;
 using AICore.Graph.PathFinding;
 using AICore.Model;
 using AICore.Navigation;
+using AICore.SteeringBehaviour;
 using AICore.SteeringBehaviour.Individual;
 using AICore.Util;
 using AICore.Worlds;
@@ -68,7 +69,9 @@ namespace AICore.Behaviour.Goals
 
             _pathFollowing = new PathFollowing(path, Player);
 
-            Player.SteeringBehaviour = _pathFollowing;
+            Player.SteeringBehaviour = CreateAvoidanceEnabledSteeringBehaviour(
+                new WeightedSteeringBehaviour(_pathFollowing, 1f)
+            );
         }
 
         private Vector2 GetValidRandomPosition()
