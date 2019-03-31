@@ -57,12 +57,12 @@ namespace AICore.Behaviour.Goals
 
         public override void Enter()
         {
-            throw new NotImplementedByException(); // Not needed
+            throw new NotImplementedByDesignException(); // Not needed
         }
 
         public override double CheckDesirability()
         {
-            throw new NotImplementedByException(); // Not needed
+            throw new NotImplementedByDesignException(); // Not needed
         }
 
         public void Render(Graphics graphics)
