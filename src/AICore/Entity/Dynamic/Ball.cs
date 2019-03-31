@@ -111,12 +111,7 @@ namespace AICore.Entity.Dynamic
         {
             affectedTeam.Goal.Score -= 1;
 
-            // Set ball to its initial position
-            Position = StartPosition;
-            Velocity = Vector2.Zero;
-            
-            // Reset teams
-            _soccerField.Teams.ForEach(team => team.Reset());
+            _soccerField.Reset();
         }
 
         public IPlayer FindClosestPlayer(List<IPlayer> players)

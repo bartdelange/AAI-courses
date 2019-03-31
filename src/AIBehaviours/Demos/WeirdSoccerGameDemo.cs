@@ -121,6 +121,10 @@ namespace AIBehaviours.Demos
                 case Keys.D:
                     _activePlayerSteeringBehaviour.MoveRight = true;
                     break;
+                
+                case Keys.R:
+                    _soccerField.Reset();
+                    break;
 
                 case Keys.Space:
                     if (!_kickActive)

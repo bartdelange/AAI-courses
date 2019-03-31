@@ -65,6 +65,15 @@ namespace AICore.Worlds
                 )
             );
         }
+        
+        public void Reset()
+        {
+            Ball.Owner = null;
+            Ball.Position = Ball.StartPosition;
+            Ball.Velocity = Vector2.Zero;
+            
+            Teams.ForEach(team => team.Reset());
+        }
 
         public void Render(Graphics graphics)
         {
