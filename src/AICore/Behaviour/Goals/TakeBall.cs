@@ -33,7 +33,7 @@ namespace AICore.Behaviour.Goals
             _fuzzyModule.AddRule("ballFar -> undesirable", ballFar, undesirable);
 
             _fuzzyModule.AddRule("positionClose -> veryDesirable", positionClose, veryDesirable);
-            _fuzzyModule.AddRule("positionMedium -> undesirable", positionMedium, desirable);
+            _fuzzyModule.AddRule("positionMedium -> undesirable", positionMedium, undesirable);
             _fuzzyModule.AddRule("positionFar -> undesirable", positionFar, undesirable);
         }
 

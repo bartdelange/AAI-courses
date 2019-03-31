@@ -15,8 +15,8 @@ namespace AICore.Behaviour.Goals
         {
             var distToBall = _fuzzyModule.CreateFlv("DistToBall");
             var ballClose = distToBall.AddLeftShoulderSet("BallClose", 0, 50, 50);
-            var ballMedium = distToBall.AddTriangularSet("BallMedium", 50, 50, 350);
-            var ballFar = distToBall.AddRightShoulderSet("BallFar", 350, 450, 1000);
+            var ballMedium = distToBall.AddTriangularSet("BallMedium", 50, 150, 250);
+            var ballFar = distToBall.AddRightShoulderSet("BallFar", 150, 250, 1000);
 
             var desirability = _fuzzyModule.CreateFlv("Desirability");
             var desirable = desirability.AddTriangularSet("Desirable", 25, 50, 75);

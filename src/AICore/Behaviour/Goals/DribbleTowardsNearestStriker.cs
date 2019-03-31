@@ -40,9 +40,7 @@ namespace AICore.Behaviour.Goals
             
             var distanceToStriker = Vector2.Distance(Player.Position, _nearestStriker.Position);
             
-            _fuzzyModule.Fuzzify("DistToPlayer", distanceToStriker);
-            
-            if (_fuzzyModule.DeFuzzify("Desirability", FuzzyModule.DefuzzifyType.MaxAv) > 60)
+            if (distanceToStriker < 125 && Vector2.Dot(_nearestStriker.Position - Player.Position, Player.Position) < 0f)
             {
                 SoccerField.Ball.Kick(Player, distanceToStriker);
             }

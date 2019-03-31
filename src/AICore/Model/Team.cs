@@ -80,7 +80,7 @@ namespace AICore.Model
                 ),
                 new Player(
                     PlayerStrategy.Striker,
-                    new Vector2(center.X + (isOpponent ? 75 : -75), center.Y),
+                    new Vector2(center.X + (isOpponent ? 75 : -75), center.Y + (isOpponent ? 15 : -15)),
                     teamColor
                 ),
                 new Player(
