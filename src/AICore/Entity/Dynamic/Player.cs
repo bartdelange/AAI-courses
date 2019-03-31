@@ -8,10 +8,18 @@ using AICore.Util;
 
 namespace AICore.Entity.Dynamic
 {
+    public enum PlayerStrategy
+    {
+        Defender,
+        Striker,
+        GoalKeeper
+    }
+    
     public class  Player : MovingEntity, IPlayer
     {
         public new Vector2 StartPosition { get; }
         public Team Team { get; set; }
+        public PlayerStrategy Strategy { get; set; }
         
         public Think ThinkGoal { get; set; }
 
@@ -23,12 +31,12 @@ namespace AICore.Entity.Dynamic
         public float Energy { get; set; }
 
         // Render properties
-        private readonly string _positionName;
         private readonly Brush _brush;
 
-        public Player(string positionName, Vector2 startingPosition, Color color) : base(startingPosition)
+        public Player(PlayerStrategy playerStrategy, Vector2 startingPosition, Color color) : base(startingPosition)
         {
             StartPosition = startingPosition;
+            Strategy = playerStrategy;
 
             // Set entity properties
             MaxSpeed = Config.MaxSpeed;
@@ -36,7 +44,6 @@ namespace AICore.Entity.Dynamic
             BoundingRadius = 10;
 
             // 
-            _positionName = positionName;
             _brush = new SolidBrush(color);
         }
         
@@ -67,10 +74,12 @@ namespace AICore.Entity.Dynamic
         {
             ThinkGoal?.RenderIfVisible(graphics);
 
-            var textSize = graphics.MeasureString(_positionName, SystemFonts.DefaultFont);
+            var strategyName = Strategy.ToString();
+
+            var textSize = graphics.MeasureString(strategyName, SystemFonts.DefaultFont);
 
             graphics.DrawString(
-                _positionName,
+                strategyName,
                 SystemFonts.DefaultFont,
                 Brushes.Black,
                 (Position + new Vector2(-(textSize.Width / 2), -(BoundingRadius + 15))).ToPoint()
@@ -84,7 +93,6 @@ namespace AICore.Entity.Dynamic
             );
 
             graphics.FillEllipse(_brush, rectangle);
-            
             
             base.Render(graphics);
         }

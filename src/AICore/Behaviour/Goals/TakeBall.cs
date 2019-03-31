@@ -1,27 +1,27 @@
-using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using AICore.Entity.Contracts;
 using AICore.FuzzyLogic;
-using AICore.FuzzyLogic.FuzzyHedges;
-using AICore.SteeringBehaviour;
-using AICore.SteeringBehaviour.Aggregate;
 using AICore.SteeringBehaviour.Individual;
-using AICore.SteeringBehaviour.Util;
 using AICore.Worlds;
 
 namespace AICore.Behaviour.Goals
 {
-    public class GoToBall : BaseGoal
+    public class TakeBall : BaseGoal
     {
         private readonly FuzzyModule _fuzzyModule = new FuzzyModule();
-        
-        public GoToBall(IPlayer player, SoccerField soccerField): base(player, soccerField)
+
+        public TakeBall(IPlayer player, SoccerField soccerField) : base(player, soccerField)
         {
             var distToBall = _fuzzyModule.CreateFlv("DistToBall");
             var ballClose = distToBall.AddLeftShoulderSet("BallClose", 0, 50, 100);
             var ballMedium = distToBall.AddTriangularSet("BallMedium", 50, 100, 150);
             var ballFar = distToBall.AddRightShoulderSet("BallFar", 100, 150, 1000);
+            
+            var distFromPosition = _fuzzyModule.CreateFlv("DistFromPosition");
+            var positionClose = distFromPosition.AddLeftShoulderSet("PositionClose", 0, 25, 50);
+            var positionMedium = distFromPosition.AddTriangularSet("PositionMedium", 25, 50, 100);
+            var positionFar = distFromPosition.AddRightShoulderSet("PositionFar", 100, 150, 1000);
 
             var desirability = _fuzzyModule.CreateFlv("Desirability");
             var veryDesirable = desirability.AddRightShoulderSet("VeryDesirable", 50, 75, 100);
@@ -29,45 +29,40 @@ namespace AICore.Behaviour.Goals
             var undesirable = desirability.AddLeftShoulderSet("Undesirable", 0, 25, 50);
 
             _fuzzyModule.AddRule("ballClose -> veryDesirable", ballClose, veryDesirable);
-            _fuzzyModule.AddRule("ballMedium -> desirable", ballMedium, desirable);
+            _fuzzyModule.AddRule("ballMedium -> undesirable", ballMedium, undesirable);
             _fuzzyModule.AddRule("ballFar -> undesirable", ballFar, undesirable);
+
+            _fuzzyModule.AddRule("positionClose -> veryDesirable", positionClose, veryDesirable);
+            _fuzzyModule.AddRule("positionMedium -> undesirable", positionMedium, desirable);
+            _fuzzyModule.AddRule("positionFar -> undesirable", positionFar, undesirable);
         }
 
         public override void Enter()
         {
-            Player.SteeringBehaviour = new WeightedTruncatedRunningSumWithPrioritization(new List<WeightedSteeringBehaviour>
-            {
-                new WeightedSteeringBehaviour(new WallObstacleAvoidance(Player, SoccerField.Sidelines, SoccerField.Obstacles),10f),
-                new WeightedSteeringBehaviour(new Pursuit(Player, SoccerField.Ball), 1f)
-            }, Player.MaxSpeed);
         }
 
         public override void Update(float deltaTime)
         {
-            Player.Energy -= 0.5f * deltaTime;
+            Player.SteeringBehaviour = new Pursuit(Player, SoccerField.Ball);
             SoccerField.Ball.TakeBall(Player);
         }
-        
+
         public override void Leave()
         {
-            
         }
 
         public override double CheckDesirability()
         {
-            if (SoccerField.Ball.Owner == Player)
-            {
-                return 0;
-            }
-            
             if (Player.Team.Players.Any(player => player == SoccerField.Ball.Owner))
             {
                 return 0;
             }
             
             var distanceToBall = Vector2.Distance(Player.Position, SoccerField.Ball.Position);
+            var distanceFromPosition = Vector2.Distance(Player.Position, Player.StartPosition);
             
             _fuzzyModule.Fuzzify("DistToBall", distanceToBall);
+            _fuzzyModule.Fuzzify("DistFromPosition", distanceFromPosition);
             return _fuzzyModule.DeFuzzify("Desirability", FuzzyModule.DefuzzifyType.MaxAv);
         }
     }

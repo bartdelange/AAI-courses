@@ -1,5 +1,6 @@
 using AICore.Entity.Contracts;
 using AICore.SteeringBehaviour.Aggregate;
+using AICore.SteeringBehaviour.Individual;
 using AICore.Worlds;
 
 namespace AICore.Behaviour.Goals
@@ -13,7 +14,7 @@ namespace AICore.Behaviour.Goals
         public override void Enter()
         {
             Player.MaxSpeed = Config.RestSpeed;
-            Player.SteeringBehaviour = new WanderNearPositionBehaviour(Player, SoccerField.Sidelines, SoccerField.Obstacles);
+            Player.SteeringBehaviour = new Seek(Player, Player.StartPosition);
         }
 
         public override void Update(float deltaTim)

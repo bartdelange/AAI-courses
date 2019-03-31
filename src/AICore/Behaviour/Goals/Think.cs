@@ -76,6 +76,8 @@ namespace AICore.Behaviour.Goals
 
         public void Render(Graphics graphics)
         {
+            if (!Config.Debug) return;
+            
             const float margin = 2;
             var offset = (float) -Player.BoundingRadius;
             
