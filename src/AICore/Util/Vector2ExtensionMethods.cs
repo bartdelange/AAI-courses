@@ -13,13 +13,13 @@ namespace AICore.Util
 
         public static Vector2 GetRandom(Bounds bounds)
         {
-            var minX = Math.Abs(bounds.Min.Y);
+            var minX = Math.Abs(bounds.Min.X);
             var maxX = Math.Abs(bounds.Max.X) + minX;
             var minY = Math.Abs(bounds.Min.Y);
             var maxY = Math.Abs(bounds.Max.Y) + minY;
 
-            var randomX = Random.Next((int) minX, (int) maxX) - minX;
-            var randomY = Random.Next((int) minY, (int) maxY) - minY;
+            var randomX = Random.Next((int) (minX + bounds.Min.X), (int) maxX) - minX;
+            var randomY = Random.Next((int) (minY + bounds.Min.Y), (int) maxY) - minY;
 
             return new Vector2(randomX, randomY);
         }
