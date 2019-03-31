@@ -21,7 +21,7 @@ namespace AICore.Entity.Static
             set => throw new ArgumentException("BoundingRadius should not be used in SoccerGoal");
         }
 
-        public int Score { get; set; } = Config.InitialScore;
+        public int Score { get; set; }
 
         private readonly Bounds _bounds;
 

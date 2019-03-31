@@ -109,7 +109,7 @@ namespace AICore.Entity.Dynamic
 
         private void HandleGoal(Team affectedTeam)
         {
-            affectedTeam.Goal.Score -= 1;
+            affectedTeam.Opponent.Goal.Score += 1;
 
             _soccerField.Reset();
         }

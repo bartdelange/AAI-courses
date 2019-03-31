@@ -48,6 +48,7 @@
     <Compile Include="Behaviour\Goals\DefendGoal.cs" />
     <Compile Include="Behaviour\Goals\DribbleToGoal.cs" />
     <Compile Include="Behaviour\Goals\DribbleTowardsNearestStriker.cs" />
+    <Compile Include="Behaviour\Goals\GoalkeeperThink.cs" />
     <Compile Include="Behaviour\Goals\GoToBall.cs" />
     <Compile Include="Behaviour\Goals\IGoal.cs" />
     <Compile Include="Behaviour\Goals\RestGoal.cs" />
