@@ -33,9 +33,6 @@ namespace AICore.SteeringBehaviour.Individual
                 return Vector2.Zero;
             }
 
-            //because Deceleration is enumerated as an int, this value is required
-            //to provide fine tweaking of the deceleration..
-
             //calculate the speed required to reach the target given the desired
             //deceleration
             var speed = Math.Ceiling(dist / (DecelerationSpeed * DecelerationTweaker));

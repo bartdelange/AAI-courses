@@ -38,7 +38,7 @@ namespace AIBehaviours.Demos
             var playingFieldArea = new Bounds(Vector2.Zero, WorldSize) - new Vector2(60, 30);
 
             _soccerField = new SoccerField(playingFieldArea);
-            
+
             // Create teams
             var teamRed = new Team(Color.Red, playingFieldArea, _soccerField);
             var teamBlue = new Team(Color.DeepSkyBlue, playingFieldArea, _soccerField, true);
@@ -70,22 +70,37 @@ namespace AIBehaviours.Demos
             switch (e.KeyCode)
             {
                 case Keys.W:
+                    if (_activePlayerSteering == null)
+                        break;
+
                     _activePlayerSteering.MoveUp = false;
                     break;
 
                 case Keys.A:
+                    if (_activePlayerSteering == null)
+                        break;
+
                     _activePlayerSteering.MoveLeft = false;
                     break;
 
                 case Keys.S:
+                    if (_activePlayerSteering == null)
+                        break;
+
                     _activePlayerSteering.MoveDown = false;
                     break;
 
                 case Keys.D:
+                    if (_activePlayerSteering == null)
+                        break;
+
                     _activePlayerSteering.MoveRight = false;
                     break;
 
                 case Keys.Space:
+                    if (_activePlayerSteering == null)
+                        break;
+
                     var timespan = DateTime.Now.Subtract(_kickActiveTime).TotalMilliseconds;
 
                     _soccerField.Ball.Kick(
@@ -108,26 +123,41 @@ namespace AIBehaviours.Demos
                     break;
 
                 case Keys.W:
+                    if (_activePlayerSteering == null)
+                        break;
+
                     _activePlayerSteering.MoveUp = true;
                     break;
 
                 case Keys.A:
+                    if (_activePlayerSteering == null)
+                        break;
+
                     _activePlayerSteering.MoveLeft = true;
                     break;
 
                 case Keys.S:
+                    if (_activePlayerSteering == null)
+                        break;
+
                     _activePlayerSteering.MoveDown = true;
                     break;
 
                 case Keys.D:
+                    if (_activePlayerSteering == null)
+                        break;
+
                     _activePlayerSteering.MoveRight = true;
                     break;
-                
+
                 case Keys.R:
                     _soccerField.Reset();
                     break;
 
                 case Keys.Space:
+                    if (_activePlayerSteering == null)
+                        break;
+
                     if (!_kickActive)
                         _kickActiveTime = DateTime.Now;
 

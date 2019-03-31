@@ -20,9 +20,9 @@ namespace AICore.Behaviour.Goals
             var goalFar = distToGoal.AddRightShoulderSet("GoalFar", 150, 200, 1000);
 
             var desirability = _fuzzyModule.CreateFlv("Desirability");
-            var veryDesirable = desirability.AddRightShoulderSet("VeryDesirable", 50, 75, 100);
-            var desirable = desirability.AddTriangularSet("Desirable", 25, 50, 75);
             var undesirable = desirability.AddLeftShoulderSet("Undesirable", 0, 25, 50);
+            var desirable = desirability.AddTriangularSet("Desirable", 25, 50, 75);
+            var veryDesirable = desirability.AddRightShoulderSet("VeryDesirable", 50, 75, 100);
 
             _fuzzyModule.AddRule("goalClose -> desirable", goalClose, veryDesirable);
             _fuzzyModule.AddRule("goalMedium -> desirable", goalMedium, desirable);
