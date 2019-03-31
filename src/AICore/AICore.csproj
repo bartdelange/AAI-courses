@@ -72,11 +72,8 @@
     <Compile Include="Shapes\Circle.cs" />
     <Compile Include="Shapes\IPolygon.cs" />
     <Compile Include="SteeringBehaviour\Aggregate\FlockingBehaviour.cs" />
-    <Compile Include="SteeringBehaviour\Aggregate\InterceptBallBehaviour.cs" />
-    <Compile Include="SteeringBehaviour\Aggregate\WallAndObstacleAvoidanceBehaviour.cs" />
+    <Compile Include="SteeringBehaviour\Aggregate\WallObstacleAvoidance.cs" />
     <Compile Include="SteeringBehaviour\Aggregate\WanderNearPositionBehaviour.cs" />
-    <Compile Include="SteeringBehaviour\Aggregate\WanderObstacleAvoidanceBehaviour.cs" />
-    <Compile Include="SteeringBehaviour\Aggregate\WanderWallAvoidanceBehaviour.cs" />
     <Compile Include="SteeringBehaviour\Group\AlignmentBehaviour.cs" />
     <Compile Include="SteeringBehaviour\Group\CohesionBehaviour.cs" />
     <Compile Include="SteeringBehaviour\Group\SeparationBehaviour.cs" />
@@ -154,9 +151,6 @@
     <Compile Include="Worlds\IWorld.cs" />
     <Compile Include="Worlds\SoccerField.cs" />
     <Compile Include="Worlds\World.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Assets\soccer_ball_pattern.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -37,7 +37,7 @@ namespace AICore.Behaviour.Goals
         {
             Player.SteeringBehaviour = new WeightedTruncatedRunningSumWithPrioritization(new List<WeightedSteeringBehaviour>
             {
-                new WeightedSteeringBehaviour(new WallObstacleAvoidanceBehaviour(Player, SoccerField.Sidelines, SoccerField.Obstacles),10f),
+                new WeightedSteeringBehaviour(new WallObstacleAvoidance(Player, SoccerField.Sidelines, SoccerField.Obstacles),10f),
                 new WeightedSteeringBehaviour(new Pursuit(Player, SoccerField.Ball), 1f)
             }, Player.MaxSpeed);
         }

@@ -8,13 +8,13 @@ using AICore.SteeringBehaviour.Util;
 
 namespace AICore.SteeringBehaviour.Aggregate
 {
-    public class WallObstacleAvoidanceBehaviour : ISteeringBehaviour
+    public class WallObstacleAvoidance : ISteeringBehaviour
     {
         public bool Visible { get; set; } = true;
 
         private readonly WeightedTruncatedRunningSumWithPrioritization _aggregateBehaviour;
 
-        public WallObstacleAvoidanceBehaviour(IMovingEntity entity, IEnumerable<IWall> walls, IEnumerable<IObstacle> obstacles, float detectionLength = 20)
+        public WallObstacleAvoidance(IMovingEntity entity, IEnumerable<IWall> walls, IEnumerable<IObstacle> obstacles, float detectionLength = 20)
         {
             var wallAvoidanceBehaviour = new WallAvoidance(entity, walls, detectionLength);
             var obstacleAvoidanceBehaviour = new ObstacleAvoidance(entity, obstacles, detectionLength);

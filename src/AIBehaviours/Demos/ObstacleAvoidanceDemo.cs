@@ -1,8 +1,11 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Numerics;
 using AIBehaviours.Controls;
 using AICore.Model;
-using AICore.SteeringBehaviour.Aggregate;
+using AICore.SteeringBehaviour;
+using AICore.SteeringBehaviour.Individual;
+using AICore.SteeringBehaviour.Util;
 using AICore.Util;
 using AICore.Worlds;
 
@@ -13,23 +16,28 @@ namespace AIBehaviours.Demos
         public ObstacleAvoidanceDemo(Size size) : base(size)
         {
             var bounds = new Bounds(Vector2.Zero, WorldSize);
-
             var world = new World();
-            
-            world.Obstacles.AddRange(EntityUtils.CreateObstacles(bounds, 500));
 
-            // Create walls
-            const int margin = 20;
-            world.Walls.AddRange(EntityUtils.CreateCage(
-                new Bounds(Vector2.Zero, new Vector2(WorldSize.Width, WorldSize.Height)) - new Vector2(margin)
-            ));
+            world.Obstacles.AddRange(EntityUtils.CreateObstacles(bounds, 500));
 
             var entities = EntityUtils.CreateVehicles(
                 50,
                 bounds,
-                entity => entity.SteeringBehaviour = new WanderWallObstacleAvoidanceBehaviour(entity, world.Obstacles, world.Walls)
+                entity =>
+                {
+                    entity.SteeringBehaviour = new WeightedTruncatedRunningSumWithPrioritization(
+                        new List<WeightedSteeringBehaviour>
+                        {
+                            new WeightedSteeringBehaviour(new ObstacleAvoidance(entity, world.Obstacles, 30), 1f),
+                            new WeightedSteeringBehaviour(new Wander(entity), 1f),
+                        },
+                        entity.MaxSpeed
+                    );
+                    
+                    entity.Middlewares.Add(new WrapAroundMiddleware(entity, bounds));
+                }
             );
-            
+
             world.Entities.AddRange(entities);
 
             World = world;

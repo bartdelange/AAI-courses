@@ -8,8 +8,6 @@ using AIBehaviours.Controls;
 using AICore;
 using AICore.Behaviour.Goals;
 using AICore.Entity.Contracts;
-using AICore.Entity.Dynamic;
-using AICore.Entity.Static;
 using AICore.Model;
 using AICore.SteeringBehaviour;
 using AICore.SteeringBehaviour.Individual;

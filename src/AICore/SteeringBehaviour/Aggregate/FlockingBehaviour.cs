@@ -19,8 +19,7 @@ namespace AICore.SteeringBehaviour.Aggregate
             _steeringBehaviour = new WeightedTruncatedRunningSumWithPrioritization(
                 new List<WeightedSteeringBehaviour>
                 {
-                    new WeightedSteeringBehaviour(new AlignmentBehaviour<IMovingEntity>(movingEntity, neighbours),
-                        0.3f),
+                    new WeightedSteeringBehaviour(new AlignmentBehaviour<IMovingEntity>(movingEntity, neighbours),0.3f),
                     new WeightedSteeringBehaviour(new CohesionBehaviour<IEntity>(movingEntity, neighbours), 0.7f)
                 },
                 movingEntity.MaxSpeed

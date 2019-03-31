@@ -2,16 +2,13 @@
 using System.Numerics;
 using AIBehaviours.Controls;
 using AICore.Model;
-using AICore.SteeringBehaviour.Aggregate;
+using AICore.SteeringBehaviour.Individual;
 using AICore.SteeringBehaviour.Util;
 using AICore.Util;
 using AICore.Worlds;
 
 namespace AIBehaviours.Demos
 {
-    /// <summary>
-    /// 
-    /// </summary>
     public class WallAvoidanceDemo : DemoForm
     {
         public WallAvoidanceDemo(Size size) : base(size)
@@ -30,7 +27,7 @@ namespace AIBehaviours.Demos
             var vehicles = EntityUtils.CreateVehicles(
                 150,
                 bounds,
-                (entity) => entity.SteeringBehaviour = new WanderWallAvoidanceBehaviour(entity, world.Walls)
+                (entity) => entity.SteeringBehaviour = new WallAvoidance(entity, world.Walls)
             );
 
             world.Entities.AddRange(vehicles);

@@ -29,7 +29,7 @@ namespace AICore.SteeringBehaviour.Individual
             _soccerField = soccerField;
 
             _wallObstacleAvoidanceBehaviour = new WeightedSteeringBehaviour(
-                new WallObstacleAvoidanceBehaviour(player, soccerField.Sidelines, soccerField.Obstacles),
+                new WallObstacleAvoidance(player, soccerField.Sidelines, soccerField.Obstacles),
                 10f
             );
         }

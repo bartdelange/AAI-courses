@@ -15,7 +15,7 @@ namespace AIBehaviours.Demos
 {
     public class PathFollowingDemo : DemoForm
     {
-        private World _world;
+        private readonly World _world;
 
         public PathFollowingDemo(Size size) : base(size)
         {
