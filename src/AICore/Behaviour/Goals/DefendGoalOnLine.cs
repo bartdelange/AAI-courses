@@ -2,6 +2,7 @@ using System.Numerics;
 using AICore.Entity.Contracts;
 using AICore.Entity.Static;
 using AICore.FuzzyLogic;
+using AICore.SteeringBehaviour;
 using AICore.SteeringBehaviour.Individual;
 using AICore.Worlds;
 
@@ -33,8 +34,9 @@ namespace AICore.Behaviour.Goals
 
         public override void Update(float deltaTime)
         {
-            // TODO: "Fix" player on line (make him step backwards  slower then sideways)
-            Player.SteeringBehaviour = new Interpose(Player, SoccerField.Ball, Player.Team.Goal);
+            Player.SteeringBehaviour = CreateAvoidanceEnabledSteeringBehaviour(
+                new WeightedSteeringBehaviour(new Interpose(Player, SoccerField.Ball, Player.Team.Goal), 1f)
+            );
         }
 
         public override void Leave()

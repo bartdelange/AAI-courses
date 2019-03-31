@@ -6,6 +6,7 @@ using AICore.FuzzyLogic;
 using AICore.Graph.PathFinding;
 using AICore.Model;
 using AICore.Navigation;
+using AICore.SteeringBehaviour;
 using AICore.SteeringBehaviour.Aggregate;
 using AICore.SteeringBehaviour.Individual;
 using AICore.Util;

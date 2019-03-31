@@ -35,11 +35,9 @@ namespace AICore.Behaviour.Goals
 
         public override void Enter()
         {
-            Player.SteeringBehaviour = new WeightedTruncatedRunningSumWithPrioritization(new List<WeightedSteeringBehaviour>
-            {
-                new WeightedSteeringBehaviour(new WallObstacleAvoidance(Player, SoccerField.Sidelines, SoccerField.Obstacles),10f),
+            Player.SteeringBehaviour = CreateAvoidanceEnabledSteeringBehaviour(
                 new WeightedSteeringBehaviour(new Pursuit(Player, SoccerField.Ball), 1f)
-            }, Player.MaxSpeed);
+            );
         }
 
         public override void Update(float deltaTime)

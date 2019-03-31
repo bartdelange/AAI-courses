@@ -3,6 +3,7 @@ using AICore.Entity.Contracts;
 using AICore.Entity.Dynamic;
 using AICore.FuzzyLogic;
 using AICore.FuzzyLogic.FuzzyHedges;
+using AICore.SteeringBehaviour;
 using AICore.SteeringBehaviour.Individual;
 using AICore.Worlds;
 
@@ -39,7 +40,9 @@ namespace AICore.Behaviour.Goals
 
         public override void Update(float deltaTime)
         {
-            Player.SteeringBehaviour = new Pursuit(Player, _nearestStriker);
+            Player.SteeringBehaviour = CreateAvoidanceEnabledSteeringBehaviour(
+                new WeightedSteeringBehaviour(new Pursuit(Player, _nearestStriker), 1f)
+            );
             
             var distanceToStriker = Vector2.Distance(Player.Position, _nearestStriker.Position);
             
