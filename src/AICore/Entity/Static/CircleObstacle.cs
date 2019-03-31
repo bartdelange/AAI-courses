@@ -62,11 +62,6 @@ namespace AICore.Entity.Static
                 BoundingRadius * 2,
                 BoundingRadius * 2
             );
-
-            g.FillEllipse(
-                Brushes.Red,
-                new Rectangle((int) Position.X - 2, (int) Position.Y - 2, 5, 5)
-            );
         }
     }
 }
