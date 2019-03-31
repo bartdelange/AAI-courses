@@ -5,7 +5,10 @@ namespace AICore.Behaviour.Goals
         GoToBall,
         DribbleToGoal,
         RestGoal,
-        ShootBallToGoal
+        ShootBallToGoal,
+        InterceptBall,
+        DribbleToNearestStriker,
+        ShootBallToStriker
     }
 
     public interface IGoal

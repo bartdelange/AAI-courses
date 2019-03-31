@@ -44,12 +44,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Behaviour\Goals\BaseGoal.cs" />
+    <Compile Include="Behaviour\Goals\DefenderThink.cs" />
     <Compile Include="Behaviour\Goals\DribbleToGoal.cs" />
     <Compile Include="Behaviour\Goals\GoToBall.cs" />
     <Compile Include="Behaviour\Goals\IGoal.cs" />
     <Compile Include="Behaviour\Goals\RestGoal.cs" />
-    <Compile Include="Behaviour\Goals\StrikerGoals\ShootBallToGoal.cs" />
-    <Compile Include="Behaviour\Goals\StrikerGoals\StrikerThink.cs" />
+    <Compile Include="Behaviour\Goals\ShootBallToGoal.cs" />
+    <Compile Include="Behaviour\Goals\StrikerThink.cs" />
     <Compile Include="Behaviour\Goals\Think.cs" />
     <Compile Include="Behaviour\TiredModule.cs" />
     <Compile Include="Config.cs" />

@@ -1,7 +1,7 @@
 using AICore.Entity.Contracts;
 using AICore.Worlds;
 
-namespace AICore.Behaviour.Goals.StrikerGoals
+namespace AICore.Behaviour.Goals
 {
     public class StrikerThink : Think
     {

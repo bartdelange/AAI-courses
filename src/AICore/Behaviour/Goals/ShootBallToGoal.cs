@@ -4,7 +4,7 @@ using AICore.Entity.Contracts;
 using AICore.FuzzyLogic;
 using AICore.Worlds;
 
-namespace AICore.Behaviour.Goals.StrikerGoals
+namespace AICore.Behaviour.Goals
 {
     public class ShootBallToGoal : BaseGoal
     {

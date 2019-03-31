@@ -64,7 +64,7 @@ namespace AICore.Entity.Dynamic
             // Ball should follow owner when it has one
             if (Owner != null)
             {
-                const float margin = 5;
+                const float margin = 15;
                 
                 // Should update it to be in front of the player
                 Position = Owner.Position + Owner.Heading * (Owner.BoundingRadius + BoundingRadius + margin);
