@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Numerics;
@@ -8,20 +9,26 @@ using AICore.Util;
 
 namespace AICore.Entity.Static
 {
-    public class SoccerGoal : IRenderable, IPolygon
+    public class SoccerGoal : IEntity, IPolygon
     {
         public bool Visible { get; set; } = true;
 
-        public Vector2 Position { get; }
+        public Vector2 Position { get; set; }
+
+        public int BoundingRadius
+        {
+            get => throw new ArgumentException("BoundingRadius should not be used in SoccerGoal");
+            set => throw new ArgumentException("BoundingRadius should not be used in SoccerGoal");
+        }
 
         public int Score { get; set; } = Config.InitialScore;
 
         private readonly Bounds _bounds;
-        
+
         // Rendering properties
         private readonly Brush _goalBrush;
         private readonly Brush _scoreBrush;
-        private readonly Font _scoreFont = new Font(FontFamily.GenericSansSerif,18f, FontStyle.Bold);
+        private readonly Font _scoreFont = new Font(FontFamily.GenericSansSerif, 18f, FontStyle.Bold);
 
         /// <summary>
         /// Returns a list of vectors using the size and position of the goal
@@ -33,7 +40,7 @@ namespace AICore.Entity.Static
             _goalBrush = new SolidBrush(teamColor);
             _scoreBrush = new SolidBrush(Color.FromArgb(teamColor.ToArgb() ^ 0xffffff));
 
-            
+
             Position = position;
             _bounds = new Bounds(position - size / 2, position + size / 2);
 
@@ -53,11 +60,11 @@ namespace AICore.Entity.Static
                 _goalBrush,
                 (Rectangle) _bounds
             );
-                        
+
             graphics.DrawString(
                 Score.ToString(),
                 _scoreFont,
-                _scoreBrush, 
+                _scoreBrush,
                 Position.Minus(_scoreFont.Size / 2).ToPoint()
             );
         }

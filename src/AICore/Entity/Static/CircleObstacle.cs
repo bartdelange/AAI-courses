@@ -1,11 +1,12 @@
 ﻿using System.Drawing;
 using System.Numerics;
 using AICore.Entity.Contracts;
+using AICore.Shapes;
 using AICore.Util;
 
 namespace AICore.Entity.Static
 {
-    public class CircleObstacle : IObstacle
+    public class CircleObstacle : IObstacle, ICircle
     {
         public bool Visible { get; set; } = true;
 
@@ -19,22 +20,6 @@ namespace AICore.Entity.Static
         {
             Position = position;
             BoundingRadius = radius;
-        }
-
-        public void Render(Graphics g)
-        {
-            g.FillEllipse(
-                new SolidBrush(Color.FromArgb(50, Color.Black)),
-                Position.X - BoundingRadius,
-                Position.Y - BoundingRadius,
-                BoundingRadius * 2,
-                BoundingRadius * 2
-            );
-
-            g.FillEllipse(
-                Brushes.Red,
-                new Rectangle((int) Position.X - 2, (int) Position.Y - 2, 5, 5)
-            );
         }
 
         public bool IntersectsWithLine(Vector2 lineStart, Vector2 lineEnd, int margin = 0)
@@ -65,6 +50,22 @@ namespace AICore.Entity.Static
             var squaredMargin = margin * margin;
 
             return distanceToCircleCenter <= squaredRadius + squaredMargin;
+        }
+        
+        public void Render(Graphics g)
+        {
+            g.FillEllipse(
+                new SolidBrush(Color.FromArgb(50, Color.Black)),
+                Position.X - BoundingRadius,
+                Position.Y - BoundingRadius,
+                BoundingRadius * 2,
+                BoundingRadius * 2
+            );
+
+            g.FillEllipse(
+                Brushes.Red,
+                new Rectangle((int) Position.X - 2, (int) Position.Y - 2, 5, 5)
+            );
         }
     }
 }

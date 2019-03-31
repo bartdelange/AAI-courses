@@ -7,8 +7,8 @@ namespace AICore.Entity.Contracts
 {
     public interface IPlayer : IMovingEntity
     {
-        new Vector2 StartPosition { get; }
         Team Team { get; set; }
+        PlayerStrategy Strategy { get; }        
         
         Think ThinkGoal { get; set; }
 

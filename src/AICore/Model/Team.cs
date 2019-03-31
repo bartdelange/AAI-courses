@@ -46,23 +46,26 @@ namespace AICore.Model
                 teamColor
             );
 
-            var goalKeeper = new Player("Goalkeeper",
-                new Vector2(center.X + (isOpponent ? 400 : -400), center.Y), teamColor);
+            var goalKeeper = new Player(
+                PlayerStrategy.GoalKeeper,
+                new Vector2(center.X + (isOpponent ? 400 : -400), center.Y),
+                teamColor
+            );
 
             var defenders = new List<IPlayer>
             {
                 new Player(
-                    "Left defender",
+                    PlayerStrategy.Defender,
                     new Vector2(center.X + (isOpponent ? 225 : -225), center.Y - 150),
                     teamColor
                 ),
                 new Player(
-                    "Central defender",
+                    PlayerStrategy.Defender,
                     new Vector2(center.X + (isOpponent ? 300: -300), center.Y),
                     teamColor
                 ),
                 new Player(
-                    "Right defender",
+                    PlayerStrategy.Defender,
                     new Vector2(center.X + (isOpponent ? 225 : -225), center.Y + 150),
                     teamColor
                 )
@@ -71,17 +74,17 @@ namespace AICore.Model
             var strikers = new List<IPlayer>
             {
                 new Player(
-                    "Left striker",
+                    PlayerStrategy.Striker,
                     new Vector2(center.X + (isOpponent ? 75 : -75), center.Y - 250),
                     teamColor
                 ),
                 new Player(
-                    "Central striker",
+                    PlayerStrategy.Striker,
                     new Vector2(center.X + (isOpponent ? 75 : -75), center.Y),
                     teamColor
                 ),
                 new Player(
-                    "Right striker",
+                    PlayerStrategy.Striker,
                     new Vector2(center.X + (isOpponent ? 75 : -75), center.Y + 250),
                     teamColor
                 )
@@ -95,7 +98,7 @@ namespace AICore.Model
             Players.ForEach(player => player.Team = this);
             
             // Add behaviours to the entities
-            //defenders.ForEach(defender => defender.SteeringBehaviour = new DefenderBehaviour(defender, this, soccerField));
+            defenders.ForEach(defender => defender.ThinkGoal = new DefenderThink(defender, soccerField));
             strikers.ForEach(striker => striker.ThinkGoal = new StrikerThink(striker, soccerField));
             //goalKeeper.SteeringBehaviour = new GoalKeeperBehaviour(goalKeeper, this, soccerField);
         }

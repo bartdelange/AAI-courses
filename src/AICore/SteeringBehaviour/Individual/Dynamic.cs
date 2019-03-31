@@ -25,6 +25,8 @@ namespace AICore.SteeringBehaviour.Individual
 
         public DynamicSteering(IPlayer player, SoccerField soccerField)
         {
+            player.MaxSpeed = Config.MaxSpeed;
+            
             _player = player;
             _soccerField = soccerField;
 

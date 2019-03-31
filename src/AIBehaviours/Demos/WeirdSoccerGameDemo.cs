@@ -56,8 +56,6 @@ namespace AIBehaviours.Demos
             KeyDown += OnKeyDown;
             KeyUp += OnKeyUp;
 
-            SwitchPlayer();
-
             // Save soccer field to world instance
             World = _soccerField;
         }
