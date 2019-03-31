@@ -100,7 +100,7 @@ namespace AICore.Model
             // Add behaviours to the entities
             defenders.ForEach(defender => defender.ThinkGoal = new DefenderThink(defender, soccerField));
             strikers.ForEach(striker => striker.ThinkGoal = new StrikerThink(striker, soccerField));
-            //goalKeeper.SteeringBehaviour = new GoalKeeperBehaviour(goalKeeper, this, soccerField);
+            goalKeeper.ThinkGoal = new GoalkeeperThink(goalKeeper, soccerField);
         }
 
         public void Reset()

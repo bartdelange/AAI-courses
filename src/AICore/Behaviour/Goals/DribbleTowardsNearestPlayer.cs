@@ -8,13 +8,16 @@ using AICore.Worlds;
 
 namespace AICore.Behaviour.Goals
 {
-    public class DribbleTowardsNearestStriker : BaseGoal
+    public class DribbleTowardsNearestPlayerWithStrategy : BaseGoal
     {
         private readonly FuzzyModule _fuzzyModule = new FuzzyModule();
         private IPlayer _nearestStriker;
+        private readonly PlayerStrategy _strategy;
 
-        public DribbleTowardsNearestStriker(IPlayer player, SoccerField soccerField) : base(player, soccerField)
+        public DribbleTowardsNearestPlayerWithStrategy(IPlayer player, SoccerField soccerField, PlayerStrategy strategy) : base(player, soccerField)
         {
+            _strategy = strategy;
+            
             var distToPlayer = _fuzzyModule.CreateFlv("DistToPlayer");
             var playerClose = distToPlayer.AddLeftShoulderSet("PlayerClose", 0, 50, 100);
             var playerMedium = distToPlayer.AddTriangularSet("PlayerMedium", 50, 100, 150);
@@ -61,7 +64,7 @@ namespace AICore.Behaviour.Goals
 
             Player.Team.Players.ForEach(player =>
             {
-                if (player.Strategy != PlayerStrategy.Striker)
+                if (player.Strategy != _strategy)
                 {
                     return;
                 }

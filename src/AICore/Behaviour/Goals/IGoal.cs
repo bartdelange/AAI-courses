@@ -8,6 +8,7 @@ namespace AICore.Behaviour.Goals
         ShootBallToGoal,
         DribbleTowardsNearestStriker,
         ShootBallTowardNearestStriker,
+        ShootBallTowardNearestDefender,
         TakeBall,
         DefendGoal
     }
@@ -19,7 +20,7 @@ namespace AICore.Behaviour.Goals
         
         void Enter();
         void Update(float deltaTim);
-        double CheckDesirability();
         void Leave();
+        double CheckDesirability();
     }
 }
