@@ -138,7 +138,7 @@ namespace AICore.Entity.Dynamic
             base.Render(graphics);
 
             graphics.FillEllipse(
-                Brushes.CadetBlue,
+                Brushes.GhostWhite,
                 Position.X - (BoundingRadius),
                 Position.Y - (BoundingRadius),
                 BoundingRadius * 2,

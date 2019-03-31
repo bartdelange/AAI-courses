@@ -28,7 +28,7 @@ namespace AICore.Model
         /// <returns></returns>
         public static Bounds operator -(Bounds bounds, Vector2 v)
         {
-            return new Bounds(bounds.Min + v, bounds.Max - v * 2);
+            return new Bounds(bounds.Min + v, bounds.Max - v);
         }
 
         /// <summary>

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Numerics;
 using System.Windows.Forms;
 using AIBehaviours.Controls;
+using AIBehaviours.Properties;
 using AICore;
 using AICore.Behaviour.Goals;
 using AICore.Entity.Contracts;
@@ -16,7 +17,7 @@ using AICore.Worlds;
 
 namespace AIBehaviours.Demos
 {
-    public class WeirdSoccerGameDemo : DemoForm
+    public sealed class WeirdSoccerGameDemo : DemoForm
     {
         private readonly SoccerField _soccerField;
         private bool _kickActive;
@@ -29,11 +30,15 @@ namespace AIBehaviours.Demos
 
         public WeirdSoccerGameDemo(Size size) : base(size)
         {
-            var margin = new Vector2(15);
-            var playingFieldArea = new Bounds(Vector2.Zero, WorldSize) - margin;
+            // set background
+            WorldControl.BackgroundImage = Assets.soccerfield;
+            WorldControl.BackgroundImageLayout = ImageLayout.None;
+
+            // Create soccer field
+            var playingFieldArea = new Bounds(Vector2.Zero, WorldSize) - new Vector2(60, 30);
 
             _soccerField = new SoccerField(playingFieldArea);
-
+            
             // Create teams
             var teamRed = new Team(Color.Red, playingFieldArea, _soccerField);
             var teamBlue = new Team(Color.DeepSkyBlue, playingFieldArea, _soccerField, true);
