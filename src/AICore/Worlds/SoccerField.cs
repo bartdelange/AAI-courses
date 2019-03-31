@@ -46,10 +46,10 @@ namespace AICore.Worlds
 
             Obstacles = new List<IObstacle>
             {
-                new CircleObstacle(center - new Vector2(-100, -125), 50),
-                new CircleObstacle(center - new Vector2(100, 125), 50),
-                new CircleObstacle(center - new Vector2(100, -125), 50),
-                new CircleObstacle(center - new Vector2(-100, 125), 50)
+                new CircleObstacle(center - new Vector2(-175, -150), 50),
+                new CircleObstacle(center - new Vector2(175, 150), 50),
+                new CircleObstacle(center - new Vector2(175, -150), 50),
+                new CircleObstacle(center - new Vector2(-175, 150), 50)
             };
 
             Sidelines = EntityUtils.CreateCage(playingFieldArea);

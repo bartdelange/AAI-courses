@@ -31,7 +31,7 @@ namespace AIBehaviours.Demos
         public WeirdSoccerGameDemo(Size size) : base(size)
         {
             // set background
-            WorldControl.BackgroundImage = Assets.soccerfield;
+            WorldControl.BackgroundImage = Assets.SoccerField;
             WorldControl.BackgroundImageLayout = ImageLayout.None;
 
             // Create soccer field

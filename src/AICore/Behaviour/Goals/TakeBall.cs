@@ -47,6 +47,7 @@ namespace AICore.Behaviour.Goals
             Player.SteeringBehaviour = CreateAvoidanceEnabledSteeringBehaviour(
                 new WeightedSteeringBehaviour(new Pursuit(Player, SoccerField.Ball), 1f)
             );
+            
             SoccerField.Ball.TakeBall(Player);
         }
 

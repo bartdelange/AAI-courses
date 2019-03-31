@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Numerics;
 using AICore.Entity.Contracts;
 using AICore.Shapes;
@@ -54,8 +55,8 @@ namespace AICore.Entity.Static
         
         public void Render(Graphics g)
         {
-            g.FillEllipse(
-                new SolidBrush(Color.FromArgb(50, Color.Black)),
+            g.DrawImage(
+                Assets.HoleInGround,
                 Position.X - BoundingRadius,
                 Position.Y - BoundingRadius,
                 BoundingRadius * 2,

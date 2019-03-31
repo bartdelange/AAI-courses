@@ -163,7 +163,9 @@
     <Compile Include="Worlds\World.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Images\soccerfield.jpg" />
+    <Content Include="Images\Ball.png" />
+    <Content Include="Images\HoleInGround.png" />
+    <Content Include="Images\SoccerField.jpg" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Assets.resx">

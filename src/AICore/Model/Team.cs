@@ -41,7 +41,7 @@ namespace AICore.Model
 
             // Create goals
             Goal = new SoccerGoal(
-                playingFieldArea.Center() - new Vector2(isOpponent ? -440 : 440, 0),
+                playingFieldArea.Center() - new Vector2(isOpponent ? -435 : 435, 0),
                 new Vector2(30, 150),
                 teamColor
             );
@@ -61,7 +61,7 @@ namespace AICore.Model
                 ),
                 new Player(
                     PlayerStrategy.Defender,
-                    new Vector2(center.X + (isOpponent ? 300: -300), center.Y),
+                    new Vector2(center.X + (isOpponent ? 250: -250), center.Y),
                     teamColor
                 ),
                 new Player(

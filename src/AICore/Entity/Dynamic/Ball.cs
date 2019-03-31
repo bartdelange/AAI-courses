@@ -13,7 +13,6 @@ namespace AICore.Entity.Dynamic
     public class Ball : MovingEntity, ICircle
     {
         private readonly SoccerField _soccerField;
-        private readonly Brush _ballBrush;
 
         /// <summary>
         /// Player that is currently in possession of the ball
@@ -30,7 +29,6 @@ namespace AICore.Entity.Dynamic
 
             // Walls are used to check for collision
             _soccerField = soccerField;
-            _ballBrush = Brushes.Black;
         }
 
         public void Kick(IPlayer player, float speed)
@@ -137,8 +135,8 @@ namespace AICore.Entity.Dynamic
         {
             base.Render(graphics);
 
-            graphics.FillEllipse(
-                Brushes.GhostWhite,
+            graphics.DrawImage(
+                Assets.Ball,
                 Position.X - (BoundingRadius),
                 Position.Y - (BoundingRadius),
                 BoundingRadius * 2,
