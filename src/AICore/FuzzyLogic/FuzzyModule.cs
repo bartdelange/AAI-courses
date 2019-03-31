@@ -12,8 +12,14 @@ namespace AICore.FuzzyLogic
         }
 
         private const int CentroidSamplesToUse = 15;
-        private readonly Dictionary<string, FuzzyVariable> _fuzzyVars = new Dictionary<string, FuzzyVariable>();
-        private readonly Dictionary<string, FuzzyRule> _rules = new Dictionary<string, FuzzyRule>();
+        private readonly Dictionary<string, FuzzyVariable> _fuzzyVars;
+        private readonly Dictionary<string, FuzzyRule> _rules;
+
+        public FuzzyModule()
+        {
+            _fuzzyVars = new Dictionary<string, FuzzyVariable>();
+            _rules = new Dictionary<string, FuzzyRule>();
+        }
 
         private void SetConfidencesOfConsequentsToZero()
         {

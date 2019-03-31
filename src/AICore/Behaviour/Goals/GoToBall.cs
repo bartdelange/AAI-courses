@@ -62,7 +62,8 @@ namespace AICore.Behaviour.Goals
             var distanceToBall = Vector2.Distance(Player.Position, SoccerField.Ball.Position);
             
             _fuzzyModule.Fuzzify("DistToBall", distanceToBall);
-            return _fuzzyModule.DeFuzzify("Desirability", FuzzyModule.DefuzzifyType.MaxAv);
+            var defuz = _fuzzyModule.DeFuzzify("Desirability", FuzzyModule.DefuzzifyType.MaxAv);
+            return defuz;
         }
     }
 }

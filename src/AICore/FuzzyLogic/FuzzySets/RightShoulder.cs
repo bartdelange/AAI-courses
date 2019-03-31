@@ -31,11 +31,8 @@ namespace AICore.FuzzyLogic.FuzzySets
                 return grad * (val - (_peakPoint - _leftOffset));
             }
 
-            //find DOM if right of center
-            if (val > _peakPoint) return 1.0;
-
-            //out of range of this FLV, return zero
-            return 0;
+            //find DOM if right of center or out of range of this FLV, return zero
+            return val > _peakPoint && val <= _peakPoint + _rightOffset ? 1.0 : 0;
         }
     }
 }

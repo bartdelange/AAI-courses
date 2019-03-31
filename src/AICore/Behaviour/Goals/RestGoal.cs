@@ -21,7 +21,7 @@ namespace AICore.Behaviour.Goals
 
         public override double CheckDesirability()
         {
-            return 0.1d;
+            return 10d;
         }
     }
 }

@@ -53,7 +53,6 @@
     <Compile Include="Behaviour\Goals\StrikerGoals\ShootBallToGoal.cs" />
     <Compile Include="Behaviour\Goals\StrikerGoals\StrikerThink.cs" />
     <Compile Include="Behaviour\Goals\Think.cs" />
-    <Compile Include="Behaviour\StrikerBehaviour.cs" />
     <Compile Include="Behaviour\TiredModule.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Entity\Contracts\IMiddleware.cs" />
