@@ -4,7 +4,7 @@ using AICore.Entity.Contracts;
 
 namespace AICore.SteeringBehaviour.Individual
 {
-    public class EvadeBehaviour : ISteeringBehaviour
+    public class Evade : ISteeringBehaviour
     {
         public bool Visible { get; set; } = true;
 
@@ -13,7 +13,7 @@ namespace AICore.SteeringBehaviour.Individual
         private readonly IMovingEntity _movingEntity;
         private readonly IMovingEntity _target;
 
-        public EvadeBehaviour(IMovingEntity movingEntity, IMovingEntity target)
+        public Evade(IMovingEntity movingEntity, IMovingEntity target)
         {
             _movingEntity = movingEntity;
             _target = target;

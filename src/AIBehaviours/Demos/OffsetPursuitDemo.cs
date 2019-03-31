@@ -26,7 +26,7 @@ namespace AIBehaviours.Demos
             );
 
             // Add steering behaviour to leader entity
-            leader.SteeringBehaviour = new WanderBehaviour(leader);
+            leader.SteeringBehaviour = new Wander(leader);
 
             // Create follower entities
             var followers = new List<IMovingEntity>

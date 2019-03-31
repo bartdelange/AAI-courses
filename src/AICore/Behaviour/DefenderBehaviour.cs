@@ -15,8 +15,8 @@ namespace AICore.Behaviour
     /// Behaviour that is used by the striker entity
     ///
     /// Rules:
-    /// - Should not move too close to the own goal                             (Fuzzy: Arrive / WanderBehaviour)
-    /// - Should intercept the ball when ball is within a certain range         (Fuzzy: PursuitBehaviour)
+    /// - Should not move too close to the own goal                             (Fuzzy: Arrive / Wander)
+    /// - Should intercept the ball when ball is within a certain range         (Fuzzy: Pursuit)
     /// - Should move on a similar defensive line as other defenders            (OffsetPursuit / Arrive)
     /// - Should avoid obstacles in the field                                   (ObstacleAvoidance)
     /// - Should stay within the playing field                                  (WallAvoidance)
@@ -36,7 +36,7 @@ namespace AICore.Behaviour
             _steeringBehaviour = new WeightedTruncatedRunningSumWithPrioritization(
                 new List<WeightedSteeringBehaviour>
                 {
-                    new WeightedSteeringBehaviour(new WallAvoidanceBehaviour(striker, soccerField.Sidelines), 10f),
+                    new WeightedSteeringBehaviour(new WallAvoidance(striker, soccerField.Sidelines), 10f),
                 },
                 striker.MaxSpeed
             );

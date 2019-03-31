@@ -20,7 +20,7 @@ namespace AICore.Behaviour.Goals
             Player.SteeringBehaviour = new WeightedTruncatedRunningSumWithPrioritization(new List<WeightedSteeringBehaviour>
             {
                 new WeightedSteeringBehaviour(new WallObstacleAvoidanceBehaviour(Player, SoccerField.Sidelines, SoccerField.Obstacles), 10f),
-                new WeightedSteeringBehaviour(new SeekBehaviour(Player, Player.Team.Opponent.Goal.Position), 1f)
+                new WeightedSteeringBehaviour(new Seek(Player, Player.Team.Opponent.Goal.Position), 1f)
             }, Player.MaxSpeed);
         }
 
@@ -32,9 +32,12 @@ namespace AICore.Behaviour.Goals
         public override double CheckDesirability()
         {
             // If we don't own the ball we can dribble
-            if (SoccerField.Ball.Owner != Player) return 0;
+            if (SoccerField.Ball.Owner == Player)
+            {
+                return 100d;
+            }
 
-            return 100.0d;
+            return 0d;
         }
     }
 }

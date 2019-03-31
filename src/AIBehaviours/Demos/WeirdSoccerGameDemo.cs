@@ -26,7 +26,7 @@ namespace AIBehaviours.Demos
 
         private IPlayer _activePlayer;
         private ISteeringBehaviour _activePlayerPreviousSteeringBehaviour;
-        private DynamicSteeringBehaviour _activePlayerSteeringBehaviour;
+        private DynamicSteering _activePlayerSteering;
         private Think _activePlayerPreviousGoal;
 
         public WeirdSoccerGameDemo(Size size) : base(size)
@@ -69,19 +69,19 @@ namespace AIBehaviours.Demos
             switch (e.KeyCode)
             {
                 case Keys.W:
-                    _activePlayerSteeringBehaviour.MoveUp = false;
+                    _activePlayerSteering.MoveUp = false;
                     break;
 
                 case Keys.A:
-                    _activePlayerSteeringBehaviour.MoveLeft = false;
+                    _activePlayerSteering.MoveLeft = false;
                     break;
 
                 case Keys.S:
-                    _activePlayerSteeringBehaviour.MoveDown = false;
+                    _activePlayerSteering.MoveDown = false;
                     break;
 
                 case Keys.D:
-                    _activePlayerSteeringBehaviour.MoveRight = false;
+                    _activePlayerSteering.MoveRight = false;
                     break;
 
                 case Keys.Space:
@@ -107,19 +107,19 @@ namespace AIBehaviours.Demos
                     break;
 
                 case Keys.W:
-                    _activePlayerSteeringBehaviour.MoveUp = true;
+                    _activePlayerSteering.MoveUp = true;
                     break;
 
                 case Keys.A:
-                    _activePlayerSteeringBehaviour.MoveLeft = true;
+                    _activePlayerSteering.MoveLeft = true;
                     break;
 
                 case Keys.S:
-                    _activePlayerSteeringBehaviour.MoveDown = true;
+                    _activePlayerSteering.MoveDown = true;
                     break;
 
                 case Keys.D:
-                    _activePlayerSteeringBehaviour.MoveRight = true;
+                    _activePlayerSteering.MoveRight = true;
                     break;
                 
                 case Keys.R:
@@ -157,8 +157,8 @@ namespace AIBehaviours.Demos
             // Change steering behaviour to allow keyboard controls for active player
             _activePlayerPreviousSteeringBehaviour = _activePlayer.SteeringBehaviour;
             _activePlayerPreviousGoal = _activePlayer.ThinkGoal;
-            _activePlayerSteeringBehaviour = new DynamicSteeringBehaviour(_activePlayer, _soccerField);
-            _activePlayer.SteeringBehaviour = _activePlayerSteeringBehaviour;
+            _activePlayerSteering = new DynamicSteering(_activePlayer, _soccerField);
+            _activePlayer.SteeringBehaviour = _activePlayerSteering;
             _activePlayer.ThinkGoal = null;
         }
     }

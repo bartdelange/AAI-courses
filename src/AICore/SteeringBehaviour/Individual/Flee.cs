@@ -4,7 +4,7 @@ using AICore.Entity.Contracts;
 
 namespace AICore.SteeringBehaviour.Individual
 {
-    public class FleeBehaviour : ISteeringBehaviour
+    public class Flee : ISteeringBehaviour
     {
         public bool Visible { get; set; } = true;
 
@@ -13,7 +13,7 @@ namespace AICore.SteeringBehaviour.Individual
         private readonly IMovingEntity _movingEntity;
         private readonly IMovingEntity _target;
 
-        public FleeBehaviour(IMovingEntity movingEntity, IMovingEntity target)
+        public Flee(IMovingEntity movingEntity, IMovingEntity target)
         {
             _movingEntity = movingEntity;
             _target = target;

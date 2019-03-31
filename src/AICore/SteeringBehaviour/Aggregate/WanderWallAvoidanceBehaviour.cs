@@ -16,8 +16,8 @@ namespace AICore.SteeringBehaviour.Aggregate
 
         public WanderWallAvoidanceBehaviour(IMovingEntity entity, IEnumerable<IWall> walls)
         {
-            var wallAvoidanceBehaviour = new WallAvoidanceBehaviour(entity, walls);
-            var wanderBehaviour = new WanderBehaviour(entity);
+            var wallAvoidanceBehaviour = new WallAvoidance(entity, walls);
+            var wanderBehaviour = new Wander(entity);
 
             _aggregateBehaviour = new WeightedTruncatedRunningSumWithPrioritization(
                 new List<WeightedSteeringBehaviour>

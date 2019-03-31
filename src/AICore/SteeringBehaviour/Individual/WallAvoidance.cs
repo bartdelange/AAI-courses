@@ -6,7 +6,7 @@ using AICore.Util;
 
 namespace AICore.SteeringBehaviour.Individual
 {
-    public class WallAvoidanceBehaviour : ISteeringBehaviour
+    public class WallAvoidance : ISteeringBehaviour
     {
         public bool Visible { get; set; } = true;
 
@@ -17,7 +17,7 @@ namespace AICore.SteeringBehaviour.Individual
 
         private IEnumerable<Vector2> _feelers;
 
-        public WallAvoidanceBehaviour(IMovingEntity entity, IEnumerable<IWall> walls, float feelerLength = 20)
+        public WallAvoidance(IMovingEntity entity, IEnumerable<IWall> walls, float feelerLength = 20)
         {
             _movingEntity = entity;
             _walls = walls;

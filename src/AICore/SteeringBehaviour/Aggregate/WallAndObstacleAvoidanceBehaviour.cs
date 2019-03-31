@@ -16,8 +16,8 @@ namespace AICore.SteeringBehaviour.Aggregate
 
         public WallObstacleAvoidanceBehaviour(IMovingEntity entity, IEnumerable<IWall> walls, IEnumerable<IObstacle> obstacles, float detectionLength = 20)
         {
-            var wallAvoidanceBehaviour = new WallAvoidanceBehaviour(entity, walls, detectionLength);
-            var obstacleAvoidanceBehaviour = new ObstacleAvoidanceBehaviour(entity, obstacles, detectionLength);
+            var wallAvoidanceBehaviour = new WallAvoidance(entity, walls, detectionLength);
+            var obstacleAvoidanceBehaviour = new ObstacleAvoidance(entity, obstacles, detectionLength);
 
             _aggregateBehaviour = new WeightedTruncatedRunningSumWithPrioritization(
                 new List<WeightedSteeringBehaviour>

@@ -15,10 +15,10 @@ namespace AICore.Behaviour
     /// Behaviour that is used by the goal keeper
     ///
     /// Rules:
-    /// - Should stay near the goal                                (Fuzzy: ArriveBehaviour / WanderBehaviour)  
-    /// - Should kick the ball away when too close to the goal     (Fuzzy: PursuitBehaviour / Ball.Kicked())
-    /// - Should avoid obstacles in the field                      (ObstacleAvoidanceBehaviour)
-    /// - Should stay within the playing field                     (WallAvoidanceBehaviour)
+    /// - Should stay near the goal                                (Fuzzy: Arrive / Wander)  
+    /// - Should kick the ball away when too close to the goal     (Fuzzy: Pursuit / Ball.Kicked())
+    /// - Should avoid obstacles in the field                      (ObstacleAvoidance)
+    /// - Should stay within the playing field                     (WallAvoidance)
     /// - Should not move when tired                               (TiredModule)
     /// </summary>
     public class GoalKeeperBehaviour : TiredModule, ISteeringBehaviour
@@ -53,8 +53,8 @@ namespace AICore.Behaviour
             _wanderBehaviour = new WeightedTruncatedRunningSumWithPrioritization(
                 new List<WeightedSteeringBehaviour>
                 {
-                    new WeightedSteeringBehaviour(new WallAvoidanceBehaviour(goalkeeper, _soccerField.Sidelines), 10f),
-                    new WeightedSteeringBehaviour(new SeekBehaviour(goalkeeper, goalkeeper.Position), 1f)
+                    new WeightedSteeringBehaviour(new WallAvoidance(goalkeeper, _soccerField.Sidelines), 10f),
+                    new WeightedSteeringBehaviour(new Seek(goalkeeper, goalkeeper.Position), 1f)
                 },
                 goalkeeper.MaxSpeed
             );
@@ -63,8 +63,8 @@ namespace AICore.Behaviour
             _targetedBehaviour = new WeightedTruncatedRunningSumWithPrioritization(
                 new List<WeightedSteeringBehaviour>
                 {
-                    new WeightedSteeringBehaviour(new WallAvoidanceBehaviour(goalkeeper, _soccerField.Sidelines), 10f),
-                    new WeightedSteeringBehaviour(new ArriveBehaviour(goalkeeper, _entity.StartPosition), 1f)
+                    new WeightedSteeringBehaviour(new WallAvoidance(goalkeeper, _soccerField.Sidelines), 10f),
+                    new WeightedSteeringBehaviour(new Arrive(goalkeeper, _entity.StartPosition), 1f)
                 },
                 goalkeeper.MaxSpeed
             );

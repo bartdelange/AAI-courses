@@ -6,17 +6,17 @@ namespace AICore.SteeringBehaviour
     /// SeparationBehaviour weight          1.0
     /// AlignmentBehaviour weight           1.0
     /// CohesionBehaviour weight            2.0
-    /// ObstacleAvoidanceBehaviour weight   10.0
-    /// WallAvoidanceBehaviour weight       10.0
-    /// WanderBehaviour weight              1.0
-    /// SeekBehaviour weight                1.0
-    /// FleeBehaviour weight                1.0
-    /// ArriveBehaviour weight              1.0
-    /// PursuitBehaviour weight             1.0
+    /// ObstacleAvoidance weight   10.0
+    /// WallAvoidance weight       10.0
+    /// Wander weight              1.0
+    /// Seek weight                1.0
+    /// Flee weight                1.0
+    /// Arrive weight              1.0
+    /// Pursuit weight             1.0
     /// OffsetPursuitBehaviour weight       1.0
-    /// InterposeBehaviour weight           1.0
+    /// Interpose weight           1.0
     /// HideBehaviour weight                1.0
-    /// EvadeBehaviour weight               0.01
+    /// Evade weight               0.01
     /// FollowPathBehaviour weight          0.05
     /// </summary>
     public struct WeightedSteeringBehaviour

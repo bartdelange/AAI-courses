@@ -4,14 +4,14 @@ using AICore.Entity.Contracts;
 
 namespace AICore.SteeringBehaviour.Individual
 {
-    public class PursuitBehaviour : ISteeringBehaviour
+    public class Pursuit : ISteeringBehaviour
     {
         public bool Visible { get; set; } = true;
 
         private readonly IMovingEntity _movingEntity;
         private readonly IEntity _target;
 
-        public PursuitBehaviour(IMovingEntity movingEntity, IEntity target)
+        public Pursuit(IMovingEntity movingEntity, IEntity target)
         {
             _target = target;
             _movingEntity = movingEntity;
@@ -27,7 +27,7 @@ namespace AICore.SteeringBehaviour.Individual
             const float coefficient = 0.5f;
             lookAheadTime += (Vector2.Dot(_movingEntity.Heading, Vector2.Normalize(toEvader)) - 1) * -coefficient;
 
-            var seekBehaviour = new SeekBehaviour(
+            var seekBehaviour = new Seek(
                 _movingEntity,
                 _target.Position + _movingEntity.Velocity * lookAheadTime
             );

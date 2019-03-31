@@ -6,7 +6,7 @@ using AICore.Entity.Contracts;
 
 namespace AICore.SteeringBehaviour.Individual
 {
-    public class PathFollowingBehaviour : ISteeringBehaviour
+    public class PathFollowing : ISteeringBehaviour
     {
         public bool Visible { get; set; } = true;
 
@@ -21,11 +21,11 @@ namespace AICore.SteeringBehaviour.Individual
         private readonly IEnumerator<Vector2> _pathEnumerator;
 
         /// <summary>
-        /// Creates a new instance for PathFollowingBehaviour
+        /// Creates a new instance for PathFollowing
         /// </summary>
         /// <param name="path"></param>
         /// <param name="movingEntity"></param>
-        public PathFollowingBehaviour(IEnumerable<Vector2> path, IMovingEntity movingEntity)
+        public PathFollowing(IEnumerable<Vector2> path, IMovingEntity movingEntity)
         {
             _movingEntity = movingEntity;
 
@@ -39,7 +39,7 @@ namespace AICore.SteeringBehaviour.Individual
         {
             if (_pathEnumerator.Current == _finalWaypoint)
             {
-                var arriveBehaviour = new ArriveBehaviour(_movingEntity, _pathEnumerator.Current);
+                var arriveBehaviour = new Arrive(_movingEntity, _pathEnumerator.Current);
                 return arriveBehaviour.Calculate(deltaTime);
             }
 
@@ -48,7 +48,7 @@ namespace AICore.SteeringBehaviour.Individual
             // Set new waypoint
             if (distanceToWayPoint < SeekDistance) _pathEnumerator.MoveNext();
 
-            var seekBehaviour = new SeekBehaviour(_movingEntity, _pathEnumerator.Current);
+            var seekBehaviour = new Seek(_movingEntity, _pathEnumerator.Current);
             return seekBehaviour.Calculate(deltaTime);
         }
 

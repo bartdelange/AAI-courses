@@ -5,14 +5,14 @@ using AICore.Util;
 
 namespace AICore.SteeringBehaviour.Individual
 {
-    public class SeekBehaviour : ISteeringBehaviour
+    public class Seek : ISteeringBehaviour
     {
         public bool Visible { get; set; } = true;
 
         private readonly IMovingEntity _movingEntity;
         private readonly Vector2 _targetPosition;
 
-        public SeekBehaviour(IMovingEntity movingEntity, Vector2 targetPosition)
+        public Seek(IMovingEntity movingEntity, Vector2 targetPosition)
         {
             _targetPosition = targetPosition;
             _movingEntity = movingEntity;

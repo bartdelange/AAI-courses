@@ -5,7 +5,7 @@ using AICore.Entity.Contracts;
 
 namespace AICore.SteeringBehaviour.Individual
 {
-    public class ArriveBehaviour : ISteeringBehaviour
+    public class Arrive : ISteeringBehaviour
     {
         public bool Visible { get; set; } = true;
 
@@ -15,7 +15,7 @@ namespace AICore.SteeringBehaviour.Individual
         private readonly IMovingEntity _movingEntity;
         private readonly Vector2 _targetPosition;
 
-        public ArriveBehaviour(IMovingEntity movingEntity, Vector2 targetPosition)
+        public Arrive(IMovingEntity movingEntity, Vector2 targetPosition)
         {
             _movingEntity = movingEntity;
             _targetPosition = targetPosition;

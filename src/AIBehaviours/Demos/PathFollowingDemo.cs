@@ -47,7 +47,7 @@ namespace AIBehaviours.Demos
                 new PrecisePathSmoothing()
             );
 
-            movingEntity.SteeringBehaviour = new PathFollowingBehaviour(
+            movingEntity.SteeringBehaviour = new PathFollowing(
                 path,
                 movingEntity
             );

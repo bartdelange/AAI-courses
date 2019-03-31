@@ -32,7 +32,7 @@ namespace AICore.SteeringBehaviour.Individual
             var lookAheadTime = toOffset.Length() / (_movingEntity.MaxSpeed + _leader.Velocity.Length());
             var targetPosition = worldOffsetPosition + (_leader.Velocity * lookAheadTime);
 
-            var arriveBehaviour = new ArriveBehaviour(_movingEntity, targetPosition);
+            var arriveBehaviour = new Arrive(_movingEntity, targetPosition);
 
             return arriveBehaviour.Calculate(deltaTime);
         }

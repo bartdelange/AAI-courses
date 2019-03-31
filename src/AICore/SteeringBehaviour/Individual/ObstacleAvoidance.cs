@@ -8,7 +8,7 @@ using AICore.Util;
 
 namespace AICore.SteeringBehaviour.Individual
 {
-    public class ObstacleAvoidanceBehaviour : ISteeringBehaviour
+    public class ObstacleAvoidance : ISteeringBehaviour
     {
         public bool Visible { get; set; } = true;
 
@@ -21,7 +21,7 @@ namespace AICore.SteeringBehaviour.Individual
         // Debug property
         private Vector2 _targetPosition;
 
-        public ObstacleAvoidanceBehaviour(
+        public ObstacleAvoidance(
             IMovingEntity movingEntity,
             IEnumerable<IObstacle> obstacles,
             float detectionBoxLength

@@ -6,7 +6,7 @@ using AICore.Entity.Contracts;
 
 namespace AICore.SteeringBehaviour.Individual
 {
-    public class WanderBehaviour : ISteeringBehaviour
+    public class Wander : ISteeringBehaviour
     {
         public bool Visible { get; set; } = true;
 
@@ -20,7 +20,7 @@ namespace AICore.SteeringBehaviour.Individual
 
         private Vector2 _wanderTarget = new Vector2(0, 0);
 
-        public WanderBehaviour(
+        public Wander(
             IMovingEntity movingEntity,
             float wanderDistance = 50,
             float wanderRadius = 50,
